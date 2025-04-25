@@ -619,3 +619,4 @@ FodyWeavers.xsd
 
 
 # End of https://www.toptal.com/developers/gitignore/api/unity,macos,windows,rider,visualstudio,visualstudiocode
+/Assets/Import
