@@ -11,7 +11,7 @@ public class JHTExperience : MonoBehaviour
         experiencePoints += experience;
         if (JHTGameManager.Instance.LevelUpPoint1 < experiencePoints)
         {
-            Debug.Log("·¹º§¾÷ ÇÁ¸®ÆÕ º¯°æ");
+            Debug.Log("ë ˆë²¨ì—… í”„ë¦¬íŒ¹ ë³€ê²½");
         }
     }
 
