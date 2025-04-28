@@ -70,54 +70,22 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4139509033869422006}
-    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -817072780672565216}
-    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -4921032457818863963}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5782335247401943374}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5493569055312173983}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4761624671728559483}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
 --- !u!1 &8151674170594283585 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
   m_PrefabInstance: {fileID: 8558914792878862844}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4139509033869422006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8151674170594283585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bb191b5e600c1845941c05f9a5a182e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exp: 1
-  startLevel: 1
-  icon: {fileID: -2174233590385043983, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
-  type: 2
-  controller: {fileID: 11400000, guid: c2188fcb37301f842adbd8df8dab4c32, type: 2}
-  skill:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &-817072780672565216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8151674170594283585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eac3ed20725d03479be25a354cc33a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPoints: 50
 --- !u!95 &-4921032457818863963
 Animator:
   serializedVersion: 5
@@ -139,3 +107,46 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5782335247401943374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151674170594283585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260ba3d31b50817449cf89c443f75b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curExp: 0
+--- !u!114 &5493569055312173983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151674170594283585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1df65d1a4942ad144ab94ca5297b5ba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curHp: 0
+  expPoints: 10
+--- !u!114 &4761624671728559483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151674170594283585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939acd9c09e0b0144a4b384d38736ab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMyPoke: 0
+  damage: 3
+  level: 1
+  skill: []

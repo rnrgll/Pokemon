@@ -2,27 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PokeType
+public class PokemonStat : MonoBehaviour
 {
-    fire,
-    water,
-    elec,
-    wind,
-    grass
-}
-
-public class PokemonStat : ScriptableObject
-{
-    public Sprite icon;
-    public int ID;
-    public PokeType type;
-    public string name;
-    public GameObject pokePrefab;
-    public string description;
-    public bool isMine = false;
+    [Range(1,20)]
     public float exp;
-    private int hp = 10;
-    public int Hp {  get { return hp; } }
-    //[SerializeField] Skill skill;
+    public int startLevel = 1;
 
+    public Sprite icon;
+    public PokeType type;
+    [SerializeField] PokeController controller = null;
+    [SerializeField] Skill[] skill = null;
+
+    public int GetPokeStat(Stat stat)
+    {
+        return controller.GetStat(stat,type,startLevel);
+    }
+
+    //public int GetLevel()
+    //{
+    //    int currentExp = GetComponent<Experience>().GetExp();
+    //}
 }

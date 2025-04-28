@@ -73,13 +73,13 @@ PrefabInstance:
       addedObject: {fileID: 7628961913830780926}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6963139834520747874}
+      addedObject: {fileID: -7511050658057118611}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7847088448733210719}
+      addedObject: {fileID: -6209824001087769177}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6859507327044186899}
+      addedObject: {fileID: 8420125769929320531}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: ea4294fe6e549744c825356f923027bc, type: 3}
 --- !u!1 &4957037917721764951 stripped
 GameObject:
@@ -107,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6963139834520747874
+--- !u!114 &-7511050658057118611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,19 +116,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957037917721764951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bb191b5e600c1845941c05f9a5a182e, type: 3}
+  m_Script: {fileID: 11500000, guid: 260ba3d31b50817449cf89c443f75b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exp: 1
-  startLevel: 1
-  icon: {fileID: -601143604000936538, guid: ea4294fe6e549744c825356f923027bc, type: 3}
-  type: 0
-  controller: {fileID: 11400000, guid: c2188fcb37301f842adbd8df8dab4c32, type: 2}
-  skill:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &7847088448733210719
+  curExp: 0
+--- !u!114 &-6209824001087769177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,11 +129,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957037917721764951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eac3ed20725d03479be25a354cc33a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 1df65d1a4942ad144ab94ca5297b5ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 10
---- !u!114 &6859507327044186899
+  curHp: 0
+  expPoints: 10
+--- !u!114 &8420125769929320531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,7 +143,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957037917721764951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d136574ee380c843af75924f0e24966, type: 3}
+  m_Script: {fileID: 11500000, guid: 939acd9c09e0b0144a4b384d38736ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  experiencePoints: 10
+  isMyPoke: 1
+  damage: 5
+  level: 1
+  skill: []

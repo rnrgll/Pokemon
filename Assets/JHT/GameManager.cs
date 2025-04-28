@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnGameOver;
     public bool gameStart;
     public bool gameOver;
-
+    public int LevelUpPoint1 = 10;
+    public int LevelUpPoint2 = 10;
     public GameObject gameOverUI;
 
     private void Awake()
