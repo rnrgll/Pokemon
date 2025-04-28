@@ -1,0 +1,98 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class SceneChanger : MonoBehaviour
+{
+	[SerializeField] Vector2 targetPos;
+	[SerializeField] Define.PortalType portalType;
+	[SerializeField] bool isPlayerIn;
+	[SerializeField] Vector2 keyDirection;
+	Coroutine sceneCoroutine;
+	[SerializeField] bool isChange;
+	void Awake()
+	{
+
+	}
+
+	void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Player"))
+		{
+			if (portalType == Define.PortalType.Stair && !isChange)
+			{
+				// 플레이어 이동
+				//SceneChange(gameObject.name, collision.transform.gameObject);
+				sceneCoroutine = StartCoroutine(Change(gameObject.name, collision.gameObject));
+			}
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D collision)
+	{
+		if (portalType == Define.PortalType.Foothold)
+		{
+			isPlayerIn = true;
+		}
+		if (collision.CompareTag("Player"))
+		{
+			if (portalType == Define.PortalType.Foothold && isPlayerIn && !isChange)
+			{
+				Player player = collision.gameObject.GetComponent<Player>();
+
+				// 방향키 입력 직접 체크
+				Vector2 inputDir = Vector2.zero;
+				if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
+				else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
+				else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
+				else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
+
+				if (inputDir == keyDirection)
+				{
+					// 플레이어 이동
+					//SceneChange(gameObject.name, player.gameObject);
+					sceneCoroutine = StartCoroutine(Change(gameObject.name, player.gameObject));
+				}
+			}
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D collision)
+	{
+		isPlayerIn = false;
+	}
+
+	IEnumerator Change(string sceneName, GameObject player)
+	{
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+		asyncLoad.allowSceneActivation = false;
+		// 잔류이동 지우기
+		Player pc = player.GetComponent<Player>();
+		isChange = true;
+		pc.state = Define.PlayerState.SceneChange;
+		player.transform.position = new Vector3(targetPos.x, targetPos.y);
+		pc.StopMoving();
+		pc.currentDirection = keyDirection;
+		pc.AnimChange();
+
+		while (!asyncLoad.isDone)
+		{
+			if (asyncLoad.progress >= 0.9f)
+			{
+				Debug.Log(gameObject.name);
+				player.transform.position = targetPos;
+				yield return new WaitForSeconds(0.1f);
+				asyncLoad.allowSceneActivation = true;
+
+				// 상태 초기화
+				isChange = false;
+				pc.state = Define.PlayerState.Field;
+				sceneCoroutine = null;
+				Debug.Log("state init");
+
+				break;  // 루프 탈출
+			}
+			yield return null;
+		}
+	}
+}
