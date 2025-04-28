@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc689d8692a84324946d59118577180, type: 3}
   m_Name: Menu_Bag
   m_EditorClassIdentifier: 
-  menuName: 
-  description: 
+  menuName: "\uAC00\uBC29"
+  description: "\uB3C4\uAD6C\uB97C \uC9D1\uC5B4 \uB123\uB294 \n\uD3EC\uCF13 \uB09A\uC2DC
+    \uBC30\uB0AD"
