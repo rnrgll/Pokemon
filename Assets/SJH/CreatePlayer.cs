@@ -9,7 +9,8 @@ public class CreatePlayer : MonoBehaviour
 	{
 		if (isCreate)
 			return;
-		Instantiate(playerPrefab);
+		var player = Instantiate(playerPrefab);
+		player.GetComponent<Player>().state = Define.PlayerState.Field;
 		isCreate = true;
 		this.enabled = false;
 	}

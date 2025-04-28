@@ -7,11 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+	[SerializeField] public Define.PlayerState state;
 	[SerializeField] public Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
-	[SerializeField] Vector3 currentPos;
-	[SerializeField] Scene currenScene;
 	public Coroutine moveCoroutine;
-	WaitForSeconds moveDelay;
+	Coroutine ZCoroutine;
 
 	[Tooltip("이동 거리 (기본 2)")]
 	[SerializeField] int moveValue = 2;
@@ -27,62 +26,24 @@ public class Player : MonoBehaviour
 	{
 		DontDestroyOnLoad(gameObject);
 		anim = GetComponent<Animator>();
+		ZCoroutine = StartCoroutine(ZInput());
 	}
 
 	void Update()
 	{
-		if (isSceneChange)
-			return;
-		// 방향키 떼면 Idle 설정하고 이동이 끝나면 isIdle에 따라 바꾸기
-		if (Input.GetKeyUp(KeyCode.UpArrow) ||
-			Input.GetKeyUp(KeyCode.DownArrow) ||
-			Input.GetKeyUp(KeyCode.LeftArrow) ||
-			Input.GetKeyUp(KeyCode.RightArrow))
+		switch (state)
 		{
-			isIdle = true;
-			//moveCoroutine = null;
-		}
-
-		if (!isMoving)
-		{
-			Vector2 inputDir = Vector2.zero;
-
-			if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
-			else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
-			else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
-			else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
-
-			if (inputDir != Vector2.zero)
-			{
-				// 방향 변경
-				AnimChange(inputDir);
-
-				// 레이캐스트
-				Debug.DrawRay((Vector2)transform.position + (inputDir * 1.1f), inputDir, Color.green);
-				RaycastHit2D rayHit = Physics2D.Raycast((Vector2)transform.position + (inputDir * 1.1f), inputDir, 1f);
-				if (rayHit)
-				{
-					switch (rayHit.transform.gameObject.tag)
-					{
-						case "Wall":
-						case "NPC":
-							Debug.Log($"플레이어 앞 : {rayHit.transform.gameObject.name}");
-							StopMoving();
-							return;
-					}
-				}
-
-				// 방향이 같으면 이동 시작
-				if (inputDir == currentDirection)
-				{
-					moveCoroutine = StartCoroutine(Move(inputDir));
-				}
-				// 방향만 바꾸고 대기
-				else
-				{
-					currentDirection = inputDir;
-				}
-			}
+			case Define.PlayerState.Field:          // 필드
+				MoveState();
+				break;
+			case Define.PlayerState.SceneChange:    // 씬이동중
+				break;
+			case Define.PlayerState.Battle:			// 배틀중
+				break;
+			case Define.PlayerState.UI:				// UI활성화중
+				break;
+			case Define.PlayerState.Menu:			// Menu 활성화중
+				break;
 		}
 	}
 
@@ -95,6 +56,53 @@ public class Player : MonoBehaviour
 	{
 		anim.SetFloat("x", direction.x);
 		anim.SetFloat("y", direction.y);
+	}
+
+	void MoveState()
+	{
+		// Idle 설정
+		if (Input.GetKeyUp(KeyCode.UpArrow) ||
+			Input.GetKeyUp(KeyCode.DownArrow) ||
+			Input.GetKeyUp(KeyCode.LeftArrow) ||
+			Input.GetKeyUp(KeyCode.RightArrow))
+		{
+			isIdle = true;
+		}
+
+		if (isMoving)
+			return;
+
+		Vector2 inputDir = Vector2.zero;
+		if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
+		else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
+		else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
+		else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
+
+		if (inputDir == Vector2.zero)
+			return;
+
+		// 방향 변경
+		anim.SetFloat("x", inputDir.x);
+		anim.SetFloat("y", inputDir.y);
+
+		// 레이캐스트 벽 체크
+		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
+		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
+		if (hit && (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("NPC")))
+		{
+			StopMoving();
+			return;
+		}
+
+		// 같은 방향이면 이동 시작
+		if (inputDir == currentDirection)
+		{
+			moveCoroutine = StartCoroutine(Move(inputDir));
+		}
+		else
+		{
+			currentDirection = inputDir;
+		}
 	}
 
 	IEnumerator Move(Vector2 direction)
@@ -141,6 +149,11 @@ public class Player : MonoBehaviour
 		Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
 		Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
 		Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
-		
+	}
+
+	IEnumerator ZInput()
+	{
+
+		yield return null;
 	}
 }
