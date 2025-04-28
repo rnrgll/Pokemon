@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 4Grass (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 9191235856551840678, guid: 94b846e97f8d4a44e97a5c974625a0a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -148,6 +152,10 @@ PrefabInstance:
     - target: {fileID: 9191235856551840678, guid: 94b846e97f8d4a44e97a5c974625a0a8, type: 3}
       propertyPath: m_Name
       value: 4Grass (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191235856551840678, guid: 94b846e97f8d4a44e97a5c974625a0a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -211,6 +219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 4Grass (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 9191235856551840678, guid: 94b846e97f8d4a44e97a5c974625a0a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -272,6 +284,10 @@ PrefabInstance:
     - target: {fileID: 9191235856551840678, guid: 94b846e97f8d4a44e97a5c974625a0a8, type: 3}
       propertyPath: m_Name
       value: 4Grass (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9191235856551840678, guid: 94b846e97f8d4a44e97a5c974625a0a8, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

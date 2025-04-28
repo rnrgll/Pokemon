@@ -1,69 +1,118 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Define;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
-	[SerializeField] Vector3 currentPos;
-	[SerializeField] Scene currenScene;
-	Coroutine moveCoroutine;
-	WaitForSeconds moveDelay;
+	[SerializeField] public Define.PlayerState state;
+	[SerializeField] public Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
+	public Coroutine moveCoroutine;
+	public Coroutine zInput;
 
 	[Tooltip("이동 거리 (기본 2)")]
 	[SerializeField] int moveValue = 2;
 	[Tooltip("이동 시간 (기본 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
-	bool isMoving = false;
+	[SerializeField] bool isMoving = false;
 	bool isIdle = false;
+	[SerializeField] public bool isSceneChange;
 
 	Animator anim;
 
 	void Awake()
 	{
+		Debug.Log("PlayerAwake");
+		DontDestroyOnLoad(gameObject);
 		anim = GetComponent<Animator>();
+		zInput = StartCoroutine(ZInput());
+		Debug.Log(zInput);
 	}
 
 	void Update()
 	{
-		// 방향키 떼면 Idle 설정하고 이동이 끝나면 isIdle에 따라 바꾸기
+		if (state == Define.PlayerState.SceneChange) // 씬이동중
+			return;
+
+		switch (state)
+		{
+			case Define.PlayerState.Field:          // 필드
+				MoveState();
+				break;
+			case Define.PlayerState.Battle:			// 배틀중
+				break;
+			case Define.PlayerState.UI:				// UI활성화중
+				break;
+			case Define.PlayerState.Menu:			// Menu 활성화중
+				break;
+		}
+	}
+
+	public void AnimChange()
+	{
+		anim.SetFloat("x", currentDirection.x);
+		anim.SetFloat("y", currentDirection.y);
+	}
+	public void AnimChange(Vector2 direction)
+	{
+		anim.SetFloat("x", direction.x);
+		anim.SetFloat("y", direction.y);
+	}
+
+	void MoveState()
+	{
+		// Idle 설정
 		if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
 			Input.GetKeyUp(KeyCode.LeftArrow) ||
 			Input.GetKeyUp(KeyCode.RightArrow))
 		{
 			isIdle = true;
-			moveCoroutine = null;
 		}
 
-		if (!isMoving)
+		if (isMoving)
+			return;
+
+		Vector2 inputDir = Vector2.zero;
+		if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
+		else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
+		else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
+		else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
+
+		if (inputDir == Vector2.zero)
+			return;
+
+		currentDirection = inputDir;
+
+		// 방향 변경
+		AnimChange(inputDir);
+
+		// 레이캐스트 벽 체크
+		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
+		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
+		if (hit)
 		{
-			Vector2 inputDir = Vector2.zero;
-
-			if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
-			else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
-			else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
-			else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
-
-			if (inputDir != Vector2.zero)
+			switch (hit.transform.gameObject.tag)
 			{
-				// 방향 변경
-				anim.SetFloat("x", inputDir.x);
-				anim.SetFloat("y", inputDir.y);
-
-				// 방향이 같으면 이동 시작
-				if (inputDir == currentDirection)
-				{
-					moveCoroutine = StartCoroutine(Move(inputDir));
-				}
-				// 방향만 바꾸고 대기
-				else
-				{
-					currentDirection = inputDir;
-				}
+				case "Wall":
+				case "NPC":
+					StopMoving();
+					return;
 			}
+		}
+
+		// 같은 방향이면 이동 시작
+		if (inputDir == currentDirection)
+		{
+			moveCoroutine = StartCoroutine(Move(inputDir));
+		}
+		// 방향만 전환
+		else
+		{
+			currentDirection = inputDir;
 		}
 	}
 
@@ -79,7 +128,7 @@ public class Player : MonoBehaviour
 		Vector2 endPos = startPos + (direction * moveValue);
 
 		float time = 0;
-		while (time < moveDuration)
+		while (time < moveDuration && isMoving)
 		{
 			time += Time.deltaTime;
 			float percent = time / moveDuration;
@@ -93,6 +142,56 @@ public class Player : MonoBehaviour
 		{
 			anim.SetBool("isMoving", false);
 			isIdle = false;
+		}
+	}
+
+	public void StopMoving()
+	{
+		isMoving = false;
+		anim.SetBool("isMoving", false);
+		moveCoroutine = null;
+	}
+
+	//void OnDrawGizmos()
+	//{
+	//	// 플레이어 이동방향 기즈모
+	//	Gizmos.color = Color.magenta;
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
+	//}
+
+	IEnumerator ZInput()
+	{
+		while (true)
+		{
+			if (Input.GetKeyDown(KeyCode.Z))
+			{
+				switch (state)
+				{
+					case PlayerState.Field:
+						// 필드 상호작용
+						Debug.DrawRay((Vector2)transform.position + currentDirection * 1.1f, currentDirection, Color.red);
+						RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
+						if (hit)
+						{
+							var check = hit.transform.GetComponent<IInteractable>();
+							check?.Interact();
+						}
+						break;
+					case PlayerState.Battle:
+						// 배틀 대화 넘기기
+						break;
+					case PlayerState.UI:
+						// UI
+						break;
+					case PlayerState.Menu:
+						// 메뉴 선택
+						break;
+				}
+			}
+			yield return null;
 		}
 	}
 }

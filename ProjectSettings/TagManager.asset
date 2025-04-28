@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - MyPoke
+  - Wall
+  - Interact
+  - NPC
   layers:
   - Default
   - TransparentFX
