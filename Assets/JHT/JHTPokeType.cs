@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum JHTPokeType
 {
-    ºÒ,
-    ¹°,
-    ¹Ù¶÷,
-    ¹ø°³
+    ë¶ˆ,
+    ë¬¼,
+    ë°”ëžŒ,
+    ë²ˆê°œ
 }
