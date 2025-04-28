@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] Vector2 currentDirection = Vector2.down; // Ã³À½ ¹æÇâÀº ¾Æ·¡
+	[SerializeField] Vector2 currentDirection = Vector2.down; // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½
 	[SerializeField] Vector3 currentPos;
 	[SerializeField] Scene currenScene;
 	Coroutine moveCoroutine;
 	WaitForSeconds moveDelay;
 
-	[Tooltip("ÀÌµ¿ °Å¸® (±âº» 2)")]
+	[Tooltip("ï¿½Ìµï¿½ ï¿½Å¸ï¿½ (ï¿½âº» 2)")]
 	[SerializeField] int moveValue = 2;
-	[Tooltip("ÀÌµ¿ ½Ã°£ (±âº» 0.3)")]
+	[Tooltip("ï¿½Ìµï¿½ ï¿½Ã°ï¿½ (ï¿½âº» 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
 	bool isMoving = false;
 	bool isIdle = false;
@@ -28,7 +28,14 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		// ¹æÇâÅ° ¶¼¸é Idle ¼³Á¤ÇÏ°í ÀÌµ¿ÀÌ ³¡³ª¸é isIdle¿¡ µû¶ó ¹Ù²Ù±â
+		//ui manager êµ¬í˜„ ì¤‘ - ì½”ë“œ ìž„ì‹œ ì¶”ê°€
+		if (UIManager.Instance.IsAnyUIOpen) return;
+		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+		{
+			UIManager.Instance.ShowLinkedUI<UI_Menu>("UI_Menu");
+		}
+		
+		// ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½ï¿½ï¿½ Idle ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ isIdleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
 		if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
 			Input.GetKeyUp(KeyCode.LeftArrow) ||
@@ -49,16 +56,16 @@ public class Player : MonoBehaviour
 
 			if (inputDir != Vector2.zero)
 			{
-				// ¹æÇâ º¯°æ
+				// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				anim.SetFloat("x", inputDir.x);
 				anim.SetFloat("y", inputDir.y);
 
-				// ¹æÇâÀÌ °°À¸¸é ÀÌµ¿ ½ÃÀÛ
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 				if (inputDir == currentDirection)
 				{
 					moveCoroutine = StartCoroutine(Move(inputDir));
 				}
-				// ¹æÇâ¸¸ ¹Ù²Ù°í ´ë±â
+				// ï¿½ï¿½ï¿½â¸¸ ï¿½Ù²Ù°ï¿½ ï¿½ï¿½ï¿½
 				else
 				{
 					currentDirection = inputDir;
@@ -69,8 +76,8 @@ public class Player : MonoBehaviour
 
 	IEnumerator Move(Vector2 direction)
 	{
-		// 1 ÀÌµ¿ = x or y 2 º¯È­
-		// ¹Ù·Î 2¸¦ ÀÌµ¿ÇÏÁö¾Ê°í ÀÌµ¿½Ã°£¿¡ °ÉÃÄ¼­ ÀÌµ¿
+		// 1 ï¿½Ìµï¿½ = x or y 2 ï¿½ï¿½È­
+		// ï¿½Ù·ï¿½ 2ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê°ï¿½ ï¿½Ìµï¿½ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½Ìµï¿½
 		isMoving = true;
 		isIdle = false;
 		anim.SetBool("isMoving", isMoving);
