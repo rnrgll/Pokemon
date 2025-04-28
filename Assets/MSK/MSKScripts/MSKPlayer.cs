@@ -21,31 +21,19 @@ public class MSKPlayer : MonoBehaviour
 
 	Animator anim;
 
-	//	이동확인용 레이어
-	public LayerMask interactableLayer;
-	public LayerMask objectsLayer;
-    void PCRaycast()
-    {
-		if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, 2f))
-		{
-			Debug.Log(hitInfo.collider.gameObject.name);
-		}
-		else
-        {
-            Debug.Log("감지 없음");
-        }
-
-    }
     void Awake()
 	{
 		anim = GetComponent<Animator>();
 	}
 
 	void Update()
-	{
-		PCRaycast();
-		// 방향키 떼면 Idle 설정하고 이동이 끝나면 isIdle에 따라 바꾸기
-		if (Input.GetKeyUp(KeyCode.UpArrow) ||
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Interact();
+        }
+        // 방향키 떼면 Idle 설정하고 이동이 끝나면 isIdle에 따라 바꾸기
+        if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
 			Input.GetKeyUp(KeyCode.LeftArrow) ||
 			Input.GetKeyUp(KeyCode.RightArrow))
@@ -72,11 +60,7 @@ public class MSKPlayer : MonoBehaviour
 				// 방향이 같으면 이동 시작
 				if (inputDir == currentDirection)
 				{
-					if (IsWalkable(inputDir))
-					{
                         moveCoroutine = StartCoroutine(Move(inputDir));
-                    
-					}
                 }
 				// 방향만 바꾸고 대기
 				else
@@ -85,9 +69,21 @@ public class MSKPlayer : MonoBehaviour
 				}
 			}
 		}
+    }
+    void Interact()
+    {
+        var facingDit = new Vector3(anim.GetFloat("x"), anim.GetFloat("y"));
+        var interactPos = transform.position + facingDit;
+		Debug.Log(interactPos);
+		
+		var collider = Physics2D.OverlapCircle(interactPos, 0.3f, LayerMask.GetMask("ObjectLayer") | LayerMask.GetMask("InteractableLayer"));
+		if (collider != null)
+		{
+			collider.GetComponent<IInteractable>()?.Interact();
+		}
 	}
 
-	IEnumerator Move(Vector2 direction)
+    IEnumerator Move(Vector2 direction)
 	{
 		// 1 이동 = x or y 2 변화
 		// 바로 2를 이동하지않고 이동시간에 걸쳐서 이동
@@ -116,15 +112,4 @@ public class MSKPlayer : MonoBehaviour
 		}
 	}
 
-
-	//	플레이어 진행 방향에 레이어를 확인
-	//	인터랙트, 오브젝트 레이어가 존재할 시 이동 불가능
-	private bool IsWalkable(Vector3 targetPos) 
-	{
-		if (Physics2D.OverlapCircle(targetPos, 1f, objectsLayer | interactableLayer) != null) 
-		{ 
-			return false;
-		}
-		return true;
-	}
 }
