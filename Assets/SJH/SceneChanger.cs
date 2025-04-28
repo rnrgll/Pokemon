@@ -36,7 +36,7 @@ public class SceneChanger : MonoBehaviour
 		}
 		if (collision.CompareTag("Player"))
 		{
-			if (portalType == Define.PortalType.Foothold && !isChange)
+			if (portalType == Define.PortalType.Foothold && isPlayerIn && !isChange)
 			{
 				Player player = collision.gameObject.GetComponent<Player>();
 

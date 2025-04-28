@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7681147910428218313}
   - component: {fileID: 6923136373138090764}
   - component: {fileID: 8184379330739999939}
+  - component: {fileID: 5059026348586494058}
   m_Layer: 0
   m_Name: Fridge_A
   m_TagString: Wall
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2933707027980234783}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
+--- !u!114 &5059026348586494058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2933707027980234783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uB0C9\uC7A5\uACE0\uC785\uB2C8\uB2E4."

@@ -8,6 +8,7 @@ public class FieldObject : MonoBehaviour, IInteractable
 
 	public void Interact()
 	{
-		Debug.Log($"{gameObject.name} : {text}");	
+		// TODO : 필드 오브젝트 상호작용 UI 활성화
+		Debug.Log($"{gameObject.name} : {text}");
 	}
 }

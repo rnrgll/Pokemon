@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4951918615245438001}
   - component: {fileID: 7982785761440274543}
   - component: {fileID: 9040286893430181411}
+  - component: {fileID: 994550805042004774}
   m_Layer: 0
   m_Name: Heal3
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +131,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &994550805042004774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810091343875611535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: "\uD3EC\uCF13\uBAAC \uD68C\uBCF5"
 --- !u!1 &2057713973579282154
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +157,7 @@ GameObject:
   - component: {fileID: 7456384532136556336}
   m_Layer: 0
   m_Name: Heal4
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -273,7 +287,7 @@ GameObject:
   - component: {fileID: 4529765253347564914}
   m_Layer: 0
   m_Name: Heal1
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -438,7 +452,7 @@ GameObject:
   - component: {fileID: 7325945217779552185}
   m_Layer: 0
   m_Name: Heal2
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

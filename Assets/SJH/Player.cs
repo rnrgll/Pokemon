@@ -4,13 +4,14 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Define;
 
 public class Player : MonoBehaviour
 {
 	[SerializeField] public Define.PlayerState state;
 	[SerializeField] public Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
 	public Coroutine moveCoroutine;
-	Coroutine ZCoroutine;
+	public Coroutine zInput;
 
 	[Tooltip("이동 거리 (기본 2)")]
 	[SerializeField] int moveValue = 2;
@@ -24,19 +25,22 @@ public class Player : MonoBehaviour
 
 	void Awake()
 	{
+		Debug.Log("PlayerAwake");
 		DontDestroyOnLoad(gameObject);
 		anim = GetComponent<Animator>();
-		ZCoroutine = StartCoroutine(ZInput());
+		zInput = StartCoroutine(ZInput());
+		Debug.Log(zInput);
 	}
 
 	void Update()
 	{
+		if (state == Define.PlayerState.SceneChange) // 씬이동중
+			return;
+
 		switch (state)
 		{
 			case Define.PlayerState.Field:          // 필드
 				MoveState();
-				break;
-			case Define.PlayerState.SceneChange:    // 씬이동중
 				break;
 			case Define.PlayerState.Battle:			// 배틀중
 				break;
@@ -81,17 +85,23 @@ public class Player : MonoBehaviour
 		if (inputDir == Vector2.zero)
 			return;
 
+		currentDirection = inputDir;
+
 		// 방향 변경
-		anim.SetFloat("x", inputDir.x);
-		anim.SetFloat("y", inputDir.y);
+		AnimChange(inputDir);
 
 		// 레이캐스트 벽 체크
 		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
 		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
-		if (hit && (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("NPC")))
+		if (hit)
 		{
-			StopMoving();
-			return;
+			switch (hit.transform.gameObject.tag)
+			{
+				case "Wall":
+				case "NPC":
+					StopMoving();
+					return;
+			}
 		}
 
 		// 같은 방향이면 이동 시작
@@ -99,6 +109,7 @@ public class Player : MonoBehaviour
 		{
 			moveCoroutine = StartCoroutine(Move(inputDir));
 		}
+		// 방향만 전환
 		else
 		{
 			currentDirection = inputDir;
@@ -141,19 +152,46 @@ public class Player : MonoBehaviour
 		moveCoroutine = null;
 	}
 
-	void OnDrawGizmos()
-	{
-		// 플레이어 이동방향 기즈모
-		Gizmos.color = Color.magenta;
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
-	}
+	//void OnDrawGizmos()
+	//{
+	//	// 플레이어 이동방향 기즈모
+	//	Gizmos.color = Color.magenta;
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
+	//}
 
 	IEnumerator ZInput()
 	{
-
-		yield return null;
+		while (true)
+		{
+			if (Input.GetKeyDown(KeyCode.Z))
+			{
+				switch (state)
+				{
+					case PlayerState.Field:
+						// 필드 상호작용
+						Debug.DrawRay((Vector2)transform.position + currentDirection * 1.1f, currentDirection, Color.red);
+						RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
+						if (hit)
+						{
+							var check = hit.transform.GetComponent<IInteractable>();
+							check?.Interact();
+						}
+						break;
+					case PlayerState.Battle:
+						// 배틀 대화 넘기기
+						break;
+					case PlayerState.UI:
+						// UI
+						break;
+					case PlayerState.Menu:
+						// 메뉴 선택
+						break;
+				}
+			}
+			yield return null;
+		}
 	}
 }
