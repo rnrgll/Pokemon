@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
+	[SerializeField] public Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
 	[SerializeField] Vector3 currentPos;
 	[SerializeField] Scene currenScene;
-	Coroutine moveCoroutine;
+	public Coroutine moveCoroutine;
 	WaitForSeconds moveDelay;
 
 	[Tooltip("이동 거리 (기본 2)")]
@@ -18,16 +19,20 @@ public class Player : MonoBehaviour
 	[SerializeField] float moveDuration = 0.3f;
 	[SerializeField] bool isMoving = false;
 	bool isIdle = false;
+	[SerializeField] public bool isSceneChange;
 
 	Animator anim;
 
 	void Awake()
 	{
+		DontDestroyOnLoad(gameObject);
 		anim = GetComponent<Animator>();
 	}
 
 	void Update()
 	{
+		if (isSceneChange)
+			return;
 		// 방향키 떼면 Idle 설정하고 이동이 끝나면 isIdle에 따라 바꾸기
 		if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
@@ -35,7 +40,7 @@ public class Player : MonoBehaviour
 			Input.GetKeyUp(KeyCode.RightArrow))
 		{
 			isIdle = true;
-			moveCoroutine = null;
+			//moveCoroutine = null;
 		}
 
 		if (!isMoving)
@@ -50,19 +55,20 @@ public class Player : MonoBehaviour
 			if (inputDir != Vector2.zero)
 			{
 				// 방향 변경
-				anim.SetFloat("x", inputDir.x);
-				anim.SetFloat("y", inputDir.y);
+				AnimChange(inputDir);
 
 				// 레이캐스트
+				Debug.DrawRay((Vector2)transform.position + (inputDir * 1.1f), inputDir, Color.green);
 				RaycastHit2D rayHit = Physics2D.Raycast((Vector2)transform.position + (inputDir * 1.1f), inputDir, 1f);
 				if (rayHit)
 				{
-					if (rayHit.transform.gameObject.tag == "Wall")
+					switch (rayHit.transform.gameObject.tag)
 					{
-						isMoving = false;
-						anim.SetBool("isMoving", false);
-						moveCoroutine = null;
-						return;
+						case "Wall":
+						case "NPC":
+							Debug.Log($"플레이어 앞 : {rayHit.transform.gameObject.name}");
+							StopMoving();
+							return;
 					}
 				}
 
@@ -80,6 +86,17 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	public void AnimChange()
+	{
+		anim.SetFloat("x", currentDirection.x);
+		anim.SetFloat("y", currentDirection.y);
+	}
+	public void AnimChange(Vector2 direction)
+	{
+		anim.SetFloat("x", direction.x);
+		anim.SetFloat("y", direction.y);
+	}
+
 	IEnumerator Move(Vector2 direction)
 	{
 		// 1 이동 = x or y 2 변화
@@ -92,7 +109,7 @@ public class Player : MonoBehaviour
 		Vector2 endPos = startPos + (direction * moveValue);
 
 		float time = 0;
-		while (time < moveDuration)
+		while (time < moveDuration && isMoving)
 		{
 			time += Time.deltaTime;
 			float percent = time / moveDuration;
@@ -107,5 +124,23 @@ public class Player : MonoBehaviour
 			anim.SetBool("isMoving", false);
 			isIdle = false;
 		}
+	}
+
+	public void StopMoving()
+	{
+		isMoving = false;
+		anim.SetBool("isMoving", false);
+		moveCoroutine = null;
+	}
+
+	void OnDrawGizmos()
+	{
+		// 플레이어 이동방향 기즈모
+		Gizmos.color = Color.magenta;
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
+		
 	}
 }

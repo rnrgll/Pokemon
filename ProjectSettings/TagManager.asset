@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Interact
+  - NPC
   layers:
   - Default
   - TransparentFX
