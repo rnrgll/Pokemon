@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Interact
   - NPC
+  - Slope
   layers:
   - Default
   - TransparentFX
