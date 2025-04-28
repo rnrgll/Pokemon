@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8274744671361420350}
   m_Layer: 0
   m_Name: 9BigTrees
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,10 @@ PrefabInstance:
     - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_Name
       value: BigTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -114,6 +118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigTree
       objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
@@ -175,6 +183,10 @@ PrefabInstance:
     - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_Name
       value: BigTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -238,6 +250,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigTree
       objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
@@ -299,6 +315,10 @@ PrefabInstance:
     - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_Name
       value: BigTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -362,6 +382,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigTree
       objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -423,6 +447,10 @@ PrefabInstance:
     - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_Name
       value: BigTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -486,6 +514,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigTree
       objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -547,6 +579,10 @@ PrefabInstance:
     - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_Name
       value: BigTree
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531286506303548855, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
       propertyPath: m_LocalPosition.x

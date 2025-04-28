@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 	[SerializeField] int moveValue = 2;
 	[Tooltip("이동 시간 (기본 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
-	bool isMoving = false;
+	[SerializeField] bool isMoving = false;
 	bool isIdle = false;
 
 	Animator anim;
@@ -52,6 +52,19 @@ public class Player : MonoBehaviour
 				// 방향 변경
 				anim.SetFloat("x", inputDir.x);
 				anim.SetFloat("y", inputDir.y);
+
+				// 레이캐스트
+				RaycastHit2D rayHit = Physics2D.Raycast((Vector2)transform.position + (inputDir * 1.1f), inputDir, 1f);
+				if (rayHit)
+				{
+					if (rayHit.transform.gameObject.tag == "Wall")
+					{
+						isMoving = false;
+						anim.SetBool("isMoving", false);
+						moveCoroutine = null;
+						return;
+					}
+				}
 
 				// 방향이 같으면 이동 시작
 				if (inputDir == currentDirection)
