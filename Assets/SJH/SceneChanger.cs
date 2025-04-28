@@ -21,7 +21,7 @@ public class SceneChanger : MonoBehaviour
 		{
 			if (portalType == Define.PortalType.Stair && !isChange)
 			{
-				// ÇÃ·¹ÀÌ¾î ÀÌµ¿
+				// í”Œë ˆì´ì–´ ì´ë™
 				//SceneChange(gameObject.name, collision.transform.gameObject);
 				sceneCoroutine = StartCoroutine(Change(gameObject.name, collision.gameObject));
 			}
@@ -40,7 +40,7 @@ public class SceneChanger : MonoBehaviour
 			{
 				Player player = collision.gameObject.GetComponent<Player>();
 
-				// ¹æÇâÅ° ÀÔ·Â Á÷Á¢ Ã¼Å©
+				// ë°©í–¥í‚¤ ì…ë ¥ ì§ì ‘ ì²´í¬
 				Vector2 inputDir = Vector2.zero;
 				if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
 				else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
@@ -49,7 +49,7 @@ public class SceneChanger : MonoBehaviour
 
 				if (inputDir == keyDirection)
 				{
-					// ÇÃ·¹ÀÌ¾î ÀÌµ¿
+					// í”Œë ˆì´ì–´ ì´ë™
 					//SceneChange(gameObject.name, player.gameObject);
 					sceneCoroutine = StartCoroutine(Change(gameObject.name, player.gameObject));
 				}
@@ -66,7 +66,7 @@ public class SceneChanger : MonoBehaviour
 	{
 		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 		asyncLoad.allowSceneActivation = false;
-		// ÀÜ·ùÀÌµ¿ Áö¿ì±â
+		// ì”ë¥˜ì´ë™ ì§€ìš°ê¸°
 		Player pc = player.GetComponent<Player>();
 		isChange = true;
 		pc.state = Define.PlayerState.SceneChange;
@@ -84,13 +84,13 @@ public class SceneChanger : MonoBehaviour
 				yield return new WaitForSeconds(0.1f);
 				asyncLoad.allowSceneActivation = true;
 
-				// »óÅÂ ÃÊ±âÈ­
+				// ìƒíƒœ ì´ˆê¸°í™”
 				isChange = false;
 				pc.state = Define.PlayerState.Field;
 				sceneCoroutine = null;
 				Debug.Log("state init");
 
-				break;  // ·çÇÁ Å»Ãâ
+				break;  // ë£¨í”„ íƒˆì¶œ
 			}
 			yield return null;
 		}

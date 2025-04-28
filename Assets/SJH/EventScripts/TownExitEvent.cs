@@ -6,18 +6,18 @@ public class TownExitEvent : PokeEvent
 {
 	public override void OnPokeEvent(Collider2D player)
 	{
-		//@ Á¶°Ç
-		// Æ÷ÄÏ¸óÀ» µé°í ÀÖÁö ¾ÊÀº »óÅÂ¿¡¼­ ¸¶À»¹ÛÀ¸·Î ³ª°¥¶§
+		//@ ì¡°ê±´
+		// í¬ì¼“ëª¬ì„ ë“¤ê³  ìžˆì§€ ì•Šì€ ìƒíƒœì—ì„œ ë§ˆì„ë°–ìœ¼ë¡œ ë‚˜ê°ˆë•Œ
 
-		//@ ¿¬°ü ¿£ÇÇ½Ã
+		//@ ì—°ê´€ ì—”í”¼ì‹œ
 		// NPC2
 
-		//@ Èå¸§
-		// ÇÃ·¹ÀÌ¾î »óÅÂ ¹Ù²Ù±â UI
-		// UI È°¼ºÈ­
-		// ´ë»ç
-		// ¿£ÇÇ½Ã°¡ ÇÃ·¹ÀÌ¾î ¾Õ±îÁö ÀÌµ¿
-		// ´ë»ç
-		// ÇÃ·¹ÀÌ¾î¿Í ÇÔ²² ¿£ÇÇ½Ã ¿ø·¡ À§Ä¡·Î ÀÌµ¿
+		//@ íë¦„
+		// í”Œë ˆì´ì–´ ìƒíƒœ ë°”ê¾¸ê¸° UI
+		// UI í™œì„±í™”
+		// ëŒ€ì‚¬
+		// ì—”í”¼ì‹œê°€ í”Œë ˆì´ì–´ ì•žê¹Œì§€ ì´ë™
+		// ëŒ€ì‚¬
+		// í”Œë ˆì´ì–´ì™€ í•¨ê»˜ ì—”í”¼ì‹œ ì›ëž˜ ìœ„ì¹˜ë¡œ ì´ë™
 	}
 }
