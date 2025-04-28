@@ -1,83 +1,125 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Define;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] Vector2 currentDirection = Vector2.down; // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½
-	[SerializeField] Vector3 currentPos;
-	[SerializeField] Scene currenScene;
-	Coroutine moveCoroutine;
-	WaitForSeconds moveDelay;
+	[SerializeField] public Define.PlayerState state;
+	[SerializeField] public Vector2 currentDirection = Vector2.down; // Ã³À½ ¹æÇâÀº ¾Æ·¡
+	public Coroutine moveCoroutine;
+	public Coroutine zInput;
 
-	[Tooltip("ï¿½Ìµï¿½ ï¿½Å¸ï¿½ (ï¿½âº» 2)")]
+	[Tooltip("ÀÌµ¿ °Å¸® (±âº» 2)")]
 	[SerializeField] int moveValue = 2;
-	[Tooltip("ï¿½Ìµï¿½ ï¿½Ã°ï¿½ (ï¿½âº» 0.3)")]
+	[Tooltip("ÀÌµ¿ ½Ã°£ (±âº» 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
-	bool isMoving = false;
+	[SerializeField] bool isMoving = false;
 	bool isIdle = false;
+	[SerializeField] public bool isSceneChange;
 
 	Animator anim;
 
 	void Awake()
 	{
+		Debug.Log("PlayerAwake");
+		DontDestroyOnLoad(gameObject);
 		anim = GetComponent<Animator>();
+		zInput = StartCoroutine(ZInput());
+		Debug.Log(zInput);
 	}
 
 	void Update()
 	{
-		//ui manager êµ¬í˜„ ì¤‘ - ì½”ë“œ ìž„ì‹œ ì¶”ê°€
-		if (UIManager.Instance.IsAnyUIOpen) return;
-		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+		if (state == Define.PlayerState.SceneChange) // ¾ÀÀÌµ¿Áß
+			return;
+
+		switch (state)
 		{
-			UIManager.Instance.ShowLinkedUI<UI_Menu>("UI_Menu");
+			case Define.PlayerState.Field:          // ÇÊµå
+				MoveState();
+				break;
+			case Define.PlayerState.Battle:			// ¹èÆ²Áß
+				break;
+			case Define.PlayerState.UI:				// UIÈ°¼ºÈ­Áß
+				break;
+			case Define.PlayerState.Menu:			// Menu È°¼ºÈ­Áß
+				break;
 		}
-		
-		// ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½ï¿½ï¿½ Idle ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ isIdleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
+	}
+
+	public void AnimChange()
+	{
+		anim.SetFloat("x", currentDirection.x);
+		anim.SetFloat("y", currentDirection.y);
+	}
+	public void AnimChange(Vector2 direction)
+	{
+		anim.SetFloat("x", direction.x);
+		anim.SetFloat("y", direction.y);
+	}
+
+	void MoveState()
+	{
+		// Idle ¼³Á¤
 		if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
 			Input.GetKeyUp(KeyCode.LeftArrow) ||
 			Input.GetKeyUp(KeyCode.RightArrow))
 		{
 			isIdle = true;
-			moveCoroutine = null;
 		}
 
-		if (!isMoving)
+		if (isMoving)
+			return;
+
+		Vector2 inputDir = Vector2.zero;
+		if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
+		else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
+		else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
+		else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
+
+		if (inputDir == Vector2.zero)
+			return;
+
+		currentDirection = inputDir;
+
+		// ¹æÇâ º¯°æ
+		AnimChange(inputDir);
+
+		// ·¹ÀÌÄ³½ºÆ® º® Ã¼Å©
+		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
+		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
+		if (hit)
 		{
-			Vector2 inputDir = Vector2.zero;
-
-			if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
-			else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
-			else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
-			else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
-
-			if (inputDir != Vector2.zero)
+			switch (hit.transform.gameObject.tag)
 			{
-				// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-				anim.SetFloat("x", inputDir.x);
-				anim.SetFloat("y", inputDir.y);
-
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
-				if (inputDir == currentDirection)
-				{
-					moveCoroutine = StartCoroutine(Move(inputDir));
-				}
-				// ï¿½ï¿½ï¿½â¸¸ ï¿½Ù²Ù°ï¿½ ï¿½ï¿½ï¿½
-				else
-				{
-					currentDirection = inputDir;
-				}
+				case "Wall":
+				case "NPC":
+					StopMoving();
+					return;
 			}
+		}
+
+		// °°Àº ¹æÇâÀÌ¸é ÀÌµ¿ ½ÃÀÛ
+		if (inputDir == currentDirection)
+		{
+			moveCoroutine = StartCoroutine(Move(inputDir));
+		}
+		// ¹æÇâ¸¸ ÀüÈ¯
+		else
+		{
+			currentDirection = inputDir;
 		}
 	}
 
 	IEnumerator Move(Vector2 direction)
 	{
-		// 1 ï¿½Ìµï¿½ = x or y 2 ï¿½ï¿½È­
-		// ï¿½Ù·ï¿½ 2ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê°ï¿½ ï¿½Ìµï¿½ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¼ï¿½ ï¿½Ìµï¿½
+		// 1 ÀÌµ¿ = x or y 2 º¯È­
+		// ¹Ù·Î 2¸¦ ÀÌµ¿ÇÏÁö¾Ê°í ÀÌµ¿½Ã°£¿¡ °ÉÃÄ¼­ ÀÌµ¿
 		isMoving = true;
 		isIdle = false;
 		anim.SetBool("isMoving", isMoving);
@@ -86,7 +128,7 @@ public class Player : MonoBehaviour
 		Vector2 endPos = startPos + (direction * moveValue);
 
 		float time = 0;
-		while (time < moveDuration)
+		while (time < moveDuration && isMoving)
 		{
 			time += Time.deltaTime;
 			float percent = time / moveDuration;
@@ -100,6 +142,56 @@ public class Player : MonoBehaviour
 		{
 			anim.SetBool("isMoving", false);
 			isIdle = false;
+		}
+	}
+
+	public void StopMoving()
+	{
+		isMoving = false;
+		anim.SetBool("isMoving", false);
+		moveCoroutine = null;
+	}
+
+	//void OnDrawGizmos()
+	//{
+	//	// ÇÃ·¹ÀÌ¾î ÀÌµ¿¹æÇâ ±âÁî¸ð
+	//	Gizmos.color = Color.magenta;
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
+	//}
+
+	IEnumerator ZInput()
+	{
+		while (true)
+		{
+			if (Input.GetKeyDown(KeyCode.Z))
+			{
+				switch (state)
+				{
+					case PlayerState.Field:
+						// ÇÊµå »óÈ£ÀÛ¿ë
+						Debug.DrawRay((Vector2)transform.position + currentDirection * 1.1f, currentDirection, Color.red);
+						RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
+						if (hit)
+						{
+							var check = hit.transform.GetComponent<IInteractable>();
+							check?.Interact();
+						}
+						break;
+					case PlayerState.Battle:
+						// ¹èÆ² ´ëÈ­ ³Ñ±â±â
+						break;
+					case PlayerState.UI:
+						// UI
+						break;
+					case PlayerState.Menu:
+						// ¸Þ´º ¼±ÅÃ
+						break;
+				}
+			}
+			yield return null;
 		}
 	}
 }
