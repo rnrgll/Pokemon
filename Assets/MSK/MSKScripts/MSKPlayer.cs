@@ -21,6 +21,9 @@ public class MSKPlayer : MonoBehaviour
 
 	Animator anim;
 
+	public event Action OnEncountered;
+
+
     void Awake()
 	{
 		anim = GetComponent<Animator>();
