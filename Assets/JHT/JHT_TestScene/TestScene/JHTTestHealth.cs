@@ -7,7 +7,6 @@ public class JHTTestHealth : MonoBehaviour
     private int maxHp = 10;
     public int curHp;
     public int expPoints = 10;
-
     public bool isDead;
 
     JHTTestExp exp;

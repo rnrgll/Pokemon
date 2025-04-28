@@ -73,9 +73,6 @@ PrefabInstance:
       addedObject: {fileID: -4921032457818863963}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5782335247401943374}
-    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5493569055312173983}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
       insertIndex: -1
@@ -107,25 +104,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5782335247401943374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8151674170594283585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260ba3d31b50817449cf89c443f75b98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curExp: 0
-  levelPrefabs:
-  - {fileID: 8151674170594283585}
-  - {fileID: 1273373693652197277, guid: 8b95c062cafe59e4aa26f786d8ca15ae, type: 3}
-  OnChangePrefab:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5493569055312173983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939acd9c09e0b0144a4b384d38736ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMyPoke: 0
+  isMyPoke: 1
   damage: 3
   level: 2
   skill: []

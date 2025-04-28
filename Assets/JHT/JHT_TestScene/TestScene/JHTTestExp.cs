@@ -10,7 +10,6 @@ public class JHTTestExp : MonoBehaviour
     public GameObject[] levelPrefabs;
     private GameObject currentPrefab;
 
-    public UnityEvent<int> OnChangePrefab; 
 
     JHTTestPokeClass poke;
     private void Awake()
@@ -18,18 +17,10 @@ public class JHTTestExp : MonoBehaviour
          poke = GetComponent<JHTTestPokeClass>();
     }
 
-    private void OnEnable()
-    {
-        OnChangePrefab.AddListener(SpawnLevelPrefab);
-    }
-    private void OnDisable()
-    {
-        OnChangePrefab.RemoveListener(SpawnLevelPrefab);
-    }
 
     private void Start()
     {
-        SpawnLevelPrefab(poke.level);
+        //SpawnLevelPrefab(poke.level);
         curExp = startExp;
     }
 
@@ -48,24 +39,23 @@ public class JHTTestExp : MonoBehaviour
                 poke.level = levelPrefabs.Length;
             }
 
-            OnChangePrefab.Invoke(poke.level);
         }
     }
 
 
-    public void SpawnLevelPrefab(int level)
-    {
-        if (level - 1 < 0 || level - 1 >= levelPrefabs.Length)
-        {
-            Debug.LogWarning("·¹º§ ÇÁ¸®ÆÕ ÀÎµ¦½º°¡ ¹üÀ§¸¦ ¹þ¾î³µ½À´Ï´Ù.");
-            return;
-        }
-
-        if (currentPrefab != null)
-        {
-            Destroy(currentPrefab);
-        }
-
-        currentPrefab = Instantiate(levelPrefabs[level-1], transform.position, Quaternion.identity);
-    }
+    //public void SpawnLevelPrefab(int level)
+    //{
+    //    if (level - 1 < 0 || level - 1 >= levelPrefabs.Length)
+    //    {
+    //        Debug.LogWarning("·¹º§ ÇÁ¸®ÆÕ ÀÎµ¦½º°¡ ¹üÀ§¸¦ ¹þ¾î³µ½À´Ï´Ù.");
+    //        return;
+    //    }
+    //
+    //    if (currentPrefab != null)
+    //    {
+    //        Destroy(currentPrefab);
+    //    }
+    //
+    //    currentPrefab = Instantiate(levelPrefabs[level-1], transform.position, Quaternion.identity);
+    //}
 }

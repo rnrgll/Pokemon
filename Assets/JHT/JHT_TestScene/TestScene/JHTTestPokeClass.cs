@@ -10,6 +10,14 @@ public class JHTTestPokeClass : MonoBehaviour
 
     [SerializeField] JHTSkill[] skill;
     JHTTestHealth health;
+    JHTTestExp exp;
+    private void Awake()
+    {
+        if (exp == null && isMyPoke == true)
+        {
+            gameObject.AddComponent<JHTTestExp>();
+        }
+    }
     private void Start()
     {
         health = GetComponent<JHTTestHealth>();

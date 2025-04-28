@@ -27,6 +27,7 @@ public class JHTFightScene : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (testExp == null) return;
             testExp.GetExp(5);
         }
     }
