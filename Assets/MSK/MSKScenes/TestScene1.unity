@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogBox: {fileID: 202765826}
   dialogText: {fileID: 1933081706}
-  letterPerSec: 1
+  letterPerSec: 45
 --- !u!1 &338894601
 GameObject:
   m_ObjectHideFlags: 0
@@ -2763,6 +2763,7 @@ GameObject:
   - component: {fileID: 1247747223}
   - component: {fileID: 1247747222}
   - component: {fileID: 1247747224}
+  - component: {fileID: 1247747225}
   m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
@@ -2831,7 +2832,7 @@ Transform:
   m_GameObject: {fileID: 1247747221}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.729786, y: 2.1337883, z: 0.11760476}
+  m_LocalPosition: {x: 20, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2882,6 +2883,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
+--- !u!114 &1247747225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247747221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - Books
 --- !u!1 &1272030143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3061,6 +3077,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1374951569}
   - component: {fileID: 1374951568}
+  - component: {fileID: 1374951570}
   m_Layer: 7
   m_Name: GameObject (2)
   m_TagString: Untagged
@@ -3129,12 +3146,27 @@ Transform:
   m_GameObject: {fileID: 1374951567}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.729787, y: 2.1337883, z: 0.11760476}
+  m_LocalPosition: {x: 16, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 665379763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1374951570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374951567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - Your Radio
 --- !u!1 &1383461317
 GameObject:
   m_ObjectHideFlags: 0
@@ -3289,6 +3321,7 @@ GameObject:
   - component: {fileID: 1613129582}
   - component: {fileID: 1613129581}
   - component: {fileID: 1613129583}
+  - component: {fileID: 1613129584}
   m_Layer: 7
   m_Name: Bed
   m_TagString: Untagged
@@ -3408,6 +3441,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
+--- !u!114 &1613129584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613129580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - Bed...
 --- !u!1 &1627339473
 GameObject:
   m_ObjectHideFlags: 0
@@ -3418,6 +3466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1627339475}
   - component: {fileID: 1627339474}
+  - component: {fileID: 1627339476}
   m_Layer: 7
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -3486,12 +3535,27 @@ Transform:
   m_GameObject: {fileID: 1627339473}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.729786, y: 2.1337883, z: 0.11760476}
+  m_LocalPosition: {x: 18, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 665379763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1627339476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627339473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - TV...
 --- !u!1 &1931163923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3502,6 +3566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1931163925}
   - component: {fileID: 1931163924}
+  - component: {fileID: 1931163926}
   m_Layer: 7
   m_Name: GameObject (3)
   m_TagString: Untagged
@@ -3570,12 +3635,27 @@ Transform:
   m_GameObject: {fileID: 1931163923}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.729787, y: 2.1337883, z: 0.11760476}
+  m_LocalPosition: {x: 14, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 665379763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1931163926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931163923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - PC for coding
 --- !u!1 &1933081705
 GameObject:
   m_ObjectHideFlags: 0
