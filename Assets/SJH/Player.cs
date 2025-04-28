@@ -9,13 +9,13 @@ using static Define;
 public class Player : MonoBehaviour
 {
 	[SerializeField] public Define.PlayerState state;
-	[SerializeField] public Vector2 currentDirection = Vector2.down; // Ã³À½ ¹æÇâÀº ¾Æ·¡
+	[SerializeField] public Vector2 currentDirection = Vector2.down; // ì²˜ìŒ ë°©í–¥ì€ ì•„ë˜
 	public Coroutine moveCoroutine;
 	public Coroutine zInput;
 
-	[Tooltip("ÀÌµ¿ °Å¸® (±âº» 2)")]
+	[Tooltip("ì´ë™ ê±°ë¦¬ (ê¸°ë³¸ 2)")]
 	[SerializeField] int moveValue = 2;
-	[Tooltip("ÀÌµ¿ ½Ã°£ (±âº» 0.3)")]
+	[Tooltip("ì´ë™ ì‹œê°„ (ê¸°ë³¸ 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
 	[SerializeField] bool isMoving = false;
 	bool isIdle = false;
@@ -34,19 +34,19 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		if (state == Define.PlayerState.SceneChange) // ¾ÀÀÌµ¿Áß
+		if (state == Define.PlayerState.SceneChange) // ì”¬ì´ë™ì¤‘
 			return;
 
 		switch (state)
 		{
-			case Define.PlayerState.Field:          // ÇÊµå
+			case Define.PlayerState.Field:          // í•„ë“œ
 				MoveState();
 				break;
-			case Define.PlayerState.Battle:			// ¹èÆ²Áß
+			case Define.PlayerState.Battle:			// ë°°í‹€ì¤‘
 				break;
-			case Define.PlayerState.UI:				// UIÈ°¼ºÈ­Áß
+			case Define.PlayerState.UI:				// UIí™œì„±í™”ì¤‘
 				break;
-			case Define.PlayerState.Menu:			// Menu È°¼ºÈ­Áß
+			case Define.PlayerState.Menu:			// Menu í™œì„±í™”ì¤‘
 				break;
 		}
 	}
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
 
 	void MoveState()
 	{
-		// Idle ¼³Á¤
+		// Idle ì„¤ì •
 		if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
 			Input.GetKeyUp(KeyCode.LeftArrow) ||
@@ -87,10 +87,10 @@ public class Player : MonoBehaviour
 
 		currentDirection = inputDir;
 
-		// ¹æÇâ º¯°æ
+		// ë°©í–¥ ë³€ê²½
 		AnimChange(inputDir);
 
-		// ·¹ÀÌÄ³½ºÆ® º® Ã¼Å©
+		// ë ˆì´ìºìŠ¤íŠ¸ ë²½ ì²´í¬
 		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
 		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
 		if (hit)
@@ -104,12 +104,12 @@ public class Player : MonoBehaviour
 			}
 		}
 
-		// °°Àº ¹æÇâÀÌ¸é ÀÌµ¿ ½ÃÀÛ
+		// ê°™ì€ ë°©í–¥ì´ë©´ ì´ë™ ì‹œì‘
 		if (inputDir == currentDirection)
 		{
 			moveCoroutine = StartCoroutine(Move(inputDir));
 		}
-		// ¹æÇâ¸¸ ÀüÈ¯
+		// ë°©í–¥ë§Œ ì „í™˜
 		else
 		{
 			currentDirection = inputDir;
@@ -118,8 +118,8 @@ public class Player : MonoBehaviour
 
 	IEnumerator Move(Vector2 direction)
 	{
-		// 1 ÀÌµ¿ = x or y 2 º¯È­
-		// ¹Ù·Î 2¸¦ ÀÌµ¿ÇÏÁö¾Ê°í ÀÌµ¿½Ã°£¿¡ °ÉÃÄ¼­ ÀÌµ¿
+		// 1 ì´ë™ = x or y 2 ë³€í™”
+		// ë°”ë¡œ 2ë¥¼ ì´ë™í•˜ì§€ì•Šê³  ì´ë™ì‹œê°„ì— ê±¸ì³ì„œ ì´ë™
 		isMoving = true;
 		isIdle = false;
 		anim.SetBool("isMoving", isMoving);
@@ -154,7 +154,7 @@ public class Player : MonoBehaviour
 
 	//void OnDrawGizmos()
 	//{
-	//	// ÇÃ·¹ÀÌ¾î ÀÌµ¿¹æÇâ ±âÁî¸ğ
+	//	// í”Œë ˆì´ì–´ ì´ë™ë°©í–¥ ê¸°ì¦ˆëª¨
 	//	Gizmos.color = Color.magenta;
 	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
 	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
 				switch (state)
 				{
 					case PlayerState.Field:
-						// ÇÊµå »óÈ£ÀÛ¿ë
+						// í•„ë“œ ìƒí˜¸ì‘ìš©
 						Debug.DrawRay((Vector2)transform.position + currentDirection * 1.1f, currentDirection, Color.red);
 						RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
 						if (hit)
@@ -181,13 +181,13 @@ public class Player : MonoBehaviour
 						}
 						break;
 					case PlayerState.Battle:
-						// ¹èÆ² ´ëÈ­ ³Ñ±â±â
+						// ë°°í‹€ ëŒ€í™” ë„˜ê¸°ê¸°
 						break;
 					case PlayerState.UI:
 						// UI
 						break;
 					case PlayerState.Menu:
-						// ¸Ş´º ¼±ÅÃ
+						// ë©”ë‰´ ì„ íƒ
 						break;
 				}
 			}

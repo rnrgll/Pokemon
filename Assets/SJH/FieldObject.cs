@@ -8,7 +8,7 @@ public class FieldObject : MonoBehaviour, IInteractable
 
 	public void Interact()
 	{
-		// TODO : ÇÊµå ¿ÀºêÁ§Æ® »óÈ£ÀÛ¿ë UI È°¼ºÈ­
+		// TODO : í•„ë“œ ì˜¤ë¸Œì íŠ¸ ìƒí˜¸ì‘ìš© UI í™œì„±í™”
 		Debug.Log($"{gameObject.name} : {text}");
 	}
 }

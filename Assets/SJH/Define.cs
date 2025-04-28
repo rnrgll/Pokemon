@@ -6,26 +6,26 @@ public class Define
 {
 	public static Dictionary<string, string> sceneDic = new Dictionary<string, string>()
 	{
-		["ÁÖÀÎ°øÁı2Ãş"] = "PlayerHouse2F",
-		["ÁÖÀÎ°øÁı1Ãş"] = "PlayerHouse1F",
-		["¿¬µÎ¸¶À»"] = "NewBarkTown",
-		["¿¬±¸¼Ò"] = "ProfessorLab",
-		["29¹øµµ·Î"] = "Route29",
+		["ì£¼ì¸ê³µì§‘2ì¸µ"] = "PlayerHouse2F",
+		["ì£¼ì¸ê³µì§‘1ì¸µ"] = "PlayerHouse1F",
+		["ì—°ë‘ë§ˆì„"] = "NewBarkTown",
+		["ì—°êµ¬ì†Œ"] = "ProfessorLab",
+		["29ë²ˆë„ë¡œ"] = "Route29",
 
 	};
 
 	public enum PortalType
 	{
-		Stair,      // Æ®¸®°Å ¹æ½ÄÀ¸·Î ¾Àº¯°æ
-		Foothold    // Stay ÀÏ¶§ Æ¯Á¤ ¹æÇâÅ° ÀÔ·ÂÇÏ¸é ¾Àº¯°æ
+		Stair,      // íŠ¸ë¦¬ê±° ë°©ì‹ìœ¼ë¡œ ì”¬ë³€ê²½
+		Foothold    // Stay ì¼ë•Œ íŠ¹ì • ë°©í–¥í‚¤ ì…ë ¥í•˜ë©´ ì”¬ë³€ê²½
 	};
 
 	public enum PlayerState
 	{
-		Field,			// ÇÊµå
-		SceneChange,    // ¾À ÀÌµ¿Áß
-		Battle,			// ¹èÆ²Áß
-		UI,				// UI È°¼ºÈ­Áß
-		Menu,			// Menu È°¼ºÈ­Áß
+		Field,			// í•„ë“œ
+		SceneChange,    // ì”¬ ì´ë™ì¤‘
+		Battle,			// ë°°í‹€ì¤‘
+		UI,				// UI í™œì„±í™”ì¤‘
+		Menu,			// Menu í™œì„±í™”ì¤‘
 	};
 }
