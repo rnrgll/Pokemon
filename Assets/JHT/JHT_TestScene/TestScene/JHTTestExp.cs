@@ -27,7 +27,7 @@ public class JHTTestExp : MonoBehaviour
     public void GetExp(int amount)
     {
         curExp += amount;
-        Debug.Log($"ÇöÀç °æÇèÄ¡´Â : {curExp} ÀÔ´Ï´Ù");
+        Debug.Log($"í˜„ì¬ ê²½í—˜ì¹˜ëŠ” : {curExp} ì…ë‹ˆë‹¤");
         if (curExp > JHTGameManager.Instance.LevelUpPoint1)
         {
             curExp = 0;
@@ -47,7 +47,7 @@ public class JHTTestExp : MonoBehaviour
     //{
     //    if (level - 1 < 0 || level - 1 >= levelPrefabs.Length)
     //    {
-    //        Debug.LogWarning("·¹º§ ÇÁ¸®ÆÕ ÀÎµ¦½º°¡ ¹üÀ§¸¦ ¹ş¾î³µ½À´Ï´Ù.");
+    //        Debug.LogWarning("ë ˆë²¨ í”„ë¦¬íŒ¹ ì¸ë±ìŠ¤ê°€ ë²”ìœ„ë¥¼ ë²—ì–´ë‚¬ìŠµë‹ˆë‹¤.");
     //        return;
     //    }
     //
