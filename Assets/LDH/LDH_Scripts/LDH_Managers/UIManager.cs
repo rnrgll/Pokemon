@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
@@ -50,7 +50,7 @@ public class UIManager : Singleton<UIManager>
     //캔버스 sorting order 셋팅
     public void SetCanvas(GameObject uiGameObject, bool isPopup = false)
     {
-        Canvas canvas = uiGameObject.GetOrAddComponent<Canvas>();
+        Canvas canvas = uiGameObject.GetComponent<Canvas>();
         
         //렌더 - 오버레이
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -102,7 +102,7 @@ public class UIManager : Singleton<UIManager>
             return null;
         }
 
-        T popUp = Instantiate(prefab,RootUI.transform).GetOrAddComponent<T>();
+        T popUp = Instantiate(prefab,RootUI.transform).GetComponent<T>();
         _popUpStack.Push(popUp);
 
         
@@ -155,7 +155,7 @@ public class UIManager : Singleton<UIManager>
         if (_linkList.Count > 0)
             _linkList[_linkList.Count-1].Close(); // 마지막 Linked UI(현재 보이는 UI)를 비활성화
 
-        T linked = Instantiate(prefab, RootUI.transform).GetOrAddComponent<T>();
+        T linked = Instantiate(prefab, RootUI.transform).GetComponent<T>();
         linked.transform.SetAsLastSibling();
         _linkList.Add(linked); // 리스트에 추가
         
