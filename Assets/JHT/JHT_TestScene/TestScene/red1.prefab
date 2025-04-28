@@ -120,6 +120,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curExp: 0
+  levelPrefabs:
+  - {fileID: 4957037917721764951}
+  - {fileID: 8151674170594283585, guid: 9095f06fc7fa53f4994f38fe2a4501ba, type: 3}
+  - {fileID: 1273373693652197277, guid: 8b95c062cafe59e4aa26f786d8ca15ae, type: 3}
+  OnChangePrefab:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-6209824001087769177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curHp: 0
   expPoints: 10
+  isDead: 0
 --- !u!114 &8420125769929320531
 MonoBehaviour:
   m_ObjectHideFlags: 0
