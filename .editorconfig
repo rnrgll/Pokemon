@@ -8,7 +8,7 @@ root = true
 
 # 들여쓰기 및 간격
 indent_size = 4
-indent_style = space
+indent_style = tab
 tab_width = 4
 
 # 새 줄 기본 설정
@@ -29,7 +29,7 @@ dotnet_search_reference_assemblies = true
 
 # Using 구성
 dotnet_separate_import_directive_groups = false
-dotnet_sort_system_directives_first = true
+dotnet_sort_system_directives_first = false
 file_header_template = unset
 
 # this. 및 Me. 기본 설정
