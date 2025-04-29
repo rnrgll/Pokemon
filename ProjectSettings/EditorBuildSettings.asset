@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/PlayerHouse2F.unity
+    guid: 5f33ad3f969a6304b95201f9267d274a
+  - enabled: 1
+    path: Assets/Scenes/PlayerHouse1F.unity
+    guid: 172054d75afb2da4bb6766199cb380fe
+  - enabled: 1
+    path: Assets/Scenes/NewBarkTown.unity
+    guid: f2147b5d92063044ea94d20d99b24b02
+  - enabled: 1
+    path: Assets/Scenes/ProfessorLab.unity
+    guid: fdb2e3ac7269f8d4aac01f0d1f9d8958
   m_configObjects: {}

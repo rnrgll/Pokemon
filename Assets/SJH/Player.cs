@@ -1,76 +1,125 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Define;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] Vector2 currentDirection = Vector2.down; // Ã³À½ ¹æÇâÀº ¾Æ·¡
-	[SerializeField] Vector3 currentPos;
-	[SerializeField] Scene currenScene;
-	Coroutine moveCoroutine;
-	WaitForSeconds moveDelay;
+	[SerializeField] public Define.PlayerState state;
+	[SerializeField] public Vector2 currentDirection = Vector2.down; // ì²˜ìŒ ë°©í–¥ì€ ì•„ë˜
+	public Coroutine moveCoroutine;
+	public Coroutine zInput;
 
-	[Tooltip("ÀÌµ¿ °Å¸® (±âº» 2)")]
+	[Tooltip("ì´ë™ ê±°ë¦¬ (ê¸°ë³¸ 2)")]
 	[SerializeField] int moveValue = 2;
-	[Tooltip("ÀÌµ¿ ½Ã°£ (±âº» 0.3)")]
+	[Tooltip("ì´ë™ ì‹œê°„ (ê¸°ë³¸ 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
-	bool isMoving = false;
+	[SerializeField] bool isMoving = false;
 	bool isIdle = false;
+	[SerializeField] public bool isSceneChange;
 
 	Animator anim;
 
 	void Awake()
 	{
+		Debug.Log("PlayerAwake");
+		DontDestroyOnLoad(gameObject);
 		anim = GetComponent<Animator>();
+		zInput = StartCoroutine(ZInput());
+		Debug.Log(zInput);
 	}
 
 	void Update()
 	{
-		// ¹æÇâÅ° ¶¼¸é Idle ¼³Á¤ÇÏ°í ÀÌµ¿ÀÌ ³¡³ª¸é isIdle¿¡ µû¶ó ¹Ù²Ù±â
+		if (state == Define.PlayerState.SceneChange) // ì”¬ì´ë™ì¤‘
+			return;
+
+		switch (state)
+		{
+			case Define.PlayerState.Field:          // í•„ë“œ
+				MoveState();
+				break;
+			case Define.PlayerState.Battle:			// ë°°í‹€ì¤‘
+				break;
+			case Define.PlayerState.UI:				// UIí™œì„±í™”ì¤‘
+				break;
+			case Define.PlayerState.Menu:			// Menu í™œì„±í™”ì¤‘
+				break;
+		}
+	}
+
+	public void AnimChange()
+	{
+		anim.SetFloat("x", currentDirection.x);
+		anim.SetFloat("y", currentDirection.y);
+	}
+	public void AnimChange(Vector2 direction)
+	{
+		anim.SetFloat("x", direction.x);
+		anim.SetFloat("y", direction.y);
+	}
+
+	void MoveState()
+	{
+		// Idle ì„¤ì •
 		if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
 			Input.GetKeyUp(KeyCode.LeftArrow) ||
 			Input.GetKeyUp(KeyCode.RightArrow))
 		{
 			isIdle = true;
-			moveCoroutine = null;
 		}
 
-		if (!isMoving)
+		if (isMoving)
+			return;
+
+		Vector2 inputDir = Vector2.zero;
+		if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
+		else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
+		else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
+		else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
+
+		if (inputDir == Vector2.zero)
+			return;
+
+		currentDirection = inputDir;
+
+		// ë°©í–¥ ë³€ê²½
+		AnimChange(inputDir);
+
+		// ë ˆì´ìºìŠ¤íŠ¸ ë²½ ì²´í¬
+		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
+		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
+		if (hit)
 		{
-			Vector2 inputDir = Vector2.zero;
-
-			if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
-			else if (Input.GetKey(KeyCode.DownArrow)) inputDir = Vector2.down;
-			else if (Input.GetKey(KeyCode.LeftArrow)) inputDir = Vector2.left;
-			else if (Input.GetKey(KeyCode.RightArrow)) inputDir = Vector2.right;
-
-			if (inputDir != Vector2.zero)
+			switch (hit.transform.gameObject.tag)
 			{
-				// ¹æÇâ º¯°æ
-				anim.SetFloat("x", inputDir.x);
-				anim.SetFloat("y", inputDir.y);
-
-				// ¹æÇâÀÌ °°À¸¸é ÀÌµ¿ ½ÃÀÛ
-				if (inputDir == currentDirection)
-				{
-					moveCoroutine = StartCoroutine(Move(inputDir));
-				}
-				// ¹æÇâ¸¸ ¹Ù²Ù°í ´ë±â
-				else
-				{
-					currentDirection = inputDir;
-				}
+				case "Wall":
+				case "NPC":
+					StopMoving();
+					return;
 			}
+		}
+
+		// ê°™ì€ ë°©í–¥ì´ë©´ ì´ë™ ì‹œì‘
+		if (inputDir == currentDirection)
+		{
+			moveCoroutine = StartCoroutine(Move(inputDir));
+		}
+		// ë°©í–¥ë§Œ ì „í™˜
+		else
+		{
+			currentDirection = inputDir;
 		}
 	}
 
 	IEnumerator Move(Vector2 direction)
 	{
-		// 1 ÀÌµ¿ = x or y 2 º¯È­
-		// ¹Ù·Î 2¸¦ ÀÌµ¿ÇÏÁö¾Ê°í ÀÌµ¿½Ã°£¿¡ °ÉÃÄ¼­ ÀÌµ¿
+		// 1 ì´ë™ = x or y 2 ë³€í™”
+		// ë°”ë¡œ 2ë¥¼ ì´ë™í•˜ì§€ì•Šê³  ì´ë™ì‹œê°„ì— ê±¸ì³ì„œ ì´ë™
 		isMoving = true;
 		isIdle = false;
 		anim.SetBool("isMoving", isMoving);
@@ -79,7 +128,7 @@ public class Player : MonoBehaviour
 		Vector2 endPos = startPos + (direction * moveValue);
 
 		float time = 0;
-		while (time < moveDuration)
+		while (time < moveDuration && isMoving)
 		{
 			time += Time.deltaTime;
 			float percent = time / moveDuration;
@@ -93,6 +142,65 @@ public class Player : MonoBehaviour
 		{
 			anim.SetBool("isMoving", false);
 			isIdle = false;
+		}
+	}
+
+	public void StopMoving()
+	{
+		isMoving = false;
+		anim.SetBool("isMoving", false);
+		moveCoroutine = null;
+	}
+
+	//void OnDrawGizmos()
+	//{
+	//	// í”Œë ˆì´ì–´ ì´ë™ë°©í–¥ ê¸°ì¦ˆëª¨
+	//	Gizmos.color = Color.magenta;
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
+	//}
+
+	IEnumerator ZInput()
+	{
+		while (true)
+		{
+			if (Input.GetKeyDown(KeyCode.Z))
+			{
+				switch (state)
+				{
+					case PlayerState.Field:
+						// í•„ë“œ ìƒí˜¸ì‘ìš©
+						Debug.DrawRay((Vector2)transform.position + currentDirection * 1.1f, currentDirection, Color.red);
+						RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
+						if (hit)
+						{
+							var check = hit.transform.GetComponent<IInteractable>();
+							check?.Interact();
+						}
+						break;
+					case PlayerState.Battle:
+						// ë°°í‹€ ëŒ€í™” ë„˜ê¸°ê¸°
+						break;
+					case PlayerState.UI:
+						// UI
+						break;
+					case PlayerState.Menu:
+						// ë©”ë‰´ ì„ íƒ
+						break;
+				}
+			}
+			yield return null;
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Slope")
+		{
+			// TODO : ì–¸ë• ì í”„
+			
 		}
 	}
 }
