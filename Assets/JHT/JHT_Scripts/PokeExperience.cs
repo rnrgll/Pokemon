@@ -15,7 +15,11 @@ public class PokeExperience : MonoBehaviour
 
 	public void GetXp(float amount)
 	{
-		controller.exp += amount;
+		if (controller.gameObject.layer==10)
+		{
+			controller.exp += amount;
+		}
+		
 		//if(exp가 GameManager.Instance.경험치최대치)
 		//{
 		//	진화이벤트;

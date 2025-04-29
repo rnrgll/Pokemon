@@ -26,7 +26,7 @@ public class PokeHealth : MonoBehaviour
 
 	public void TakeDamage(int damage)
 	{
-		if (controller.gameObject.CompareTag("Enemy"))
+		if (controller.gameObject.layer == 11)
 		{
 			controller.curHp -= damage;
 		}

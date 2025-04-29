@@ -5,7 +5,7 @@ using UnityEngine;
 public class PokeController : MonoBehaviour
 {
 	public bool isMine;
-
+	public Sprite icon;
 	private int maxHp = 20;
 	public int curHp;
 	//public int Hp { get; set; }
@@ -26,7 +26,8 @@ public class PokeController : MonoBehaviour
 
 	public void Attack()
 	{
-		if (target.gameObject.CompareTag("Enemy"))
+		target.GetComponent<PokeHealth>();
+		if (target.gameObject.layer == 11)
 		{
 			target.TakeDamage(power);
 		}

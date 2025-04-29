@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class ClickTest : MonoBehaviour
 {
-	PokeHealth pokeHealth;
+	PokeController controller;
 
 	private void Start()
 	{
-		pokeHealth = FindObjectOfType<PokeHealth>();
+		controller = FindObjectOfType<PokeController>();
 	}
 
 	public void Click()
 	{
-		if (pokeHealth == null) pokeHealth = FindObjectOfType<PokeHealth>();
-		pokeHealth.TakeDamage(5);
+		if (controller == null) controller = FindObjectOfType<PokeController>();
+		if (controller != null)
+		{
+			controller.Attack();
+		}
+		else
+		{
+			Debug.Log("타겟이 없습니다");
+		}
 	}
 }

@@ -13,8 +13,12 @@ PrefabInstance:
       value: red1
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       propertyPath: m_LocalScale.x
@@ -148,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMine: 1
-  hp: 10
+  icon: {fileID: -601143604000936538, guid: ea4294fe6e549744c825356f923027bc, type: 3}
+  curHp: 0
   exp: 0
+  dieXp: 0
   power: 5
