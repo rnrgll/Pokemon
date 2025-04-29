@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
 			case Define.PlayerState.Menu:			// Menu 활성화중
 				break;
 			case Define.PlayerState.Dialog:         //	대화 활성화중
+				DialogManager.Instance.HandleUpdate();
 				break;
 		}
 	}
