@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 		{
 			shadow.SetActive(false);
 		}
-		
+    
 		Manager.UI.OnAllUIClosed += OnAllUIClosed;
 	}
 	
