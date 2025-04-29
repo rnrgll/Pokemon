@@ -3956,6 +3956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 994546001}
+  hud: {fileID: 994546002}
 --- !u!4 &1806035912
 Transform:
   m_ObjectHideFlags: 0
