@@ -46,7 +46,6 @@ public class UI_MenuButton : MonoBehaviour
 	public void RefreshState()
 	{
 		gameObject.SetActive(isOpened);
-		SetArrowActive(false);
 	}
 	
 	public void SetArrowActive(bool active)
