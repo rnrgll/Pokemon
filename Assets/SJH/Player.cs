@@ -207,6 +207,8 @@ public class Player : MonoBehaviour
 						// 배틀 대화 넘기기
 						break;
 					case PlayerState.UI:
+						// UI
+						break;
 					case PlayerState.Menu:
 						Manager.UI.OnUISelect();
 						break;
@@ -215,8 +217,15 @@ public class Player : MonoBehaviour
 			yield return null;
 		}
 	}
-
-
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Slope")
+		{
+			// TODO : 언덕 점프
+			
+		}
+	}
+	
 	#region UI
 	void OnAllUIClosed()
 	{
@@ -226,6 +235,4 @@ public class Player : MonoBehaviour
 	}
 	#endregion	
 
-
-	
 }

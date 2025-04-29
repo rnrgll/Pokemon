@@ -17,21 +17,6 @@ public class JHTFightScene : MonoBehaviour
     GameObject myPokeInstance;
     GameObject enemyPokeInstance;
 
-    JHTTestExp testExp;
-    private void Awake()
-    {
-        testExp = FindObjectOfType<JHTTestExp>();
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (testExp == null) return;
-            testExp.GetExp(5);
-        }
-    }
-
     public void SetPosition()
     {
         if (myPokeInstance == null) //pokemonStat.isMine && 

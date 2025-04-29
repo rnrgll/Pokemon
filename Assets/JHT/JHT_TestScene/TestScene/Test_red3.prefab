@@ -58,17 +58,29 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 89ea2beee5c1706459f683c8e2fda03a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4814124939929986014}
+      addedObject: {fileID: 1296953340852364541}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 89ea2beee5c1706459f683c8e2fda03a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -6344021220332474178}
+      addedObject: {fileID: -3451959038031761171}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 89ea2beee5c1706459f683c8e2fda03a, type: 3}
 --- !u!1 &1273373693652197277 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8653719598885068355, guid: 89ea2beee5c1706459f683c8e2fda03a, type: 3}
   m_PrefabInstance: {fileID: 1606695998538251808}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4814124939929986014
+--- !u!114 &1296953340852364541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273373693652197277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260ba3d31b50817449cf89c443f75b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3451959038031761171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,22 +92,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df65d1a4942ad144ab94ca5297b5ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHp: 10
-  expPoints: 10
-  isDead: 0
---- !u!114 &-6344021220332474178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1273373693652197277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 939acd9c09e0b0144a4b384d38736ab5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMyPoke: 1
-  damage: 10
-  level: 3
-  skill: []

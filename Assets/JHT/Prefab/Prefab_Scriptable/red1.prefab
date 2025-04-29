@@ -12,14 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: red1
       objectReference: {fileID: 0}
-    - target: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -81,13 +73,13 @@ PrefabInstance:
       addedObject: {fileID: 7628961913830780926}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -8302303976587360401}
+      addedObject: {fileID: 6963139834520747874}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -2570252771558844759}
+      addedObject: {fileID: 7847088448733210719}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8917123583129722779}
+      addedObject: {fileID: 6859507327044186899}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: ea4294fe6e549744c825356f923027bc, type: 3}
 --- !u!1 &4957037917721764951 stripped
 GameObject:
@@ -115,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-8302303976587360401
+--- !u!114 &6963139834520747874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,36 +116,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957037917721764951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6be2bf4509e7c5945ab34d553d7b6070, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bb191b5e600c1845941c05f9a5a182e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2570252771558844759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4957037917721764951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 358bef232d36c744aac09d687b04e135, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8917123583129722779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4957037917721764951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41ec94c0094b27f4db9058608e76e73f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMine: 1
+  exp: 1
+  startLevel: 1
   icon: {fileID: -601143604000936538, guid: ea4294fe6e549744c825356f923027bc, type: 3}
-  curHp: 0
-  exp: 0
-  dieXp: 0
-  power: 5
+  type: 0
+  controller: {fileID: 11400000, guid: c2188fcb37301f842adbd8df8dab4c32, type: 2}
+  skill:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &7847088448733210719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957037917721764951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eac3ed20725d03479be25a354cc33a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 10
+--- !u!114 &6859507327044186899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957037917721764951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d136574ee380c843af75924f0e24966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  experiencePoints: 10
