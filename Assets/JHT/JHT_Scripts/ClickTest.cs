@@ -16,7 +16,7 @@ public class ClickTest : MonoBehaviour
 		if (controller == null) controller = FindObjectOfType<PokeController>();
 		if (controller != null)
 		{
-			controller.Attack();
+			//controller.Attack();
 		}
 		else
 		{

@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 		{
 			shadow.SetActive(false);
 		}
-
+    
 		Manager.UI.OnAllUIClosed += OnAllUIClosed;
 	}
 	
@@ -79,6 +79,9 @@ public class Player : MonoBehaviour
 			case Define.PlayerState.UI:             // UI활성화중
 				break;
 			case Define.PlayerState.Menu:           // Menu 활성화중
+				break;
+			case Define.PlayerState.Dialog:         //	대화 활성화중
+				DialogManager.Instance.HandleUpdate();
 				break;
 		}
 	}
@@ -233,6 +236,9 @@ public class Player : MonoBehaviour
 						break;
 					case PlayerState.Menu:
 						Manager.UI.OnUISelect();
+						break;
+					case PlayerState.Dialog:
+						// 대화
 						break;
 				}
 			}
