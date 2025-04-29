@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PokeSkill : MonoBehaviour
+[CreateAssetMenu(fileName = "PokeSkills", menuName = "Skills/Skills")]
+public class PokeSkill : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public float damage;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public string skillName;
+
+	public Sprite icon;
+
+	
 }

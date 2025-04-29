@@ -2,36 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PokeController : MonoBehaviour
+
+public enum State
 {
-	public bool isMine;
-	public Sprite icon;
-	private int maxHp = 20;
-	public int curHp;
-	//public int Hp { get; set; }
+	None,
+	Poison,
+	Freeze,
+	Burn,
+	Sleep,
+	Paralysis
+}
 
-	public float exp;
-	//public float Exp { get { return exp; } }
-	public float dieXp;
-
-	public int power;
-	//public int Power { get; set; }
-
+public class PokeController : PokeClass
+{
 	PokeHealth target;
+	public State state;
 
-	public void Start()
-	{
-		curHp = maxHp;
-	}
+	public List<PokeSkill> skill;
+	Animator animator;
 
-	public void Attack()
+	private void Start()
 	{
-		target.GetComponent<PokeHealth>();
-		if (target.gameObject.layer == 11)
-		{
-			target.TakeDamage(power);
-		}
+		skill = new List<PokeSkill>();
+		animator = GetComponent<Animator>();
 	}
 
 
+	public void ActiveSkill(PokeSkill skill)
+	{
+		animator.Play(skill.skillName);
+		Debug.Log($"{skill.damage * this.power}만큼 데이지를 줍니다");
+	}
+
+
+	public void GetXp(float amount)
+	{
+		exp += amount;
+		
+	}
 }

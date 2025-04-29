@@ -6,22 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class MSKPlayer : MonoBehaviour
 {
-	[SerializeField] Vector2 currentDirection = Vector2.down; // Ã³À½ ¹æÇâÀº ¾Æ·¡
+	[SerializeField] Vector2 currentDirection = Vector2.down; // ì²˜ìŒ ë°©í–¥ì€ ì•„ë˜
 	[SerializeField] Vector3 currentPos;
 	[SerializeField] Scene currenScene;
 	Coroutine moveCoroutine;
 	WaitForSeconds moveDelay;
 
-	[Tooltip("ÀÌµ¿ °Å¸® (±âº» 2)")]
+	[Tooltip("ì´ë™ ê±°ë¦¬ (ê¸°ë³¸ 2)")]
 	[SerializeField] int moveValue = 2;
-	[Tooltip("ÀÌµ¿ ½Ã°£ (±âº» 0.3)")]
+	[Tooltip("ì´ë™ ì‹œê°„ (ê¸°ë³¸ 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
 	bool isMoving = false;
 	bool isIdle = false;
 
 	Animator anim;
 
-	public event Action OnEncountered;
+	//public event Action OnEncountered;
 
 
     void Awake()
@@ -35,7 +35,7 @@ public class MSKPlayer : MonoBehaviour
         {
             Interact();
         }
-        // ¹æÇâÅ° ¶¼¸é Idle ¼³Á¤ÇÏ°í ÀÌµ¿ÀÌ ³¡³ª¸é isIdle¿¡ µû¶ó ¹Ù²Ù±â
+        // ë°©í–¥í‚¤ ë–¼ë©´ Idle ì„¤ì •í•˜ê³  ì´ë™ì´ ëë‚˜ë©´ isIdleì— ë”°ë¼ ë°”ê¾¸ê¸°
         if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
 			Input.GetKeyUp(KeyCode.LeftArrow) ||
@@ -56,16 +56,16 @@ public class MSKPlayer : MonoBehaviour
 
 			if (inputDir != Vector2.zero)
 			{
-				// ¹æÇâ º¯°æ
+				// ë°©í–¥ ë³€ê²½
 				anim.SetFloat("x", inputDir.x);
 				anim.SetFloat("y", inputDir.y);
 
-				// ¹æÇâÀÌ °°À¸¸é ÀÌµ¿ ½ÃÀÛ
+				// ë°©í–¥ì´ ê°™ìœ¼ë©´ ì´ë™ ì‹œì‘
 				if (inputDir == currentDirection)
 				{
                         moveCoroutine = StartCoroutine(Move(inputDir));
                 }
-				// ¹æÇâ¸¸ ¹Ù²Ù°í ´ë±â
+				// ë°©í–¥ë§Œ ë°”ê¾¸ê³  ëŒ€ê¸°
 				else
 				{
 					currentDirection = inputDir;
@@ -88,8 +88,8 @@ public class MSKPlayer : MonoBehaviour
 
     IEnumerator Move(Vector2 direction)
 	{
-		// 1 ÀÌµ¿ = x or y 2 º¯È­
-		// ¹Ù·Î 2¸¦ ÀÌµ¿ÇÏÁö¾Ê°í ÀÌµ¿½Ã°£¿¡ °ÉÃÄ¼­ ÀÌµ¿
+		// 1 ì´ë™ = x or y 2 ë³€í™”
+		// ë°”ë¡œ 2ë¥¼ ì´ë™í•˜ì§€ì•Šê³  ì´ë™ì‹œê°„ì— ê±¸ì³ì„œ ì´ë™
 		isMoving = true;
 		isIdle = false;
 		anim.SetBool("isMoving", isMoving);
