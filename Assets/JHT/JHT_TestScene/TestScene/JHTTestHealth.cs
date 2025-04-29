@@ -1,37 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class JHTTestHealth : MonoBehaviour
 {
-    private int maxHp = 10;
-    public int curHp;
-    public int expPoints = 10;
-    public bool isDead;
+	JHTTestPokeClass pokeClass;
+	JHTTestExp pokeExp;
 
-    JHTTestExp exp;
 
-    void Start()
-    {
-        exp = GetComponent<JHTTestExp>();
-        curHp = maxHp;
-        
-    }
+	private void Awake()
+	{
+		pokeExp = GetComponent<JHTTestExp>();
+	}
 
-    public void TakeDamage(float damage)
-    {
-        curHp -= (int)damage;
+	public void TakeDamage(int amount)
+	{
+		if (pokeClass == null) pokeClass = GetComponent<JHTTestPokeClass>();
 
-        if (curHp <= 0)
-        {
-            isDead = true;
-            Die();
-        }
-    }
+		pokeClass.hp -= amount;
+		Debug.Log($"데미지 {amount}만큼 {gameObject.name}이 받았습니다 현재 체력 {pokeClass.hp}");
+		if (pokeClass.hp <= 0)
+		{
+			Die();
+		}
+	}
+	
+	public void Die()
+	{
+		//if (!pokeClass.isMyPoke)
+		//{
+		//	pokeExp.GetXP(10);
+		//}
 
-    public void Die()
-    {
-        Destroy(gameObject);
-        exp.GetExp(expPoints);
-    }
+		if (gameObject != null)
+		{
+			Destroy(gameObject);
+		}
+	}
+
+	public void DebugMessage()
+	{
+		Debug.Log(pokeClass.hp);
+	}
 }
