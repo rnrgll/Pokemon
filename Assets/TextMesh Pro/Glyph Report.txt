@@ -1,0 +1,12 @@
+Font: DungGeunMo  Style: ???
+Point Size: 34   SP/PD Ratio: 14.7%
+
+Characters included: 2444/2444
+Missing characters: 0
+Excluded characters: 0
+
+Characters missing from font file:
+----------------------------------------
+
+Characters excluded from packing:
+----------------------------------------
