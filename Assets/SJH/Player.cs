@@ -4,24 +4,36 @@ using static Define;
 
 public class Player : MonoBehaviour
 {
+	[Tooltip("플레이어 상태")]
 	[SerializeField] public Define.PlayerState state;
+	[Tooltip("플레이어 방향")]
 	[SerializeField] public Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
+	// 플레이어 이동 코루틴
 	public Coroutine moveCoroutine;
+	// 플레이어 점프 코루틴
 	Coroutine jumpCoroutine;
+	// 점프 시간
 	WaitForSeconds jumpTime;
+	// 플레이어 Z 키 코루틴
 	public Coroutine zInput;
 
 	[Tooltip("이동 거리 (기본 2)")]
 	[SerializeField] int moveValue = 2;
 	[Tooltip("이동 시간 (기본 0.3)")]
 	[SerializeField] float moveDuration = 0.3f;
+	[Tooltip("플레이어 이동상태")]
 	[SerializeField] bool isMoving = false;
+	// 플레이어 방향키입력 뗐을 때 트리거
 	bool isIdle = false;
+	[Tooltip("플레이어 씬 변경 상태")]
 	[SerializeField] public bool isSceneChange;
 
-	Animator anim;
-
+	// 플레이어 점프중 체크
 	bool isJump = false;
+	[Tooltip("플레이어 그림자 오브젝트")]
+	[SerializeField] GameObject shadow;
+
+	Animator anim;
 
 	void Awake()
 	{
@@ -33,6 +45,14 @@ public class Player : MonoBehaviour
 		// 점프 시간
 		jumpTime = new WaitForSeconds(0.03f);
 		Debug.Log(zInput);
+	}
+
+	void Start()
+	{
+		if (shadow != null)
+		{
+			shadow.SetActive(false);
+		}
 	}
 
 	void Update()
@@ -67,6 +87,8 @@ public class Player : MonoBehaviour
 
 	void MoveState()
 	{
+		if (isJump)
+			return;
 		// Idle 설정
 		if (Input.GetKeyUp(KeyCode.UpArrow) ||
 			Input.GetKeyUp(KeyCode.DownArrow) ||
@@ -221,62 +243,123 @@ public class Player : MonoBehaviour
 		float jumpHeight = 2;
 		float jumpDistance = 4;
 
-		Vector3 startPos = new Vector3(Mathf.Round(transform.position.x), (int)transform.position.y, 0); ;
+		// 그림자 활성화
+		if (shadow != null)
+		{
+			shadow.SetActive(true);
+			shadow.transform.position = Vector3.zero;
+		}
+
+		Vector3 startPos = new Vector3(
+			Mathf.Round(transform.position.x),
+			direction == Vector2.up ? Mathf.Round(transform.position.y - 1) : (int)transform.position.y,
+			0);
+
 		Vector3 endPos = startPos + ((Vector3)direction * jumpDistance);
 
-		Debug.Log($"시작 위치 : {startPos}");
-		Debug.Log($"도착 위치 : {endPos}");
+		//Debug.Log($"이전 위치 : {transform.position}");
+		//Debug.Log($"시작 위치 : {startPos}");
+		//Debug.Log($"도착 위치 : {endPos}");
 
 		// 네방향 구분
 		switch (direction)
 		{
 			case var v when v == Vector2.up:
-				break;
+				{
+					float yPos;
+					for (int i = 3; i >= 0; i--)
+					{
+						yPos = startPos.y + (0.16f * i);
+						transform.position = new Vector3(startPos.x, yPos, 0);
+						//Debug.Log($"{i} : {transform.position}");
+						yield return jumpTime;
+					}
+					for (int i = 1; i <= 7; i++)
+					{
+						yPos = startPos.y + (jumpDistance / 10 * i);
+						transform.position = new Vector3(startPos.x, yPos, 0);
+						//Debug.Log($"{i} : {transform.position}");
+						if (i == 5)
+							StopMoving();
+						yield return jumpTime;
+					}
+					break;
+				}
 			case var v when v == Vector2.down:
-				float yPos;
-				for (int i = 3; i >= 0; i--)
 				{
-					yPos = startPos.y + (0.16f * i);
-					transform.position = new Vector3(startPos.x, yPos, 0);
-					Debug.Log($"{i} : {transform.position}");
-					yield return jumpTime;
+					float yPos;
+					for (int i = 3; i >= 0; i--)
+					{
+						yPos = startPos.y + (0.16f * i);
+						transform.position = new Vector3(startPos.x, yPos, 0);
+						Debug.Log($"{i} : {transform.position}");
+						yield return jumpTime;
+					}
+					for (int i = 1; i <= 7; i++)
+					{
+						yPos = startPos.y - (jumpDistance / 10 * i);
+						transform.position = new Vector3(startPos.x, yPos, 0);
+						Debug.Log($"{i} : {transform.position}");
+						if (i == 5)
+							StopMoving();
+						yield return jumpTime;
+					}
+					break;
 				}
-				for (int i = 1; i <= 7; i++)
-				{
-					yPos = startPos.y - (jumpDistance / 10 * i);
-					transform.position = new Vector3(startPos.x, yPos, 0);
-					Debug.Log($"{i} : {transform.position}");
-					if (i == 5)
-						StopMoving();
-					yield return jumpTime;
-				}
-				break;
 			case var v when v == Vector2.left:
-				for (int i = 1; i <= 5; i++)
 				{
-					transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), startPos.y + (jumpHeight / 10 * i), 0);
-					yield return jumpTime;
-				}
-				for (int i = 6; i <= 10; i++)
-				{
-					transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5)), 0);
-					if (i == 8)
-						StopMoving();
-					yield return jumpTime;
+					float shadowYPos = startPos.y;
+					for (int i = 1; i <= 5; i++)
+					{
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(transform.position.x, shadowYPos);
+							Debug.Log($"그림자 위치 : {shadow.transform.localPosition}");
+						}
+						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), startPos.y + (jumpHeight / 10 * i), 0);
+						Debug.Log($"주인공 위치 : {transform.position}");
+						yield return jumpTime;
+					}
+					for (int i = 6; i <= 10; i++)
+					{
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(transform.position.x, shadowYPos);
+							Debug.Log($"그림자 위치 : {shadow.transform.localPosition}");
+						}
+						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5)), 0);
+						Debug.Log($"주인공 위치 : {transform.position}");
+						if (i == 8)
+							StopMoving();
+						yield return jumpTime;
+					}
 				}
 				break;
 			case var v when v == Vector2.right:
-				for (int i = 1; i <= 5; i++)
 				{
-					transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), startPos.y + (jumpHeight / 10 * i), 0);
-					yield return jumpTime;
-				}
-				for (int i = 6; i <= 10; i++)
-				{
-					transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5)), 0);
-					if (i == 8)
-						StopMoving();
-					yield return jumpTime;
+					float shadowStartY = startPos.y;
+					for (int i = 1; i <= 5; i++)
+					{
+						float playerYPos = startPos.y + (jumpHeight / 10 * i);
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(transform.position.x, shadowStartY, 0);
+						}
+						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
+						yield return jumpTime;
+					}
+					for (int i = 6; i <= 10; i++)
+					{
+						float playerYPos = (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5));
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(transform.position.x, shadowStartY, 0);
+						}
+						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
+						if (i == 8)
+							StopMoving();
+						yield return jumpTime;
+					}
 				}
 				break;
 		}
@@ -285,6 +368,11 @@ public class Player : MonoBehaviour
 		transform.position = endPos;
 		isJump = false;
 		jumpCoroutine = null;
+
+		// 그림자 비활성화
+		if (shadow != null)
+			shadow.SetActive(false);
+
 		yield return new WaitForSeconds(0.5f);
 	}
 }
