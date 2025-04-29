@@ -39,7 +39,6 @@ public class PokeHealth : MonoBehaviour
 
 	private void Die()
 	{
-		experience.GetXp(controller.dieXp);
 		Destroy(controller.gameObject);
 	}
 }

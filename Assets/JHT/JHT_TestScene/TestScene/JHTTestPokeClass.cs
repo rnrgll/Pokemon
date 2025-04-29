@@ -13,11 +13,10 @@ public class JHTTestPokeClass : ScriptableObject
     public int level;
 	//public int exp;
 	public int hp;
-
+	[SerializeField] GameObject prefab;
 	//public int prefabIndex;
 	//public GameObject[] levelPrefab;
 	//public GameObject curLevelPrefab = null;
-	
 
 	
 }
