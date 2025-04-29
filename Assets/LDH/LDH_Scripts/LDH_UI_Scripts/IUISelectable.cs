@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum JHTPokeType
+public interface IUISelectable
 {
-    불,
-    물,
-    바람,
-    번개
+	public void OnSelect();
 }

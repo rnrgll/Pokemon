@@ -9,8 +9,10 @@ public class CreatePlayer : MonoBehaviour
 	{
 		if (isCreate)
 			return;
+
 		var player = Instantiate(playerPrefab);
 		player.GetComponent<Player>().state = Define.PlayerState.Field;
+		// CreatePlayer 오브젝트 위치에 플레이어 생성
 		player.transform.position = gameObject.transform.position;
 		isCreate = true;
 		this.enabled = false;

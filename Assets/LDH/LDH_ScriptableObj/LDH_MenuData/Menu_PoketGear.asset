@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc689d8692a84324946d59118577180, type: 3}
   m_Name: Menu_PoketGear
   m_EditorClassIdentifier: 
-  menuName: 
-  description: 
+  menuName: "\uD3EC\uCF13\uAE30\uC5B4"
+  description: "\uD2B8\uB808\uC774\uB108\uC758 \uC5EC\uD589\uC5D0\n\uB3C4\uC6C0\uC774
+    \uB418\uB294 \uD234"

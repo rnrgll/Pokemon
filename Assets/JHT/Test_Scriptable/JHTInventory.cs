@@ -57,7 +57,7 @@ public class JHTInventory : MonoBehaviour
         }
         else
         {
-            print("½½·ÔÀÌ °¡µæ Â÷ ÀÖ½À´Ï´Ù.");
+            print("ìŠ¬ë¡¯ì´ ê°€ë“ ì°¨ ìˆìŠµë‹ˆë‹¤.");
         }
     }
 
@@ -71,7 +71,7 @@ public class JHTInventory : MonoBehaviour
     //    }
     //    else
     //    {
-    //        Debug.LogWarning("Æ÷ÄÏ¸óÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù!");
+    //        Debug.LogWarning("í¬ì¼“ëª¬ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤!");
     //    }
     //}
 
