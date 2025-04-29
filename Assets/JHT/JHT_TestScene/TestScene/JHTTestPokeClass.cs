@@ -11,12 +11,12 @@ public class JHTTestPokeClass : ScriptableObject
 	public Sprite icon;
     public int damage;
     public int level;
-	public int exp;
+	//public int exp;
 	public int hp;
 
-	public int prefabIndex;
-	public GameObject[] levelPrefab;
-	public GameObject curPrefab = null;
+	//public int prefabIndex;
+	//public GameObject[] levelPrefab;
+	//public GameObject curLevelPrefab = null;
 	
 
 	

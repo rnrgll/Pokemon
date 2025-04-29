@@ -10,11 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       propertyPath: m_Name
-      value: Test_red1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
-      propertyPath: m_TagString
-      value: Pokemon
+      value: red1
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       propertyPath: m_LocalScale.x
@@ -68,10 +64,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1609719090194301641, guid: ea4294fe6e549744c825356f923027bc, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -81,13 +73,13 @@ PrefabInstance:
       addedObject: {fileID: 7628961913830780926}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3082117121917589474}
+      addedObject: {fileID: 6963139834520747874}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -6840544495725009059}
+      addedObject: {fileID: 7847088448733210719}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: ea4294fe6e549744c825356f923027bc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3411607468820897686}
+      addedObject: {fileID: 6859507327044186899}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: ea4294fe6e549744c825356f923027bc, type: 3}
 --- !u!1 &4957037917721764951 stripped
 GameObject:
@@ -115,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-3082117121917589474
+--- !u!114 &6963139834520747874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,10 +116,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957037917721764951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260ba3d31b50817449cf89c443f75b98, type: 3}
+  m_Script: {fileID: 11500000, guid: 5bb191b5e600c1845941c05f9a5a182e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-6840544495725009059
+  exp: 1
+  startLevel: 1
+  icon: {fileID: -601143604000936538, guid: ea4294fe6e549744c825356f923027bc, type: 3}
+  type: 0
+  controller: {fileID: 11400000, guid: c2188fcb37301f842adbd8df8dab4c32, type: 2}
+  skill:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &7847088448733210719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,10 +137,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957037917721764951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df65d1a4942ad144ab94ca5297b5ba2, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eac3ed20725d03479be25a354cc33a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-3411607468820897686
+  healthPoints: 10
+--- !u!114 &6859507327044186899
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957037917721764951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 616c32a3bd097db48ab8e6985808de0f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d136574ee380c843af75924f0e24966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pokeClass: {fileID: 11400000, guid: c41cb3589166e0a48a15de586331236e, type: 2}
+  experiencePoints: 10
