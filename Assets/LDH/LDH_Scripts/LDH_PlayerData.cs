@@ -21,15 +21,15 @@ public class LDH_PlayerData
 	public float PlayTime => playTime;
 
 	[SerializeField] private bool[] hasBadges = new bool[8];
-	
+	public bool[] HasBadges => hasBadges;
 
 
 	// 초기화 함수 (처음 게임 시작할 때 호출)
 	public void Init()
 	{
-		playerName = "익명";
+		playerName = "골드";
 		playerID = Random.Range(10000, 100000).ToString();
-		money = 0;
+		money = 3000;
 		
 		playTime = 0f;
         
