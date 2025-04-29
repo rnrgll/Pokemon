@@ -18,6 +18,11 @@ public class SpriteAnimator
 		this.spriteRenderer = spriteRenderer;
 		this.frameRate = frameRate;
 	}
+	public List<Sprite> NpcFrames
+	{
+		get { return frames; }
+	}
+
 
 	public void Start()
 	{
@@ -37,4 +42,5 @@ public class SpriteAnimator
 			animTimer -= frameRate;
 		}
 	}
+
 }

@@ -233,11 +233,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 648812137239690783, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 648812137239690783, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 648812137239690783, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -282,6 +282,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2817950634812131084, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1917776051}
+    - targetCorrespondingSourceObject: {fileID: 2817950634812131084, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1917776052}
   m_SourcePrefab: {fileID: 100100000, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
 --- !u!1 &803648014
 GameObject:
@@ -1174,6 +1177,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1917776052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917776045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3612336c7a083d4aa2eb91bc7d5d15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveValue: 2
 --- !u!1 &1977262852
 GameObject:
   m_ObjectHideFlags: 0
