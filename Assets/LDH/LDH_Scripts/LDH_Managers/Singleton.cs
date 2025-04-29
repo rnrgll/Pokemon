@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,5 +35,25 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     public static T GetInstance()
     {
 	    return _instance;
+    }
+
+
+    protected virtual void Awake()
+    {
+	    //이미 생성된게 있으면 자기 자신 파괴
+	    if (_instance != null && _instance != this)
+	    {
+		    Debug.Log(name);
+		    Destroy(gameObject);
+	    }
+	    
+	    Init();
+	    
+	    
+    }
+
+    protected virtual void Init()
+    {
+	    
     }
 }
