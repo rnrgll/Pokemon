@@ -59,5 +59,16 @@ public class UI_MenuButton : MonoBehaviour
 	{
 		return _descriptasbleData.description;
 	}
+
+	public void OpenMenu()
+	{
+		if (string.IsNullOrEmpty(_linkedPrefabPath))
+		{
+			//연결된 프리팹 경로가 없는 경우 -> 구현되지 않은 기능
+			Debug.Log("구현되지 않은 기능입니다.");
+			return;
+		}
+		Manager.UI.ShowLinkedUI<UI_Linked>(_linkedPrefabPath);
+	}
 	
 }

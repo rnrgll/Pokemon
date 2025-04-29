@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class UI_Menu : UI_Linked
+public class UI_Menu : UI_Linked, IUISelectable
 {
     private static int _curIdx = 0;
     private int _preIdx = 0;
@@ -49,7 +49,7 @@ public class UI_Menu : UI_Linked
         {
            MoveIdx(1);
         }
-        else if (Input.GetKeyDown(KeyCode.Return))
+        else if (Input.GetKeyDown(KeyCode.Return)|| Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             CloseSelf();
         }
@@ -96,5 +96,21 @@ public class UI_Menu : UI_Linked
     void CloseSelf()
     {
         Manager.UI.UndoLinkedUI();
+    }
+
+    public void OnSelect()
+    {
+	    if (_curIdx == _activeMenuButtons.Count - 1)
+	    {
+		    //'닫다' 메뉴
+		    CloseSelf();
+		    return;
+	    }
+	    
+	    //그 외 메뉴는 각자 UI 띄우기
+	    UI_MenuButton selectedButton = _activeMenuButtons[_curIdx];
+	    selectedButton.OpenMenu();
+	    
+	    
     }
 }

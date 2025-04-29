@@ -207,10 +207,8 @@ public class Player : MonoBehaviour
 						// 배틀 대화 넘기기
 						break;
 					case PlayerState.UI:
-						// UI
-						break;
 					case PlayerState.Menu:
-						// 메뉴 선택
+						Manager.UI.OnUISelect();
 						break;
 				}
 			}

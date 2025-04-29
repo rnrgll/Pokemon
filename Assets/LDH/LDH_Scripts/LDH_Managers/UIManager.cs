@@ -73,6 +73,30 @@ public class UIManager : Singleton<UIManager>
 
     }
     
+    
+    //z키 선택 알림
+    public void OnUISelect()
+    {
+	    // 팝업 확인을 먼저한다.
+	    if (_popUpStack.Count > 0)
+	    {
+		    UI_PopUp topPopUp = _popUpStack.Peek();
+		    IUISelectable selectable = topPopUp.GetComponent<IUISelectable>();
+		    selectable?.OnSelect();
+		    return;
+	    }
+
+	    // 팝업 없으면 연결 UI
+	    if (_linkList.Count > 0)
+	    {
+		    UI_Linked topLinked = _linkList[_linkList.Count - 1];
+		    IUISelectable selectable = topLinked.GetComponent<IUISelectable>();
+		    selectable?.OnSelect();
+		    return;
+	    }
+	    // 둘 다 없으면 무시
+    }
+    
 
     #region 팝업 UI
 
