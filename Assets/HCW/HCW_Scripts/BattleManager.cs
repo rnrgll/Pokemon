@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
 {
      private const int MaxPartySize = 6;    // 최대 파티 크기
-     [SerializeField] private BattleUI ui;  // UI 요소
+     [SerializeField] private BattleUIController ui;  // UI 요소
 
       private List<Pokemon> playerParty;    // 플레이어 포켓몬 리스트
       private Pokemon playerPokemon;        // 플레이어 포켓몬
@@ -24,18 +22,20 @@ public class BattleManager : MonoBehaviour
 
 
      private void Awake()
-     {
-         ui.OnActionSelected.AddListener(OnActionButton);
-         ui.OnSkillSelected.AddListener(OnSkillButton);
+     { 
+		// UI 이벤트 구독
+        ui.OnActionSelected.AddListener(OnActionButton);
+        ui.OnSkillSelected.AddListener(OnSkillButton);
      }
     
      private void OnDestroy()
      {
-         ui.OnActionSelected.RemoveListener(OnActionButton);
-         ui.OnSkillSelected.RemoveListener(OnSkillButton);
+		// 구독 해제
+        ui.OnActionSelected.RemoveListener(OnActionButton);
+        ui.OnSkillSelected.RemoveListener(OnSkillButton);
      }
 
-     /// 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
+     // 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
      public void StartBattle(List<Pokemon> party, List<Pokemon> enemies)
      {
          playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokemon>();
@@ -47,9 +47,8 @@ public class BattleManager : MonoBehaviour
              return;
          }
     
-         playerPokemon = playerParty[0];
-         currentEnemyIndex = 0;
-         enemyPokemon = enemyParty[currentEnemyIndex];
+         playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
+         enemyPokemon = enemyParty[0]; // 적의 첫번째 포켓몬
     
          Debug.Log($"배틀 시작 : {playerPokemon.Name} VS {enemyPokemon.Name}");
          StartCoroutine(BattleLoop());
@@ -73,7 +72,7 @@ public class BattleManager : MonoBehaviour
                  break;
              }
     
-             // 액션 메뉴 표시
+             // 행동 선택
              selectedAction = null;
              ui.ShowActionMenu();
              yield return new WaitUntil(() => selectedAction != null);
