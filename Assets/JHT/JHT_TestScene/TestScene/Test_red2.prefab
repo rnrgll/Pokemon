@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
       propertyPath: m_Name
-      value: red2
+      value: Test_red2
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
       propertyPath: m_LocalScale.x
@@ -73,10 +73,10 @@ PrefabInstance:
       addedObject: {fileID: -4921032457818863963}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5493569055312173983}
+      addedObject: {fileID: 7281992198207997145}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4761624671728559483}
+      addedObject: {fileID: 7997126533280635396}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: e17f56a2a10c5c743a0f3d4bc59a7c81, type: 3}
 --- !u!1 &8151674170594283585 stripped
 GameObject:
@@ -104,7 +104,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5493569055312173983
+--- !u!114 &7281992198207997145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151674170594283585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 260ba3d31b50817449cf89c443f75b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pokeClass: {fileID: 11400000, guid: c41cb3589166e0a48a15de586331236e, type: 2}
+--- !u!114 &7997126533280635396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,22 +129,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df65d1a4942ad144ab94ca5297b5ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHp: 0
-  expPoints: 10
-  isDead: 0
---- !u!114 &4761624671728559483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8151674170594283585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 939acd9c09e0b0144a4b384d38736ab5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMyPoke: 1
-  damage: 3
-  level: 2
-  skill: []

@@ -2,36 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class JHTTestHealth : MonoBehaviour
 {
-    private int maxHp = 10;
-    public int curHp;
-    public int expPoints = 10;
-    public bool isDead;
+	JHTTestPokeClass pokeClass;
+	JHTTestExp pokeExp;
 
-    JHTTestExp exp;
+	private void Awake()
+	{
+		pokeExp = GetComponent<JHTTestExp>();
+	}
 
-    void Start()
-    {
-        exp = GetComponent<JHTTestExp>();
-        curHp = maxHp;
-        
-    }
+	public void TakeDamage(int amount)
+	{
+		pokeClass.hp -= amount;
 
-    public void TakeDamage(float damage)
-    {
-        curHp -= (int)damage;
+		if (pokeClass.hp <= 0)
+		{
+			Die();
+		}
+	}
+	
+	public void Die()
+	{
+		if (!pokeClass.isMyPoke)
+		{
+			pokeExp.GetXP(10);
+		}
 
-        if (curHp <= 0)
-        {
-            isDead = true;
-            Die();
-        }
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
-        exp.GetExp(expPoints);
-    }
+		if (gameObject != null)
+		{
+			Destroy(gameObject);
+		}
+	}
 }

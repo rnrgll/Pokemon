@@ -71,12 +71,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 8e19ae89c99b9764288e119683748ae9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1935281540745956684}
-    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 8e19ae89c99b9764288e119683748ae9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5265950550448148196}
-    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 8e19ae89c99b9764288e119683748ae9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -489002790426076484}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 8e19ae89c99b9764288e119683748ae9, type: 3}
 --- !u!1 &3572705323394426230 stripped
 GameObject:
@@ -104,34 +98,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5265950550448148196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3572705323394426230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 939acd9c09e0b0144a4b384d38736ab5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMyPoke: 0
-  damage: 5
-  level: 1
-  skill: []
---- !u!114 &-489002790426076484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3572705323394426230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df65d1a4942ad144ab94ca5297b5ba2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curHp: 10
-  expPoints: 10
-  isDead: 0

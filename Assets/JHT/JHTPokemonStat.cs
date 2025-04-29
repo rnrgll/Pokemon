@@ -5,8 +5,9 @@ using UnityEngine;
 public class JHTPokemonStat : MonoBehaviour
 {
     [Range(1,20)]
-    public float exp;
-    public int startLevel = 1;
+	public int startLevel = 1;
+	public float exp;
+   
 
     public Sprite icon;
     public JHTPokeType type;

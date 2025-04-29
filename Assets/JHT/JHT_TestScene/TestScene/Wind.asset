@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939acd9c09e0b0144a4b384d38736ab5, type: 3}
+  m_Name: Wind
+  m_EditorClassIdentifier: 
+  type: 2
+  isMyPoke: 0
+  id: 2
+  icon: {fileID: 2008858941467880259, guid: 8e19ae89c99b9764288e119683748ae9, type: 3}
+  damage: 5
+  level: 1
+  exp: 0
+  hp: 10
+  prefabIndex: 0
+  levelPrefab:
+  - {fileID: 3572705323394426230, guid: 09d7818d10577904c8d8943b394cd1b9, type: 3}
+  curPrefab: {fileID: 0}
