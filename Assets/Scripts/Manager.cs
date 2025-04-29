@@ -9,7 +9,6 @@ public static class Manager
 	public static DataManager Data { get { return DataManager.GetInstance(); } }
 	//씬 매니저, 다이얼로그 매니저, 게임 매니저 등.. 을 생성해서 등록
 	
-	
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 	private static void Initialize()
 	{

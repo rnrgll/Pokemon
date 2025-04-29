@@ -28,4 +28,26 @@ public class Define
 		UI,				// UI 활성화중
 		Menu,			// Menu 활성화중
 	};
+
+	public enum PokeType // 타입
+	{
+		None,       // 없음
+		Normal,     // 노말
+		Fire,       // 불꽃
+		Water,      // 물
+		Grass,      // 풀
+		Electric,   // 전기
+		Ice,        // 얼음
+		Fighting,   // 격투
+		Poison,     // 독
+		Ground,     // 땅
+		Flying,     // 비행
+		Psychic,    // 에스퍼
+		Bug,        // 벌레
+		Rock,       // 바위
+		Ghost,      // 고스트
+		Dragon,     // 드래곤
+		Dark,       // 악
+		Steel,      // 강철
+	}
 }

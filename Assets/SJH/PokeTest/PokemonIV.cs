@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public struct PokemonIV
+{
+	public int hp;
+	public int attack;
+	public int defense;
+	public int speAttack;
+	public int speDefense;
+	public int speed;
+
+	public PokemonIV(int hp, int attack, int defense, int speAttack, int speDefense, int speed)
+	{
+		this.hp = hp;
+		this.attack = attack;
+		this.defense = defense;
+		this.speAttack = speAttack;
+		this.speDefense = speDefense;
+		this.speed = speed;
+	}
+
+	public static PokemonIV GetRandomIV()
+	{
+		// 개체값 랜덤 반환
+		return new PokemonIV
+			(
+				Random.Range(0, 32),  // 체력
+				Random.Range(0, 32),  // 공격
+				Random.Range(0, 32),  // 방어
+				Random.Range(0, 32),  // 특공
+				Random.Range(0, 32),  // 특방
+				Random.Range(0, 32)   // 스핏
+			);
+	}
+}
