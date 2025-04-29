@@ -20,12 +20,12 @@ public class UI_PopUp : MonoBehaviour
 
     protected virtual void Init()
     {
-        UIManager.Instance.SetCanvas(gameObject,true);
+        Manager.UI.SetCanvas(gameObject,true);
     }
 
 
 public virtual void ClosePopupUI()
     {
-        UIManager.Instance.ClosePopupUI(this);
+        Manager.UI.ClosePopupUI(this);
     }
 }

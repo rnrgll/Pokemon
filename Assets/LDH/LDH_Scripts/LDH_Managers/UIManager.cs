@@ -20,14 +20,22 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private List<UI_Linked> _linkList = new List<UI_Linked>();
     
     
+    
     //ui가 열려있는지 여부
     public bool IsAnyUIOpen =>  _popUpStack.Count > 0 || _linkList.Count > 0;
+    //ui가 열려있는지 여부에 따른 액션이벤트
+    public event Action OnAllUIClosed;
     
     
     //임시 초기화
     private void Awake()
     {
         CreateInstance();
+    }
+
+    private void OnDestroy()
+    {
+	    OnAllUIClosed = null;
     }
 
     public GameObject RootUI
@@ -109,6 +117,9 @@ public class UIManager : Singleton<UIManager>
         Destroy(stackPopUp.gameObject);
         _order--;
 
+        //모든 UI가 다 닫혔으면 이벤트 호출
+        if(!IsAnyUIOpen)
+	        OnAllUIClosed?.Invoke();
     }
 
     #endregion
@@ -161,6 +172,10 @@ public class UIManager : Singleton<UIManager>
         if (_linkList.Count > 0)
             _linkList[_linkList.Count-1].Open(); // 직전 UI 활성화
 
+        
+        //모든 UI가 다 닫혔으면 이벤트 호출
+        if(!IsAnyUIOpen)
+	        OnAllUIClosed?.Invoke();
     }
 
     #endregion

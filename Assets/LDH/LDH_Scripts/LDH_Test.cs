@@ -13,9 +13,9 @@ public class LDH_Test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            UIManager.Instance.ShowLinkedUI<UI_Menu>("UI_Menu");
-        }
+        // if (Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.KeypadEnter))
+        // {
+        //     UIManager.Instance.ShowLinkedUI<UI_Menu>("UI_Menu");
+        // }
     }
 }

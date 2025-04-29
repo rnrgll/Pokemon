@@ -95,6 +95,6 @@ public class UI_Menu : UI_Linked
 
     void CloseSelf()
     {
-        UIManager.Instance.UndoLinkedUI();
+        Manager.UI.UndoLinkedUI();
     }
 }

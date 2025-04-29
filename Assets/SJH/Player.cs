@@ -32,6 +32,18 @@ public class Player : MonoBehaviour
 		Debug.Log(zInput);
 	}
 
+	private void Start()
+	{
+		Manager.UI.OnAllUIClosed += OnAllUIClosed;
+	}
+	
+	private void OnDestroy()
+	{
+		//이벤트 구독 해제
+		if(Manager.UI!=null)
+			Manager.UI.OnAllUIClosed -= OnAllUIClosed;
+	}
+
 	void Update()
 	{
 		if (state == Define.PlayerState.SceneChange) // 씬이동중
@@ -75,6 +87,17 @@ public class Player : MonoBehaviour
 
 		if (isMoving)
 			return;
+		
+		//메뉴 키 입력
+		if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+		{
+			if (!Manager.UI.IsAnyUIOpen)
+			{
+				Manager.UI.ShowLinkedUI<UI_Menu>("UI_Menu");
+				state = Define.PlayerState.Menu; // 플레이어 상태를 UI로 전환
+			}
+			return;
+		}
 
 		Vector2 inputDir = Vector2.zero;
 		if (Input.GetKey(KeyCode.UpArrow)) inputDir = Vector2.up;
@@ -194,4 +217,17 @@ public class Player : MonoBehaviour
 			yield return null;
 		}
 	}
+
+
+	#region UI
+	void OnAllUIClosed()
+	{
+		//만약 이전 상태가 필드가 아니라 배틀 상태였다면..?? -> 추후 로직에 따라 수정 필요
+		if(state==Define.PlayerState.Menu)
+			state = Define.PlayerState.Field;
+	}
+	#endregion	
+
+
+	
 }

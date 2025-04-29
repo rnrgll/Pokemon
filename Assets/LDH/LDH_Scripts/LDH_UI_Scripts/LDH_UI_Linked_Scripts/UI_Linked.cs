@@ -11,7 +11,7 @@ public class UI_Linked : MonoBehaviour
 
     protected virtual void Init()
     {
-        UIManager.Instance.SetCanvas(gameObject,false);
+        Manager.UI.SetCanvas(gameObject,false);
     }
     
     public virtual void Open()
