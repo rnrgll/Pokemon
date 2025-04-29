@@ -26,13 +26,6 @@ public class UIManager : Singleton<UIManager>
     //ui가 열려있는지 여부에 따른 액션이벤트
     public event Action OnAllUIClosed;
     
-    
-    //임시 초기화
-    private void Awake()
-    {
-        CreateInstance();
-    }
-
     private void OnDestroy()
     {
 	    OnAllUIClosed = null;
