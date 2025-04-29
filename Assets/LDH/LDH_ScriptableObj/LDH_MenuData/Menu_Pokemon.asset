@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc689d8692a84324946d59118577180, type: 3}
   m_Name: Menu_Pokemon
   m_EditorClassIdentifier: 
-  menuName: 
-  description: 
+  menuName: "\uD3EC\uCF13\uBAAC"
+  description: "\uAC19\uC774 \uC788\uB294\n\uD3EC\uCF13\uBAAC\uC758 \uC0C1\uD0DC"

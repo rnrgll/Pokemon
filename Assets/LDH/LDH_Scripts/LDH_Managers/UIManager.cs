@@ -20,14 +20,22 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private List<UI_Linked> _linkList = new List<UI_Linked>();
     
     
+    
     //ui가 열려있는지 여부
     public bool IsAnyUIOpen =>  _popUpStack.Count > 0 || _linkList.Count > 0;
+    //ui가 열려있는지 여부에 따른 액션이벤트
+    public event Action OnAllUIClosed;
     
     
     //임시 초기화
     private void Awake()
     {
         CreateInstance();
+    }
+
+    private void OnDestroy()
+    {
+	    OnAllUIClosed = null;
     }
 
     public GameObject RootUI
@@ -65,18 +73,30 @@ public class UIManager : Singleton<UIManager>
 
     }
     
-    //time scale 조정으로 플레이어 controll input 막기. UI 관련 애니메이션은 time에 영향을 받지 않는 unscaledTime 등을 이용해 처리한다.
-    private void UpdateTimeScale()
+    
+    //z키 선택 알림
+    public void OnUISelect()
     {
-        if (_popUpStack.Count > 0 || _linkList.Count > 0)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1f; // 아무것도 없으면 다시 게임 실행
-        }
+	    // 팝업 확인을 먼저한다.
+	    if (_popUpStack.Count > 0)
+	    {
+		    UI_PopUp topPopUp = _popUpStack.Peek();
+		    IUISelectable selectable = topPopUp.GetComponent<IUISelectable>();
+		    selectable?.OnSelect();
+		    return;
+	    }
+
+	    // 팝업 없으면 연결 UI
+	    if (_linkList.Count > 0)
+	    {
+		    UI_Linked topLinked = _linkList[_linkList.Count - 1];
+		    IUISelectable selectable = topLinked.GetComponent<IUISelectable>();
+		    selectable?.OnSelect();
+		    return;
+	    }
+	    // 둘 다 없으면 무시
     }
+    
 
     #region 팝업 UI
 
@@ -104,9 +124,7 @@ public class UIManager : Singleton<UIManager>
 
         T popUp = Instantiate(prefab,RootUI.transform).GetComponent<T>();
         _popUpStack.Push(popUp);
-
         
-        UpdateTimeScale(); 
         
         return popUp;
     }
@@ -123,8 +141,9 @@ public class UIManager : Singleton<UIManager>
         Destroy(stackPopUp.gameObject);
         _order--;
 
-        
-        UpdateTimeScale(); 
+        //모든 UI가 다 닫혔으면 이벤트 호출
+        if(!IsAnyUIOpen)
+	        OnAllUIClosed?.Invoke();
     }
 
     #endregion
@@ -160,8 +179,7 @@ public class UIManager : Singleton<UIManager>
         _linkList.Add(linked); // 리스트에 추가
         
         linked.Open();
-        
-        UpdateTimeScale(); 
+
         
         return linked;
     }
@@ -171,14 +189,17 @@ public class UIManager : Singleton<UIManager>
         if (_linkList.Count == 0)
             return;
 
-        UI_Linked lastLinked = _linkList[^1]; //마지막 UI = 현재 UI
+        UI_Linked lastLinked = _linkList[_linkList.Count-1]; //마지막 UI = 현재 UI
         _linkList.RemoveAt(_linkList.Count - 1); //리스트에서 제거
         Destroy(lastLinked.gameObject); //삭제
 
         if (_linkList.Count > 0)
             _linkList[_linkList.Count-1].Open(); // 직전 UI 활성화
+
         
-        UpdateTimeScale(); 
+        //모든 UI가 다 닫혔으면 이벤트 호출
+        if(!IsAnyUIOpen)
+	        OnAllUIClosed?.Invoke();
     }
 
     #endregion

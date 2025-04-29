@@ -166,8 +166,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4571277808290956796}
   - {fileID: 2798321916660053767}
+  - {fileID: 4571277808290956796}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -250,8 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b9f0319441b43b9931fe84db7a6c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UI_MenuBox: {fileID: 4571277808290956796}
-  menuArrows: []
+  _UI_MenuBox: {fileID: 0}
+  _UI_WhiteBox: {fileID: 0}
+  _activeMenuButtons: []
 --- !u!1 &3070834080222135261
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,13 +461,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4571277808290956796}
     m_Modifications:
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isOpened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _descriptasbleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 8616015636215424ea8400b94faa57c4, type: 2}
     - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Name
       value: Menu_Pokemon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7735899822490650661, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Pivot.x
@@ -570,6 +575,14 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC124\uC815"
       objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isOpened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _descriptasbleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5f74a0245ac1a4bab91cd73c99ecc3ac, type: 2}
     - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Name
       value: Menu_Setting
@@ -676,6 +689,22 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uC774\uB984"
       objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isOpened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isPlayerMenu
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _linkedPrefabPath
+      value: UI_PlayerCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _descriptasbleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 17b62eebeedb6411fa6b59f8e84a0a3e, type: 2}
     - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Name
       value: Menu_Player
@@ -782,6 +811,14 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uAC00\uBC29"
       objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isOpened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _descriptasbleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6736acdafb2bf4e8ca39863c775055ea, type: 2}
     - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Name
       value: Menu_Bag
@@ -866,6 +903,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8344572259763090206, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -888,6 +929,14 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uB2EB\uB2E4"
       objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isOpened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _descriptasbleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 94aea8499153a40ea90b5165cd15ad6f, type: 2}
     - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Name
       value: Menu_Close
@@ -994,6 +1043,14 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uB808\uD3EC\uD2B8"
       objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isOpened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _descriptasbleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 259101ad4280e4779a58958ba67b3f9a, type: 2}
     - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Name
       value: Menu_Report
@@ -1100,6 +1157,14 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uD3EC\uCF13\uAE30\uC5B4"
       objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: isOpened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _descriptasbleData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4c9ff59f23b4844ef9b40217c7d1bb7a, type: 2}
     - target: {fileID: 5791894177661004010, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: m_Name
       value: Menu_PoketGear
