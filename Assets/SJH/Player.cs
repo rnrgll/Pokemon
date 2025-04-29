@@ -46,16 +46,14 @@ public class Player : MonoBehaviour
 		jumpTime = new WaitForSeconds(0.03f);
 		Debug.Log(zInput);
 	}
-  
+
 	void Start()
 	{
 		if (shadow != null)
 		{
 			shadow.SetActive(false);
 		}
-    
-	private void Start()
-	{
+
 		Manager.UI.OnAllUIClosed += OnAllUIClosed;
 	}
 	
