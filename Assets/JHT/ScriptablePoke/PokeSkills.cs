@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JHTTestPokeManager : MonoBehaviour
+public class PokeSkills : MonoBehaviour
 {
-	JHTCharType type;
-	void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         
     }
