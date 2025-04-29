@@ -16,7 +16,7 @@ public class DialogManager : MonoBehaviour
 
 	Dialog dialog;
 	int currentLine = 0;
-	bool isTyping;
+	public bool isTyping;
 
 	public static DialogManager Instance { get; private set; }
 	private void Awake()
