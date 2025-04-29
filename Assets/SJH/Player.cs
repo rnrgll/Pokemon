@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using static Define;
 
 public class Player : MonoBehaviour
@@ -11,6 +7,8 @@ public class Player : MonoBehaviour
 	[SerializeField] public Define.PlayerState state;
 	[SerializeField] public Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
 	public Coroutine moveCoroutine;
+	Coroutine jumpCoroutine;
+	WaitForSeconds jumpTime;
 	public Coroutine zInput;
 
 	[Tooltip("이동 거리 (기본 2)")]
@@ -23,12 +21,17 @@ public class Player : MonoBehaviour
 
 	Animator anim;
 
+	bool isJump = false;
+
 	void Awake()
 	{
-		Debug.Log("PlayerAwake");
 		DontDestroyOnLoad(gameObject);
+
 		anim = GetComponent<Animator>();
+		// Z 키 코루틴
 		zInput = StartCoroutine(ZInput());
+		// 점프 시간
+		jumpTime = new WaitForSeconds(0.03f);
 		Debug.Log(zInput);
 	}
 
@@ -42,11 +45,11 @@ public class Player : MonoBehaviour
 			case Define.PlayerState.Field:          // 필드
 				MoveState();
 				break;
-			case Define.PlayerState.Battle:			// 배틀중
+			case Define.PlayerState.Battle:         // 배틀중
 				break;
-			case Define.PlayerState.UI:				// UI활성화중
+			case Define.PlayerState.UI:             // UI활성화중
 				break;
-			case Define.PlayerState.Menu:			// Menu 활성화중
+			case Define.PlayerState.Menu:           // Menu 활성화중
 				break;
 		}
 	}
@@ -199,8 +202,89 @@ public class Player : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "Slope")
 		{
-			// TODO : 언덕 점프
-			
+			// 점프중이 아닐 때
+			if (jumpCoroutine == null)
+			{
+				// 이동 코루틴 스탑
+				if (moveCoroutine != null)
+					StopCoroutine(moveCoroutine);
+
+				// 점프 코루틴 시작
+				jumpCoroutine = StartCoroutine(Jump(currentDirection));
+			}
 		}
+	}
+
+	IEnumerator Jump(Vector2 direction)
+	{
+		isJump = true;
+		float jumpHeight = 2;
+		float jumpDistance = 4;
+
+		Vector3 startPos = new Vector3(Mathf.Round(transform.position.x), (int)transform.position.y, 0); ;
+		Vector3 endPos = startPos + ((Vector3)direction * jumpDistance);
+
+		Debug.Log($"시작 위치 : {startPos}");
+		Debug.Log($"도착 위치 : {endPos}");
+
+		// 네방향 구분
+		switch (direction)
+		{
+			case var v when v == Vector2.up:
+				break;
+			case var v when v == Vector2.down:
+				float yPos;
+				for (int i = 3; i >= 0; i--)
+				{
+					yPos = startPos.y + (0.16f * i);
+					transform.position = new Vector3(startPos.x, yPos, 0);
+					Debug.Log($"{i} : {transform.position}");
+					yield return jumpTime;
+				}
+				for (int i = 1; i <= 7; i++)
+				{
+					yPos = startPos.y - (jumpDistance / 10 * i);
+					transform.position = new Vector3(startPos.x, yPos, 0);
+					Debug.Log($"{i} : {transform.position}");
+					if (i == 5)
+						StopMoving();
+					yield return jumpTime;
+				}
+				break;
+			case var v when v == Vector2.left:
+				for (int i = 1; i <= 5; i++)
+				{
+					transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), startPos.y + (jumpHeight / 10 * i), 0);
+					yield return jumpTime;
+				}
+				for (int i = 6; i <= 10; i++)
+				{
+					transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5)), 0);
+					if (i == 8)
+						StopMoving();
+					yield return jumpTime;
+				}
+				break;
+			case var v when v == Vector2.right:
+				for (int i = 1; i <= 5; i++)
+				{
+					transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), startPos.y + (jumpHeight / 10 * i), 0);
+					yield return jumpTime;
+				}
+				for (int i = 6; i <= 10; i++)
+				{
+					transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5)), 0);
+					if (i == 8)
+						StopMoving();
+					yield return jumpTime;
+				}
+				break;
+		}
+
+		// 점프 후 위치 설정
+		transform.position = endPos;
+		isJump = false;
+		jumpCoroutine = null;
+		yield return new WaitForSeconds(0.5f);
 	}
 }
