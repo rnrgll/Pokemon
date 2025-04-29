@@ -86,3 +86,4 @@ MonoBehaviour:
     - 1
     - 2
     - 3
+  player: {fileID: 0}
