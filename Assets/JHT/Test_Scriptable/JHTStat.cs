@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum JHTStat
 {
-    ü��,
-    ����ġ_ȹ�淮,
-    �ʿ����ġ��,
-    ������,
-    ��ȭ
+    체력,
+    경험치_획득량,
+    필요경험치량,
+    데미지,
+    진화
 }

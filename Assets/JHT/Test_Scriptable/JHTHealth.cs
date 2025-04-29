@@ -15,16 +15,16 @@ public class JHTHealth : MonoBehaviour
     }
     void Start()
     {
-        healthPoints = GetComponent<JHTPokemonStat>().GetPokeStat(JHTStat.Ã¼·Â);
+        healthPoints = GetComponent<JHTPokemonStat>().GetPokeStat(JHTStat.ì²´ë ¥);
     }
 
-    public void TakeDamage(int damage) //GameObject instigator, -> ÇØ´ç ÀûÀÌ Á×¾úÀ»°æ¿ì
+    public void TakeDamage(int damage) //GameObject instigator, -> í•´ë‹¹ ì ì´ ì£½ì—ˆì„ê²½ìš°
     {
         healthPoints = Mathf.Max(healthPoints - damage, 0);
         if (healthPoints <= 0)
         {
             Die();
-            //GetRewardExp(instigator); ->°æÇèÄ¡ È¹µæ ³ªÁß¿¡ ¹èÆ²¾À°ú ÇÕÃÆÀ» ¶§ ±¸Çö
+            //GetRewardExp(instigator); ->ê²½í—˜ì¹˜ íšë“ ë‚˜ì¤‘ì— ë°°í‹€ì”¬ê³¼ í•©ì³¤ì„ ë•Œ êµ¬í˜„
         }
     }
 
@@ -33,7 +33,7 @@ public class JHTHealth : MonoBehaviour
         JHTExperience experience = instigator.GetComponent<JHTExperience>();
         if (experience == null) return;
 
-        experience.GetExperience(GetComponent<JHTPokemonStat>().GetPokeStat(JHTStat.°æÇèÄ¡_È¹µæ·®));
+        experience.GetExperience(GetComponent<JHTPokemonStat>().GetPokeStat(JHTStat.ê²½í—˜ì¹˜_íšë“ëŸ‰));
     }
 
     public void Die()
