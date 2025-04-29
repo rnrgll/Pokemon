@@ -103,11 +103,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ec94c0094b27f4db9058608e76e73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMine: 0
+  id: 2
+  isDead: 0
+  type: 3
   icon: {fileID: -3351589392665486415, guid: 8aca305713dcfab48918f52018994cf8, type: 3}
   curHp: 0
   exp: 0
-  dieXp: 10
+  dieExp: 10
   power: 1
 --- !u!114 &2801583107030278141
 MonoBehaviour:

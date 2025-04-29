@@ -27,6 +27,7 @@ public class Define
 		Battle,			// 배틀중
 		UI,				// UI 활성화중
 		Menu,			// Menu 활성화중
+		Dialog			// 대화 활성화중
 	};
 
 	public enum PokeType // 타입

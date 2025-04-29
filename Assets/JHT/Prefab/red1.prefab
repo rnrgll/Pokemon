@@ -151,9 +151,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ec94c0094b27f4db9058608e76e73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMine: 1
+  id: 1
+  isDead: 0
+  type: 1
   icon: {fileID: -601143604000936538, guid: ea4294fe6e549744c825356f923027bc, type: 3}
   curHp: 0
   exp: 0
-  dieXp: 0
+  dieExp: 10
   power: 5
+  state: 0
+  skill:
+  - {fileID: 11400000, guid: 0a990c71ade8dfa46b940dae60ffc5f6, type: 2}
+  - {fileID: 11400000, guid: 0c25e45a5a043574aa9a006ef6f625dd, type: 2}
