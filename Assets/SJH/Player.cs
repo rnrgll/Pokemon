@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
 				break;
 			case Define.PlayerState.Menu:			// Menu 활성화중
 				break;
+			case Define.PlayerState.Dialog:         //	대화 활성화중
+				break;
 		}
 	}
 
@@ -188,6 +190,9 @@ public class Player : MonoBehaviour
 						break;
 					case PlayerState.Menu:
 						// 메뉴 선택
+						break;
+					case PlayerState.Dialog:
+						// 대화
 						break;
 				}
 			}
