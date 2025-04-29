@@ -16,9 +16,7 @@ MonoBehaviour:
   name: Pikachu
   type: 1
   icon: {fileID: -582390868871671100, guid: 2abf8e83c557dee4b82f2aaff37e6314, type: 3}
-  hp: 20
   power: 10
-  curExp: 0
-  nextExp: 20
-  maxExp: 10
+  maxExp: 150
+  maxHp: 225
   isMine: 0
