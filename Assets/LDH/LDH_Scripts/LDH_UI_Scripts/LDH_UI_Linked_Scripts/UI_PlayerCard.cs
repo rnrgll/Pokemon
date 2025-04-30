@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UI_PlayerCard : UI_Linked, IUISelectable
+public class UI_PlayerCard : UI_Linked
 {
 	[SerializeField] private GameObject[] infoPanels;
 	[SerializeField] private int curIdx;
@@ -50,20 +50,7 @@ public class UI_PlayerCard : UI_Linked, IUISelectable
 	    }
     }
 
-    public void OnSelect()
-    {
-	    //Status Panel에서 선택 입력 시, Badge Panel로 넘어감
-	    if (curIdx == 0)
-	    {
-		    curIdx = 1;
-		    UpdateInfoPanels();
-
-	    }
-
-	    //Badge Panel에서 선택 입력 시, 메뉴 종료됨
-	    else
-	    {
-		    Manager.UI.UndoLinkedUI();
-	    }
-    }
+    
+    //해당 UI는 선택 항목 처리가 필요 없는 화면이므로 OnSelect()는 오버라이드하지 않음
+    // OnCancle()은 UI_Linked의 기본 닫기 로직(CloseSelf)을 그대로 사용
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Linked : MonoBehaviour
+public class UI_Linked : MonoBehaviour, IUISelectable, ICancelable
 {
     private void Start()
     {
@@ -22,5 +22,20 @@ public class UI_Linked : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    
+
+    public virtual void OnCancle()
+    {
+	   CloseSelf();
+    }
+
+
+    protected void CloseSelf()
+    {
+	    Manager.UI.UndoLinkedUI();
+    }
+
+    //상속받은 쪽에서 구현하라고 처리
+    public virtual void OnSelect()
+    {
+    }
 }

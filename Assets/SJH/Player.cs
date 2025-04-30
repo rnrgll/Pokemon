@@ -234,7 +234,6 @@ public class Player : MonoBehaviour
 						// UI
 						break;
 					case PlayerState.Menu:
-						Manager.UI.OnUISelect();
 						break;
 					case PlayerState.Dialog:
 						// 대화
