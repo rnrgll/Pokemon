@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PokemonManagerS : Singleton<PokemonManagerS>
 {
 	public static PokemonManagerS Get;
@@ -25,22 +26,25 @@ public class PokemonManagerS : Singleton<PokemonManagerS>
 		}
 	}
 
-	public void Start()
-	{
-		
-	}
-
-	public void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			party.Add(new PokemonS(1, "2", 1, new PokemonStatS(1, 2, 3, 4, 5, 6), new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Fire, PokeType.Ice));
-		}
-		if (Input.GetKeyDown(KeyCode.D))
-		{
-			party.Add(new PokemonS(1, "Pikachu", 1, GetBaseStat[1], new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Water, PokeType.Ice));
-		}
-	}
+	//********************싱글턴에서 define스크립트에서 가져오는거?
+	//public void Start()
+	//{
+	//	SkillS fireball = new SkillS(10, "fireBall", "Throw fireball", SkillType.Physical);
+	//}
+	//
+	//public void Update()
+	//{
+	//	if (Input.GetKeyDown(KeyCode.Space))
+	//	{
+	//		party.Add(new PokemonS(1, "2", 1, new PokemonStatS(1, 2, 3, 4, 5, 6), 
+	//			new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Fire, PokeType.Ice));
+	//	}
+	//	if (Input.GetKeyDown(KeyCode.D))
+	//	{
+	//		party.Add(new PokemonS(1, "Pikachu", 1, GetBaseStat[1],
+	//			new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Water, PokeType.Ice));
+	//	}
+	//}
 
 	void PokemonBaseStatInit()
 	{

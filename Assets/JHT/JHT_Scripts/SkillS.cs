@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class SkillS : MonoBehaviour
 {
-	public Sprite icon;
+	//public Sprite icon;
 	public int damage;
 	public string name;
 	public string description;
 	public PokeType pokeType;
 	public GameObject particle;
 
-	public SkillS(Sprite _icon, int _damage, string _name, string _description, PokeType _pokeType)
+	public SkillS(int _damage, string _name, string _description, PokeType _pokeType)
 	{
-		this.icon = _icon;
 		this.name = _name;
 		this.description = _description;
 		this.pokeType = _pokeType;
@@ -34,7 +34,8 @@ public class SkillS : MonoBehaviour
 		if (rand > 2)
 		{
 			defender.TakeDamage(attacker, skill.damage * attacker.pokemonStat.attack);
-			Instantiate(particle, defender.transform.position, Quaternion.identity);
+			GameObject parti = Instantiate(particle, defender.transform.position, Quaternion.identity);
+			Destroy(parti, 2f);
 
 		}
 		else

@@ -2,18 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum PokeType
-{
-	None = 0,
-	Water,
-	Fire,
-	Grass,
-	Wind,
-	Ice,
-	Poison,
-	Ground
-}
-
+using static Define;
 public class PokemonS : MonoBehaviour
 {
 	public int id;
@@ -37,12 +26,13 @@ public class PokemonS : MonoBehaviour
 
 	public bool isDead;
 
-	public List<SkillS> skills = new List<SkillS>();
+	public List<SkillS> skills;
 
 	public event Action OnDie;
 	public event Action OnLevelUp;
 
-	public PokemonS(int _id, string _name, int _level, PokemonStatS _baseStat, PokemonIVS _iv, PokeType _pokeType1, PokeType _pokeType2)
+	public PokemonS(int _id, string _name, int _level, PokemonStatS _baseStat, PokemonIVS _iv,
+		PokeType _pokeType1, PokeType _pokeType2,List<SkillS> _skills)
 	{
 		id = _id;
 		pokeName = _name;
@@ -56,6 +46,7 @@ public class PokemonS : MonoBehaviour
 		curExp = 0;
 		nextExp = 999;
 		hp = maxHp;
+		this.skills = _skills;
 
 		isDead = false;
 	}
@@ -144,14 +135,19 @@ public class PokemonS : MonoBehaviour
 	{
 		isDead = true;
 		Debug.Log($"{gameObject.name}이 사망했습니다");
-		Destroy(this.gameObject);
+		//Destroy(this.gameObject);
+		//if (PokemonManagerS.Get.party.Contains(해당 포켓몬이 존재 할경우))
+		//{
+		//	PokemonManagerS.Get.party.Remove(해당 포켓몬 리스트에서 삭제); //Or RemoveAt인덱스 삭제
+		//}
+
 		if (PokemonManagerS.Get.party.Count > 0)
 		{
 			Debug.Log("다음 포켓몬을 꺼내겠습니다");
 		}
 		else
 		{
-			Debug.Log("포켓몬이 없습니다");
+			Debug.Log("다음 포켓몬이 없습니다");
 			//battle씬에서 나감
 		}
 	}	
