@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public class BattleDialogue : MonoBehaviour
 {
 	[SerializeField] private GameObject dialoguePanel;
 	[SerializeField] private TMP_Text dialogueText;
