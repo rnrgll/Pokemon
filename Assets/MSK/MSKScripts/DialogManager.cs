@@ -3,41 +3,28 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class DialogManager : MonoBehaviour
-{
+public class DialogManager : Singleton<DialogManager>
+{ 
 	[SerializeField] GameObject dialogBox;
 	[SerializeField] TMP_Text dialogText;
 	[SerializeField] int letterPerSec;
-
-
-	public event Action OnShowDialog;
-	public event Action CloseDialog;
-
 
 	Dialog dialog;
 	int currentLine = 0;
 	public bool isTyping;
 
 	public static DialogManager Instance { get; private set; }
-	private void Awake()
+	public event Action OnShowDialog;
+	public event Action CloseDialog;
+
+	protected override void Awake()
 	{
 		Instance = this;
 	}
-	public IEnumerator ShowText(Dialog dialog)
-	{
-		yield return new WaitForEndOfFrame();
-		OnShowDialog?.Invoke();
-
-		this.dialog = dialog;
-		dialogBox.SetActive(true);
-		dialogText.text = dialog.Lines[0];
-		StartCoroutine(ShowDialog(dialog.Lines[0]));
-	}
-
 	public void HandleUpdate()
-	{
+	{	// 대화 진행중
 		if (Input.GetKeyDown(KeyCode.Z) && !isTyping)
-		{
+		{	// 다음 대사박스 출력
 			++currentLine;
 			if (currentLine < dialog.Lines.Count)
 			{
@@ -51,6 +38,16 @@ public class DialogManager : MonoBehaviour
 			}
 		}
 	}
+	public IEnumerator ShowText(Dialog dialog)
+	{
+		yield return new WaitForEndOfFrame();
+		OnShowDialog?.Invoke();
+
+		this.dialog = dialog;
+		dialogBox.SetActive(true);
+		dialogText.text = dialog.Lines[0];
+		StartCoroutine(ShowDialog(dialog.Lines[0]));
+	}
 	public IEnumerator ShowDialog(string dialog)
 	{
 		isTyping = true;
@@ -62,5 +59,4 @@ public class DialogManager : MonoBehaviour
 		}
 		isTyping = false;
 	}
-
 }
