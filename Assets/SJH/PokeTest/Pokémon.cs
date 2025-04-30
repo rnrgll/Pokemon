@@ -20,6 +20,11 @@ public class Pokémon : MonoBehaviour
 
 	public bool isDead;
 
+	void Start()
+	{
+		
+	}
+
 	public Pokémon(int _id, string _name, int _level, PokemonStat _baseStat, PokemonIV _iv, PokeType _pokeType1, PokeType _pokeType2)
 	{
 		id = _id;

@@ -10,6 +10,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	// 내파티
 	public List<Pokémon> party = new List<Pokémon>();
 	public Dictionary<int, PokemonStat> GetBaseStat = new Dictionary<int, PokemonStat>();
+	public GameObject pokemonPrefab;
 
 	void Awake()
 	{
@@ -24,7 +25,14 @@ public class PokemonManager : Singleton<PokemonManager>
 			Destroy(gameObject);
 		}
 	}
-	
+
+	void Start()
+	{
+		var test = Instantiate(pokemonPrefab).GetComponent<Pokémon>();
+		test.id = 1;
+		party.Add(Instantiate(pokemonPrefab).GetComponent<Pokémon>());
+	}
+
 	void PokemonBaseStatInit()
 	{
 		// 2세대 스타팅 포켓몬 등록
