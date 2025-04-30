@@ -142,11 +142,63 @@ public class Player : MonoBehaviour
 		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
 		if (hit)
 		{
+			Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
 			switch (hit.transform.gameObject.tag)
 			{
 				case "Wall":
 				case "NPC":
 					StopMoving();
+					return;
+				case "SlopeLeft":
+					if (inputDir == Vector2.left)
+					{
+						// 점프중이 아닐 때
+						if (jumpCoroutine == null)
+						{
+							// 이동 코루틴 스탑
+							if (moveCoroutine != null)
+								StopCoroutine(moveCoroutine);
+
+							// 점프 코루틴 시작
+							jumpCoroutine = StartCoroutine(Jump(currentDirection));
+						}
+					}
+					else
+						StopMoving();
+					return;
+				case "SlopeRight":
+					if (inputDir == Vector2.right)
+					{
+						// 점프중이 아닐 때
+						if (jumpCoroutine == null)
+						{
+							// 이동 코루틴 스탑
+							if (moveCoroutine != null)
+								StopCoroutine(moveCoroutine);
+
+							// 점프 코루틴 시작
+							jumpCoroutine = StartCoroutine(Jump(currentDirection));
+						}
+					}
+					else
+						StopMoving();
+					return;
+				case "SlopeDown":
+					if (inputDir == Vector2.down)
+					{
+						// 점프중이 아닐 때
+						if (jumpCoroutine == null)
+						{
+							// 이동 코루틴 스탑
+							if (moveCoroutine != null)
+								StopCoroutine(moveCoroutine);
+
+							// 점프 코루틴 시작
+							jumpCoroutine = StartCoroutine(Jump(currentDirection));
+						}
+					}
+					else
+						StopMoving();
 					return;
 			}
 		}
@@ -199,15 +251,15 @@ public class Player : MonoBehaviour
 		moveCoroutine = null;
 	}
 
-	//void OnDrawGizmos()
-	//{
-	//	// 플레이어 이동방향 기즈모
-	//	Gizmos.color = Color.magenta;
-	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
-	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
-	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
-	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
-	//}
+	void OnDrawGizmos()
+	{
+		// 플레이어 이동방향 기즈모
+		Gizmos.color = Color.magenta;
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
+		Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
+	}
 
 	IEnumerator ZInput()
 	{
@@ -244,22 +296,22 @@ public class Player : MonoBehaviour
 			yield return null;
 		}
 	}
-	void OnCollisionEnter2D(Collision2D collision)
-	{
-		if (collision.gameObject.tag == "Slope")
-		{
-			// 점프중이 아닐 때
-			if (jumpCoroutine == null)
-			{
-				// 이동 코루틴 스탑
-				if (moveCoroutine != null)
-					StopCoroutine(moveCoroutine);
+	//void OnCollisionEnter2D(Collision2D collision)
+	//{
+	//	if (collision.gameObject.tag == "Slope")
+	//	{
+	//		// 점프중이 아닐 때
+	//		if (jumpCoroutine == null)
+	//		{
+	//			// 이동 코루틴 스탑
+	//			if (moveCoroutine != null)
+	//				StopCoroutine(moveCoroutine);
 
-				// 점프 코루틴 시작
-				jumpCoroutine = StartCoroutine(Jump(currentDirection));
-			}
-		}
-	}
+	//			// 점프 코루틴 시작
+	//			jumpCoroutine = StartCoroutine(Jump(currentDirection));
+	//		}
+	//	}
+	//}
 	IEnumerator Jump(Vector2 direction)
 	{
 		isJump = true;
