@@ -51,4 +51,15 @@ public class Define
 		Dark,       // 악
 		Steel,      // 강철
 	}
+
+
+	#region UI
+	public enum UIInputType
+	{
+		Select,
+		Cancel,
+	}
+	
+
+	#endregion
 }

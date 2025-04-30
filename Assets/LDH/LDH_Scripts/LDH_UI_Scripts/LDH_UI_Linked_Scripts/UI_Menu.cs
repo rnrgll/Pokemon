@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class UI_Menu : UI_Linked, IUISelectable
+public class UI_Menu : UI_Linked
 {
     private static int _curIdx = 0;
     private int _preIdx = 0;
@@ -49,10 +49,6 @@ public class UI_Menu : UI_Linked, IUISelectable
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
            MoveIdx(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Return)|| Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            CloseSelf();
         }
     }
 
@@ -106,13 +102,8 @@ public class UI_Menu : UI_Linked, IUISelectable
 		    activeMenuButton.SetArrowActive(false);
 	    }
     }
-
-    void CloseSelf()
-    {
-        Manager.UI.UndoLinkedUI();
-    }
-
-    public void OnSelect()
+    
+    public override void OnSelect()
     {
 	    if (_curIdx == _activeMenuButtons.Count - 1)
 	    {
@@ -125,6 +116,7 @@ public class UI_Menu : UI_Linked, IUISelectable
 	    UI_MenuButton selectedButton = _activeMenuButtons[_curIdx];
 	    selectedButton.OpenMenu();
 	    
-	    
     }
+    
+    
 }
