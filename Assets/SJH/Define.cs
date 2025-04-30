@@ -59,7 +59,23 @@ public class Define
 		Select,
 		Cancel,
 	}
-	
+
+	public enum BagPanel
+	{
+		Items,
+		Balls,
+		KeyItems,
+		TM,
+		Count
+		
+	}
+
+	#endregion
+
+
+	#region Item
+
+	public int ItemMaxCnt = 99;
 
 	#endregion
 }

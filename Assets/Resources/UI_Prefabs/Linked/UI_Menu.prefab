@@ -816,6 +816,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
+      propertyPath: _linkedPrefabPath
+      value: UI_Bag
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: _descriptasbleData
       value: 
       objectReference: {fileID: 11400000, guid: 6736acdafb2bf4e8ca39863c775055ea, type: 2}
