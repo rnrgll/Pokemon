@@ -20,8 +20,12 @@ public class SkillS : MonoBehaviour
 		this.damage = _damage;
 	}
 
+	public void AttackStatus(PokemonS attacker, PokemonS defender, SkillS skill)
+	{
+		attacker.TakeStatus(attacker, skill.damage);
+	}
 
-	public void Attack(PokemonS attacker, PokemonS defender, Skill skill)
+	public void Attack(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
 		int rand = Random.Range(0,10);
 		attacker.animator.SetTrigger(name);
@@ -29,7 +33,7 @@ public class SkillS : MonoBehaviour
 		
 		if (rand > 2)
 		{
-			defender.TakeDamage(attacker, skill.Power * attacker.pokemonStat.attack);
+			defender.TakeDamage(attacker, skill.damage * attacker.pokemonStat.attack);
 			Instantiate(particle, defender.transform.position, Quaternion.identity);
 
 		}

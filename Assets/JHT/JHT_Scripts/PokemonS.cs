@@ -112,6 +112,11 @@ public class PokemonS : MonoBehaviour
 
 	}
 
+	public void TakeStatus(PokemonS attacker, int amount)
+	{
+
+	}
+
 	public void TakeDamage(PokemonS attacker, int amount)
 	{
 		if (isDead) return;

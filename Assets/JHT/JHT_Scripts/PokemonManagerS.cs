@@ -25,6 +25,11 @@ public class PokemonManagerS : Singleton<PokemonManagerS>
 		}
 	}
 
+	public void Start()
+	{
+		party.Add(new PokemonS(1, "2", 1, new PokemonStatS(1, 2, 3, 4, 5, 6), new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Fire, PokeType.Ice));
+	}
+
 	void PokemonBaseStatInit()
 	{
 		// 2세대 스타팅 포켓몬 등록
