@@ -25,7 +25,23 @@ public class UI_PlayerCard : UI_Linked, IUISelectable
     {
 	    UpdateInfoPanels();
     }
-    
+
+
+    private void Update()
+    {
+	    if (Input.GetKeyDown(KeyCode.LeftArrow))
+	    {
+		    curIdx = Mathf.Clamp(curIdx - 1, 0, infoPanels.Length - 1);
+		    UpdateInfoPanels();
+	    }
+	    else if (Input.GetKeyDown(KeyCode.RightArrow))
+	    {
+		    curIdx = Mathf.Clamp(curIdx + 1, 0, infoPanels.Length - 1);
+		    UpdateInfoPanels();
+	    }
+    }
+
+
     private void UpdateInfoPanels()
     {
 	    for (int i = 0; i < infoPanels.Length; i++)

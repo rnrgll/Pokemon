@@ -30,12 +30,13 @@ public class UI_Menu : UI_Linked, IUISelectable
     private void OnEnable()
     {
 	    RefreshActiveMenuList();
+	    UpdateUI();
     }
 
     void Start()
     {
-        UpdateArrow();
-        UpdateMenuDescription();
+	    SetInActiveAllArrow();
+       UpdateUI();
     }
     
     // Update is called once per frame
@@ -78,8 +79,13 @@ public class UI_Menu : UI_Linked, IUISelectable
         else if (_curIdx >= _activeMenuButtons.Count)
             _curIdx = 0;
         
-        UpdateArrow();
-        UpdateMenuDescription();
+       UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+	    UpdateArrow();
+	    UpdateMenuDescription();
     }
     
     void UpdateArrow()
@@ -91,6 +97,14 @@ public class UI_Menu : UI_Linked, IUISelectable
     void UpdateMenuDescription()
     {
 	    _UI_WhiteBoxText.text = _activeMenuButtons[_curIdx].GetMenuDescription();
+    }
+
+    void SetInActiveAllArrow()
+    {
+	    foreach (UI_MenuButton activeMenuButton in _activeMenuButtons)
+	    {
+		    activeMenuButton.SetArrowActive(false);
+	    }
     }
 
     void CloseSelf()

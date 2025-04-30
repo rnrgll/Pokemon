@@ -28,8 +28,7 @@ public class UI_MenuButton : MonoBehaviour
 
 		if (isPlayerMenu)
 		{
-			//Todo : 데이터 연동 예정
-			_menuButtonText.text = "임시"; //연동 예정
+			_menuButtonText.text = Manager.Data.LdhPlayerData.PlayerName;
 		}
 		else
 		{
@@ -46,7 +45,6 @@ public class UI_MenuButton : MonoBehaviour
 	public void RefreshState()
 	{
 		gameObject.SetActive(isOpened);
-		SetArrowActive(false);
 	}
 	
 	public void SetArrowActive(bool active)
