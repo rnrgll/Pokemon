@@ -40,13 +40,7 @@ public class DialogManager : Singleton<DialogManager>
 
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
-			if (dialogInstance == null)
-			{
-				dialogInstance = Instantiate(prefab);
-				// 인스턴스 내부 트랜스폼을 통하여 프리팹 내부 접근
-				dialogBox = dialogInstance.transform.GetChild(0).gameObject;
-				dialogText = dialogBox.GetComponentInChildren<TMP_Text>();
-			}
+			
 			// 다음 대사박스 출력
 			if (!isTyping)
 			{
@@ -59,6 +53,9 @@ public class DialogManager : Singleton<DialogManager>
 				{
 					currentLine = 0;
 					dialogBox.SetActive(false);
+					//--------------------//
+					Manager.Game.Player.state = Define.PlayerState.Field;
+					//--------------------//
 					CloseDialog?.Invoke();
 				}
 			}
@@ -66,19 +63,36 @@ public class DialogManager : Singleton<DialogManager>
 	}
 
 
+	public void StartDialogue(Dialog dialog)
+	{
+		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		CreateDialogueUI();
+		StartCoroutine(DialogManager.Instance.ShowText(dialog));
+	}
 
 
-
-	public IEnumerator ShowText(Dialog dialog)
+	private IEnumerator ShowText(Dialog dialog)
 	{
 		yield return new WaitForEndOfFrame();
 		OnShowDialog?.Invoke();
-
+		
 		this.dialog = dialog;
 		dialogBox.SetActive(true);
 		dialogText.text = dialog.Lines[0];
 		StartCoroutine(ShowDialog(dialog.Lines[0]));
 	}
+
+	private void CreateDialogueUI()
+	{
+		if (dialogInstance == null)
+		{
+			dialogInstance = Instantiate(prefab);
+			// 인스턴스 내부 트랜스폼을 통하여 프리팹 내부 접근
+			dialogBox = dialogInstance.transform.GetChild(0).gameObject;
+			dialogText = dialogBox.GetComponentInChildren<TMP_Text>();
+		}
+	}
+	
 
 	public IEnumerator ShowDialog(string dialog)
 	{
