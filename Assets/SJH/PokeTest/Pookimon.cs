@@ -5,19 +5,19 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using static Define;
 
-public class Pookimon
+public class Pookimon : MonoBehaviour
 {
 	public int id;
-	public string name;
+	public string pokeName;
 	public int level;
 	public int hp;
 	public int maxHp;
 	public int curExp;
 	public int nextExp;
-	public PokemonStat baseStat;	// 종족값
-	public PokemonIV iv;			// 개체값
+	[SerializeField] public PokemonStat baseStat;   // 종족값
+	[SerializeField] public PokemonIV iv;           // 개체값
 	//public PokemonStat ev;			// 노력치
-	public PokemonStat pokemonStat;	// 현재수치
+	[SerializeField] public PokemonStat pokemonStat;	// 현재수치
 	public PokeType pokeType1;
 	public PokeType pokeType2;
 
@@ -26,7 +26,7 @@ public class Pookimon
 	public Pookimon(int _id, string _name, int _level, PokemonStat _baseStat, PokemonIV _iv, PokeType _pokeType1, PokeType _pokeType2)
 	{
 		id = _id;
-		name = _name;
+		pokeName = _name;
 		level = _level;
 		baseStat = _baseStat;
 		iv = _iv;

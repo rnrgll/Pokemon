@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public struct PokemonIV
 {
 	public int hp;
@@ -26,12 +28,12 @@ public struct PokemonIV
 		// 개체값 랜덤 반환
 		return new PokemonIV
 			(
-				Random.Range(0, 32),  // 체력
-				Random.Range(0, 32),  // 공격
-				Random.Range(0, 32),  // 방어
-				Random.Range(0, 32),  // 특공
-				Random.Range(0, 32),  // 특방
-				Random.Range(0, 32)   // 스핏
+				UnityEngine.Random.Range(0, 32),  // 체력
+				UnityEngine.Random.Range(0, 32),  // 공격
+				UnityEngine.Random.Range(0, 32),  // 방어
+				UnityEngine.Random.Range(0, 32),  // 특공
+				UnityEngine.Random.Range(0, 32),  // 특방
+				UnityEngine.Random.Range(0, 32)   // 스핏
 			);
 	}
 }

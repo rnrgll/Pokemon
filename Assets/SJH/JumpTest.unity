@@ -996,6 +996,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe558d80b1a36b443a0c56d0e553473b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  party:
+  - {fileID: 759733483}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &205837457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3759,6 +3763,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
   m_PrefabInstance: {fileID: 755577789}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &759733482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 759733484}
+  - component: {fileID: 759733483}
+  m_Layer: 0
+  m_Name: Pooki
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &759733483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759733482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e443f3ac0e0023145ab45cc1cb2c3462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+  pokeName: "\uC774\uC0C1\uD574\uC528"
+  level: 5
+  hp: 30
+  maxHp: 30
+  curExp: 0
+  nextExp: 100
+  pokeType1: 4
+  pokeType2: 7
+  isDead: 0
+--- !u!4 &759733484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759733482}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &783591166
 GameObject:
   m_ObjectHideFlags: 0
@@ -41519,3 +41577,4 @@ SceneRoots:
   - {fileID: 217936586}
   - {fileID: 713279306}
   - {fileID: 202444039}
+  - {fileID: 759733484}
