@@ -11,7 +11,7 @@ public class SkillS : MonoBehaviour
 	public PokeType pokeType;
 	public GameObject particle;
 
-	public SkillS(Sprite _icon, int _damage, string _name, string _description, PokeType _pokeType, Animator anim)
+	public SkillS(Sprite _icon, int _damage, string _name, string _description, PokeType _pokeType)
 	{
 		this.icon = _icon;
 		this.name = _name;
@@ -24,8 +24,9 @@ public class SkillS : MonoBehaviour
 	public void Attack(PokemonS attacker, PokemonS defender, Skill skill)
 	{
 		int rand = Random.Range(0,10);
-		attacker.animator.SetTrigger(name); // 상의해보고 결정
+		attacker.animator.SetTrigger(name);
 
+		
 		if (rand > 2)
 		{
 			defender.TakeDamage(attacker, skill.Power * attacker.pokemonStat.attack);
