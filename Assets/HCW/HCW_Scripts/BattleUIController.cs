@@ -26,7 +26,10 @@ public class BattleUIController : MonoBehaviour
 	public UnityEvent<string> OnActionSelected = new UnityEvent<string>();
 	public UnityEvent<int> OnSkillSelected = new UnityEvent<int>();
 
+	private List<Button> actionButtons;
 	private List<Button> skillButtons;
+
+
 
 	void Awake()
 	{
@@ -50,12 +53,24 @@ public class BattleUIController : MonoBehaviour
 		for (int i = 0; i < skillButtons.Count; i++)
 		{
 			int idx = i;
-			skillButtons[i].onClick.AddListener(() =>{OnSkillSelected.Invoke(idx); skillPanel.SetActive(false);});
+			skillButtons[i].onClick.AddListener(() => {OnSkillSelected.Invoke(idx); skillPanel.SetActive(false);});
 		}
 	}
 	public void ShowActionMenu() => bottomPanel.SetActive(true);
 
 	public void HideActionMenu() => bottomPanel.SetActive(false);
+
+	// TODO 매뉴창 방향키 조작
+	//void Update()
+	//{
+	//	if (bottomPanel.activeSelf)
+	//	{
+	//		if (Input.GetKeyDown(KeyCode.Escape))
+	//		{
+	//			HideActionMenu();
+	//		}
+	//	}
+	//}
 
 	public void ShowSkillSelection(Pokemon pokemon)
 	{

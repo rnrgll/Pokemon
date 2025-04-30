@@ -302,7 +302,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\"\uD6A8\uACFC\uAC00 \uAD49\uC7A5\uD588\uB2E4!\""
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a44024238fb81475a8bb5919df1dad17, type: 2}
   m_sharedMaterial: {fileID: 879832099988764899, guid: a44024238fb81475a8bb5919df1dad17, type: 2}
@@ -2692,11 +2692,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1597513775}
   - {fileID: 798778934}
   - {fileID: 1439310379}
   - {fileID: 64088588}
   - {fileID: 1871827481}
-  - {fileID: 1597513775}
   - {fileID: 1494919638}
   - {fileID: 810784864}
   m_Father: {fileID: 0}
@@ -4432,6 +4432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 994546001}
   hud: {fileID: 994546002}
+  dialogue: {fileID: 1597513778}
 --- !u!4 &1806035912
 Transform:
   m_ObjectHideFlags: 0
