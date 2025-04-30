@@ -1643,7 +1643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d9b1e68cfa07bf48a6d079d48510d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: 2, y: -6}
+  exitSceneName: 
+  exitPos: {x: 0, y: 0}
   portalType: 0
   isPlayerIn: 0
   keyDirection: {x: 0, y: 1}
@@ -3715,50 +3716,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
   m_PrefabInstance: {fileID: 755577789}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &759733482
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 759733484}
-  - component: {fileID: 759733483}
-  m_Layer: 0
-  m_Name: Pooki
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &759733483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759733482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e443f3ac0e0023145ab45cc1cb2c3462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &759733484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759733482}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &783591166
 GameObject:
   m_ObjectHideFlags: 0
@@ -3979,7 +3936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d9b1e68cfa07bf48a6d079d48510d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: -12, y: -2}
+  exitSceneName: 
+  exitPos: {x: 0, y: 0}
   portalType: 0
   isPlayerIn: 0
   keyDirection: {x: 0, y: 1}
@@ -5201,23 +5159,9 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 1039746190}
-    m_ColliderPaths:
-    - - X: 30000000
-        Y: -150000000
-      - X: 10000000
-        Y: -150000000
-      - X: 10000000
-        Y: -170000000
-      - X: 30000000
-        Y: -170000000
+  m_ColliderPaths: []
   m_CompositePaths:
-    m_Paths:
-    - - {x: 2.999971, y: -17}
-      - {x: 2.999971, y: -15}
-      - {x: 1, y: -15.000029}
-      - {x: 1.0000293, y: -17}
+    m_Paths: []
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -5280,7 +5224,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
@@ -40773,23 +40717,9 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 2039041978}
-    m_ColliderPaths:
-    - - X: 50000000
-        Y: -110000000
-      - X: 30000000
-        Y: -110000000
-      - X: 30000000
-        Y: -130000000
-      - X: 50000000
-        Y: -130000000
+  m_ColliderPaths: []
   m_CompositePaths:
-    m_Paths:
-    - - {x: 4.999971, y: -13}
-      - {x: 4.999971, y: -11}
-      - {x: 3, y: -11.00003}
-      - {x: 3.0000293, y: -13}
+    m_Paths: []
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -40852,7 +40782,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
@@ -41279,23 +41209,9 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 2067620424}
-    m_ColliderPaths:
-    - - X: 10000000
-        Y: -110000000
-      - X: -10000000
-        Y: -110000000
-      - X: -10000000
-        Y: -130000000
-      - X: 10000000
-        Y: -130000000
+  m_ColliderPaths: []
   m_CompositePaths:
-    m_Paths:
-    - - {x: 0.99997073, y: -13}
-      - {x: 0.99997073, y: -11}
-      - {x: -1, y: -11.00003}
-      - {x: -0.99997073, y: -13}
+    m_Paths: []
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -41358,7 +41274,7 @@ TilemapCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
@@ -42057,63 +41973,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 199c333f86351ac479944037a7c1b303, type: 3}
---- !u!1001 &7505529767816464471
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6473940212381720619, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
-      propertyPath: m_Name
-      value: PokemonManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
 --- !u!1001 &8520820381872110695
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42251,5 +42110,3 @@ SceneRoots:
   - {fileID: 1787612750}
   - {fileID: 217936586}
   - {fileID: 713279306}
-  - {fileID: 7505529767816464471}
-  - {fileID: 759733484}

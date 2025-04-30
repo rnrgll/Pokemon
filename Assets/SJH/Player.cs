@@ -150,55 +150,27 @@ public class Player : MonoBehaviour
 					StopMoving();
 					return;
 				case "SlopeLeft":
-					if (inputDir == Vector2.left)
-					{
-						// 점프중이 아닐 때
-						if (jumpCoroutine == null)
-						{
-							// 이동 코루틴 스탑
-							if (moveCoroutine != null)
-								StopCoroutine(moveCoroutine);
-
-							// 점프 코루틴 시작
-							jumpCoroutine = StartCoroutine(Jump(currentDirection));
-						}
-					}
-					else
-						StopMoving();
-					return;
 				case "SlopeRight":
-					if (inputDir == Vector2.right)
-					{
-						// 점프중이 아닐 때
-						if (jumpCoroutine == null)
-						{
-							// 이동 코루틴 스탑
-							if (moveCoroutine != null)
-								StopCoroutine(moveCoroutine);
-
-							// 점프 코루틴 시작
-							jumpCoroutine = StartCoroutine(Jump(currentDirection));
-						}
-					}
-					else
-						StopMoving();
-					return;
 				case "SlopeDown":
-					if (inputDir == Vector2.down)
+					bool isCanJump =
+						(hit.transform.gameObject.tag == "SlopeLeft" && inputDir == Vector2.left) ||
+						(hit.transform.gameObject.tag == "SlopeRight" && inputDir == Vector2.right) ||
+						(hit.transform.gameObject.tag == "SlopeDown" && inputDir == Vector2.down);
+
+					if (isCanJump)
 					{
-						// 점프중이 아닐 때
 						if (jumpCoroutine == null)
 						{
-							// 이동 코루틴 스탑
 							if (moveCoroutine != null)
 								StopCoroutine(moveCoroutine);
 
-							// 점프 코루틴 시작
 							jumpCoroutine = StartCoroutine(Jump(currentDirection));
 						}
 					}
 					else
+					{
 						StopMoving();
+					}
 					return;
 			}
 		}
