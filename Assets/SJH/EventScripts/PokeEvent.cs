@@ -7,8 +7,11 @@ public abstract class PokeEvent : MonoBehaviour
 	void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.CompareTag("Player"))
-			OnPokeEvent(collision);
+		{
+			OnPokeEvent(collision.gameObject);
+			Debug.Log("이벤트 트리거 실행");
+		}
 	}
 
-	public abstract void OnPokeEvent(Collider2D player);
+	public abstract void OnPokeEvent(GameObject player);
 }
