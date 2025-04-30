@@ -59,7 +59,16 @@ public class Define
 		Select,
 		Cancel,
 	}
-	
+
+	public enum BagPanel
+	{
+		Items,
+		Balls,
+		KeyItems,
+		TM,
+		Count
+		
+	}
 
 	#endregion
 }
