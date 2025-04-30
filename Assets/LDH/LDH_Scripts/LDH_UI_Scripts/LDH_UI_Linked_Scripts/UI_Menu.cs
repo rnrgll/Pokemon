@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class UI_Menu : UI_Linked, IUISelectable
+public class UI_Menu : UI_Linked
 {
     private static int _curIdx = 0;
     private int _preIdx = 0;
@@ -30,12 +30,13 @@ public class UI_Menu : UI_Linked, IUISelectable
     private void OnEnable()
     {
 	    RefreshActiveMenuList();
+	    UpdateUI();
     }
 
     void Start()
     {
-        UpdateArrow();
-        UpdateMenuDescription();
+	    SetInActiveAllArrow();
+       UpdateUI();
     }
     
     // Update is called once per frame
@@ -48,10 +49,6 @@ public class UI_Menu : UI_Linked, IUISelectable
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
            MoveIdx(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Return)|| Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            CloseSelf();
         }
     }
 
@@ -78,8 +75,13 @@ public class UI_Menu : UI_Linked, IUISelectable
         else if (_curIdx >= _activeMenuButtons.Count)
             _curIdx = 0;
         
-        UpdateArrow();
-        UpdateMenuDescription();
+       UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+	    UpdateArrow();
+	    UpdateMenuDescription();
     }
     
     void UpdateArrow()
@@ -93,12 +95,15 @@ public class UI_Menu : UI_Linked, IUISelectable
 	    _UI_WhiteBoxText.text = _activeMenuButtons[_curIdx].GetMenuDescription();
     }
 
-    void CloseSelf()
+    void SetInActiveAllArrow()
     {
-        Manager.UI.UndoLinkedUI();
+	    foreach (UI_MenuButton activeMenuButton in _activeMenuButtons)
+	    {
+		    activeMenuButton.SetArrowActive(false);
+	    }
     }
-
-    public void OnSelect()
+    
+    public override void OnSelect()
     {
 	    if (_curIdx == _activeMenuButtons.Count - 1)
 	    {
@@ -111,6 +116,7 @@ public class UI_Menu : UI_Linked, IUISelectable
 	    UI_MenuButton selectedButton = _activeMenuButtons[_curIdx];
 	    selectedButton.OpenMenu();
 	    
-	    
     }
+    
+    
 }

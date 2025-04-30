@@ -18,4 +18,9 @@ public class LDH_Test : MonoBehaviour
         //     UIManager.Instance.ShowLinkedUI<UI_Menu>("UI_Menu");
         // }
     }
+
+    public void AddBadge(int idx)
+    {
+	    Manager.Data.LdhPlayerData.GetBadge(idx);
+    }
 }

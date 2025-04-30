@@ -12,7 +12,7 @@ public class JHTPokemonStat : MonoBehaviour
     public Sprite icon;
     public JHTPokeType type;
     [SerializeField] JHTPokeController controller = null;
-    [SerializeField] JHTSkill[] skill = null;
+    //[SerializeField] JHTSkill[] skill = null;
 
     public int GetPokeStat(JHTStat stat)
     {

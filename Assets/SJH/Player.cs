@@ -44,9 +44,8 @@ public class Player : MonoBehaviour
 		zInput = StartCoroutine(ZInput());
 		// 점프 시간
 		jumpTime = new WaitForSeconds(0.03f);
-		Debug.Log(zInput);
 	}
-  
+
 	void Start()
 	{
 		if (shadow != null)
@@ -54,8 +53,6 @@ public class Player : MonoBehaviour
 			shadow.SetActive(false);
 		}
     
-	private void Start()
-	{
 		Manager.UI.OnAllUIClosed += OnAllUIClosed;
 	}
 	
@@ -237,7 +234,6 @@ public class Player : MonoBehaviour
 						// UI
 						break;
 					case PlayerState.Menu:
-						Manager.UI.OnUISelect();
 						break;
 					case PlayerState.Dialog:
 						// 대화

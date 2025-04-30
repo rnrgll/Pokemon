@@ -1,53 +1,74 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using Unity.VisualScripting;
 using UnityEngine;
+using static Define;
 
 public class UIManager : Singleton<UIManager>
 {
+	//========================================//
     //pop up : 1회성 알림 -> 종료시 삭제
     //linked up : 계층 구조 UI -> 종료시 비활성화
-    
-    
+    //========================================//
+
+    #region Variables
     //rootUI : ui object의 최상의 부모(컨테이너)
     private GameObject _rootUI;
 
     //PopUp 용 스택
-    [SerializeField] private Stack<UI_PopUp> _popUpStack = new Stack<UI_PopUp>();
+    private Stack<UI_PopUp> _popUpStack = new Stack<UI_PopUp>();
     private int _order = 10;
 
     //Linked 용 스택
     [SerializeField] private List<UI_Linked> _linkList = new List<UI_Linked>();
     
-    
+    //UI Root
+    public GameObject RootUI
+    {
+	    get
+	    {
+		    if (_rootUI == null)
+		    {
+			    _rootUI = GameObject.Find("UI_Root");
+			    if (_rootUI == null)
+			    {
+				    _rootUI = new GameObject("UI_Root");
+			    }
+		    }
+
+		    return _rootUI;
+	    }
+    }
     
     //ui가 열려있는지 여부
     public bool IsAnyUIOpen =>  _popUpStack.Count > 0 || _linkList.Count > 0;
     //ui가 열려있는지 여부에 따른 액션이벤트
     public event Action OnAllUIClosed;
     
+    
+    #endregion
+
+
+    #region EventFunction
+    
     private void OnDestroy()
     {
 	    OnAllUIClosed = null;
     }
 
-    public GameObject RootUI
+    private void Update()
     {
-        get
-        {
-            if (_rootUI == null)
-            {
-                _rootUI = GameObject.Find("UI_Root");
-                if (_rootUI == null)
-                {
-                    _rootUI = new GameObject("UI_Root");
-                }
-            }
-
-            return _rootUI;
-        }
+	    if(!IsAnyUIOpen) return;
+	    if (Input.GetKeyDown(KeyCode.Z))
+	    {
+		    HandleUIInput(UIInputType.Select);
+	    }
+	    else if (Input.GetKeyDown(KeyCode.X))
+		    HandleUIInput(UIInputType.Cancel);
     }
+
+    #endregion
+    
     
     //캔버스 sorting order 셋팅
     public void SetCanvas(GameObject uiGameObject, bool isPopup = false)
@@ -69,14 +90,21 @@ public class UIManager : Singleton<UIManager>
     
     
     //z키 선택 알림
-    public void OnUISelect()
+    public void HandleUIInput(UIInputType inputType)
     {
 	    // 팝업 확인을 먼저한다.
 	    if (_popUpStack.Count > 0)
 	    {
 		    UI_PopUp topPopUp = _popUpStack.Peek();
-		    IUISelectable selectable = topPopUp.GetComponent<IUISelectable>();
-		    selectable?.OnSelect();
+		    switch (inputType)
+		    {
+			    case UIInputType.Select:
+				    (topPopUp as IUISelectable)?.OnSelect();
+				    break;
+			    case UIInputType.Cancel:
+				    (topPopUp as ICancelable)?.OnCancle();
+				    break;
+		    }
 		    return;
 	    }
 
@@ -84,12 +112,21 @@ public class UIManager : Singleton<UIManager>
 	    if (_linkList.Count > 0)
 	    {
 		    UI_Linked topLinked = _linkList[_linkList.Count - 1];
-		    IUISelectable selectable = topLinked.GetComponent<IUISelectable>();
-		    selectable?.OnSelect();
+		    switch (inputType)
+		    {
+			    case UIInputType.Select:
+				    (topLinked as IUISelectable)?.OnSelect();
+				    break;
+			    case UIInputType.Cancel:
+				    (topLinked as ICancelable)?.OnCancle();
+				    break;
+		    }
 		    return;
 	    }
 	    // 둘 다 없으면 무시
     }
+    
+    
     
 
     #region 팝업 UI
