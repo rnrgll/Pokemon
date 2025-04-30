@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class DialogManager : Singleton<DialogManager>
 {
-	[SerializeField] GameObject dialogBox;
-	//	NPC 텍스트
-	[SerializeField] TMP_Text dialogText;
 	// 타이핑 시간
 	[SerializeField] int letterPerSec;
 
 	//	가져올 프리펩의 경로
-	GameObject prefab = Resources.Load<GameObject>("Dialog_Prefab/DialogPrefab");
+
+	[SerializeField] TMP_Text dialogText;
+	[SerializeField] GameObject prefab;
+	[SerializeField] GameObject dialogBox;
 	GameObject dialogInstance = null;
 
 
@@ -43,6 +43,9 @@ public class DialogManager : Singleton<DialogManager>
 			if (dialogInstance == null)
 			{
 				dialogInstance = Instantiate(prefab);
+				// 인스턴스 내부 트랜스폼을 통하여 프리팹 내부 접근
+				dialogBox = dialogInstance.transform.GetChild(0).gameObject;
+				dialogText = dialogBox.GetComponentInChildren<TMP_Text>();
 			}
 			// 다음 대사박스 출력
 			if (!isTyping)
