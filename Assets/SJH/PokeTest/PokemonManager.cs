@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class PokemonManager : MonoBehaviour
+public class PokemonManager : Singleton<PokemonManager>
 {
 	public static PokemonManager Get;
 	
 	// 내파티
-	public List<Pookimon> party = new List<Pookimon>();
+	public List<Pokémon> party = new List<Pokémon>();
 	public Dictionary<int, PokemonStat> GetBaseStat = new Dictionary<int, PokemonStat>();
 
 	void Awake()

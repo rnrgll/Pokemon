@@ -952,54 +952,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 948493374980504852, guid: 5d9e41bce5b98cf4ab829ef17c490caa, type: 3}
   m_PrefabInstance: {fileID: 161153304}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &202444038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 202444039}
-  - component: {fileID: 202444040}
-  m_Layer: 0
-  m_Name: PokemonManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &202444039
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202444038}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &202444040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 202444038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe558d80b1a36b443a0c56d0e553473b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  party:
-  - {fileID: 759733483}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1001 &205837457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3799,6 +3751,27 @@ MonoBehaviour:
   maxHp: 30
   curExp: 0
   nextExp: 100
+  baseStat:
+    hp: 0
+    attack: 0
+    defense: 0
+    speAttack: 0
+    speDefense: 0
+    speed: 0
+  iv:
+    hp: 0
+    attack: 0
+    defense: 0
+    speAttack: 0
+    speDefense: 0
+    speed: 0
+  pokemonStat:
+    hp: 0
+    attack: 0
+    defense: 0
+    speAttack: 0
+    speDefense: 0
+    speed: 0
   pokeType1: 4
   pokeType2: 7
   isDead: 0
@@ -41443,6 +41416,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 199c333f86351ac479944037a7c1b303, type: 3}
+--- !u!1001 &7505529767816464471
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142347702375767602, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6473940212381720619, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
+      propertyPath: m_Name
+      value: PokemonManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d6373f067e70ea04686735b241a91e4e, type: 3}
 --- !u!1001 &8520820381872110695
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41576,5 +41606,5 @@ SceneRoots:
   - {fileID: 1787612750}
   - {fileID: 217936586}
   - {fileID: 713279306}
-  - {fileID: 202444039}
+  - {fileID: 7505529767816464471}
   - {fileID: 759733484}

@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.Analytics;
-using static Define;
 
-public class Pookimon : MonoBehaviour
+public class Pokémon : MonoBehaviour
 {
 	public int id;
 	public string pokeName;
@@ -16,14 +13,14 @@ public class Pookimon : MonoBehaviour
 	public int nextExp;
 	[SerializeField] public PokemonStat baseStat;   // 종족값
 	[SerializeField] public PokemonIV iv;           // 개체값
-	//public PokemonStat ev;			// 노력치
-	[SerializeField] public PokemonStat pokemonStat;	// 현재수치
+													//public PokemonStat ev;			// 노력치
+	[SerializeField] public PokemonStat pokemonStat;    // 현재수치
 	public PokeType pokeType1;
 	public PokeType pokeType2;
 
 	public bool isDead;
 
-	public Pookimon(int _id, string _name, int _level, PokemonStat _baseStat, PokemonIV _iv, PokeType _pokeType1, PokeType _pokeType2)
+	public Pokémon(int _id, string _name, int _level, PokemonStat _baseStat, PokemonIV _iv, PokeType _pokeType1, PokeType _pokeType2)
 	{
 		id = _id;
 		pokeName = _name;
