@@ -1,19 +1,31 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class DialogManager : Singleton<DialogManager>
 { 
 	[SerializeField] GameObject dialogBox;
+	//	NPC 텍스트
 	[SerializeField] TMP_Text dialogText;
+	// 타이핑 시간
 	[SerializeField] int letterPerSec;
 
+	//	가져올 프리펩의 경로
+	GameObject prefab = Resources.Load<GameObject>("MSK/MSKPrefab/DialogPrefab}");
+
+
 	Dialog dialog;
+
+	// NPC대사 단위
 	int currentLine = 0;
+	//	대사 출력의 여부
 	public bool isTyping;
 
 	public static DialogManager Instance { get; private set; }
+	
+	
 	public event Action OnShowDialog;
 	public event Action CloseDialog;
 
@@ -21,6 +33,7 @@ public class DialogManager : Singleton<DialogManager>
 	{
 		Instance = this;
 	}
+
 	public void HandleUpdate()
 	{	// 대화 진행중
 		if (Input.GetKeyDown(KeyCode.Z) && !isTyping)
@@ -38,6 +51,8 @@ public class DialogManager : Singleton<DialogManager>
 			}
 		}
 	}
+
+
 	public IEnumerator ShowText(Dialog dialog)
 	{
 		yield return new WaitForEndOfFrame();
@@ -48,6 +63,9 @@ public class DialogManager : Singleton<DialogManager>
 		dialogText.text = dialog.Lines[0];
 		StartCoroutine(ShowDialog(dialog.Lines[0]));
 	}
+
+
+
 	public IEnumerator ShowDialog(string dialog)
 	{
 		isTyping = true;
