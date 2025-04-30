@@ -266,12 +266,6 @@ public class Player : MonoBehaviour
 		float jumpHeight = 2;
 		float jumpDistance = 4;
 
-		// 그림자 활성화
-		if (shadow != null)
-		{
-			shadow.SetActive(true);
-			shadow.transform.position = Vector3.zero;
-		}
 
 		Vector3 startPos = new Vector3(
 			Mathf.Round(transform.position.x),
@@ -279,6 +273,14 @@ public class Player : MonoBehaviour
 			0);
 
 		Vector3 endPos = startPos + ((Vector3)direction * jumpDistance);
+
+		// 그림자 활성화
+		if (shadow != null)
+		{
+			shadow.SetActive(true);
+			shadow.transform.SetParent(null);   // 부모 분리
+			shadow.transform.position = startPos;
+		}
 
 		//Debug.Log($"이전 위치 : {transform.position}");
 		//Debug.Log($"시작 위치 : {startPos}");
@@ -289,19 +291,27 @@ public class Player : MonoBehaviour
 		{
 			case var v when v == Vector2.up:
 				{
-					float yPos;
+					float shadowXPos = startPos.x;
 					for (int i = 3; i >= 0; i--)
 					{
-						yPos = startPos.y + (0.16f * i);
+						float yPos = startPos.y + (0.16f * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
 						//Debug.Log($"{i} : {transform.position}");
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, transform.position.y - (0.1f * i));
+						}
 						yield return jumpTime;
 					}
 					for (int i = 1; i <= 7; i++)
 					{
-						yPos = startPos.y + (jumpDistance / 10 * i);
+						float yPos = startPos.y + (jumpDistance / 10 * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
 						//Debug.Log($"{i} : {transform.position}");
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, transform.position.y);
+						}
 						if (i == 5)
 							StopMoving();
 						yield return jumpTime;
@@ -310,19 +320,25 @@ public class Player : MonoBehaviour
 				}
 			case var v when v == Vector2.down:
 				{
-					float yPos;
+					float shadowXPos = startPos.x;
 					for (int i = 3; i >= 0; i--)
 					{
-						yPos = startPos.y + (0.16f * i);
+						float yPos = startPos.y + (0.16f * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
-						Debug.Log($"{i} : {transform.position}");
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, transform.position.y - 1);
+						}
 						yield return jumpTime;
 					}
 					for (int i = 1; i <= 7; i++)
 					{
-						yPos = startPos.y - (jumpDistance / 10 * i);
+						float yPos = startPos.y - (jumpDistance / 10 * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
-						Debug.Log($"{i} : {transform.position}");
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, Mathf.Max(endPos.y, transform.position.y - 1f));
+						}
 						if (i == 5)
 							StopMoving();
 						yield return jumpTime;
@@ -334,24 +350,22 @@ public class Player : MonoBehaviour
 					float shadowYPos = startPos.y;
 					for (int i = 1; i <= 5; i++)
 					{
+						float playerYPos = startPos.y + (jumpHeight / 10 * i);
+						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowYPos);
-							Debug.Log($"그림자 위치 : {shadow.transform.localPosition}");
 						}
-						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), startPos.y + (jumpHeight / 10 * i), 0);
-						Debug.Log($"주인공 위치 : {transform.position}");
 						yield return jumpTime;
 					}
 					for (int i = 6; i <= 10; i++)
 					{
+						float playerYPos = (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5));
+						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowYPos);
-							Debug.Log($"그림자 위치 : {shadow.transform.localPosition}");
 						}
-						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5)), 0);
-						Debug.Log($"주인공 위치 : {transform.position}");
 						if (i == 8)
 							StopMoving();
 						yield return jumpTime;
@@ -364,21 +378,21 @@ public class Player : MonoBehaviour
 					for (int i = 1; i <= 5; i++)
 					{
 						float playerYPos = startPos.y + (jumpHeight / 10 * i);
+						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowStartY, 0);
 						}
-						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						yield return jumpTime;
 					}
 					for (int i = 6; i <= 10; i++)
 					{
 						float playerYPos = (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5));
+						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowStartY, 0);
 						}
-						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						if (i == 8)
 							StopMoving();
 						yield return jumpTime;
@@ -394,7 +408,10 @@ public class Player : MonoBehaviour
 
 		// 그림자 비활성화
 		if (shadow != null)
+		{
 			shadow.SetActive(false);
+			shadow.transform.SetParent(transform);	// 플레이어를 부모로 다시 설정
+		}
 
 		yield return new WaitForSeconds(0.5f);
 	}
