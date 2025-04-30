@@ -20,12 +20,49 @@ public class Pokémon : MonoBehaviour
 
 	public bool isDead;
 
-	void Start()
+
+
+	// 생성자는 사용할 수 없으니 Init함수를 실행해서 데이터 할당
+	public void Init(int _id, int _level)
 	{
-		
+		// 데이터 매니저에서 고정데이터 받아오기
+		SJH_PokemonData data = Manager.Data.SJH_PokemonData.GetPokemonData(_id);
+
+		// 고정데이터 Id, 이름, 종족값, 타입
+		id = data.Id;
+		pokeName = data.Name;
+		baseStat = data.BaseStat;
+		pokeType1 = data.PokeType1;
+		pokeType2 = data.PokeType2;
+
+		// 개별데이터 hp exp iv stat
+		level = _level;
+		isDead = false;
+		iv = PokemonIV.GetRandomIV();
+		pokemonStat = GetStat();
+		hp = pokemonStat.hp;
+		maxHp = hp;
+	}
+	public void Init(string _name, int _level)
+	{
+		SJH_PokemonData data = Manager.Data.SJH_PokemonData.GetPokemonData(_name);
+		id = data.Id;
+		pokeName = data.Name;
+		baseStat = data.BaseStat;
+		pokeType1 = data.PokeType1;
+		pokeType2 = data.PokeType2;
+
+		// hp exp iv stat
+		level = _level;
+		isDead = false;
+		iv = PokemonIV.GetRandomIV();
+		pokemonStat = GetStat();
+		hp = pokemonStat.hp;
+		maxHp = hp;
 	}
 
-	public Pokémon(int _id, string _name, int _level, PokemonStat _baseStat, PokemonIV _iv, PokeType _pokeType1, PokeType _pokeType2)
+	// 모든 값 개별적으로 입력
+	public void Init(int _id, string _name, int _level, PokemonStat _baseStat, PokemonIV _iv, PokeType _pokeType1, PokeType _pokeType2)
 	{
 		id = _id;
 		pokeName = _name;
@@ -38,7 +75,8 @@ public class Pokémon : MonoBehaviour
 		pokemonStat = GetStat();
 		curExp = 0;
 		nextExp = 999;
-		hp = maxHp;
+		hp = pokemonStat.hp;
+		maxHp = hp;
 
 		isDead = false;
 	}

@@ -20,6 +20,6 @@ public class DataManager : Singleton<DataManager>
 		LdhPlayerData.Init();
 
 		SJH_PokemonData = new SJH_PokemonData();
-		
+		SJH_PokemonData.Init();
 	}
 }

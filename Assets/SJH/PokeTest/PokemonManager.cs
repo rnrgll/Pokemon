@@ -28,8 +28,9 @@ public class PokemonManager : Singleton<PokemonManager>
 
 	void Start()
 	{
-		var test = Instantiate(pokemonPrefab).GetComponent<Pokémon>();
-		test.id = 1;
+		GameObject pokeObject = Instantiate(pokemonPrefab);
+		Pokémon pokemon = pokeObject.GetComponent<Pokémon>();
+		//pokemon.Init();
 		party.Add(Instantiate(pokemonPrefab).GetComponent<Pokémon>());
 	}
 
