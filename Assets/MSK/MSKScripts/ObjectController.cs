@@ -7,6 +7,6 @@ public class ObjectController : MonoBehaviour, IInteractable
     [SerializeField] Dialog dialog;
     public void Interact()
     {
-        StartCoroutine(DialogManager.Instance.ShowText(dialog));
+	    Manager.Dialog.StartDialogue(dialog);
     }
 }

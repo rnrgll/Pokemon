@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using static Define;
@@ -44,6 +45,18 @@ public class Player : MonoBehaviour
 		zInput = StartCoroutine(ZInput());
 		// 점프 시간
 		jumpTime = new WaitForSeconds(0.03f);
+	}
+
+	private void OnEnable()
+	{
+		if(Manager.Game.Player==null)
+			Manager.Game.SetPlayer(this);
+	}
+
+	private void OnDisable()
+	{
+		if(Manager.Game!=null && Manager.Game.Player!=null)
+			Manager.Game.ReleasePlayer();
 	}
 
 	void Start()
