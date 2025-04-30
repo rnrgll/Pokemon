@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviour
 	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
 	[SerializeField] private BattleUIController ui;  // UI 요소
 	[SerializeField] private BattleHUD hud;          // HP 게이지·텍스트 제어
-	[SerializeField] private DialogueManager dialogue; // 대화창
+	[SerializeField] private BattleDialogue dialogue; // 대화창
 
 	private List<Pokemon> playerParty;    // 플레이어 포켓몬 리스트
     private Pokemon playerPokemon;        // 플레이어 포켓몬
