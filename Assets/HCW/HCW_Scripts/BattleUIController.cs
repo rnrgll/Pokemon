@@ -35,8 +35,9 @@ public class BattleUIController : MonoBehaviour
 	}
 	void Start()
 	{
-		// 기본 패널 제외 전부 비활성화
-		bottomPanel.SetActive(true);
+		// 대사창이 끝날때까지 액션 버튼 비활성화
+		bottomPanel.SetActive(false);
+		// 기술 패널도 숨김
 		skillPanel.SetActive(false);
 
 		// 액션 버튼 이벤트 등록
@@ -52,6 +53,9 @@ public class BattleUIController : MonoBehaviour
 			skillButtons[i].onClick.AddListener(() =>{OnSkillSelected.Invoke(idx); skillPanel.SetActive(false);});
 		}
 	}
+	public void ShowActionMenu() => bottomPanel.SetActive(true);
+
+	public void HideActionMenu() => bottomPanel.SetActive(false);
 
 	public void ShowSkillSelection(Pokemon pokemon)
 	{
@@ -73,5 +77,5 @@ public class BattleUIController : MonoBehaviour
 		}
 		skillPanel.SetActive(true);
 	}
-	public void HideSkillSelection() => skillPanel.SetActive(false); //
+	public void HideSkillSelection() => skillPanel.SetActive(false);
 }

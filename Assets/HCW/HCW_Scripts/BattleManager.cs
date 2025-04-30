@@ -7,8 +7,9 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     private const int MaxPartySize = 6;              // 최대 파티 크기
-
-    [SerializeField] private BattleUIController ui;  // UI 요소
+	// [SerializeField] private PlayerPokemonPos;       // 플레이어 포켓몬 위치
+	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
+	[SerializeField] private BattleUIController ui;  // UI 요소
 	[SerializeField] private BattleHUD hud;          // HP 게이지·텍스트 제어
 
 	private List<Pokemon> playerParty;    // 플레이어 포켓몬 리스트
