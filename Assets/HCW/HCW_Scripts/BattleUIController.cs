@@ -26,7 +26,10 @@ public class BattleUIController : MonoBehaviour
 	public UnityEvent<string> OnActionSelected = new UnityEvent<string>();
 	public UnityEvent<int> OnSkillSelected = new UnityEvent<int>();
 
+	private List<Button> actionButtons;
 	private List<Button> skillButtons;
+
+
 
 	void Awake()
 	{
@@ -35,8 +38,9 @@ public class BattleUIController : MonoBehaviour
 	}
 	void Start()
 	{
-		// 기본 패널 제외 전부 비활성화
-		bottomPanel.SetActive(true);
+		// 대사창이 끝날때까지 액션 버튼 비활성화
+		bottomPanel.SetActive(false);
+		// 기술 패널도 숨김
 		skillPanel.SetActive(false);
 
 		// 액션 버튼 이벤트 등록
@@ -49,9 +53,24 @@ public class BattleUIController : MonoBehaviour
 		for (int i = 0; i < skillButtons.Count; i++)
 		{
 			int idx = i;
-			skillButtons[i].onClick.AddListener(() =>{OnSkillSelected.Invoke(idx); skillPanel.SetActive(false);});
+			skillButtons[i].onClick.AddListener(() => {OnSkillSelected.Invoke(idx); skillPanel.SetActive(false);});
 		}
 	}
+	public void ShowActionMenu() => bottomPanel.SetActive(true);
+
+	public void HideActionMenu() => bottomPanel.SetActive(false);
+
+	// TODO 매뉴창 방향키 조작
+	//void Update()
+	//{
+	//	if (bottomPanel.activeSelf)
+	//	{
+	//		if (Input.GetKeyDown(KeyCode.Escape))
+	//		{
+	//			HideActionMenu();
+	//		}
+	//	}
+	//}
 
 	public void ShowSkillSelection(Pokemon pokemon)
 	{
@@ -73,5 +92,5 @@ public class BattleUIController : MonoBehaviour
 		}
 		skillPanel.SetActive(true);
 	}
-	public void HideSkillSelection() => skillPanel.SetActive(false); //
+	public void HideSkillSelection() => skillPanel.SetActive(false);
 }
