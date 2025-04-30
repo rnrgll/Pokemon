@@ -50,6 +50,13 @@ public class Define
 		Dragon,     // 드래곤
 		Dark,       // 악
 		Steel,      // 강철
+	};
+
+	public enum SkillType // 스킬 타입
+	{
+		Physical,   // 물리
+		Special,    // 특수
+		Status      // 특수기
 	}
 
 
