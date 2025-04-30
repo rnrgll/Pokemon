@@ -2,6 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum PokeType
+{
+	None = 0,
+	Water,
+	Fire,
+	Grass,
+	Wind,
+	Ice,
+	Poison,
+	Ground
+}
 
 public class PokemonS : MonoBehaviour
 {
@@ -12,7 +23,10 @@ public class PokemonS : MonoBehaviour
 	public int maxHp;
 	public int curExp;
 	public int nextExp;
-	private int maxLevel = 20;
+
+	public Sprite front;
+	public Sprite back;
+	public Animator animator;
 	
 	[SerializeField] public PokemonStatS baseStat;   // 종족값
 	[SerializeField] public PokemonIVS iv;           // 개체값
@@ -22,6 +36,8 @@ public class PokemonS : MonoBehaviour
 	public PokeType pokeType2;
 
 	public bool isDead;
+
+	public List<SkillS> skills = new List<SkillS>();
 
 	public event Action OnDie;
 	public event Action OnLevelUp;
@@ -53,6 +69,11 @@ public class PokemonS : MonoBehaviour
 	{
 		OnDie -= Die;
 		OnLevelUp -= UpdateLevel;
+	}
+
+	private void Start()
+	{
+		animator = GetComponent<Animator>();
 	}
 
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
@@ -95,9 +116,16 @@ public class PokemonS : MonoBehaviour
 	{
 		if (isDead) return;
 
+		float realDamage = 0;
+
+		if (!WinType(attacker))
+		{
+			realDamage *= 1.3f;
+		}
+
+		amount += (int)realDamage;
 
 		Debug.Log($"{amount}만큼 데미지를 받습니다");
-
 		hp = Mathf.Max(0, hp - amount);
 		Debug.Log($"현재 체력 : {hp}");
 
@@ -148,5 +176,65 @@ public class PokemonS : MonoBehaviour
 		return hp;
 	}
 
+	public bool WinType(PokemonS attacker)
+	{
+		if (this.pokeType1 == PokeType.None)
+			return false;
+		else if (this.pokeType1 == PokeType.Water)
+		{
+			if (attacker.pokeType1 == PokeType.Grass ||
+				attacker.pokeType1 == PokeType.Ice ||
+				attacker.pokeType1 == PokeType.Ground)
+			{
+				return true;
+			}
+		}
+		else if (pokeType1 == PokeType.Fire)
+		{
+			if (attacker.pokeType1 == PokeType.Water ||
+				attacker.pokeType1 == PokeType.Ice ||
+				attacker.pokeType1 == PokeType.Ground)
+			{
+				return true;
+			}
+		}
+		else if (pokeType1 == PokeType.Ice)
+		{
+			if (attacker.pokeType1 == PokeType.Grass ||
+				attacker.pokeType1 == PokeType.Ground ||
+				attacker.pokeType1 == PokeType.Wind)
+			{
+				return true;
+			}
+		}
+		else if (pokeType1 == PokeType.Wind)
+		{
+			if (attacker.pokeType1 == PokeType.Fire ||
+				attacker.pokeType1 == PokeType.Water ||
+				attacker.pokeType1 == PokeType.Poison)
+			{
+				return true;
+			}
+		}
+		else if (pokeType1 == PokeType.Poison)
+		{
+			if (attacker.pokeType1 == PokeType.Fire ||
+				attacker.pokeType1 == PokeType.Water ||
+				attacker.pokeType1 == PokeType.Ice)
+			{
+				return true;
+			}
+		}
+		else if (pokeType1 == PokeType.Ground)
+		{
+			if (attacker.pokeType1 == PokeType.Wind ||
+				attacker.pokeType1 == PokeType.Water ||
+				attacker.pokeType1 == PokeType.Poison)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
