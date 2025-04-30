@@ -14,10 +14,11 @@ public class UIManager : Singleton<UIManager>
     #region Variables
     //rootUI : ui object의 최상의 부모(컨테이너)
     private GameObject _rootUI;
+
     //PopUp 용 스택
     private Stack<UI_PopUp> _popUpStack = new Stack<UI_PopUp>();
     private int _order = 10;
-    
+
     //Linked 용 스택
     [SerializeField] private List<UI_Linked> _linkList = new List<UI_Linked>();
     
@@ -233,7 +234,4 @@ public class UIManager : Singleton<UIManager>
     }
 
     #endregion
-    
-
-    
 }

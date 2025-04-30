@@ -15,8 +15,7 @@ public class NPCController : MonoBehaviour, IInteractable
 	}
 	public void Interact()
     {
-		//	if (DialogManager.Instance.isTyping == false) 
-		//	{	StartCoroutine(DialogManager.Instance.ShowText(dialog));}
-		StartCoroutine(npcCharacter.NpcMove(new Vector2(2, 0)));
+		if (DialogManager.Instance.isTyping == false) 
+		{	StartCoroutine(DialogManager.Instance.ShowText(dialog));}
 	}
 }
