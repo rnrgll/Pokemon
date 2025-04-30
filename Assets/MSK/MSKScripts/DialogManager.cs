@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class DialogManager : Singleton<DialogManager>
-{ 
+{
 	[SerializeField] GameObject dialogBox;
 	//	NPC 텍스트
 	[SerializeField] TMP_Text dialogText;
@@ -13,7 +12,9 @@ public class DialogManager : Singleton<DialogManager>
 	[SerializeField] int letterPerSec;
 
 	//	가져올 프리펩의 경로
-	GameObject prefab = Resources.Load<GameObject>("MSK/MSKPrefab/DialogPrefab}");
+	GameObject prefab = Resources.Load<GameObject>("Dialog_Prefab/DialogPrefab");
+	GameObject dialogInstance = null;
+
 
 
 	Dialog dialog;
@@ -24,8 +25,8 @@ public class DialogManager : Singleton<DialogManager>
 	public bool isTyping;
 
 	public static DialogManager Instance { get; private set; }
-	
-	
+
+
 	public event Action OnShowDialog;
 	public event Action CloseDialog;
 
@@ -35,22 +36,34 @@ public class DialogManager : Singleton<DialogManager>
 	}
 
 	public void HandleUpdate()
-	{	// 대화 진행중
-		if (Input.GetKeyDown(KeyCode.Z) && !isTyping)
-		{	// 다음 대사박스 출력
-			++currentLine;
-			if (currentLine < dialog.Lines.Count)
+	{   // 대화 진행중
+
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			if (dialogInstance == null)
 			{
-				StartCoroutine(ShowDialog(dialog.Lines[currentLine]));
+				dialogInstance = Instantiate(prefab);
 			}
-			else
+			// 다음 대사박스 출력
+			if (!isTyping)
 			{
-				currentLine = 0;
-				dialogBox.SetActive(false);
-				CloseDialog?.Invoke();
+				++currentLine;
+				if (currentLine < dialog.Lines.Count)
+				{
+					StartCoroutine(ShowDialog(dialog.Lines[currentLine]));
+				}
+				else
+				{
+					currentLine = 0;
+					dialogBox.SetActive(false);
+					CloseDialog?.Invoke();
+				}
 			}
 		}
 	}
+
+
+
 
 
 	public IEnumerator ShowText(Dialog dialog)
@@ -64,8 +77,6 @@ public class DialogManager : Singleton<DialogManager>
 		StartCoroutine(ShowDialog(dialog.Lines[0]));
 	}
 
-
-
 	public IEnumerator ShowDialog(string dialog)
 	{
 		isTyping = true;
@@ -77,4 +88,9 @@ public class DialogManager : Singleton<DialogManager>
 		}
 		isTyping = false;
 	}
+
+
+
+
+
 }
