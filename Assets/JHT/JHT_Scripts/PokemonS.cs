@@ -123,10 +123,10 @@ public class PokemonS : MonoBehaviour
 
 		float realDamage = 0;
 
-		if (!WinType(attacker))
-		{
-			realDamage *= 1.3f;
-		}
+		//if (!WinType(attacker))
+		//{
+		//	realDamage *= 1.3f;
+		//}
 
 		amount += (int)realDamage;
 
@@ -181,65 +181,65 @@ public class PokemonS : MonoBehaviour
 		return hp;
 	}
 
-	public bool WinType(PokemonS attacker)
-	{
-		if (this.pokeType1 == PokeType.None)
-			return false;
-		else if (this.pokeType1 == PokeType.Water)
-		{
-			if (attacker.pokeType1 == PokeType.Grass ||
-				attacker.pokeType1 == PokeType.Ice ||
-				attacker.pokeType1 == PokeType.Ground)
-			{
-				return true;
-			}
-		}
-		else if (pokeType1 == PokeType.Fire)
-		{
-			if (attacker.pokeType1 == PokeType.Water ||
-				attacker.pokeType1 == PokeType.Ice ||
-				attacker.pokeType1 == PokeType.Ground)
-			{
-				return true;
-			}
-		}
-		else if (pokeType1 == PokeType.Ice)
-		{
-			if (attacker.pokeType1 == PokeType.Grass ||
-				attacker.pokeType1 == PokeType.Ground ||
-				attacker.pokeType1 == PokeType.Wind)
-			{
-				return true;
-			}
-		}
-		else if (pokeType1 == PokeType.Wind)
-		{
-			if (attacker.pokeType1 == PokeType.Fire ||
-				attacker.pokeType1 == PokeType.Water ||
-				attacker.pokeType1 == PokeType.Poison)
-			{
-				return true;
-			}
-		}
-		else if (pokeType1 == PokeType.Poison)
-		{
-			if (attacker.pokeType1 == PokeType.Fire ||
-				attacker.pokeType1 == PokeType.Water ||
-				attacker.pokeType1 == PokeType.Ice)
-			{
-				return true;
-			}
-		}
-		else if (pokeType1 == PokeType.Ground)
-		{
-			if (attacker.pokeType1 == PokeType.Wind ||
-				attacker.pokeType1 == PokeType.Water ||
-				attacker.pokeType1 == PokeType.Poison)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+	//public bool WinType(PokemonS attacker)
+	//{
+	//	if (this.pokeType1 == PokeType.None)
+	//		return false;
+	//	else if (this.pokeType1 == PokeType.Water)
+	//	{
+	//		if (attacker.pokeType1 == PokeType.Grass ||
+	//			attacker.pokeType1 == PokeType.Ice ||
+	//			attacker.pokeType1 == PokeType.Ground)
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	else if (pokeType1 == PokeType.Fire)
+	//	{
+	//		if (attacker.pokeType1 == PokeType.Water ||
+	//			attacker.pokeType1 == PokeType.Ice ||
+	//			attacker.pokeType1 == PokeType.Ground)
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	else if (pokeType1 == PokeType.Ice)
+	//	{
+	//		if (attacker.pokeType1 == PokeType.Grass ||
+	//			attacker.pokeType1 == PokeType.Ground ||
+	//			attacker.pokeType1 == PokeType.Wind)
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	else if (pokeType1 == PokeType.Wind)
+	//	{
+	//		if (attacker.pokeType1 == PokeType.Fire ||
+	//			attacker.pokeType1 == PokeType.Water ||
+	//			attacker.pokeType1 == PokeType.Poison)
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	else if (pokeType1 == PokeType.Poison)
+	//	{
+	//		if (attacker.pokeType1 == PokeType.Fire ||
+	//			attacker.pokeType1 == PokeType.Water ||
+	//			attacker.pokeType1 == PokeType.Ice)
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	else if (pokeType1 == PokeType.Ground)
+	//	{
+	//		if (attacker.pokeType1 == PokeType.Wind ||
+	//			attacker.pokeType1 == PokeType.Water ||
+	//			attacker.pokeType1 == PokeType.Poison)
+	//		{
+	//			return true;
+	//		}
+	//	}
+	//	return false;
+	//}
 
 }

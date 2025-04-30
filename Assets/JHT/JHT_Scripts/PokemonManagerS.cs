@@ -27,7 +27,19 @@ public class PokemonManagerS : Singleton<PokemonManagerS>
 
 	public void Start()
 	{
-		party.Add(new PokemonS(1, "2", 1, new PokemonStatS(1, 2, 3, 4, 5, 6), new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Fire, PokeType.Ice));
+		
+	}
+
+	public void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			party.Add(new PokemonS(1, "2", 1, new PokemonStatS(1, 2, 3, 4, 5, 6), new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Fire, PokeType.Ice));
+		}
+		if (Input.GetKeyDown(KeyCode.D))
+		{
+			party.Add(new PokemonS(1, "Pikachu", 1, GetBaseStat[1], new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Water, PokeType.Ice));
+		}
 	}
 
 	void PokemonBaseStatInit()
