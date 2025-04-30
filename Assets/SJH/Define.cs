@@ -59,23 +59,40 @@ public class Define
 		Select,
 		Cancel,
 	}
-
-	public enum BagPanel
-	{
-		Items,
-		Balls,
-		KeyItems,
-		TM,
-		Count
-		
-	}
+	
 
 	#endregion
 
 
 	#region Item
 
-	public int ItemMaxCnt = 99;
+	public int ItemMaxCnt = 99; //보유 가능한 최대 개수
+	
+	public enum ItemCategory // 아이템 카테고리(대분류)
+	{ 
+		Item, 
+		Ball,
+		KeyItem,
+		TM_HM,
+		Count
+	}
+	
+	public enum ItemTarget
+	{
+		None,              // 사용 대상 없음
+		Player,            // 플레이어 본인 대상
+		MyPokemon,        // 내 포켓몬 대상
+		EmneyPokemon,   // 상대 포켓몬 대상
+	}
+
+	public enum ItemUseContext //사용 환경
+	{
+		FieldOnly,
+		BattleOnly,
+		Both
+	}
+	
+	
 
 	#endregion
 }
