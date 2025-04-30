@@ -8,17 +8,25 @@ using static Define;
 public class UI_Bag : UI_Linked
 {
 	private static BagPanel currentPanel = BagPanel.Items;
-
+	private static int[] currentCursorList = new int[(int)BagPanel.Count];
+	private int curCursorIdx = 0;
+	private int preCursorIdx = 0;
+	
 	[Header("UI 오브젝트 참조")]
 	[SerializeField] private Image bagIconImg;
 	[SerializeField] private Image labelImg;
-	[SerializeField] private GameObject itemList;
+	[SerializeField] private ScrollRect scrollRect;
+	private Transform itemSlotRoot;
 
 	[Header("리소스")] 
 	[SerializeField] private Sprite[] bagIconSprites;
 	[SerializeField] private Sprite[] labelSprites;
 
-	
+	private void Awake()
+	{
+		itemSlotRoot = scrollRect.content;
+	}
+
 	private void OnEnable()
 	{
 		UpdateUI();
@@ -28,6 +36,7 @@ public class UI_Bag : UI_Linked
 	{
 		base.Init();
 		UpdateUI();
+		UpdateItemSlotUI();
 	}
 
 
@@ -40,6 +49,14 @@ public class UI_Bag : UI_Linked
 		else if (Input.GetKeyDown(KeyCode.RightArrow))
 		{
 			MovePanel(1);
+		}
+		else if (Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			MoveCursor(-1);
+		}
+		else if (Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			MoveCursor(1);
 		}
 	}
 	
@@ -57,10 +74,33 @@ public class UI_Bag : UI_Linked
 		UpdateUI();
 	}
 
+	void MoveCursor(int direction)
+	{
+		int panelIdx = (int)currentPanel;
+		
+		preCursorIdx = curCursorIdx;
+		int next = curCursorIdx + direction;
+		int itemCount = itemSlotRoot.childCount;
+		next = Mathf.Clamp(next, 0, itemCount-1);
+		
+		Debug.Log($"{itemCount} , {next}");
+		currentCursorList[panelIdx] = curCursorIdx = next;
+		UpdateItemSlotUI();
+	}
+
 	void UpdateUI()
 	{
 		UpdateBagIcon(currentPanel);
 		UpdateTagImage(currentPanel);
+	}
+
+	void UpdateItemSlotUI()
+	{
+		UI_ItemSlot preSlot = itemSlotRoot.GetChild(preCursorIdx).GetComponent<UI_ItemSlot>();
+		UI_ItemSlot curSlot = itemSlotRoot.GetChild(curCursorIdx).GetComponent<UI_ItemSlot>();
+		
+		preSlot.Deselect();
+		curSlot.Select();
 	}
 
 
@@ -91,3 +131,4 @@ public class UI_Bag : UI_Linked
 	    Debug.Log("ui_bag 캔슬 호출");
     }
 }
+

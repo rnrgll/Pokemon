@@ -71,4 +71,11 @@ public class Define
 	}
 
 	#endregion
+
+
+	#region Item
+
+	public int ItemMaxCnt = 99;
+
+	#endregion
 }
