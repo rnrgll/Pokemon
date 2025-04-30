@@ -44,7 +44,6 @@ public class Player : MonoBehaviour
 		zInput = StartCoroutine(ZInput());
 		// 점프 시간
 		jumpTime = new WaitForSeconds(0.03f);
-		Debug.Log(zInput);
 	}
 
 	void Start()
