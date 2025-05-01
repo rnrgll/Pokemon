@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
+
 public class Pokémon : MonoBehaviour
 {
 	[Tooltip("도감 번호")]
@@ -48,7 +49,6 @@ public class Pokémon : MonoBehaviour
 	{
 		// 데이터 매니저에서 고정데이터 받아오기
 		SJH_PokemonData data = Manager.Data.SJH_PokemonData.GetPokemonData(_id);
-
 		SetData(data, _level);
 	}
 	public void Init(string _name, int _level)
@@ -81,7 +81,7 @@ public class Pokémon : MonoBehaviour
 
 		// 스킬 랜덤
 		SetSkills(data);
-		
+
 		//상태 정상으로 설정
 		condition = StatusCondition.None;
 	}
@@ -290,11 +290,11 @@ public class Pokémon : MonoBehaviour
 		if (value <= 0) //오류
 			throw new ArgumentOutOfRangeException(nameof(value), "회복량은 양수여야 합니다.");
 		int hpGap = maxHp - hp;
-		
+
 		//실제 회복량
 		int actualHeal = Mathf.Min(value, hpGap);
 		hp += actualHeal;
-		
+
 		return actualHeal;
 	}
 
