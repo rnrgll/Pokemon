@@ -100,4 +100,16 @@ public class SceneChanger : MonoBehaviour
 			yield return null;
 		}
 	}
+
+
+	public void Change(string nextSceneName, Vector2 nextPos)
+	{
+		exitSceneName = nextSceneName;
+		exitPos = nextPos;
+		isChange = false;
+		
+		Player player = FindObjectOfType<Player>();
+
+		StartCoroutine(Change(player.gameObject));
+	}
 }

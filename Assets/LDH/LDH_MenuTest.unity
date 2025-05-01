@@ -255,10 +255,6 @@ MonoBehaviour:
   _pokemon: {fileID: 1920030746}
   startHp: 10
   maxHp: 20
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 1
   condition: 6
   healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
@@ -547,10 +543,6 @@ MonoBehaviour:
   _pokemon: {fileID: 2030702401}
   startHp: 20
   maxHp: 20
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 1
   condition: 4
   healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
@@ -705,10 +697,6 @@ MonoBehaviour:
   _pokemon: {fileID: 1056029543}
   startHp: 20
   maxHp: 20
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 1
   condition: 3
   healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
@@ -3101,6 +3089,154 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8484361118332487892, guid: 8bc77806f6e674e8dbc84d512158d1cc, type: 3}
   m_PrefabInstance: {fileID: 487509984}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &514051085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 514051086}
+  - component: {fileID: 514051089}
+  - component: {fileID: 514051088}
+  - component: {fileID: 514051087}
+  - component: {fileID: 514051090}
+  m_Layer: 5
+  m_Name: TestButton (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &514051086
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514051085}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1557091689}
+  m_Father: {fileID: 909826990}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &514051087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514051085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 514051088}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 514051090}
+        m_TargetAssemblyTypeName: LDH_RopeTest, Assembly-CSharp
+        m_MethodName: UseRope
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &514051088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514051085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &514051089
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514051085}
+  m_CullTransparentMesh: 1
+--- !u!114 &514051090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514051085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36b83e3a0da405897b732c6a2a362e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _escapeRope: {fileID: 11400000, guid: 5c5f3f7947b194b73a200e5a8ddc6b2f, type: 2}
+  isInDungeon: 1
 --- !u!1 &529329112
 GameObject:
   m_ObjectHideFlags: 0
@@ -3162,10 +3298,6 @@ MonoBehaviour:
   _pokemon: {fileID: 0}
   startHp: 0
   maxHp: 0
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 0
   condition: 0
   healItem: {fileID: 0}
@@ -3633,7 +3765,7 @@ GameObject:
   - component: {fileID: 909826990}
   - component: {fileID: 909826991}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3658,6 +3790,7 @@ RectTransform:
   - {fileID: 215985379}
   - {fileID: 1201901480}
   - {fileID: 1465106661}
+  - {fileID: 514051086}
   m_Father: {fileID: 1212934445}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -3822,10 +3955,6 @@ MonoBehaviour:
   _pokemon: {fileID: 1305516628}
   startHp: 20
   maxHp: 20
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 1
   condition: 2
   healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
@@ -4456,10 +4585,6 @@ MonoBehaviour:
   _pokemon: {fileID: 278240343}
   startHp: 20
   maxHp: 20
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 1
   condition: 5
   healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
@@ -5361,10 +5486,6 @@ MonoBehaviour:
   _pokemon: {fileID: 1906032779}
   startHp: 20
   maxHp: 20
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 1
   condition: 1
   healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
@@ -5519,12 +5640,8 @@ MonoBehaviour:
   _pokemon: {fileID: 1625938840}
   startHp: 20
   maxHp: 20
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 1
-  condition: 5
+  condition: 6
   healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
   keyItem: {fileID: 0}
 --- !u!114 &1465106663
@@ -5576,7 +5693,7 @@ MonoBehaviour:
         m_MethodName: UseItem
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 70de9ace33bd14159b663546084b4928, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: bd796a235a515444da4d94771e879918, type: 2}
           m_ObjectArgumentAssemblyTypeName: ItemBase, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -5789,6 +5906,140 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539523871}
+  m_CullTransparentMesh: 1
+--- !u!1 &1557091688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1557091689}
+  - component: {fileID: 1557091691}
+  - component: {fileID: 1557091690}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1557091689
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557091688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 514051086}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1557091690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557091688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\uB3D9\uAD74\uD0C8\uCD9C\uB85C\uD504"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: a44024238fb81475a8bb5919df1dad17, type: 2}
+  m_sharedMaterial: {fileID: 879832099988764899, guid: a44024238fb81475a8bb5919df1dad17, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 24
+  m_fontSizeBase: 24
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1557091691
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557091688}
   m_CullTransparentMesh: 1
 --- !u!1 &1613129580
 GameObject:
@@ -6368,10 +6619,6 @@ MonoBehaviour:
   _pokemon: {fileID: 0}
   startHp: 0
   maxHp: 0
-  inGameContext:
-    IsInBattle: 0
-    IsWildBattle: 0
-    IsInDungeon: 0
   isInBattle: 0
   condition: 0
   healItem: {fileID: 0}

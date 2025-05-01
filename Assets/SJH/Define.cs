@@ -11,6 +11,7 @@ public class Define
 		["연두마을"] = "NewBarkTown",
 		["연구소"] = "ProfessorLab",
 		["29번도로"] = "Route29",
+		["도라지시티"] = "VioletCity",
 
 	};
 
