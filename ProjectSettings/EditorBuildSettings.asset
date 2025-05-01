@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ProfessorLab.unity
     guid: fdb2e3ac7269f8d4aac01f0d1f9d8958
+  - enabled: 1
+    path: Assets/Scenes/Route29.unity
+    guid: 677d99f6026fdef42a5a60ebe6c754c5
   m_configObjects: {}

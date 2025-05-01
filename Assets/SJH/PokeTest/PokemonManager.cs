@@ -5,31 +5,41 @@ using static Define;
 
 public class PokemonManager : Singleton<PokemonManager>
 {
-	public static PokemonManager Get;
+	public static PokemonManager Get => GetInstance();
 	
 	// 내파티
 	public List<Pokémon> party = new List<Pokémon>();
+	public List<Pokémon> pc = new List<Pokémon>();
 	public Dictionary<int, PokemonStat> GetBaseStat = new Dictionary<int, PokemonStat>();
+	public GameObject pokemonPrefab;
 
-	void Awake()
+	public void AddPokemon(string pokeName, int level)
 	{
-		if (Get == null)
-		{
-			Get = this;
-			DontDestroyOnLoad(gameObject);
-			PokemonBaseStatInit();
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
+		Pokémon pokemon = Instantiate(pokemonPrefab).GetComponent<Pokémon>();
+		pokemon.Init(pokeName, level);
+
+		AddParty(pokemon);
 	}
-	
-	void PokemonBaseStatInit()
+
+	public void AddPokemon(int pokedex, int level)
 	{
-		// 2세대 스타팅 포켓몬 등록
-		GetBaseStat.Add(1, new PokemonStat(45, 49, 65, 49, 65, 45)); // 치코리타
-		GetBaseStat.Add(4, new PokemonStat(39, 52, 43, 60, 50, 65)); // 브케인
-		GetBaseStat.Add(7, new PokemonStat(50, 65, 64, 44, 48, 43)); // 리아코
+		Pokémon pokemon = Instantiate(pokemonPrefab).GetComponent<Pokémon>();
+		pokemon.Init(pokedex, level);
+
+		AddParty(pokemon);
+	}
+
+	private void AddParty(Pokémon pokemon)
+	{
+		pokemon.gameObject.name = pokemon.pokeName;
+		if (party.Count >= 6)
+		{
+			Debug.Log($"가지고 있는 포켓몬 초과 PC로");
+			pc.Add(pokemon);
+			return;
+		}
+
+		party.Add(pokemon);
+		Debug.Log($"골드은/는 {pokemon.pokeName} 을/를 얻었다!");
 	}
 }
