@@ -8,12 +8,13 @@ public class SkillS : MonoBehaviour
 	//public Sprite icon;
 	public string name;
 	public string description;
-	public int damage;
+	public float damage;
 	public SkillType skillType;
 	public GameObject Physicsparticle;
 	public GameObject specialParticle;
 
-	public SkillS(string _name, string _description, int _damage, SkillType _skillType)
+
+	public SkillS(string _name, string _description, float _damage, SkillType _skillType)
 	{
 		this.name = _name;
 		this.description = _description;
@@ -44,7 +45,7 @@ public class SkillS : MonoBehaviour
 
 	public void AttackStat(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
-		attacker.TakeStat(attacker,defender, skill.damage);
+		attacker.TakeStat(attacker,defender, skill);
 
 		//파티클은 어떻게 실행할건가
 		GameObject parti = Instantiate(specialParticle, defender.transform.position, Quaternion.identity);
@@ -59,7 +60,7 @@ public class SkillS : MonoBehaviour
 		//20 확률로 피함
 		if (rand > 2)
 		{
-			defender.TakeDamage(attacker,defender, skill.damage * attacker.pokemonStat.attack);
+			defender.TakeDamage(attacker,defender, skill); //skill.damage* attacker.pokemonStat.attack
 			//파티클은 어떻게 실행할건가
 			GameObject parti = Instantiate(Physicsparticle, defender.transform.position, Quaternion.identity);
 			Destroy(parti, 2f);
