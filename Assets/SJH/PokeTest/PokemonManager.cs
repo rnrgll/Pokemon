@@ -9,9 +9,16 @@ public class PokemonManager : Singleton<PokemonManager>
 	
 	// 내파티
 	public List<Pokémon> party = new List<Pokémon>();
+	// PC
 	public List<Pokémon> pc = new List<Pokémon>();
-	public Dictionary<int, PokemonStat> GetBaseStat = new Dictionary<int, PokemonStat>();
+	// 포켓몬 프리펩
 	public GameObject pokemonPrefab;
+
+	void Start()
+	{
+		// Test용 스타팅 포ㅓ켓몬 주기
+		AddPokemon(1, 5);
+	}
 
 	public void AddPokemon(string pokeName, int level)
 	{
@@ -42,4 +49,16 @@ public class PokemonManager : Singleton<PokemonManager>
 		party.Add(pokemon);
 		Debug.Log($"골드은/는 {pokemon.pokeName} 을/를 얻었다!");
 	}
+
+	// 살아있는 포켓몬 체크용
+	public bool AlivePokemonCheck()
+	{
+		foreach (var poke in party)
+		{
+			if (!poke.isDead && poke.hp > 0)
+				return true;
+		}
+		return false;
+	}
+
 }
