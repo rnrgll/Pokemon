@@ -7,8 +7,11 @@ public class TownExitEvent : PokeEvent
 	public override void OnPokeEvent(GameObject player)
 	{
 		if (Manager.Poke.party.Count < 0)
+		{
+			Debug.Log("포켓몬을 가지고 있지 않습니다 삡");
 			return;
-
+		}
+		Debug.Log("포켓몬을 가지고 있습니다 통과");
 		// TODO : 포켓몬 없이 마을밖으로 나갈 때 엔피시가 가로막게
 
 		// 장소 : 연두마을 -22, -12 or -22, -13

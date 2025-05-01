@@ -59,6 +59,13 @@ public class Define
 		Status      // 특수기
 	}
 
+	public enum ExpType // 경험치 타입
+	{
+		Fast,       // 빠른 800,000			EXP = 4 * Level³ / 5
+		MediumFast, // 약간 빠름 1,000,000	EXP = Level³
+		MediumSlow, // 약간 느림 1,059,860	EXP = (6/5) * Level³ - 15 * Level² + 100 * Level - 140
+	}
+
 
 	#region UI
 	public enum UIInputType

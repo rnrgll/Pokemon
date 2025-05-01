@@ -4,9 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-	[SerializeField] Vector2 targetPos;
+	[Tooltip("도착할 씬 이름")]
+	[SerializeField] string exitSceneName;
+	[Tooltip("도착할 씬 위치")]
+	[SerializeField] Vector2 exitPos;
+	[Tooltip("씬체인저 타입")]
 	[SerializeField] Define.PortalType portalType;
 	[SerializeField] bool isPlayerIn;
+	[Tooltip("씬 변경후 방향")]
 	[SerializeField] Vector2 keyDirection;
 	Coroutine sceneCoroutine;
 	[SerializeField] bool isChange;
@@ -23,7 +28,7 @@ public class SceneChanger : MonoBehaviour
 			{
 				// 플레이어 이동
 				//SceneChange(gameObject.name, collision.transform.gameObject);
-				sceneCoroutine = StartCoroutine(Change(gameObject.name, collision.gameObject));
+				sceneCoroutine = StartCoroutine(Change(collision.gameObject));
 			}
 		}
 	}
@@ -51,7 +56,7 @@ public class SceneChanger : MonoBehaviour
 				{
 					// 플레이어 이동
 					//SceneChange(gameObject.name, player.gameObject);
-					sceneCoroutine = StartCoroutine(Change(gameObject.name, player.gameObject));
+					sceneCoroutine = StartCoroutine(Change(player.gameObject));
 				}
 			}
 		}
@@ -62,15 +67,15 @@ public class SceneChanger : MonoBehaviour
 		isPlayerIn = false;
 	}
 
-	IEnumerator Change(string sceneName, GameObject player)
+	IEnumerator Change(GameObject player)
 	{
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(exitSceneName);
 		asyncLoad.allowSceneActivation = false;
 		// 잔류이동 지우기
 		Player pc = player.GetComponent<Player>();
 		isChange = true;
 		pc.state = Define.PlayerState.SceneChange;
-		player.transform.position = new Vector3(targetPos.x, targetPos.y);
+		player.transform.position = new Vector3(exitPos.x, exitPos.y);
 		pc.StopMoving();
 		pc.currentDirection = keyDirection;
 		pc.AnimChange();
@@ -80,7 +85,7 @@ public class SceneChanger : MonoBehaviour
 			if (asyncLoad.progress >= 0.9f)
 			{
 				Debug.Log(gameObject.name);
-				player.transform.position = targetPos;
+				player.transform.position = exitPos;
 				yield return new WaitForSeconds(0.1f);
 				asyncLoad.allowSceneActivation = true;
 
