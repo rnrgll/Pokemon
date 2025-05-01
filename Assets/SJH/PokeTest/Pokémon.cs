@@ -32,6 +32,12 @@ public class Pokémon : MonoBehaviour
 	public Define.PokeType pokeType2;
 	[Tooltip("포켓몬 경험치 타입")]
 	public Define.ExpType expType;
+	[Tooltip("다음 진화 레벨")]
+	public int evolveLevel;
+	[Tooltip("다음 진화 이름")]
+	public string evolveName;
+	[Tooltip("포켓몬 기술")]
+	public List<string> skills;
 	[Tooltip("죽었으면 true / 살았으면 false")]
 	public bool isDead;
 
@@ -60,6 +66,8 @@ public class Pokémon : MonoBehaviour
 		pokeType1 = data.PokeType1;
 		pokeType2 = data.PokeType2;
 		expType = data.ExpType;
+		evolveLevel = data.EvolveLevel;
+		evolveName = data.EvolveName;
 
 		// 개별데이터 hp exp iv stat
 		level = _level;
@@ -70,27 +78,11 @@ public class Pokémon : MonoBehaviour
 		pokemonStat = GetStat();
 		hp = pokemonStat.hp;
 		maxHp = hp;
+
+		var defaultSkills = data.DefaultSkill;
+		var learnableSkills = data.SkillDic;
 	}
-
-	// 모든 값 개별적으로 입력
-	public void Init(int _id, string _name, int _level, PokemonStat _baseStat, PokemonIV _iv, Define.PokeType _pokeType1, Define.PokeType _pokeType2)
-	{
-		id = _id;
-		pokeName = _name;
-		level = _level;
-		baseStat = _baseStat;
-		iv = _iv;
-		pokeType1 = _pokeType1;
-		pokeType2 = _pokeType2;
-
-		pokemonStat = GetStat();
-		curExp = 0;
-		nextExp = 999;
-		hp = pokemonStat.hp;
-		maxHp = hp;
-
-		isDead = false;
-	}
+	
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
 	private PokemonStat GetStat()
 	{
@@ -127,6 +119,10 @@ public class Pokémon : MonoBehaviour
 		}
 	}
 
+	public void SetSkills()
+	{
+
+	}
 
 	public void AddExp(int value)
 	{

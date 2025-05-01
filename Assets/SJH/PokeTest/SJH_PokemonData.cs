@@ -21,9 +21,15 @@ public class SJH_PokemonData
 	public Define.PokeType PokeType2;
 	// 경험치 타입
 	public Define.ExpType ExpType;
-	// 기술
-	// 스프라이트1
-	// 스프라이트2
+	// 진화 레벨
+	public int EvolveLevel;
+	// 진화 포켓몬 이름
+	public string EvolveName;
+	// 기본 스킬
+	public List<string> DefaultSkill;
+	// 배우는 스킬 <level, skillName>
+	public Dictionary<int, string> SkillDic;
+	// TODO : 스프라이트 1, 스프라이트 2
 
 
 	public void Init()
@@ -38,6 +44,25 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Grass,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 16,
+				EvolveName = "베이리프",
+				// 기본 기술
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "울음소리"
+				},
+				// 스킬 딕셔너리 <int 레벨, string 기술명 or Skill class>
+				SkillDic = new Dictionary<int, string>()
+				{
+					[8] = "잎날가르기",
+					[12] = "리플렉터",
+					[15] = "독가루",
+					[22] = "광합성",
+					[29] = "누르기",
+					[36] = "빛의장막",
+					[43] = "신비의부적",
+					[50] = "솔라빔"
+				}
 			},
 			[2] = new SJH_PokemonData
 			{
@@ -47,6 +72,23 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Grass,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 32,
+				EvolveName = "메가니움",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "울음소리", "잎날가르기", "리플렉터"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[8] = "잎날가르기",
+					[12] = "리플렉터",
+					[15] = "독가루",
+					[23] = "광합성",
+					[31] = "누르기",
+					[39] = "빛의장막",
+					[47] = "신비의부적",
+					[55] = "솔라빔"
+				}
 			},
 			[3] = new SJH_PokemonData
 			{
@@ -56,6 +98,23 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Grass,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "울음소리", "잎날가르기", "리플렉터"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[8] = "잎날가르기",
+					[12] = "리플렉터",
+					[15] = "독가루",
+					[22] = "광합성",
+					[31] = "누르기",
+					[41] = "빛의장막",
+					[51] = "신비의부적",
+					[61] = "솔라빔"
+				}
 			},
 			[4] = new SJH_PokemonData
 			{
@@ -65,6 +124,21 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Fire,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 14,
+				EvolveName = "마그케인",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "째려보기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "연막",
+					[12] = "불꽃세례",
+					[19] = "전광석화",
+					[27] = "화염자동차",
+					[36] = "스피드스타",
+					[46] = "화염방사",
+				}
 			},
 			[5] = new SJH_PokemonData
 			{
@@ -74,6 +148,21 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Fire,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 36,
+				EvolveName = "블레이범",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "째려보기", "연막"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "연막",
+					[12] = "불꽃세례",
+					[21] = "전광석화",
+					[31] = "화염자동차",
+					[42] = "스피드스타",
+					[54] = "화염방사",
+				}
 			},
 			[6] = new SJH_PokemonData
 			{
@@ -83,6 +172,21 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Fire,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "째려보기", "연막", "불꽃세례"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "연막",
+					[12] = "불꽃세례",
+					[21] = "전광석화",
+					[31] = "화염자동차",
+					[45] = "스피드스타",
+					[60] = "화염방사",
+				}
 			},
 			[7] = new SJH_PokemonData
 			{
@@ -92,6 +196,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Water,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 18,
+				EvolveName = "엘리게이",
+				DefaultSkill = new List<string>()
+				{
+					"할퀴기", "째려보기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[7] = "분노",
+					[13] = "물대포",
+					[20] = "물기",
+					[27] = "겁나는얼굴",
+					[35] = "베어가르기",
+					[43] = "싫은소리",
+					[52] = "하이드로펌프",
+				}
 			},
 			[8] = new SJH_PokemonData
 			{
@@ -101,6 +221,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Water,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 30,
+				EvolveName = "장크로다일",
+				DefaultSkill = new List<string>()
+				{
+					"할퀴기", "째려보기", "분노"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "분노",
+					[12] = "물대포",
+					[21] = "물기",
+					[28] = "겁나는얼굴",
+					[37] = "베어가르기",
+					[45] = "싫은소리",
+					[55] = "하이드로펌프",
+				}
 			},
 			[9] = new SJH_PokemonData
 			{
@@ -110,6 +246,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Water,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"할퀴기", "째려보기", "분노", "물대포"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "분노",
+					[12] = "물대포",
+					[21] = "물기",
+					[28] = "겁나는얼굴",
+					[38] = "베어가르기",
+					[47] = "싫은소리",
+					[58] = "하이드로펌프",
+				}
 			},
 			[10] = new SJH_PokemonData
 			{
@@ -119,6 +271,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 18,
+				EvolveName = "피죤",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[5] = "모래뿌리기",
+					[9] = "바람일으키기",
+					[15] = "전광석화",
+					[21] = "날려버리기",
+					[29] = "날개치기",
+					[37] = "고속이동",
+					[47] = "따라하기",
+				}
 			},
 			[11] = new SJH_PokemonData
 			{
@@ -128,6 +296,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 36,
+				EvolveName = "피죤투",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "모래뿌리기", "바람일으키기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[5] = "모래뿌리기",
+					[9] = "바람일으키기",
+					[15] = "전광석화",
+					[23] = "날려버리기",
+					[33] = "날개치기",
+					[43] = "고속이동",
+					[55] = "따라하기",
+				}
 			},
 			[12] = new SJH_PokemonData
 			{
@@ -137,6 +321,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "모래뿌리기", "바람일으키기", "전광석화"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[5] = "모래뿌리기",
+					[9] = "바람일으키기",
+					[15] = "전광석화",
+					[23] = "날려버리기",
+					[33] = "날개치기",
+					[46] = "고속이동",
+					[61] = "따라하기",
+				}
 			},
 			[13] = new SJH_PokemonData
 			{
@@ -146,6 +346,21 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 20,
+				EvolveName = "깨비드릴조",
+				DefaultSkill = new List<string>()
+				{
+					"쪼기", "울음소리",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[7] = "째려보기",
+					[13] = "마구찌르기",
+					[25] = "따라가때리기",
+					[31] = "따라하기",
+					[37] = "회전부리",
+					[43] = "고속이동",
+				}
 			},
 			[14] = new SJH_PokemonData
 			{
@@ -155,6 +370,21 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"쪼기", "울음소리", "째려보기", "마구찌르기"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[9] = "째려보기",
+					[13] = "마구찌르기",
+					[26] = "따라가때리기",
+					[32] = "따라하기",
+					[40] = "회전부리",
+					[47] = "고속이동",
+				}
 			},
 			[15] = new SJH_PokemonData
 			{
@@ -164,6 +394,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 20,
+				EvolveName = "야부엉",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "울음소리",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "꿰뚫어보기",
+					[11] = "쪼기",
+					[16] = "최면술",
+					[22] = "리플렉터",
+					[28] = "돌진",
+					[34] = "염동력",
+					[48] = "꿈먹기",
+				}
 			},
 			[16] = new SJH_PokemonData
 			{
@@ -173,6 +419,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "울음소리", "꿰뚫어보기", "쪼기"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "꿰뚫어보기",
+					[11] = "쪼기",
+					[16] = "최면술",
+					[25] = "리플렉터",
+					[33] = "돌진",
+					[41] = "염동력",
+					[57] = "꿈먹기",
+				}
 			},
 			[17] = new SJH_PokemonData
 			{
@@ -182,6 +444,20 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 20,
+				EvolveName = "레트라",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "꼬리흔들기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[7] = "전광석화",
+					[13] = "필살앞니",
+					[20] = "기충전",
+					[27] = "따라가때리기",
+					[34] = "분노의앞니",
+				}
 			},
 			[18] = new SJH_PokemonData
 			{
@@ -191,6 +467,20 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "꼬리흔들기", "전광석화"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[7] = "전광석화",
+					[13] = "필살앞니",
+					[20] = "기충전",
+					[30] = "따라가때리기",
+					[40] = "분노의앞니",
+				}
 			},
 			[19] = new SJH_PokemonData
 			{
@@ -200,6 +490,21 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 15,
+				EvolveName = "다꼬리",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[5] = "웅크리기",
+					[11] = "전광석화",
+					[17] = "마구할퀴기",
+					[25] = "힘껏치기",
+					[33] = "잠자기",
+					[41] = "망각술",
+				}
 			},
 			[20] = new SJH_PokemonData
 			{
@@ -209,6 +514,21 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Normal,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "웅크리기", "전광석화"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[5] = "웅크리기",
+					[11] = "전광석화",
+					[18] = "마구할퀴기",
+					[28] = "힘껏치기",
+					[38] = "잠자기",
+					[48] = "망각술",
+				}
 			},
 			[24] = new SJH_PokemonData
 			{
@@ -218,6 +538,16 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 7,
+				EvolveName = "단데기",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기", "실뿜기"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					
+				}
 			},
 			[25] = new SJH_PokemonData
 			{
@@ -227,6 +557,16 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 10,
+				EvolveName = "버터플",
+				DefaultSkill = new List<string>()
+				{
+					"단단해지기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[7] = "단단해지기",
+				}
 			},
 			[26] = new SJH_PokemonData
 			{
@@ -236,6 +576,24 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.Flying,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"염동력",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[10] = "염동력",
+					[13] = "독가루",
+					[14] = "저리가루",
+					[15] = "수면가루",
+					[18] = "초음파",
+					[23] = "날려버리기",
+					[28] = "바람일으키기",
+					[34] = "환상빔",
+					[40] = "신비의부적",
+				}
 			},
 			[27] = new SJH_PokemonData
 			{
@@ -245,6 +603,16 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 7,
+				EvolveName = "딱충이",
+				DefaultSkill = new List<string>()
+				{
+					"독침", "실뿜기"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[9] = "벌레먹음",
+				}
 			},
 			[28] = new SJH_PokemonData
 			{
@@ -254,6 +622,16 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = 10,
+				EvolveName = "독침붕",
+				DefaultSkill = new List<string>()
+				{
+					"단단해지기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[7] = "단단해지기",
+				}
 			},
 			[29] = new SJH_PokemonData
 			{
@@ -263,6 +641,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.MediumFast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"마구찌르기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[10] = "마구찌르기",
+					[15] = "기충전",
+					[20] = "더블니들",
+					[25] = "분노",
+					[30] = "따라가때리기",
+					[35] = "바늘미사일",
+					[40] = "고속이동",
+				}
 			},
 			[32] = new SJH_PokemonData
 			{
@@ -272,6 +666,23 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.Fast,
+				EvolveLevel = 22,
+				EvolveName = "아리아도스",
+				DefaultSkill = new List<string>()
+				{
+					"독침", "실뿜기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "겁나는얼굴",
+					[11] = "휘감기",
+					[27] = "나이트헤드",
+					[23] = "흡혈",
+					[30] = "마구할퀴기",
+					[37] = "37",
+					[45] = "싫은소리",
+					[53] = "사이코키네시스",
+				}
 			},
 			[33] = new SJH_PokemonData
 			{
@@ -281,6 +692,23 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Bug,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.Fast,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"독침", "실뿜기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "겁나는얼굴",
+					[11] = "휘감기",
+					[17] = "나이트헤드",
+					[25] = "흡혈",
+					[34] = "마구할퀴기",
+					[43] = "37",
+					[53] = "싫은소리",
+					[63] = "사이코키네시스",
+				}
 			},
 			[34] = new SJH_PokemonData
 			{
@@ -290,6 +718,23 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Rock,
 				PokeType2 = Define.PokeType.Ground,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 25,
+				EvolveName = "데구리",
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "웅크리기",
+					[11] = "돌떨구기",
+					[16] = "매그니튜드",
+					[21] = "자폭",
+					[26] = "단단해지기",
+					[31] = "구르기",
+					[41] = "지진",
+					[48] = "대폭발",
+				}
 			},
 			[35] = new SJH_PokemonData
 			{
@@ -299,6 +744,23 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Rock,
 				PokeType2 = Define.PokeType.Ground,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"몸통박치기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "웅크리기",
+					[11] = "돌떨구기",
+					[16] = "매그니튜드",
+					[21] = "자폭",
+					[27] = "단단해지기",
+					[34] = "구르기",
+					[41] = "지진",
+					[48] = "대폭발",
+				}
 			},
 			[58] = new SJH_PokemonData
 			{
@@ -308,6 +770,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Ghost,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 25,
+				EvolveName = "고우스트",
+				DefaultSkill = new List<string>()
+				{
+					"최면술", "핥기",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[8] = "원한",
+					[13] = "검은눈빛",
+					[16] = "저주",
+					[21] = "나이트헤드",
+					[28] = "이상한빛",
+					[33] = "꿈먹기",
+					[36] = "길동무",
+				}
 			},
 			[59] = new SJH_PokemonData
 			{
@@ -317,6 +795,22 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Ghost,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"최면술", "핥기", "원한"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[8] = "원한",
+					[13] = "검은눈빛",
+					[16] = "저주",
+					[21] = "나이트헤드",
+					[31] = "이상한빛",
+					[39] = "꿈먹기",
+					[48] = "길동무",
+				}
 			},
 			[64] = new SJH_PokemonData
 			{
@@ -326,6 +820,24 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Grass,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = 21,
+				EvolveName = "우츠동",
+				DefaultSkill = new List<string>()
+				{
+					"덩굴채찍",
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "성장",
+					[11] = "김밥말이",
+					[15] = "수면가루",
+					[17] = "독가루",
+					[19] = "저리가루",
+					[23] = "용해액",
+					[30] = "달콤한향기",
+					[37] = "잎날가르기",
+					[45] = "힘껏치기",
+				}
 			},
 			[65] = new SJH_PokemonData
 			{
@@ -335,6 +847,24 @@ public class SJH_PokemonData
 				PokeType1 = Define.PokeType.Grass,
 				PokeType2 = Define.PokeType.Poison,
 				ExpType = Define.ExpType.MediumSlow,
+				EvolveLevel = -1,
+				EvolveName = null,
+				DefaultSkill = new List<string>()
+				{
+					"덩굴채찍", "성장", "김밥말이"
+				},
+				SkillDic = new Dictionary<int, string>()
+				{
+					[6] = "성장",
+					[11] = "김밥말이",
+					[15] = "수면가루",
+					[17] = "독가루",
+					[19] = "저리가루",
+					[24] = "용해액",
+					[33] = "달콤한향기",
+					[42] = "잎날가르기",
+					[54] = "힘껏치기",
+				}
 			},
 		};
 
