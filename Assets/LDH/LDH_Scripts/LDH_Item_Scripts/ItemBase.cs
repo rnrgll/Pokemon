@@ -7,21 +7,61 @@ public abstract class ItemBase : ScriptableObject
 	//속성 : 이름, 설명, 카테고리(대분류), 사용 대상, 사용 환경, 판매 가능, 판매 가격, 구매 가능, 구매 가격
 	//메서드 : 설명 조회, 사용 가능 여부, 사용하기
 	
-	string name;
-	string description;
-	ItemCategory category;
-	ItemTarget useTarget;
-	ItemUseContext useContext;   
+	[SerializeField] string name;
+	[SerializeField] string description;
+	[SerializeField] ItemCategory category;
+	[SerializeField] ItemTarget useTarget;
+	[SerializeField] ItemUseContext useContext;   
 
-	bool isSellable;
-	int sellPrice;
-	bool isPurchasable;
-	int purchasePrice;
+	[SerializeField] bool isSellable;
+	[SerializeField] int sellPrice;
+	[SerializeField] bool isPurchasable;
+	[SerializeField] int purchasePrice;
+
+	[SerializeField] private bool isConsumable;
+	
+	public string Name => name;
+	public string Description => description;
+	public ItemCategory Category => category; //카테고리
+	public ItemTarget UseTartget => useTarget; //사용 대상
+	public ItemUseContext UseContext => useContext; //사용 환경
 
 	
-	//필드 아이템, 중요한 물건과 같이 대상이 플레이어거나 없는 경우는 target을 null로 전제하고 구현한다.
-	public abstract bool CanUse(Pokemon target, UseContext context); 
-	public abstract void Use(Pokemon target, UseContext context);
-	public string GetDescription() => description;
-
+	public bool IsSellable => isSellable;
+	public bool IsPurchasable => isPurchasable;
+	public int SellPrice => sellPrice;
+	public int PurchasePrice => purchasePrice;
+	public bool IsConsumable => isConsumable;
+	
+	
+	/// <summary>
+	/// 이 아이템이 대상 선택이 필요한지 여부
+	/// 기본값: 대상이 포켓몬이면 true
+	/// 필요하다면 오버라이딩 가능
+	/// </summary>
+	public virtual bool RequiresTarget()
+	{
+		return (useTarget == ItemTarget.EmneyPokemon || useTarget == ItemTarget.MyPokemon);
+	}
+	
+	/// <summary>
+	/// 현재 상황(context)에서 사용 가능한 아이템인가?
+	/// </summary>
+	/// <param name="context"></param>
+	/// <returns></returns>
+	public virtual bool CanUseNow(InGameContext curInGameContext)
+	{
+		switch (useContext)
+		{
+			case ItemUseContext.Both:
+				return true;
+			case ItemUseContext.BattleOnly:
+				return curInGameContext.IsInBattle;
+			case ItemUseContext.FieldOnly:
+				return !curInGameContext.IsInBattle;
+			default:
+				return false;
+		}
+	}
+	public abstract void Use(Pokemon target, InGameContext inGameContext);
 }

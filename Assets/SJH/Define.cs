@@ -91,8 +91,6 @@ public class Define
 		BattleOnly,
 		Both
 	}
-	
-	
 
 	#endregion
 }

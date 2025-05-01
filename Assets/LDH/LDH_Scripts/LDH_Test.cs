@@ -4,19 +4,43 @@ using UnityEngine;
 
 public class LDH_Test : MonoBehaviour
 {
+	private Pokemon _pokemon;
+	[SerializeField] private int startHp;
+	public InGameContext inGameContext;
+	
+	public bool isInBattle;
+	
+	
+	[Header("Test Items")]
+	[SerializeField] private Item_Heal healItem;
+	[SerializeField] private Item_KeyItem keyItem;
+	
+	
     // Start is called before the first frame update
     void Start()
     {
-        
+	    _pokemon = new Pokemon("테스트포켓몬", 20, 10, null);
+	    _pokemon.HP = startHp;
+
+
+	    inGameContext = new InGameContext { IsInBattle = isInBattle, NotifyMessage = msg => Debug.Log(msg) };
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Heal()
     {
-        // if (Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.KeypadEnter))
-        // {
-        //     UIManager.Instance.ShowLinkedUI<UI_Menu>("UI_Menu");
-        // }
+	    Debug.Log($"대상이 필요? :  {healItem.RequiresTarget()}");
+	    
+	    Debug.Log($"지금 사용가능? :  {healItem.CanUseNow(inGameContext)}");
+	    
+	    healItem.Use(_pokemon,inGameContext);
+    }
+
+    public void UseItem(ItemBase item)
+    {
+	    Debug.Log($"대상이 필요? :  {item.RequiresTarget()}");
+	    
+	    Debug.Log($"지금 사용가능? :  {item.CanUseNow(inGameContext)}");
+	    item.Use(null,inGameContext);
     }
 
     public void AddBadge(int idx)
