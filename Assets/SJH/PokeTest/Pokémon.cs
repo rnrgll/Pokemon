@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Define;
 
 public class Pokémon : MonoBehaviour
 {
@@ -71,18 +69,18 @@ public class Pokémon : MonoBehaviour
 
 		// 개별데이터 hp exp iv stat
 		level = _level;
-		curExp = level == 1 ? 0 : GetTotalExp(level);	// 1이면 0 아니면 레벨에 맞는 누적 경험치
-		nextExp = GetTotalExp(level + 1) - curExp;		// 다음 레벨까지 필요한 경험치
+		curExp = level == 1 ? 0 : GetTotalExp(level);   // 1이면 0 아니면 레벨에 맞는 누적 경험치
+		nextExp = GetTotalExp(level + 1) - curExp;      // 다음 레벨까지 필요한 경험치
 		isDead = false;
 		iv = PokemonIV.GetRandomIV();
 		pokemonStat = GetStat();
 		hp = pokemonStat.hp;
 		maxHp = hp;
 
-		var defaultSkills = data.DefaultSkill;
-		var learnableSkills = data.SkillDic;
+		// 스킬 랜덤
+		SetSkills(data);
 	}
-	
+
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
 	private PokemonStat GetStat()
 	{
@@ -119,9 +117,65 @@ public class Pokémon : MonoBehaviour
 		}
 	}
 
-	public void SetSkills()
+	public void SetSkills(SJH_PokemonData data)
 	{
+		skills = new List<string>();
 
+		int defaultSkillCount = data.DefaultSkill.Count;
+		int learnableSkillCount = 0;
+
+		List<string> learnableSkills = new List<string>();
+
+		// 현재 레벨 이하 배울 수 있는 스킬 리스트
+		if (data.SkillDic != null)
+		{
+			foreach (int skillLevel in data.SkillDic.Keys)
+			{
+				if (skillLevel <= level)
+				{
+					string skill = data.SkillDic[skillLevel];
+					if (!learnableSkills.Contains(skill))
+					{
+						learnableSkillCount++;
+						learnableSkills.Add(skill);
+					}
+				}
+			}
+		}
+
+		// 기본 스킬 + 배울 수 있는 스킬 리스트
+		List<string> allSkills = new List<string>();
+
+		// 기본 스킬 추가
+		if (data.DefaultSkill != null)
+			allSkills.AddRange(data.DefaultSkill);
+
+		// 배울 스킬 추가 (중복체크)
+		foreach (string skill in learnableSkills)
+		{
+			if (!allSkills.Contains(skill))
+				allSkills.Add(skill);
+		}
+
+		// 배울 스킬이 5개 이상이면 랜덤
+		if (allSkills.Count > 4)
+		{
+			// Fisher-Yates Shuffle
+			System.Random ran = new System.Random();
+			int n = allSkills.Count;
+			while (n > 1)
+			{
+				n--;
+				int k = ran.Next(n + 1);
+				(allSkills[k], allSkills[n]) = (allSkills[n], allSkills[k]);
+			}
+
+			skills = allSkills.GetRange(0, 4);
+		}
+		else
+		{
+			skills = allSkills;
+		}
 	}
 
 	public void AddExp(int value)
@@ -135,6 +189,11 @@ public class Pokémon : MonoBehaviour
 			Debug.Log($"{pokeName} :  레벨업! {level} → {level + 1}");
 			level++;
 			// TODO : 레벨업마다 진화, 기술 체크, 레벨업에서 종족값도 변해야함
+			// 1. 기술체크
+			CheckLearnableSkill();
+			// 2. 진화체크
+			CheckEvolution();
+
 		}
 
 		// 레벨업 후 경험치 계산
@@ -155,5 +214,66 @@ public class Pokémon : MonoBehaviour
 
 		// 최대 체력을 초과하지 않게 클램프
 		hp = Mathf.Min(hp, maxHp);
+	}
+
+	void CheckLearnableSkill()
+	{
+		var data = Manager.Data.SJH_PokemonData.GetPokemonData(pokeName);
+
+		if (data.SkillDic == null)
+			return;
+
+		if (data.SkillDic.TryGetValue(level, out string newSkill))
+		{
+			if (!skills.Contains(newSkill))
+			{
+				if (skills.Count < 4)
+				{
+					skills.Add(newSkill);
+					Debug.Log($"{pokeName}은/는 {newSkill}을/를 배웠다!");
+				}
+				else
+				{
+					// TODO : 가지고 있는 기술이 4개면 지울지 추가할지 결정
+				}
+			}
+		}
+	}
+
+	void CheckEvolution()
+	{
+		// TODO : 진화할지 말지 플레이어가 결정
+		// 우선은 강제 진화
+		if (evolveLevel <= 0 || evolveName == null)
+			return;
+		if (level >= evolveLevel)
+		{
+			Debug.Log($"{pokeName}이/가 {evolveName}으로 진화합니다!");
+
+			// 진화전 데이터
+			int hpGap = maxHp - hp;
+			string prevName = pokeName;
+
+			// 데이터 교체
+			var evolveData = Manager.Data.SJH_PokemonData.GetPokemonData(evolveName);
+			pokeName = evolveData.Name;
+			baseStat = evolveData.BaseStat;
+			pokeType1 = evolveData.PokeType1;
+			pokeType2 = evolveData.PokeType2;
+			expType = evolveData.ExpType;
+			evolveLevel = evolveData.EvolveLevel;
+			evolveName = evolveData.EvolveName;
+
+			// 진화하면서 스탯 갱신
+			pokemonStat = GetStat();
+			maxHp = pokemonStat.hp;
+			hp = maxHp - hpGap;
+			if (hp < 1)
+				hp = 1;
+
+			nextExp = GetTotalExp(level + 1) - curExp;
+
+			Debug.Log($"진화 완료 {prevName} → {pokeName}");
+		}
 	}
 }
