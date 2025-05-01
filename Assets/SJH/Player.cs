@@ -33,6 +33,9 @@ public class Player : MonoBehaviour
 	[Tooltip("플레이어 그림자 오브젝트")]
 	[SerializeField] GameObject shadow;
 
+	[Tooltip("플레이어 풀 오브젝트")]
+	[SerializeField] GameObject grassEffect;
+
 	Animator anim;
 
 	void Awake()
@@ -48,10 +51,11 @@ public class Player : MonoBehaviour
 
 	void Start()
 	{
+		// 그림자 / 풀 이펙트 비활성화
 		if (shadow != null)
-		{
 			shadow.SetActive(false);
-		}
+		if (grassEffect != null)
+			grassEffect.SetActive(false);
     
 		Manager.UI.OnAllUIClosed += OnAllUIClosed;
 	}
@@ -141,11 +145,12 @@ public class Player : MonoBehaviour
 
 		// 레이캐스트 벽 체크
 		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
-		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
-		if (hit)
+		RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
+		foreach (var hit in hits)
 		{
+			string tag = hit.transform.gameObject.tag;
 			Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
-			switch (hit.transform.gameObject.tag)
+			switch (tag)
 			{
 				case "Wall":
 				case "NPC":
@@ -269,22 +274,25 @@ public class Player : MonoBehaviour
 			yield return null;
 		}
 	}
-	//void OnCollisionEnter2D(Collision2D collision)
-	//{
-	//	if (collision.gameObject.tag == "Slope")
-	//	{
-	//		// 점프중이 아닐 때
-	//		if (jumpCoroutine == null)
-	//		{
-	//			// 이동 코루틴 스탑
-	//			if (moveCoroutine != null)
-	//				StopCoroutine(moveCoroutine);
 
-	//			// 점프 코루틴 시작
-	//			jumpCoroutine = StartCoroutine(Jump(currentDirection));
-	//		}
-	//	}
-	//}
+	void OnTriggerStay2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Grass"))
+		{
+			if (grassEffect != null && !grassEffect.activeSelf)
+				grassEffect.SetActive(true);
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Grass"))
+		{
+			if (grassEffect != null)
+				grassEffect.SetActive(false);
+		}
+	}
+
 	IEnumerator Jump(Vector2 direction)
 	{
 		isJump = true;

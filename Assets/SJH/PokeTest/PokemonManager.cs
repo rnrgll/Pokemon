@@ -13,6 +13,12 @@ public class PokemonManager : Singleton<PokemonManager>
 	public Dictionary<int, PokemonStat> GetBaseStat = new Dictionary<int, PokemonStat>();
 	public GameObject pokemonPrefab;
 
+	void Start()
+	{
+		// Test용
+		AddPokemon(1, 5);
+	}
+
 	public void AddPokemon(string pokeName, int level)
 	{
 		Pokémon pokemon = Instantiate(pokemonPrefab).GetComponent<Pokémon>();

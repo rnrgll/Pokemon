@@ -12,6 +12,8 @@ TagManager:
   - SlopeLeft
   - SlopeRight
   - SlopeDown
+  - Slope
+  - Grass
   layers:
   - Default
   - TransparentFX
