@@ -2,18 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum PokeType
-{
-	None = 0,
-	Water,
-	Fire,
-	Grass,
-	Wind,
-	Ice,
-	Poison,
-	Ground
-}
-
+using static Define;
 public class PokemonS : MonoBehaviour
 {
 	public int id;
@@ -28,21 +17,23 @@ public class PokemonS : MonoBehaviour
 	public Sprite back;
 	public Animator animator;
 	
-	[SerializeField] public PokemonStatS baseStat;   // 종족값
-	[SerializeField] public PokemonIVS iv;           // 개체값
-													//public PokemonStat ev;			// 노력치
-	[SerializeField] public PokemonStatS pokemonStat;    // 현재수치
+	public PokemonStatS baseStat;   // 종족값
+	public PokemonIVS iv;           // 개체값
+									//public PokemonStat ev;			// 노력치
+	public PokemonStatS pokemonStat;    // 현재수치
 	public PokeType pokeType1;
 	public PokeType pokeType2;
 
 	public bool isDead;
 
-	public List<SkillS> skills = new List<SkillS>();
+	public List<SkillS> skills;
 
 	public event Action OnDie;
 	public event Action OnLevelUp;
 
-	public PokemonS(int _id, string _name, int _level, PokemonStatS _baseStat, PokemonIVS _iv, PokeType _pokeType1, PokeType _pokeType2)
+	//인스턴스할 포켓몬 능력치
+	public PokemonS(int _id, string _name, int _level, PokemonStatS _baseStat, PokemonIVS _iv,
+		PokeType _pokeType1, PokeType _pokeType2,List<SkillS> _skills)
 	{
 		id = _id;
 		pokeName = _name;
@@ -56,6 +47,7 @@ public class PokemonS : MonoBehaviour
 		curExp = 0;
 		nextExp = 999;
 		hp = maxHp;
+		this.skills = _skills;
 
 		isDead = false;
 	}
@@ -89,6 +81,7 @@ public class PokemonS : MonoBehaviour
 		);
 	}
 
+	//다음레벨 경험치 -> 추후 진화이벤트, 스킬 추가이벤트 넣어야됨
 	public int GetNextExp(int level)
 	{
 		if (0 <= level && level < 5)
@@ -101,6 +94,7 @@ public class PokemonS : MonoBehaviour
 			return level * level * 8;
 	}
 
+	//다음레벨 경험치
 	public void GeNextExp(int amount)
 	{
 		curExp += amount;
@@ -112,27 +106,31 @@ public class PokemonS : MonoBehaviour
 
 	}
 
-	public void TakeStatus(PokemonS attacker, int amount)
+	//스페셜 테미지
+	public void TakeSpecial(PokemonS attacker, PokemonS defender, float amount)
 	{
+		//무슨효과?
+	}
+
+	//상태 데미지(defence조절)
+	public void TakeStat(PokemonS attacker, PokemonS defender, float amount)
+	{
+		if (defender == null || isDead) return;
+		amount += TypeSumCalculator(attacker, defender);
+		pokemonStat.defense = Mathf.Max(0, (int)(pokemonStat.defense - amount));
 
 	}
 
-	public void TakeDamage(PokemonS attacker, int amount)
+	//일반 데미지
+	public void TakeDamage(PokemonS attacker,PokemonS defender, float amount)
 	{
-		if (isDead) return;
+		if (defender == null || isDead) return;
 
-		float realDamage = 0;
-
-		//if (!WinType(attacker))
-		//{
-		//	realDamage *= 1.3f;
-		//}
-
-		amount += (int)realDamage;
+		amount += TypeSumCalculator(attacker,defender);
 
 		Debug.Log($"{amount}만큼 데미지를 받습니다");
-		hp = Mathf.Max(0, hp - amount);
-		Debug.Log($"현재 체력 : {hp}");
+		pokemonStat.hp = Mathf.Max(0, (int)(pokemonStat.hp - amount));
+		Debug.Log($"현재 체력 : {pokemonStat.hp}");
 
 		if (hp == 0)
 		{
@@ -140,22 +138,29 @@ public class PokemonS : MonoBehaviour
 		}
 	}
 
+	//체력0 이벤트
 	public void Die()
 	{
 		isDead = true;
 		Debug.Log($"{gameObject.name}이 사망했습니다");
-		Destroy(this.gameObject);
+		//Destroy(this.gameObject);
+		//if (PokemonManagerS.Get.party.Contains(해당 포켓몬이 존재 할경우))
+		//{
+		//	PokemonManagerS.Get.party.Remove(해당 포켓몬 리스트에서 삭제); //Or RemoveAt인덱스 삭제
+		//}
+
 		if (PokemonManagerS.Get.party.Count > 0)
 		{
 			Debug.Log("다음 포켓몬을 꺼내겠습니다");
 		}
 		else
 		{
-			Debug.Log("포켓몬이 없습니다");
+			Debug.Log("다음 포켓몬이 없습니다");
 			//battle씬에서 나감
 		}
 	}	
 
+	//레벨 이벤트
 	public void UpdateLevel()
 	{
 		if (level <= 20)
@@ -177,69 +182,122 @@ public class PokemonS : MonoBehaviour
 
 	public int Heal(int amount)
 	{
-		hp += Mathf.Min(maxHp, hp + amount);
-		return hp;
+		pokemonStat.hp += Mathf.Min(maxHp, pokemonStat.hp + amount);
+		return pokemonStat.hp;
 	}
 
-	//public bool WinType(PokemonS attacker)
-	//{
-	//	if (this.pokeType1 == PokeType.None)
-	//		return false;
-	//	else if (this.pokeType1 == PokeType.Water)
-	//	{
-	//		if (attacker.pokeType1 == PokeType.Grass ||
-	//			attacker.pokeType1 == PokeType.Ice ||
-	//			attacker.pokeType1 == PokeType.Ground)
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//	else if (pokeType1 == PokeType.Fire)
-	//	{
-	//		if (attacker.pokeType1 == PokeType.Water ||
-	//			attacker.pokeType1 == PokeType.Ice ||
-	//			attacker.pokeType1 == PokeType.Ground)
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//	else if (pokeType1 == PokeType.Ice)
-	//	{
-	//		if (attacker.pokeType1 == PokeType.Grass ||
-	//			attacker.pokeType1 == PokeType.Ground ||
-	//			attacker.pokeType1 == PokeType.Wind)
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//	else if (pokeType1 == PokeType.Wind)
-	//	{
-	//		if (attacker.pokeType1 == PokeType.Fire ||
-	//			attacker.pokeType1 == PokeType.Water ||
-	//			attacker.pokeType1 == PokeType.Poison)
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//	else if (pokeType1 == PokeType.Poison)
-	//	{
-	//		if (attacker.pokeType1 == PokeType.Fire ||
-	//			attacker.pokeType1 == PokeType.Water ||
-	//			attacker.pokeType1 == PokeType.Ice)
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//	else if (pokeType1 == PokeType.Ground)
-	//	{
-	//		if (attacker.pokeType1 == PokeType.Wind ||
-	//			attacker.pokeType1 == PokeType.Water ||
-	//			attacker.pokeType1 == PokeType.Poison)
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//	return false;
-	//}
+	//타입별 계산 합
+	#region Type Damage Sum
 
+	public float TypeSumCalculator(PokemonS attack, PokemonS defense)
+	{
+		float firstDamageRate = TypeCalculator(attack.pokeType1, defense.pokeType1);
+		float secondDamageRate = TypeCalculator(attack.pokeType2, defense.pokeType2);
+
+		return firstDamageRate * secondDamageRate;
+	}
+
+	#endregion
+
+	//포켓몬 타입별 damage계산
+	#region Type Damage
+	public float TypeCalculator(PokeType attack, PokeType defense)
+	{
+
+		if (defense == PokeType.None) return 1f;
+
+		if (attack == PokeType.Normal)
+		{
+			if (defense == PokeType.Rock || defense == PokeType.Steel) return 0.5f;
+			if (defense == PokeType.Ghost) return 0.0f;
+		}
+		else if (attack == PokeType.Fire)
+		{
+			if (defense == PokeType.Grass || defense == PokeType.Ice || defense == PokeType.Bug || defense == PokeType.Steel) return 2f;
+			if (defense == PokeType.Fire || defense == PokeType.Water || defense == PokeType.Rock || defense == PokeType.Dragon) return 0.5f;
+		}
+		else if (attack == PokeType.Water)
+		{
+			if (defense == PokeType.Fire || defense == PokeType.Ground || defense == PokeType.Rock) return 2f;
+			if (defense == PokeType.Water || defense == PokeType.Grass || defense == PokeType.Dragon) return 0.5f;
+		}
+		else if (attack == PokeType.Electric)
+		{
+			if (defense == PokeType.Water || defense == PokeType.Flying) return 2f;
+			if (defense == PokeType.Electric || defense == PokeType.Grass || defense == PokeType.Dragon) return 0.5f;
+		}
+		else if (attack == PokeType.Grass)
+		{
+			if (defense == PokeType.Water || defense == PokeType.Ground || defense == PokeType.Rock) return 2f;
+			if (defense == PokeType.Fire || defense == PokeType.Grass || defense == PokeType.Poison || defense == PokeType.Flying || defense == PokeType.Bug || defense == PokeType.Dragon || defense == PokeType.Steel) return 0.5f;
+		}
+		else if (attack == PokeType.Ice)
+		{
+			if (defense == PokeType.Grass || defense == PokeType.Ground || defense == PokeType.Flying || defense == PokeType.Dragon) return 2f;
+			if (defense == PokeType.Fire || defense == PokeType.Water || defense == PokeType.Ice || defense == PokeType.Steel) return 0.5f;
+		}
+		else if (attack == PokeType.Fighting)
+		{
+			if (defense == PokeType.Normal || defense == PokeType.Ice || defense == PokeType.Rock || defense == PokeType.Dark || defense == PokeType.Steel) return 2f;
+			if (defense == PokeType.Poison || defense == PokeType.Flying || defense == PokeType.Psychic || defense == PokeType.Bug) return 0.5f;
+			if (defense == PokeType.Ghost) return 0f;
+		}
+		else if (attack == PokeType.Poison)
+		{
+			if (defense == PokeType.Grass) return 2f;
+			if (defense == PokeType.Poison || defense == PokeType.Ground || defense == PokeType.Rock || defense == PokeType.Ghost) return 0.5f;
+			if (defense == PokeType.Steel) return 0f;
+		}
+		else if (attack == PokeType.Ground)
+		{
+			if (defense == PokeType.Fire || defense == PokeType.Electric || defense == PokeType.Poison || defense == PokeType.Rock || defense == PokeType.Steel) return 2f;
+			if (defense == PokeType.Grass || defense == PokeType.Bug) return 0.5f;
+			if (defense == PokeType.Flying) return 0f;
+		}
+		else if (attack == PokeType.Flying)
+		{
+			if (defense == PokeType.Grass || defense == PokeType.Fighting || defense == PokeType.Bug) return 2f;
+			if (defense == PokeType.Electric || defense == PokeType.Rock || defense == PokeType.Steel) return 0.5f;
+		}
+		else if (attack == PokeType.Psychic)
+		{
+			if (defense == PokeType.Fighting || defense == PokeType.Poison) return 2f;
+			if (defense == PokeType.Psychic || defense == PokeType.Steel) return 0.5f;
+			if (defense == PokeType.Dark) return 0f;
+		}
+		else if (attack == PokeType.Bug)
+		{
+			if (defense == PokeType.Grass || defense == PokeType.Psychic || defense == PokeType.Dark) return 2f;
+			if (defense == PokeType.Fire || defense == PokeType.Fighting || defense == PokeType.Poison || defense == PokeType.Flying || defense == PokeType.Ghost || defense == PokeType.Steel) return 0.5f;
+		}
+		else if (attack == PokeType.Rock)
+		{
+			if (defense == PokeType.Fire || defense == PokeType.Ice || defense == PokeType.Flying || defense == PokeType.Bug) return 2f;
+			if (defense == PokeType.Fighting || defense == PokeType.Ground || defense == PokeType.Steel) return 0.5f;
+		}
+		else if (attack == PokeType.Ghost)
+		{
+			if (defense == PokeType.Psychic || defense == PokeType.Ghost) return 2f;
+			if (defense == PokeType.Dark || defense == PokeType.Steel) return 0.5f;
+			if (defense == PokeType.Normal) return 0f;
+		}
+		else if (attack == PokeType.Dragon)
+		{
+			if (defense == PokeType.Dragon) return 2f;
+			if (defense == PokeType.Steel) return 0.5f;
+		}
+		else if (attack == PokeType.Dark)
+		{
+			if (defense == PokeType.Psychic || defense == PokeType.Ghost) return 2f;
+			if (defense == PokeType.Fighting || defense == PokeType.Dark || defense == PokeType.Steel) return 0.5f;
+		}
+		else if (attack == PokeType.Steel)
+		{
+			if (defense == PokeType.Ice || defense == PokeType.Rock) return 2f;
+			if (defense == PokeType.Fire || defense == PokeType.Water || defense == PokeType.Electric || defense == PokeType.Steel) return 0.5f;
+		}
+
+		return 1f;
+	}
+	#endregion
 }
