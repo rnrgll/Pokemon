@@ -26,6 +26,11 @@ public class PokemonManagerS : Singleton<PokemonManagerS>
 		}
 	}
 
+	private void Start()
+	{
+		
+	}
+
 	//********************싱글턴에서 define스크립트에서 가져오는거?
 	//public void Start()
 	//{
@@ -36,13 +41,13 @@ public class PokemonManagerS : Singleton<PokemonManagerS>
 	//{
 	//	if (Input.GetKeyDown(KeyCode.Space))
 	//	{
-	//		party.Add(new PokemonS(1, "2", 1, new PokemonStatS(1, 2, 3, 4, 5, 6), 
+	//		party.Add(new PokemonS(1, "2", 1, GetBaseStat[1], 
 	//			new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Fire, PokeType.Ice));
 	//	}
 	//	if (Input.GetKeyDown(KeyCode.D))
 	//	{
 	//		party.Add(new PokemonS(1, "Pikachu", 1, GetBaseStat[1],
-	//			new PokemonIVS(1, 2, 3, 4, 5, 6), PokeType.Water, PokeType.Ice));
+	//			new PokemonIVS(), PokeType.Water, PokeType.Ice));
 	//	}
 	//}
 
@@ -65,4 +70,19 @@ public class PokemonManagerS : Singleton<PokemonManagerS>
 		//GetBaseStat.Add(37, new PokemonStatS(53, 51, 49, 42, 62, 55)); // 골뱃
 		//GetBaseStat.Add(39, new PokemonStatS(58, 52, 62, 45, 61, 51)); // 고라파덕
 	}
+
+	//public void SkillSet()
+	//{
+	//	pokeSkill.Add(new SkillS("FireBall", "Attack 10 damage", 10, Define.SkillType.Physical));
+	//	pokeSkill.Add(new SkillS("Rock", "Attack 20 damage", 20, Define.SkillType.Physical));
+	//	pokeSkill.Add(new SkillS("Tail", "Attack 15 damage", 15, Define.SkillType.Physical));
+	//	pokeSkill.Add(new SkillS("Tackle", "Attack 5 damage", 5, Define.SkillType.Physical));
+	//
+	//	pokeSkill.Add(new SkillS("Glare", "Attack Defence 10 damage", 10, Define.SkillType.Special));
+	//	pokeSkill.Add(new SkillS("Tail Shake", "Attack Defence 15 damage", 15, Define.SkillType.Special));
+	//	pokeSkill.Add(new SkillS("Foresight", "Attack Defence 20 damage", 20, Define.SkillType.Special));
+	//	pokeSkill.Add(new SkillS("Withdraw", "Attack Defence 30 damage", 30, Define.SkillType.Special));
+	//}
+
+
 }
