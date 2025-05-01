@@ -2,18 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PokeType
-{
-	None,
-	Fire,
-	Water,
-	Wind,
-	Grass,
-	Ice,
-	Fighting,
-	Poison,
-	Ground
-}
+
 
 public class PokeClass : MonoBehaviour
 {
