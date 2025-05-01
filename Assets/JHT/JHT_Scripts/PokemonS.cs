@@ -107,29 +107,29 @@ public class PokemonS : MonoBehaviour
 	}
 
 	//스페셜 테미지
-	public void TakeSpecial(PokemonS attacker, PokemonS defender, float amount)
+	public void TakeSpecial(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
 		//무슨효과?
 	}
 
 	//상태 데미지(defence조절)
-	public void TakeStat(PokemonS attacker, PokemonS defender, float amount)
+	public void TakeStat(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
 		if (defender == null || isDead) return;
-		amount += TypeSumCalculator(attacker, defender);
-		pokemonStat.defense = Mathf.Max(0, (int)(pokemonStat.defense - amount));
+		skill.damage += TypeSumCalculator(attacker, defender);
+		pokemonStat.defense = Mathf.Max(0, (int)(pokemonStat.defense - skill.damage));
 
 	}
 
 	//일반 데미지
-	public void TakeDamage(PokemonS attacker,PokemonS defender, float amount)
+	public void TakeDamage(PokemonS attacker,PokemonS defender, SkillS skill)
 	{
 		if (defender == null || isDead) return;
 
-		amount += TypeSumCalculator(attacker,defender);
+		skill.damage += TypeSumCalculator(attacker,defender);
 
-		Debug.Log($"{amount}만큼 데미지를 받습니다");
-		pokemonStat.hp = Mathf.Max(0, (int)(pokemonStat.hp - amount));
+		Debug.Log($"{skill.damage}만큼 데미지를 받습니다");
+		pokemonStat.hp = Mathf.Max(0, (int)(pokemonStat.hp - skill.damage));
 		Debug.Log($"현재 체력 : {pokemonStat.hp}");
 
 		if (hp == 0)
