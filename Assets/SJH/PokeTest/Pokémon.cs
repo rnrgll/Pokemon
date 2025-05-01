@@ -46,7 +46,6 @@ public class Pokémon : MonoBehaviour
 	{
 		// 데이터 매니저에서 고정데이터 받아오기
 		SJH_PokemonData data = Manager.Data.SJH_PokemonData.GetPokemonData(_id);
-
 		SetData(data, _level);
 	}
 	public void Init(string _name, int _level)

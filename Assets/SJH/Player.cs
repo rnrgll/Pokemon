@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using static Define;
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour
 
 	[Tooltip("플레이어 풀 오브젝트")]
 	[SerializeField] GameObject grassEffect;
+
+	public static event Action OnGrassEntered;
 
 	Animator anim;
 
@@ -149,7 +152,7 @@ public class Player : MonoBehaviour
 		foreach (var hit in hits)
 		{
 			string tag = hit.transform.gameObject.tag;
-			Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
+			//Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
 			switch (tag)
 			{
 				case "Wall":
@@ -221,6 +224,18 @@ public class Player : MonoBehaviour
 			anim.SetBool("isMoving", false);
 			isIdle = false;
 		}
+
+		// 타일체크
+		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero, 0);
+		foreach (var hit in hits)
+		{
+			if (hit.collider.CompareTag("Grass"))
+			{
+				//Debug.Log("플레이어는 수풀에 있음 이벤트 실행");
+				OnGrassEntered?.Invoke();
+			}
+		}
+		
 	}
 
 	public void StopMoving()
@@ -230,15 +245,15 @@ public class Player : MonoBehaviour
 		moveCoroutine = null;
 	}
 
-	void OnDrawGizmos()
-	{
-		// 플레이어 이동방향 기즈모
-		Gizmos.color = Color.magenta;
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
-		Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
-	}
+	//void OnDrawGizmos()
+	//{
+	//	// 플레이어 이동방향 기즈모
+	//	Gizmos.color = Color.magenta;
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.up * 1.1f, (Vector2)transform.position + Vector2.up * 1.1f + Vector2.up);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.down * 1.1f, (Vector2)transform.position + Vector2.down * 1.1f + Vector2.down);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.right * 1.1f, (Vector2)transform.position + Vector2.right * 1.1f + Vector2.right);
+	//	Gizmos.DrawLine((Vector2)transform.position + Vector2.left * 1.1f, (Vector2)transform.position + Vector2.left * 1.1f + Vector2.left);
+	//}
 
 	IEnumerator ZInput()
 	{
@@ -372,7 +387,7 @@ public class Player : MonoBehaviour
 						{
 							shadow.transform.position = new Vector3(shadowXPos, Mathf.Max(endPos.y, transform.position.y - 1f));
 						}
-						if (i == 5)
+						if (i == 6)
 							StopMoving();
 						yield return jumpTime;
 					}

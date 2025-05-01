@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GrassTrigger : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class GrassTrigger : MonoBehaviour
 	{
 		if (collision.CompareTag("Player"))
 		{
-			//Debug.Log("플레이어 풀숲 진입!");
+			Debug.Log("플레이어가 수풀로 들어옴");
 		}
 	}
 }
