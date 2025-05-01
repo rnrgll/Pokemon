@@ -71,6 +71,8 @@ public class Player : MonoBehaviour
 		switch (state)
 		{
 			case Define.PlayerState.Field:          // 필드
+				if (Input.GetKeyDown(KeyCode.Alpha1))
+					PokemonManager.Get.party[0].AddExp(100);
 				MoveState();
 				break;
 			case Define.PlayerState.Battle:         // 배틀중

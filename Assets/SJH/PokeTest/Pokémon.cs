@@ -63,8 +63,8 @@ public class Pokémon : MonoBehaviour
 
 		// 개별데이터 hp exp iv stat
 		level = _level;
-		curExp = 0;
-		nextExp = GetNextExp();
+		curExp = level == 1 ? 0 : GetTotalExp(level);	// 1이면 0 아니면 레벨에 맞는 누적 경험치
+		nextExp = GetTotalExp(level + 1) - curExp;		// 다음 레벨까지 필요한 경험치
 		isDead = false;
 		iv = PokemonIV.GetRandomIV();
 		pokemonStat = GetStat();
@@ -130,17 +130,34 @@ public class Pokémon : MonoBehaviour
 
 	public void AddExp(int value)
 	{
+		Debug.Log($"{pokeName} : {value} 경험치를 얻었습니다!");
 		curExp += value;
 
 		// 누적 경험치가 초과하면 레벨업 반복
-		while (curExp >= nextExp)
+		while (curExp >= GetTotalExp(level + 1))
 		{
-			curExp -= nextExp;
+			Debug.Log($"{pokeName} :  레벨업! {level} → {level + 1}");
 			level++;
-			nextExp = GetNextExp();
 			// TODO : 레벨업마다 진화, 기술 체크, 레벨업에서 종족값도 변해야함
 		}
+
+		// 레벨업 후 경험치 계산
+		nextExp = GetTotalExp(level + 1) - curExp;
+
+		// 재정산 전 최대체력
+		int prevMaxHp = maxHp;
+
 		// 스탯 재정산
 		pokemonStat = GetStat();
+
+		// 체력 재정산
+		maxHp = pokemonStat.hp;
+
+		// 체력 상승분만큼 회복
+		int hpDiff = maxHp - prevMaxHp;
+		hp += hpDiff;
+
+		// 최대 체력을 초과하지 않게 클램프
+		hp = Mathf.Min(hp, maxHp);
 	}
 }
