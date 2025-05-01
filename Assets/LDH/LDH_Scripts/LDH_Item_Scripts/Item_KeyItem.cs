@@ -6,8 +6,11 @@ using UnityEngine;
 public class Item_KeyItem : ItemBase
 {
 	
-	public override void Use(Pokemon target, InGameContext inGameContext)
+	public override bool Use(Pokémon target, InGameContext inGameContext)
     {
-	    inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUse));
+	    
+	    inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUse,Manager.Data.LdhPlayerData.PlayerName));
+
+	    return false;
     }
 }

@@ -66,6 +66,18 @@ public class Define
 		MediumSlow, // 약간 느림 1,059,860	EXP = (6/5) * Level³ - 15 * Level² + 100 * Level - 140
 	}
 
+	public enum StatusCondition
+	{
+		None,
+		Poison,			//독
+		Burn,			//화상
+		Freeze,			//얼음
+		Sleep,			//잠듦
+		Paralysis,		//마비 
+		Confusion,		//혼란
+		Faint,			//기절
+	}
+
 
 	#region UI
 	public enum UIInputType
@@ -93,7 +105,7 @@ public class Define
 	
 	public enum ItemTarget
 	{
-		None,              // 사용 대상 없음
+		None,              // 사용 대상 없음 혹은 자동 결정
 		Player,            // 플레이어 본인 대상
 		MyPokemon,        // 내 포켓몬 대상
 		EmneyPokemon,   // 상대 포켓몬 대상

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class LDH_Test : MonoBehaviour
 {
-	private Pokemon _pokemon;
+	[SerializeField] private Pokémon _pokemon;
 	[SerializeField] private int startHp;
+	[SerializeField] private int maxHp;
 	public InGameContext inGameContext;
 	
 	public bool isInBattle;
-	
+
+	public Define.StatusCondition condition;
 	
 	[Header("Test Items")]
 	[SerializeField] private Item_Heal healItem;
@@ -19,11 +21,17 @@ public class LDH_Test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-	    _pokemon = new Pokemon("테스트포켓몬", 20, 10, null);
-	    _pokemon.HP = startHp;
-
+	    _pokemon.Init(1, 3);
+	    Debug.Log(_pokemon.hp);
+	    _pokemon.maxHp = maxHp;
+	    _pokemon.hp = startHp;
 
 	    inGameContext = new InGameContext { IsInBattle = isInBattle, NotifyMessage = msg => Debug.Log(msg) };
+
+	    _pokemon.condition = condition;
+	    
+	    Debug.Log(_pokemon.condition);
+	    
     }
 
     public void Heal()
@@ -40,7 +48,9 @@ public class LDH_Test : MonoBehaviour
 	    Debug.Log($"대상이 필요? :  {item.RequiresTarget()}");
 	    
 	    Debug.Log($"지금 사용가능? :  {item.CanUseNow(inGameContext)}");
-	    item.Use(null,inGameContext);
+	    item.Use(_pokemon,inGameContext);
+	    
+	    // item.Use(null,inGameContext);
     }
 
     public void AddBadge(int idx)

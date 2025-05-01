@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static Define;
 public class Pokémon : MonoBehaviour
 {
 	[Tooltip("도감 번호")]
@@ -39,6 +40,7 @@ public class Pokémon : MonoBehaviour
 	[Tooltip("죽었으면 true / 살았으면 false")]
 	public bool isDead;
 
+	[Tooltip("상태")] public StatusCondition condition;
 
 
 	// 생성자는 사용할 수 없으니 Init함수를 실행해서 데이터 할당
@@ -79,6 +81,9 @@ public class Pokémon : MonoBehaviour
 
 		// 스킬 랜덤
 		SetSkills(data);
+		
+		//상태 정상으로 설정
+		condition = StatusCondition.None;
 	}
 
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
@@ -275,5 +280,33 @@ public class Pokémon : MonoBehaviour
 
 			Debug.Log($"진화 완료 {prevName} → {pokeName}");
 		}
+	}
+
+	/// <summary>
+	/// HP를 지정된 양 만틈 회복하고, 실제 회복한 값을 반환
+	/// </summary>
+	public int Heal(int value)
+	{
+		if (value <= 0) //오류
+			throw new ArgumentOutOfRangeException(nameof(value), "회복량은 양수여야 합니다.");
+		int hpGap = maxHp - hp;
+		
+		//실제 회복량
+		int actualHeal = Mathf.Min(value, hpGap);
+		hp += actualHeal;
+		
+		return actualHeal;
+	}
+
+	public bool RestoreStatus(Define.StatusCondition targetCondition)
+	{
+		if (condition == targetCondition)
+		{
+			condition = StatusCondition.None;
+			return true;
+		}
+
+		return false;
+
 	}
 }

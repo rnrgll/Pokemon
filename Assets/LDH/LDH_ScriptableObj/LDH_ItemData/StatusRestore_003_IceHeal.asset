@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4faa148ff5161449fba55976cde7671a, type: 3}
-  m_Name: Heal_001_Potion
+  m_Script: {fileID: 11500000, guid: d52e4e0ca5f56423a8b6824e55d35f99, type: 3}
+  m_Name: StatusRestore_003_IceHeal
   m_EditorClassIdentifier: 
-  name: "\uC0C1\uCC98\uC57D"
-  description: "\uCCB4\uB825\uC744 20 \uD68C\uBCF5\uC2DC\uD0A8\uB2E4"
+  name: "\uC5BC\uC74C\uC0C1\uD0DC\uCE58\uB8CC\uC81C"
+  description: "\uC5BC\uC74C\uC0C1\uD0DC\uB97C \uCE58\uB8CC\uD558\uC5EC \uD68C\uBCF5\uC2DC\uD0A8\uB2E4"
   category: 0
   useTarget: 2
   useContext: 2
   isSellable: 1
-  sellPrice: 150
+  sellPrice: 125
   isPurchasable: 1
-  purchasePrice: 300
+  purchasePrice: 250
   isConsumable: 1
   effectObjects:
-  - {fileID: 11400000, guid: 4fbc446e7036844f8b7df9592fb45e5e, type: 2}
+  - {fileID: 11400000, guid: a7bfa44719923430b938d61acd411183, type: 2}

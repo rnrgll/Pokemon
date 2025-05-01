@@ -63,5 +63,5 @@ public abstract class ItemBase : ScriptableObject
 				return false;
 		}
 	}
-	public abstract void Use(Pokemon target, InGameContext inGameContext);
+	public abstract bool Use(Pokémon target, InGameContext inGameContext);
 }
