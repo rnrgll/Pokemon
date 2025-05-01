@@ -5,7 +5,6 @@ using static Define;
 
 public class SJH_PokemonData
 {
-
 	private Dictionary<int, SJH_PokemonData> dataById;
 	private Dictionary<string, SJH_PokemonData> dataByName;
 

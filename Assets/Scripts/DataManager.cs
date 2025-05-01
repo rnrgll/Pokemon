@@ -13,6 +13,7 @@ public class DataManager : Singleton<DataManager>
 	//플레이어 데이터 충돌 방지를 위해 이니셜 붙임(추후 수정 예정)
 	public LDH_PlayerData LdhPlayerData { get; private set; }
 	public SJH_PokemonData SJH_PokemonData { get; private set; }
+	public EncounterData EncounterData { get; private set; }
 	
 	protected override void Init()
 	{
@@ -21,5 +22,8 @@ public class DataManager : Singleton<DataManager>
 
 		SJH_PokemonData = new SJH_PokemonData();
 		SJH_PokemonData.Init();
+
+		EncounterData = new EncounterData();
+		EncounterData.Init();
 	}
 }
