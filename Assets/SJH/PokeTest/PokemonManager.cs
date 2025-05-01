@@ -12,33 +12,11 @@ public class PokemonManager : Singleton<PokemonManager>
 	public Dictionary<int, PokemonStat> GetBaseStat = new Dictionary<int, PokemonStat>();
 	public GameObject pokemonPrefab;
 
-	void Awake()
-	{
-		if (Get == null)
-		{
-			Get = this;
-			DontDestroyOnLoad(gameObject);
-			PokemonBaseStatInit();
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
-	}
-
 	void Start()
 	{
 		GameObject pokeObject = Instantiate(pokemonPrefab);
 		Pokémon pokemon = pokeObject.GetComponent<Pokémon>();
-		//pokemon.Init();
-		party.Add(Instantiate(pokemonPrefab).GetComponent<Pokémon>());
-	}
-
-	void PokemonBaseStatInit()
-	{
-		// 2세대 스타팅 포켓몬 등록
-		GetBaseStat.Add(1, new PokemonStat(45, 49, 65, 49, 65, 45)); // 치코리타
-		GetBaseStat.Add(4, new PokemonStat(39, 52, 43, 60, 50, 65)); // 브케인
-		GetBaseStat.Add(7, new PokemonStat(50, 65, 64, 44, 48, 43)); // 리아코
+		pokemon.Init(1, 5);
+		party.Add(pokemon);
 	}
 }
