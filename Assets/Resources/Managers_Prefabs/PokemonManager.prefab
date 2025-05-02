@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   party: []
+  pokemonPrefab: {fileID: 7777329219874273151, guid: 150c1cdd060f1314094a1b0fdc037f8d, type: 3}

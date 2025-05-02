@@ -33,10 +33,11 @@ public class UI_Menu : UI_Linked
 	    UpdateUI();
     }
 
-    void Start()
+    protected override void Init()
     {
+	    base.Init();
 	    SetInActiveAllArrow();
-       UpdateUI();
+		UpdateUI();
     }
     
     // Update is called once per frame

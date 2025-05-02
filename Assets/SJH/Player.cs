@@ -34,6 +34,11 @@ public class Player : MonoBehaviour
 	[Tooltip("플레이어 그림자 오브젝트")]
 	[SerializeField] GameObject shadow;
 
+	[Tooltip("플레이어 풀 오브젝트")]
+	[SerializeField] GameObject grassEffect;
+
+	public static event Action OnGrassEntered;
+
 	Animator anim;
 
 	void Awake()
@@ -61,10 +66,11 @@ public class Player : MonoBehaviour
 
 	void Start()
 	{
+		// 그림자 / 풀 이펙트 비활성화
 		if (shadow != null)
-		{
 			shadow.SetActive(false);
-		}
+		if (grassEffect != null)
+			grassEffect.SetActive(false);
     
 		Manager.UI.OnAllUIClosed += OnAllUIClosed;
 	}
@@ -84,6 +90,8 @@ public class Player : MonoBehaviour
 		switch (state)
 		{
 			case Define.PlayerState.Field:          // 필드
+				if (Input.GetKeyDown(KeyCode.Alpha1))
+					PokemonManager.Get.party[0].AddExp(100);
 				MoveState();
 				break;
 			case Define.PlayerState.Battle:         // 배틀중
@@ -152,14 +160,39 @@ public class Player : MonoBehaviour
 
 		// 레이캐스트 벽 체크
 		Debug.DrawRay((Vector2)transform.position + inputDir * 1.1f, inputDir, Color.green);
-		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
-		if (hit)
+		RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)transform.position + inputDir * 1.1f, inputDir, 1f);
+		foreach (var hit in hits)
 		{
-			switch (hit.transform.gameObject.tag)
+			string tag = hit.transform.gameObject.tag;
+			//Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
+			switch (tag)
 			{
 				case "Wall":
 				case "NPC":
 					StopMoving();
+					return;
+				case "SlopeLeft":
+				case "SlopeRight":
+				case "SlopeDown":
+					bool isCanJump =
+						(hit.transform.gameObject.tag == "SlopeLeft" && inputDir == Vector2.left) ||
+						(hit.transform.gameObject.tag == "SlopeRight" && inputDir == Vector2.right) ||
+						(hit.transform.gameObject.tag == "SlopeDown" && inputDir == Vector2.down);
+
+					if (isCanJump)
+					{
+						if (jumpCoroutine == null)
+						{
+							if (moveCoroutine != null)
+								StopCoroutine(moveCoroutine);
+
+							jumpCoroutine = StartCoroutine(Jump(currentDirection));
+						}
+					}
+					else
+					{
+						StopMoving();
+					}
 					return;
 			}
 		}
@@ -203,6 +236,18 @@ public class Player : MonoBehaviour
 			anim.SetBool("isMoving", false);
 			isIdle = false;
 		}
+
+		// 타일체크
+		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero, 0);
+		foreach (var hit in hits)
+		{
+			if (hit.collider.CompareTag("Grass"))
+			{
+				//Debug.Log("플레이어는 수풀에 있음 이벤트 실행");
+				OnGrassEntered?.Invoke();
+			}
+		}
+		
 	}
 
 	public void StopMoving()
@@ -257,34 +302,31 @@ public class Player : MonoBehaviour
 			yield return null;
 		}
 	}
-	void OnCollisionEnter2D(Collision2D collision)
-	{
-		if (collision.gameObject.tag == "Slope")
-		{
-			// 점프중이 아닐 때
-			if (jumpCoroutine == null)
-			{
-				// 이동 코루틴 스탑
-				if (moveCoroutine != null)
-					StopCoroutine(moveCoroutine);
 
-				// 점프 코루틴 시작
-				jumpCoroutine = StartCoroutine(Jump(currentDirection));
-			}
+	void OnTriggerStay2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Grass"))
+		{
+			if (grassEffect != null && !grassEffect.activeSelf)
+				grassEffect.SetActive(true);
 		}
 	}
+
+	void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Grass"))
+		{
+			if (grassEffect != null)
+				grassEffect.SetActive(false);
+		}
+	}
+
 	IEnumerator Jump(Vector2 direction)
 	{
 		isJump = true;
 		float jumpHeight = 2;
 		float jumpDistance = 4;
 
-		// 그림자 활성화
-		if (shadow != null)
-		{
-			shadow.SetActive(true);
-			shadow.transform.position = Vector3.zero;
-		}
 
 		Vector3 startPos = new Vector3(
 			Mathf.Round(transform.position.x),
@@ -292,6 +334,14 @@ public class Player : MonoBehaviour
 			0);
 
 		Vector3 endPos = startPos + ((Vector3)direction * jumpDistance);
+
+		// 그림자 활성화
+		if (shadow != null)
+		{
+			shadow.SetActive(true);
+			shadow.transform.SetParent(null);   // 부모 분리
+			shadow.transform.position = startPos;
+		}
 
 		//Debug.Log($"이전 위치 : {transform.position}");
 		//Debug.Log($"시작 위치 : {startPos}");
@@ -302,19 +352,27 @@ public class Player : MonoBehaviour
 		{
 			case var v when v == Vector2.up:
 				{
-					float yPos;
+					float shadowXPos = startPos.x;
 					for (int i = 3; i >= 0; i--)
 					{
-						yPos = startPos.y + (0.16f * i);
+						float yPos = startPos.y + (0.16f * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
 						//Debug.Log($"{i} : {transform.position}");
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, transform.position.y - (0.1f * i));
+						}
 						yield return jumpTime;
 					}
 					for (int i = 1; i <= 7; i++)
 					{
-						yPos = startPos.y + (jumpDistance / 10 * i);
+						float yPos = startPos.y + (jumpDistance / 10 * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
 						//Debug.Log($"{i} : {transform.position}");
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, transform.position.y);
+						}
 						if (i == 5)
 							StopMoving();
 						yield return jumpTime;
@@ -323,20 +381,26 @@ public class Player : MonoBehaviour
 				}
 			case var v when v == Vector2.down:
 				{
-					float yPos;
+					float shadowXPos = startPos.x;
 					for (int i = 3; i >= 0; i--)
 					{
-						yPos = startPos.y + (0.16f * i);
+						float yPos = startPos.y + (0.16f * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
-						Debug.Log($"{i} : {transform.position}");
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, transform.position.y - 1);
+						}
 						yield return jumpTime;
 					}
 					for (int i = 1; i <= 7; i++)
 					{
-						yPos = startPos.y - (jumpDistance / 10 * i);
+						float yPos = startPos.y - (jumpDistance / 10 * i);
 						transform.position = new Vector3(startPos.x, yPos, 0);
-						Debug.Log($"{i} : {transform.position}");
-						if (i == 5)
+						if (shadow != null)
+						{
+							shadow.transform.position = new Vector3(shadowXPos, Mathf.Max(endPos.y, transform.position.y - 1f));
+						}
+						if (i == 6)
 							StopMoving();
 						yield return jumpTime;
 					}
@@ -347,24 +411,22 @@ public class Player : MonoBehaviour
 					float shadowYPos = startPos.y;
 					for (int i = 1; i <= 5; i++)
 					{
+						float playerYPos = startPos.y + (jumpHeight / 10 * i);
+						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowYPos);
-							Debug.Log($"그림자 위치 : {shadow.transform.localPosition}");
 						}
-						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), startPos.y + (jumpHeight / 10 * i), 0);
-						Debug.Log($"주인공 위치 : {transform.position}");
 						yield return jumpTime;
 					}
 					for (int i = 6; i <= 10; i++)
 					{
+						float playerYPos = (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5));
+						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowYPos);
-							Debug.Log($"그림자 위치 : {shadow.transform.localPosition}");
 						}
-						transform.position = new Vector3(startPos.x - (jumpDistance / 10 * i), (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5)), 0);
-						Debug.Log($"주인공 위치 : {transform.position}");
 						if (i == 8)
 							StopMoving();
 						yield return jumpTime;
@@ -377,21 +439,21 @@ public class Player : MonoBehaviour
 					for (int i = 1; i <= 5; i++)
 					{
 						float playerYPos = startPos.y + (jumpHeight / 10 * i);
+						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowStartY, 0);
 						}
-						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						yield return jumpTime;
 					}
 					for (int i = 6; i <= 10; i++)
 					{
 						float playerYPos = (startPos.y + jumpHeight / 2) - (jumpHeight / 10 * (i - 5));
+						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						if (shadow != null)
 						{
 							shadow.transform.position = new Vector3(transform.position.x, shadowStartY, 0);
 						}
-						transform.position = new Vector3(startPos.x + (jumpDistance / 10 * i), playerYPos, 0);
 						if (i == 8)
 							StopMoving();
 						yield return jumpTime;
@@ -407,7 +469,10 @@ public class Player : MonoBehaviour
 
 		// 그림자 비활성화
 		if (shadow != null)
+		{
 			shadow.SetActive(false);
+			shadow.transform.SetParent(transform);	// 플레이어를 부모로 다시 설정
+		}
 
 		yield return new WaitForSeconds(0.5f);
 	}

@@ -8,8 +8,12 @@ TagManager:
   - Wall
   - Interact
   - NPC
-  - Slope
   - Pokemon
+  - SlopeLeft
+  - SlopeRight
+  - SlopeDown
+  - Slope
+  - Grass
   layers:
   - Default
   - TransparentFX
