@@ -235,18 +235,32 @@ public class Pokémon : MonoBehaviour
 		{
 			if (!skills.Contains(newSkill))
 			{
-				if (skills.Count < 4)
-				{
-					skills.Add(newSkill);
-					Debug.Log($"{pokeName}은/는 {newSkill}을/를 배웠다!");
-				}
-				else
-				{
-					// TODO : 가지고 있는 기술이 4개면 지울지 추가할지 결정
-				}
+				//메소드로 분리했습니다.(이도현)
+				TryLearnSkill(newSkill);
 			}
 		}
 	}
+
+	public bool TryLearnSkill(string newSkill)
+	{
+		if (skills.Count >= 4)
+		{
+			Debug.Log("보유스킬이 4개입니다. 스킬 배울 수 없음");
+			return false;
+			//todo:가지고 있는 기술 지우기
+			//지우려고 하는 스킬이 비전머신이냐 여부에 따라 결정
+			//지우기 실패시 return false
+		}
+		
+		//지우기 성공 후 새스킬 배우기
+		skills.Add(newSkill);
+		Debug.Log($"{pokeName}은/는 {newSkill}을/를 배웠다!");
+		//Manager.UI.ShowPopupUI<UI_PopUp>("UI_Dialogue");
+		//todo:ui 띄우기
+		return true;
+
+	}
+
 
 	void CheckEvolution()
 	{

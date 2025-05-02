@@ -6,7 +6,7 @@ using static Define;
 public class SkillSData
 {
 	//Init1
-	Dictionary<int, SkillS> skillSData;
+	Dictionary<string, SkillS> skillSData;
 
 	//Init2
 	List<SkillS> skillList;
@@ -17,12 +17,12 @@ public class SkillSData
 	public int damage;
 	public SkillType skillType;
 
-	public void Init1()
+	public void Init()
 	{
-		skillSData = new Dictionary<int, SkillS>()
+		skillSData = new Dictionary<string, SkillS>()
 		{
 			//생성자 사용 중이길래 변수명 알맞게 수정했습니다.
-			[8] = new SkillS
+			["잎날가르기"] = new SkillS
 			(
 				_name : "잎날가르기",
 				_description : "적에게 10의 데미지를 입힙니다",
@@ -35,7 +35,7 @@ public class SkillSData
 			//
 			//비전머신, 기술머신 구현을 위해서 필요한 스킬 데이터를 추가합니다.(이도현)
 			//딕셔너리 키 값으로 저는 기술 번호를 넣었습니다. 제가 찾은 사이트에 있는 데이터를 넣었습니다
-			[148] = new SkillS
+			["플래시"] = new SkillS
 			(
 				_name : "플래시",
 				_description : "눈이 부신 빛으로 상대의 명중률을 떨어뜨린다",
@@ -46,7 +46,7 @@ public class SkillSData
 				_accuracy: 1,
 				isHm: true
 			),
-			[189] = new SkillS
+			["진흙뿌리기"] = new SkillS
 			(
 				_name : "진흙뿌리기",
 				_description : "상대의 얼굴 등에 진흙을 내던져서 공격한다. 명중률을 떨어뜨린다.",
@@ -87,5 +87,16 @@ public class SkillSData
 				)
 			}
 		};
+	}
+	
+	
+	public SkillS GetSkillDataByName(string name)
+	{
+		if (skillSData.TryGetValue(name, out SkillS skill))
+		{
+			return skill;
+		}
+
+		return null;
 	}
 }
