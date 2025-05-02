@@ -10,9 +10,6 @@ public class ItemDatabase
 	//딕셔너리로 모든 아이템 보관
 	//외부 접근, 수정 불가능하게 처리
 	[SerializeField] private Dictionary<string, ItemBase> _itemDict;
-	[SerializeField] private List<string> testList;
-	
-	
 	//외부 접근용 딕셔너리 생성(readonly)
 	public IReadOnlyDictionary<string, ItemBase> ItemDict => _itemDict;
 	
@@ -34,7 +31,6 @@ public class ItemDatabase
 			if (!_itemDict.ContainsKey(key))
 			{
 				_itemDict.Add(key, item);
-				testList.Add(key);
 			}
 			else
 			{
