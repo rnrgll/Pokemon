@@ -72,9 +72,9 @@ public class BattleUIController : MonoBehaviour
 	//	}
 	//}
 
-	public void ShowSkillSelection(Pokemon pokemon)
+	public void ShowSkillSelection(Pokémon pokemon)
 	{
-		var skills = pokemon.Skills;
+		var skills = pokemon.skills;
 		for (int i = 0; i < skillButtons.Count; i++)
 		{
 			// 스킬 버튼에 스킬 이름 설정 및 한칸씩 채워넣기
@@ -82,7 +82,7 @@ public class BattleUIController : MonoBehaviour
 			var txt = btn.GetComponentInChildren<TMP_Text>();
 			if (skills.Count > i)
 			{
-				txt.text = skills[i].Name;
+				txt.text = skills[i];
 				btn.gameObject.SetActive(true);
 			}
 			else

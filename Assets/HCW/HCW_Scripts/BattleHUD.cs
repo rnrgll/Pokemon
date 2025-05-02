@@ -18,23 +18,23 @@ public class BattleHUD : MonoBehaviour
 	[SerializeField] private TMP_Text enemyHPText;
 	// 추후 상태 표시창 추가가능
 
-	public void SetPlayerHUD(Pokemon p)
+	public void SetPlayerHUD(Pokémon p)
 	{
-		playerNameText.text = p.Name;            // 이름
-		playerLevelText.text = $"Lv {p.Level}";  // 레벨
-		playerHPBar.maxValue = p.MaxHP;          // 최대 HP
-		playerHPBar.value = p.HP;                // 현재 HP
-		playerHPText.text = $"{p.HP}/{p.MaxHP}"; // 숫자 표시
+		playerNameText.text = p.pokeName;            // 이름
+		playerLevelText.text = $"Lv {p.level}";  // 레벨
+		playerHPBar.maxValue = p.maxHp;          // 최대 HP
+		playerHPBar.value = p.hp;                // 현재 HP
+		playerHPText.text = $"{p.hp}/{p.maxHp}"; // 숫자 표시
 		// 추후 상태 표시창 추가가능
 	}
 
-	public void SetEnemyHUD(Pokemon e)
+	public void SetEnemyHUD(Pokémon e)
 	{
-		enemyNameText.text = e.Name;
-		enemyLevelText.text = $"Lv {e.Level}";
-		enemyHPBar.maxValue = e.MaxHP;
-		enemyHPBar.value = e.HP;
-		enemyHPText.text = $"{e.HP}/{e.MaxHP}";
+		enemyNameText.text = e.pokeName;
+		enemyLevelText.text = $"Lv {e.level}";
+		enemyHPBar.maxValue = e.maxHp;
+		enemyHPBar.value = e.hp;
+		enemyHPText.text = $"{e.hp}/{e.maxHp}";
 		// 추후 상태 표시창 추가가능
 	}
 }

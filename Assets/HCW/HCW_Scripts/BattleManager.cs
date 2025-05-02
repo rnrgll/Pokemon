@@ -4,28 +4,32 @@ using System.Linq;
 using UnityEngine;
 
 // 배틀 로직 및 흐름 제어
-public class BattleManager : MonoBehaviour
+public class BattleManager : Singleton<BattleManager>
 {
-    private const int MaxPartySize = 6;              // 최대 파티 크기
+	public static BattleManager Get => GetInstance();
+	private const int MaxPartySize = 6;              // 최대 파티 크기
 	// [SerializeField] private PlayerPokemonPos;       // 플레이어 포켓몬 위치
 	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
 	[SerializeField] private BattleUIController ui;  // UI 요소
-	[SerializeField] private BattleHUD hud;          // HP 게이지·텍스트 제어
+	[SerializeField] private BattleHUD hud;          // hp 게이지·텍스트 제어
 	[SerializeField] private BattleDialogue dialogue; // 대화창
 
-	private List<Pokemon> playerParty;    // 플레이어 포켓몬 리스트
-    private Pokemon playerPokemon;        // 플레이어 포켓몬
+	private List<Pokémon> playerParty;    // 플레이어 포켓몬 리스트
+    private Pokémon playerPokemon;        // 플레이어 포켓몬
 
-    private List<Pokemon> enemyParty;     // 적 포켓몬 리스트
+    private List<Pokémon> enemyParty;     // 적 포켓몬 리스트
     private int currentEnemyIndex;        // 현재 적 포켓몬 인덱스
-    private Pokemon enemyPokemon;         // 적 포켓몬
+    private Pokémon enemyPokemon;         // 적 포켓몬
 
     private string selectedAction;        // 선택된 행동
-    private Skill playerSelectedSkill;    // 선택된 스킬
-    private Skill enemySelectedSkill;     // 적 포켓몬이 사용할 기술
+	// 스킬로 변환하기
+    private string playerSelectedSkill;    // 선택된 스킬
+    private string enemySelectedSkill;     // 적 포켓몬이 사용할 기술
+
+	private bool istraner; // 상대가 트레이너 인지
 
 
-    private void Awake()
+	private void Awake()
     { 
 	// UI 이벤트 구독
        ui.OnActionSelected.AddListener(OnActionButton);
@@ -40,10 +44,11 @@ public class BattleManager : MonoBehaviour
     }
 
     // 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
-    public void StartBattle(List<Pokemon> party, List<Pokemon> enemies)
+    public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
     {
-       playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokemon>();// 파티의 최대 크기 설정 및 초기화
-	enemyParty = enemies?.ToList() ?? new List<Pokemon>(); // 적 포켓몬 리스트 초기화
+		istraner = true; // 상대가 트레이너일경우
+		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
+	enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
 
 	if (playerParty.Count == 0 || enemyParty.Count == 0)
         {
@@ -52,41 +57,63 @@ public class BattleManager : MonoBehaviour
         }
     
         playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
-        enemyPokemon = enemyParty[0]; // 적의 첫번째 포켓몬
+        enemyPokemon = enemyParty[0];   // 적의 첫번째 포켓몬
 
-	 hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 HUD 설정
-	 hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 HUD 설정
+	 hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
+	 hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
 	 
         StartCoroutine(BattleLoop());
     }
 
-    private IEnumerator BattleLoop()
+	public void StartBattle(List<Pokémon> party, Pokémon enemy)
+	{
+		Debug.Log("배틀 시작");
+		istraner = false; // 상대가 트레이너가 아닐경우
+		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
+
+		playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
+		enemyPokemon = enemy; // 적 포켓몬 설정
+		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
+		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
+
+		StartCoroutine(BattleLoop());
+	}
+	
+	private IEnumerator BattleLoop()
     {
-		Debug.Log($"배틀 루프 시작 : {playerPokemon.Name} VS {enemyPokemon.Name}");
+		Debug.Log($"배틀 루프 시작 : {playerPokemon.pokeName} VS {enemyPokemon.pokeName}");
 		// 배틀 시작 대사 
-		dialogue.StartDialogue(new[] { $"야생의 {enemyPokemon.Name}이(가) 나타났다!" });
-		// dialogue.StartDialogue(new[] { $"{NPC 이름}이(가) {enemyPokemon.Name}을(를) 내보냈다!" }); // NPC가 상대일경우
+		dialogue.StartDialogue(new[] { $"야생의 {enemyPokemon.pokeName}이(가) 나타났다!" });
+		// dialogue.StartDialogue(new[] { $"{NPC 이름}이(가) {enemyPokemon.pokeName}을(를) 내보냈다!" }); // NPC가 상대일경우
 
 		yield return new WaitForSeconds(1f);
 		ui.ShowActionMenu(); // 행동 선택 UI 표시
 		selectedAction = null;
 		yield return new WaitUntil(() => selectedAction != null); // 행동 선택 대기
 
-		while (playerPokemon.HP > 0 && currentEnemyIndex < enemyParty.Count)
+		while (playerPokemon.hp > 0 && currentEnemyIndex < enemyParty.Count)
         {
             // 적 포켓몬 교체 체크
-            if (enemyPokemon.HP <= 0)
+            if (enemyPokemon.hp <= 0)
             {
-                currentEnemyIndex++; // 다음 포켓몬
-                if (currentEnemyIndex < enemyParty.Count)
-                {
-                    enemyPokemon = enemyParty[currentEnemyIndex];
-                    Debug.Log($"상대는 {enemyPokemon.Name}을/를 꺼냈다");
-                    yield return new WaitForSeconds(1f);
-                    continue;
-                }
-                break;
+				// 포켓몬 경험치 + 해줘야함
+				Debug.Log($"{playerPokemon.pokeName}가 경험치를 얻었다");
+
+				if (istraner)
+				{
+					currentEnemyIndex++; // 다음 포켓몬
+					if (currentEnemyIndex < enemyParty.Count)
+					{
+						enemyPokemon = enemyParty[currentEnemyIndex];
+						Debug.Log($"상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
+						yield return new WaitForSeconds(1f);
+						continue;
+					}
+					
+				}
+				yield return new WaitForSeconds(1f);
+				break;
             }
 			
 
@@ -110,11 +137,11 @@ public class BattleManager : MonoBehaviour
                     new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
                 };
                 
-                actions.Sort((a, b) => b.Attacker.Speed.CompareTo(a.Attacker.Speed)); // 속도에 따라 정렬
+                actions.Sort((a, b) => b.Attacker.pokemonStat.speed.CompareTo(a.Attacker.pokemonStat.speed)); // 속도에 따라 정렬
 
 			    foreach (var act in actions) ///
                 {
-                    if (act.Attacker.HP <= 0) continue;
+                    if (act.Attacker.hp <= 0) continue;
                     ExecuteAction(act);
                     yield return new WaitForSeconds(1f);
                 }
@@ -134,35 +161,40 @@ public class BattleManager : MonoBehaviour
     }
     
     private void OnActionButton(string action) => selectedAction = action; 
-    private void OnSkillButton(int idx) => playerSelectedSkill = playerPokemon.Skills[idx];
+    private void OnSkillButton(int idx) => playerSelectedSkill = playerPokemon.skills[idx];
 
-    private Skill EnemyChooseAction()
+	// 적 포켓몬 행동 선택 추후 로직 추가 가능
+    private string EnemyChooseAction()
     {
-        int idx = Random.Range(0, enemyPokemon.Skills.Count);
-        return enemyPokemon.Skills[idx];
+        int idx = Random.Range(0, enemyPokemon.skills.Count);
+		// 스킬 딕셔너리 완성되면 반환 타입을 스킬로바꾸기
+        return enemyPokemon.skills[idx];
     }
-    
-    private void ExecuteAction(BattleAction action)
+	// 행동 선택 후 행동 처리
+	private void ExecuteAction(BattleAction action)
     {
-        Debug.Log($"{action.Attacker.Name} 사용 {action.Skill.Name}");
+        Debug.Log($"{action.Attacker.pokeName} 사용 {action.Skill}");
         Attack(action.Attacker, action.Target, action.Skill);
     }
-    
-    private void Attack(Pokemon atk, Pokemon tgt, Skill skl)
+
+    // 공격처리 추후 계산기 따로만들던가 여기 추가
+    private void Attack(Pokémon atk, Pokémon tgt, string skl)
     {
-        tgt.HP = Mathf.Max(0, tgt.HP - skl.Power);
-        Debug.Log($"{tgt.Name} HP: {tgt.HP}");
+       // tgt.hp = Mathf.Max(0, tgt.hp - skl.Power);
+        Debug.Log($"{tgt.pokeName} hp: {tgt.hp}");
     }
-    
-    private void EndBattle()
+
+	// 배틀 종료 처리
+	private void EndBattle()
     {
-        if (playerPokemon.HP <= 0)
+        if (playerPokemon.hp <= 0)
             Debug.Log("게임 오버: 플레이어 전멸");
         else
 		{
 			Debug.Log("승리: 모든 적 포켓몬 격파");
+			// 트레이너 배틀일 경우 돈 + 경험치
 			// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
 		}
-            
-    }
+
+	}
 }
