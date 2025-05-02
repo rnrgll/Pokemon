@@ -10,11 +10,12 @@ public class SkillS : MonoBehaviour
 	public string description;
 	public float damage;
 	public SkillType skillType;
+	public bool isMyStat;
 	public GameObject Physicsparticle;
 	public GameObject specialParticle;
 
 
-	public SkillS(string _name, string _description, float _damage, SkillType _skillType)
+	public SkillS(string _name, string _description, float _damage,bool _isMyStat, SkillType _skillType)
 	{
 		this.name = _name;
 		this.description = _description;
@@ -25,37 +26,29 @@ public class SkillS : MonoBehaviour
 	//스킬 사용시 Attack호출하고 attacker,defender,skill 사용시 타입별로 Attack실행
 	public void Attack(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
-		if (skill.skillType == SkillType.Physical)
-		{
-			AttackPhysic(attacker, defender, skill);
-		}
-		else if (skill.skillType == SkillType.Special)
-		{
-			AttackSpecial(attacker,defender, skill);
-		}
-		else
+		if (skill.skillType == SkillType.Status)
 		{
 			AttackStat(attacker, defender, skill);
 		}
-	}
-	public void AttackSpecial(PokemonS attacker, PokemonS defender, SkillS skill)
-	{
-		//무슨효과?
+		else
+		{
+			AttackDamage(attacker, defender, skill);
+		}
 	}
 
-	public void AttackStat(PokemonS attacker, PokemonS defender, SkillS skill)
+	public virtual void AttackStat(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
-		attacker.TakeStat(attacker,defender, skill);
+		defender.TakeStat(attacker,defender, skill);
 
 		//파티클은 어떻게 실행할건가
 		GameObject parti = Instantiate(specialParticle, defender.transform.position, Quaternion.identity);
 		Destroy(parti, 2f);
 	}
 
-	public void AttackPhysic(PokemonS attacker, PokemonS defender, SkillS skill)
+	public void AttackDamage(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
 		int rand = Random.Range(0,10);
-		attacker.animator.SetTrigger(name);
+		defender.animator.SetTrigger(name);
 
 		//20 확률로 피함
 		if (rand > 2)

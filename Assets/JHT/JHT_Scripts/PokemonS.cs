@@ -106,12 +106,6 @@ public class PokemonS : MonoBehaviour
 
 	}
 
-	//스페셜 테미지
-	public void TakeSpecial(PokemonS attacker, PokemonS defender, SkillS skill)
-	{
-		//무슨효과?
-	}
-
 	//상태 데미지(defence조절)
 	public void TakeStat(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
@@ -149,15 +143,15 @@ public class PokemonS : MonoBehaviour
 		//	PokemonManagerS.Get.party.Remove(해당 포켓몬 리스트에서 삭제); //Or RemoveAt인덱스 삭제
 		//}
 
-		if (PokemonManagerS.Get.party.Count > 0)
-		{
-			Debug.Log("다음 포켓몬을 꺼내겠습니다");
-		}
-		else
-		{
-			Debug.Log("다음 포켓몬이 없습니다");
-			//battle씬에서 나감
-		}
+		//if (PokemonManagerS.Get.party.Count > 0)
+		//{
+		//	Debug.Log("다음 포켓몬을 꺼내겠습니다");
+		//}
+		//else
+		//{
+		//	Debug.Log("다음 포켓몬이 없습니다");
+		//	//battle씬에서 나감
+		//}
 	}	
 
 	//레벨 이벤트
