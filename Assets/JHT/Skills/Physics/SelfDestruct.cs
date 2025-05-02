@@ -6,5 +6,5 @@ using static Define;
 public class SelfDestruct : SkillPhysic
 {
     public SelfDestruct() : base("자폭", "스스로 폭발하여 주변에 피해를 주고 자신은 전투불능이 된다",
-		200, false, SkillType.Physical) { }
+		200, false, SkillType.Physical,PokeType.Normal,5,100) { }
 }

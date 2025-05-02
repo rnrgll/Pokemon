@@ -6,5 +6,5 @@ using static Define;
 public class Earthquake : SkillPhysic
 {
     public Earthquake() : base("지진", "강한 지진을 일으켜 주변 땅에 있는 것들에 피해를 준다",
-		100, false, SkillType.Physical) { }
+		100, false, SkillType.Physical,PokeType.Ground,10,100) { }
 }

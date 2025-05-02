@@ -29,7 +29,7 @@ public abstract class SkillS
 		this.damage = _damage;
 		this.skillType = _skillType;
 		this.type = _type;
-		this.isMtStat = _isMyStat;
+		this.isMyStat = _isMyStat;
 		this.pp = _pp;
 		this.accuracy = _accuracy; //명중률 구현 안할꺼면 빼기
 		this.isHM = isHM;
