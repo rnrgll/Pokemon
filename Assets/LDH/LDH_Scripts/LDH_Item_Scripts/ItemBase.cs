@@ -7,20 +7,20 @@ public abstract class ItemBase : ScriptableObject
 	//속성 : 이름, 설명, 카테고리(대분류), 사용 대상, 사용 환경, 판매 가능, 판매 가격, 구매 가능, 구매 가격
 	//메서드 : 설명 조회, 사용 가능 여부, 사용하기
 	
-	[SerializeField] string name;
-	[SerializeField] string description;
-	[SerializeField] ItemCategory category;
-	[SerializeField] ItemTarget useTarget;
-	[SerializeField] ItemUseContext useContext;   
+	[SerializeField] protected string itemName;
+	[SerializeField] protected string description;
+	[SerializeField] protected ItemCategory category;
+	[SerializeField] protected ItemTarget useTarget;
+	[SerializeField] protected ItemUseContext useContext;   
 
-	[SerializeField] bool isSellable;
-	[SerializeField] int sellPrice;
-	[SerializeField] bool isPurchasable;
-	[SerializeField] int purchasePrice;
+	[SerializeField] protected bool isSellable;
+	[SerializeField] protected int sellPrice;
+	[SerializeField] protected bool isPurchasable;
+	[SerializeField] protected int purchasePrice;
 
-	[SerializeField] private bool isConsumable;
+	[SerializeField] protected bool isConsumable;
 	
-	public string Name => name;
+	public string ItemName => itemName;
 	public string Description => description;
 	public ItemCategory Category => category; //카테고리
 	public ItemTarget UseTartget => useTarget; //사용 대상
