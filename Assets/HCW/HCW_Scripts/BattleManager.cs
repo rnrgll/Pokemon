@@ -44,7 +44,7 @@ public class BattleManager : Singleton<BattleManager>
     }
 
     // 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
-    public void StartBattleTreiner(List<Pokémon> party, List<Pokémon> enemies)
+    public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
     {
 		istraner = true; // 상대가 트레이너일경우
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
@@ -68,6 +68,7 @@ public class BattleManager : Singleton<BattleManager>
 
 	public void StartBattle(List<Pokémon> party, Pokémon enemy)
 	{
+		Debug.Log("배틀 시작");
 		istraner = false; // 상대가 트레이너가 아닐경우
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 
