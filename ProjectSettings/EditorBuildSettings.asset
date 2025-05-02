@@ -21,6 +21,30 @@ EditorBuildSettings:
     path: Assets/Scenes/Route29.unity
     guid: 677d99f6026fdef42a5a60ebe6c754c5
   - enabled: 1
+    path: Assets/Scenes/Route29Gate.unity
+    guid: ffa6492d659aa4544ad01c68b9666bb8
+  - enabled: 1
+    path: Assets/Scenes/Route46.unity
+    guid: 7f4b3d85b3aa8a44fa97e02ff0c9d6c8
+  - enabled: 1
+    path: Assets/Scenes/CherrygroveCity.unity
+    guid: 60e700bea29426c42873305ad5070653
+  - enabled: 1
+    path: Assets/Scenes/PokeCenter1.unity
+    guid: 3ef3897628dbba246adbd6dfb60ee594
+  - enabled: 1
+    path: Assets/Scenes/PokeShop1.unity
+    guid: 30f4d74dade6f9342bc84e3b8f3ab98f
+  - enabled: 1
+    path: Assets/Scenes/Route30.unity
+    guid: eed65007b26ab194e845b515d6182514
+  - enabled: 1
+    path: Assets/Scenes/Route31.unity
+    guid: 619bd064198cdae49bb3b1fa7e8b2747
+  - enabled: 1
+    path: Assets/Scenes/Route31Gate.unity
+    guid: 48f14f5771491134ba2b94c8891f74a2
+  - enabled: 1
     path: Assets/Scenes/VioletCity.unity
     guid: 4c0a44bd89fbf6c41b2fc87dddc9dd2a
   m_configObjects: {}

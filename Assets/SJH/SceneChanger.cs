@@ -41,9 +41,10 @@ public class SceneChanger : MonoBehaviour
 		}
 		if (collision.CompareTag("Player"))
 		{
-			if (portalType == Define.PortalType.Foothold && isPlayerIn && !isChange)
+			Player player = collision.gameObject.GetComponent<Player>();
+
+			if ((portalType == Define.PortalType.Foothold) && (isPlayerIn) && (!isChange) && (transform.localPosition == player.transform.position))
 			{
-				Player player = collision.gameObject.GetComponent<Player>();
 
 				// 방향키 입력 직접 체크
 				Vector2 inputDir = Vector2.zero;

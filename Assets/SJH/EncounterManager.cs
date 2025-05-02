@@ -47,8 +47,6 @@ public class EncounterManager : Singleton<EncounterManager>
 
 		if (rate < encounterRate)
 		{
-			// TODO : 인카운터 실행
-			//Debug.Log($"성공 : {rate} < {encounterRate}");
 			// 가중치
 			// 확률 전부 더한 다음 (1 ~ 합산값 + 1) 에서 랜덤값을 뽑으면 랜덤확률
 			int totalRate = 0;
