@@ -14,6 +14,11 @@ public class PokemonManager : Singleton<PokemonManager>
 	// 포켓몬 프리펩
 	public GameObject pokemonPrefab;
 
+	// 배틀할 상대 포켓몬
+	public Pokémon enemyPokemon;
+	// 배틀할 상대 포켓몬들
+	public List<Pokémon> enemyParty;
+
 	void Start()
 	{
 		// Test용 스타팅 포ㅓ켓몬 주기
