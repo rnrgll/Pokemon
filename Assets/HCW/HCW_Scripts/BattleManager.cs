@@ -216,7 +216,7 @@ public class BattleManager : MonoBehaviour
 	// 공격처리 추후 계산기 따로만들던가 여기 추가
 	private void Attack(Pokémon atk, Pokémon tgt, string skl)
 	{
-		// tgt.hp = Mathf.Max(0, tgt.hp - skl.Power);
+		// int dmg = 
 		Debug.Log($"{tgt.pokeName} hp: {tgt.hp}");
 	}
 
