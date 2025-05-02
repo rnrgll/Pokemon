@@ -5,6 +5,32 @@ using static Define;
 
 public class Scratching : SkillPhysic
 {
-    public Scratching() : base("마구할퀴기", "뾰족하면서 날카로운 손톱이나 발톱으로 2~5회 연속으로 난도질한다",
+	int attackRand = Random.Range(2, 6);
+
+	public Scratching() : base("마구할퀴기", "뾰족하면서 날카로운 손톱이나 발톱으로 2~5회 연속으로 난도질한다",
 		18, false, SkillType.Physical,PokeType.Normal,15,79.69f) { }
+
+	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	{
+		int rand = Random.Range(0, 100);
+		defender.animator.SetTrigger(name);
+
+		//랜덤변수
+		if (Mathf.RoundToInt(accuracy) >= rand)
+		{
+			if (Mathf.RoundToInt(accuracy) >= rand)
+			{
+				for (int i = 0; i <= attackRand; i++)
+				{
+					defender.TakeDamage(attacker, defender, skill);
+				}
+				skill.pp--;
+			}
+		}
+		else
+		{
+			skill.pp--;
+			Debug.Log("공격을 회피하였습니다");
+		}
+	}
 }

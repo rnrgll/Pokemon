@@ -11,17 +11,18 @@ public class SkillPhysic : SkillS
 
 	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
 	{
-		int rand = Random.Range(0, 10);
+		int rand = Random.Range(0, 100);
 		defender.animator.SetTrigger(name);
 
-		//20 확률로 피함
-		if (rand > 2)
+		//랜덤변수
+		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-
+			skill.pp--;
 		}
 		else
 		{
+			skill.pp--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}
