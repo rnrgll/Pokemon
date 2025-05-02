@@ -188,7 +188,7 @@ public class PokemonS : MonoBehaviour
 
 	public int Heal(int amount)
 	{
-		pokemonStat.hp += Mathf.Min(maxHp, pokemonStat.hp + amount);
+		pokemonStat.hp = Mathf.Min(maxHp, pokemonStat.hp + amount);
 		return pokemonStat.hp;
 	}
 

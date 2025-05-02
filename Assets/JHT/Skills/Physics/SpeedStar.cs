@@ -7,4 +7,33 @@ public class SpeedStar : SkillPhysic
 {
 	public SpeedStar() : base("스피드스타", "빗나가지 않는 별 모양의 빛을 날린다",
 		60, false, SkillType.Physical,PokeType.Normal,20,100) { }
+
+	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	{
+		int rand = Random.Range(0, 100);
+		defender.animator.SetTrigger(name);
+
+		//랜덤변수
+		if (defender.pokeType2 == PokeType.Flying)
+		{
+			if(Mathf.RoundToInt(accuracy) >= rand)
+			{
+				defender.TakeDamage(attacker, defender, skill);
+				skill.pp--;
+				return;
+			}
+			skill.pp--;
+			Debug.Log("공격을 회피하였습니다");
+		}
+		else if (defender.pokeType2 != PokeType.Flying)
+		{
+			defender.TakeDamage(attacker, defender, skill);
+			skill.pp--;
+		}
+		else
+		{
+			skill.pp--;
+			Debug.Log("공격을 회피하였습니다");
+		}
+	}
 }

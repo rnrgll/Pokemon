@@ -14,8 +14,8 @@ public class SkillSpecial : SkillS
 		int rand = Random.Range(0, 10);
 		defender.animator.SetTrigger(name);
 
-		//20 확률로 피함
-		if (rand > 2)
+		
+		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
 
