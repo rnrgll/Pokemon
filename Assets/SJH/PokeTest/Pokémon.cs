@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
@@ -42,6 +43,7 @@ public class Pokémon : MonoBehaviour
 	[Tooltip("기본 경험치")]
 	public int baseExp;
 
+	[Tooltip("상태")] public StatusCondition condition;
 
 
 	// 생성자는 사용할 수 없으니 Init함수를 실행해서 데이터 할당
@@ -82,6 +84,9 @@ public class Pokémon : MonoBehaviour
 
 		// 스킬 랜덤
 		SetSkills(data);
+
+		//상태 정상으로 설정
+		condition = StatusCondition.None;
 	}
 
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
@@ -230,18 +235,32 @@ public class Pokémon : MonoBehaviour
 		{
 			if (!skills.Contains(newSkill))
 			{
-				if (skills.Count < 4)
-				{
-					skills.Add(newSkill);
-					Debug.Log($"{pokeName}은/는 {newSkill}을/를 배웠다!");
-				}
-				else
-				{
-					// TODO : 가지고 있는 기술이 4개면 지울지 추가할지 결정
-				}
+				//메소드로 분리했습니다.(이도현)
+				TryLearnSkill(newSkill);
 			}
 		}
 	}
+
+	public bool TryLearnSkill(string newSkill)
+	{
+		if (skills.Count >= 4)
+		{
+			Debug.Log("보유스킬이 4개입니다. 스킬 배울 수 없음");
+			return false;
+			//todo:가지고 있는 기술 지우기
+			//지우려고 하는 스킬이 비전머신이냐 여부에 따라 결정
+			//지우기 실패시 return false
+		}
+		
+		//지우기 성공 후 새스킬 배우기
+		skills.Add(newSkill);
+		Debug.Log($"{pokeName}은/는 {newSkill}을/를 배웠다!");
+		//Manager.UI.ShowPopupUI<UI_PopUp>("UI_Dialogue");
+		//todo:ui 띄우기
+		return true;
+
+	}
+
 
 	void CheckEvolution()
 	{
@@ -278,5 +297,33 @@ public class Pokémon : MonoBehaviour
 
 			Debug.Log($"진화 완료 {prevName} → {pokeName}");
 		}
+	}
+
+	/// <summary>
+	/// HP를 지정된 양 만틈 회복하고, 실제 회복한 값을 반환
+	/// </summary>
+	public int Heal(int value)
+	{
+		if (value <= 0) //오류
+			throw new ArgumentOutOfRangeException(nameof(value), "회복량은 양수여야 합니다.");
+		int hpGap = maxHp - hp;
+
+		//실제 회복량
+		int actualHeal = Mathf.Min(value, hpGap);
+		hp += actualHeal;
+
+		return actualHeal;
+	}
+
+	public bool RestoreStatus(Define.StatusCondition targetCondition)
+	{
+		if (condition == targetCondition)
+		{
+			condition = StatusCondition.None;
+			return true;
+		}
+
+		return false;
+
 	}
 }

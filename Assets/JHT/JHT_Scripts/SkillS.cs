@@ -13,12 +13,26 @@ public abstract class SkillS
 	public bool isMyStat;
 
 
-	public SkillS(string _name, string _description, float _damage,bool _isMyStat, SkillType _skillType)
+	public PokeType type; //포켓몬 타입이랑 기술 타입이랑 동일한 타입 사용해서 추가함(이도현)
+	public int pp;
+	public float accuracy; //위력
+	public bool isHM; //비전머신 기술인지의 여부
+	public GameObject Physicsparticle;
+	public GameObject specialParticle;
+	
+
+
+	public SkillS(string _name, string _description, float _damage, SkillType _skillType,bool _isMyStat, PokeType _type, int _pp, float _accuracy, bool isHm=false)
 	{
 		this.name = _name;
 		this.description = _description;
 		this.damage = _damage;
 		this.skillType = _skillType;
+		this.type = _type;
+		this.isMtStat = _isMyStat;
+		this.pp = _pp;
+		this.accuracy = _accuracy; //명중률 구현 안할꺼면 빼기
+		this.isHM = isHM;
 	}
 
 	public abstract void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill);
