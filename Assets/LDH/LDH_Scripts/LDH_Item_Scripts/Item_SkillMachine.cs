@@ -54,6 +54,7 @@ public class Item_SkillMachine : ItemBase
 		inGameContext.NotifyMessage?.Invoke(isSuccess.ToString());
 		inGameContext.Callback?.Invoke();
 		return isSuccess;
+
 	}
 	
 #if UNITY_EDITOR
