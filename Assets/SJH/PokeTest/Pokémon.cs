@@ -327,4 +327,17 @@ public class Pokémon : MonoBehaviour
 		return false;
 
 	}
+
+	public void TakeDamage(int damage)
+	{
+		// TODO : 대미지 입음
+		hp -= damage;
+		if (hp < 0)
+		{
+			hp = 0;
+			isDead = true;
+		}
+
+		Debug.Log($"{pokeName} 이/가 {damage} 대미지를 입어 체력이 {hp}이/가 되었습니다.");
+	}
 }
