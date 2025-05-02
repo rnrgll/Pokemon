@@ -11,6 +11,7 @@ public class Define
 		["연두마을"] = "NewBarkTown",
 		["연구소"] = "ProfessorLab",
 		["29번도로"] = "Route29",
+		["도라지시티"] = "VioletCity",
 
 	};
 
@@ -66,6 +67,18 @@ public class Define
 		MediumSlow, // 약간 느림 1,059,860	EXP = (6/5) * Level³ - 15 * Level² + 100 * Level - 140
 	}
 
+	public enum StatusCondition
+	{
+		None,
+		Poison,			//독
+		Burn,			//화상
+		Freeze,			//얼음
+		Sleep,			//잠듦
+		Paralysis,		//마비 
+		Confusion,		//혼란
+		Faint,			//기절
+	}
+
 
 	#region UI
 	public enum UIInputType
@@ -73,23 +86,38 @@ public class Define
 		Select,
 		Cancel,
 	}
-
-	public enum BagPanel
-	{
-		Items,
-		Balls,
-		KeyItems,
-		TM,
-		Count
-		
-	}
+	
 
 	#endregion
 
 
 	#region Item
 
-	public int ItemMaxCnt = 99;
+	public int ItemMaxCnt = 99; //보유 가능한 최대 개수
+	
+	public enum ItemCategory // 아이템 카테고리(대분류)
+	{ 
+		Item, 
+		Ball,
+		KeyItem,
+		TM_HM,
+		Count
+	}
+	
+	public enum ItemTarget
+	{
+		None,              // 사용 대상 없음 혹은 자동 결정
+		Player,            // 플레이어 본인 대상
+		MyPokemon,        // 내 포켓몬 대상
+		EmneyPokemon,   // 상대 포켓몬 대상
+	}
+
+	public enum ItemUseContext //사용 환경
+	{
+		FieldOnly,
+		BattleOnly,
+		Both
+	}
 
 	#endregion
 }

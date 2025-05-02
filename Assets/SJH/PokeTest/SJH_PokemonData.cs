@@ -28,6 +28,8 @@ public class SJH_PokemonData
 	public List<string> DefaultSkill;
 	// 배우는 스킬 <level, skillName>
 	public Dictionary<int, string> SkillDic;
+	// 기본 경험치
+	public int BaseExp;
 	// TODO : 스프라이트 1, 스프라이트 2
 
 
@@ -61,7 +63,8 @@ public class SJH_PokemonData
 					[36] = "빛의장막",
 					[43] = "신비의부적",
 					[50] = "솔라빔"
-				}
+				},
+				BaseExp = 64,
 			},
 			[2] = new SJH_PokemonData
 			{
@@ -87,7 +90,8 @@ public class SJH_PokemonData
 					[39] = "빛의장막",
 					[47] = "신비의부적",
 					[55] = "솔라빔"
-				}
+				},
+				BaseExp = 141,
 			},
 			[3] = new SJH_PokemonData
 			{
@@ -113,7 +117,8 @@ public class SJH_PokemonData
 					[41] = "빛의장막",
 					[51] = "신비의부적",
 					[61] = "솔라빔"
-				}
+				},
+				BaseExp = 208,
 			},
 			[4] = new SJH_PokemonData
 			{
@@ -137,7 +142,8 @@ public class SJH_PokemonData
 					[27] = "화염자동차",
 					[36] = "스피드스타",
 					[46] = "화염방사",
-				}
+				},
+				BaseExp = 65,
 			},
 			[5] = new SJH_PokemonData
 			{
@@ -161,7 +167,8 @@ public class SJH_PokemonData
 					[31] = "화염자동차",
 					[42] = "스피드스타",
 					[54] = "화염방사",
-				}
+				},
+				BaseExp = 142,
 			},
 			[6] = new SJH_PokemonData
 			{
@@ -185,7 +192,8 @@ public class SJH_PokemonData
 					[31] = "화염자동차",
 					[45] = "스피드스타",
 					[60] = "화염방사",
-				}
+				},
+				BaseExp = 209,
 			},
 			[7] = new SJH_PokemonData
 			{
@@ -210,7 +218,8 @@ public class SJH_PokemonData
 					[35] = "베어가르기",
 					[43] = "싫은소리",
 					[52] = "하이드로펌프",
-				}
+				},
+				BaseExp = 66,
 			},
 			[8] = new SJH_PokemonData
 			{
@@ -235,7 +244,8 @@ public class SJH_PokemonData
 					[37] = "베어가르기",
 					[45] = "싫은소리",
 					[55] = "하이드로펌프",
-				}
+				},
+				BaseExp = 143,
 			},
 			[9] = new SJH_PokemonData
 			{
@@ -260,7 +270,8 @@ public class SJH_PokemonData
 					[38] = "베어가르기",
 					[47] = "싫은소리",
 					[58] = "하이드로펌프",
-				}
+				},
+				BaseExp = 210,
 			},
 			[10] = new SJH_PokemonData
 			{
@@ -285,7 +296,8 @@ public class SJH_PokemonData
 					[29] = "날개치기",
 					[37] = "고속이동",
 					[47] = "따라하기",
-				}
+				},
+				BaseExp = 55,
 			},
 			[11] = new SJH_PokemonData
 			{
@@ -310,7 +322,8 @@ public class SJH_PokemonData
 					[33] = "날개치기",
 					[43] = "고속이동",
 					[55] = "따라하기",
-				}
+				},
+				BaseExp = 113,
 			},
 			[12] = new SJH_PokemonData
 			{
@@ -335,7 +348,8 @@ public class SJH_PokemonData
 					[33] = "날개치기",
 					[46] = "고속이동",
 					[61] = "따라하기",
-				}
+				},
+				BaseExp = 172,
 			},
 			[13] = new SJH_PokemonData
 			{
@@ -359,7 +373,8 @@ public class SJH_PokemonData
 					[31] = "따라하기",
 					[37] = "회전부리",
 					[43] = "고속이동",
-				}
+				},
+				BaseExp = 58,
 			},
 			[14] = new SJH_PokemonData
 			{
@@ -383,7 +398,8 @@ public class SJH_PokemonData
 					[32] = "따라하기",
 					[40] = "회전부리",
 					[47] = "고속이동",
-				}
+				},
+				BaseExp = 162,
 			},
 			[15] = new SJH_PokemonData
 			{
@@ -408,7 +424,8 @@ public class SJH_PokemonData
 					[28] = "돌진",
 					[34] = "염동력",
 					[48] = "꿈먹기",
-				}
+				},
+				BaseExp = 58,
 			},
 			[16] = new SJH_PokemonData
 			{
@@ -433,7 +450,8 @@ public class SJH_PokemonData
 					[33] = "돌진",
 					[41] = "염동력",
 					[57] = "꿈먹기",
-				}
+				},
+				BaseExp = 162,
 			},
 			[17] = new SJH_PokemonData
 			{
@@ -456,7 +474,8 @@ public class SJH_PokemonData
 					[20] = "기충전",
 					[27] = "따라가때리기",
 					[34] = "분노의앞니",
-				}
+				},
+				BaseExp = 57,
 			},
 			[18] = new SJH_PokemonData
 			{
@@ -479,7 +498,8 @@ public class SJH_PokemonData
 					[20] = "기충전",
 					[30] = "따라가때리기",
 					[40] = "분노의앞니",
-				}
+				},
+				BaseExp = 116,
 			},
 			[19] = new SJH_PokemonData
 			{
@@ -503,7 +523,8 @@ public class SJH_PokemonData
 					[25] = "힘껏치기",
 					[33] = "잠자기",
 					[41] = "망각술",
-				}
+				},
+				BaseExp = 57,
 			},
 			[20] = new SJH_PokemonData
 			{
@@ -527,7 +548,8 @@ public class SJH_PokemonData
 					[28] = "힘껏치기",
 					[38] = "잠자기",
 					[48] = "망각술",
-				}
+				},
+				BaseExp = 116,
 			},
 			[24] = new SJH_PokemonData
 			{
@@ -545,8 +567,9 @@ public class SJH_PokemonData
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
-					
-				}
+
+				},
+				BaseExp = 53,
 			},
 			[25] = new SJH_PokemonData
 			{
@@ -565,7 +588,8 @@ public class SJH_PokemonData
 				SkillDic = new Dictionary<int, string>()
 				{
 					[7] = "단단해지기",
-				}
+				},
+				BaseExp = 72,
 			},
 			[26] = new SJH_PokemonData
 			{
@@ -592,7 +616,8 @@ public class SJH_PokemonData
 					[28] = "바람일으키기",
 					[34] = "환상빔",
 					[40] = "신비의부적",
-				}
+				},
+				BaseExp = 160,
 			},
 			[27] = new SJH_PokemonData
 			{
@@ -611,7 +636,8 @@ public class SJH_PokemonData
 				SkillDic = new Dictionary<int, string>()
 				{
 					[9] = "벌레먹음",
-				}
+				},
+				BaseExp = 52,
 			},
 			[28] = new SJH_PokemonData
 			{
@@ -630,7 +656,8 @@ public class SJH_PokemonData
 				SkillDic = new Dictionary<int, string>()
 				{
 					[7] = "단단해지기",
-				}
+				},
+				BaseExp = 71,
 			},
 			[29] = new SJH_PokemonData
 			{
@@ -655,7 +682,8 @@ public class SJH_PokemonData
 					[30] = "따라가때리기",
 					[35] = "바늘미사일",
 					[40] = "고속이동",
-				}
+				},
+				BaseExp = 159,
 			},
 			[32] = new SJH_PokemonData
 			{
@@ -681,7 +709,8 @@ public class SJH_PokemonData
 					[37] = "37",
 					[45] = "싫은소리",
 					[53] = "사이코키네시스",
-				}
+				},
+				BaseExp = 54,
 			},
 			[33] = new SJH_PokemonData
 			{
@@ -707,7 +736,8 @@ public class SJH_PokemonData
 					[43] = "37",
 					[53] = "싫은소리",
 					[63] = "사이코키네시스",
-				}
+				},
+				BaseExp = 134,
 			},
 			[34] = new SJH_PokemonData
 			{
@@ -733,7 +763,8 @@ public class SJH_PokemonData
 					[31] = "구르기",
 					[41] = "지진",
 					[48] = "대폭발",
-				}
+				},
+				BaseExp = 86,
 			},
 			[35] = new SJH_PokemonData
 			{
@@ -759,7 +790,8 @@ public class SJH_PokemonData
 					[34] = "구르기",
 					[41] = "지진",
 					[48] = "대폭발",
-				}
+				},
+				BaseExp = 134,
 			},
 			[58] = new SJH_PokemonData
 			{
@@ -784,7 +816,8 @@ public class SJH_PokemonData
 					[28] = "이상한빛",
 					[33] = "꿈먹기",
 					[36] = "길동무",
-				}
+				},
+				BaseExp = 95,
 			},
 			[59] = new SJH_PokemonData
 			{
@@ -809,7 +842,8 @@ public class SJH_PokemonData
 					[31] = "이상한빛",
 					[39] = "꿈먹기",
 					[48] = "길동무",
-				}
+				},
+				BaseExp = 126,
 			},
 			[64] = new SJH_PokemonData
 			{
@@ -836,7 +870,8 @@ public class SJH_PokemonData
 					[30] = "달콤한향기",
 					[37] = "잎날가르기",
 					[45] = "힘껏치기",
-				}
+				},
+				BaseExp = 84,
 			},
 			[65] = new SJH_PokemonData
 			{
@@ -863,7 +898,8 @@ public class SJH_PokemonData
 					[33] = "달콤한향기",
 					[42] = "잎날가르기",
 					[54] = "힘껏치기",
-				}
+				},
+				BaseExp = 151,
 			},
 		};
 

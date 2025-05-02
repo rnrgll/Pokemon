@@ -41,9 +41,10 @@ public class SceneChanger : MonoBehaviour
 		}
 		if (collision.CompareTag("Player"))
 		{
-			if (portalType == Define.PortalType.Foothold && isPlayerIn && !isChange)
+			Player player = collision.gameObject.GetComponent<Player>();
+
+			if ((portalType == Define.PortalType.Foothold) && (isPlayerIn) && (!isChange) && (transform.localPosition == player.transform.position))
 			{
-				Player player = collision.gameObject.GetComponent<Player>();
 
 				// 방향키 입력 직접 체크
 				Vector2 inputDir = Vector2.zero;
@@ -99,5 +100,17 @@ public class SceneChanger : MonoBehaviour
 			}
 			yield return null;
 		}
+	}
+
+
+	public void Change(string nextSceneName, Vector2 nextPos)
+	{
+		exitSceneName = nextSceneName;
+		exitPos = nextPos;
+		isChange = false;
+		
+		Player player = FindObjectOfType<Player>();
+
+		StartCoroutine(Change(player.gameObject));
 	}
 }

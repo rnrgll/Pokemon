@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Define;
@@ -39,7 +40,10 @@ public class Pokémon : MonoBehaviour
 	public List<string> skills;
 	[Tooltip("죽었으면 true / 살았으면 false")]
 	public bool isDead;
+	[Tooltip("기본 경험치")]
+	public int baseExp;
 
+	[Tooltip("상태")] public StatusCondition condition;
 
 
 	// 생성자는 사용할 수 없으니 Init함수를 실행해서 데이터 할당
@@ -66,11 +70,12 @@ public class Pokémon : MonoBehaviour
 		expType = data.ExpType;
 		evolveLevel = data.EvolveLevel;
 		evolveName = data.EvolveName;
+		baseExp = data.BaseExp;
 
 		// 개별데이터 hp exp iv stat
 		level = _level;
-		curExp = level == 1 ? 0 : GetTotalExp(level);   // 1이면 0 아니면 레벨에 맞는 누적 경험치
-		nextExp = GetTotalExp(level + 1) - curExp;      // 다음 레벨까지 필요한 경험치
+		curExp = level == 1 ? 0 : GetExpByLevel(level);   // 1이면 0 아니면 레벨에 맞는 누적 경험치
+		nextExp = GetExpByLevel(level + 1) - curExp;      // 다음 레벨까지 필요한 경험치
 		isDead = false;
 		iv = PokemonIV.GetRandomIV();
 		pokemonStat = GetStat();
@@ -79,6 +84,9 @@ public class Pokémon : MonoBehaviour
 
 		// 스킬 랜덤
 		SetSkills(data);
+
+		//상태 정상으로 설정
+		condition = StatusCondition.None;
 	}
 
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
@@ -97,12 +105,12 @@ public class Pokémon : MonoBehaviour
 	// 경험치 타입에 따라 다음 경험치 반환
 	public int GetNextExp()
 	{
-		int curTotal = GetTotalExp(level);
-		int nextTotal = GetTotalExp(level + 1);
+		int curTotal = GetExpByLevel(level);
+		int nextTotal = GetExpByLevel(level + 1);
 		return nextTotal - curTotal;
 	}
 
-	public int GetTotalExp(int level)
+	public int GetExpByLevel(int level)
 	{
 		switch (expType)
 		{
@@ -178,26 +186,26 @@ public class Pokémon : MonoBehaviour
 		}
 	}
 
-	public void AddExp(int value)
+	public void AddExp(int baseExp)
 	{
-		Debug.Log($"{pokeName} : {value} 경험치를 얻었습니다!");
-		curExp += value;
+		// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
+		// TODO : 경험치를 주는쪽에서 계산할지 받는쪽에서 계산할지
+		Debug.Log($"{pokeName} : {baseExp} 경험치를 얻었습니다!");
+		curExp += baseExp;
 
 		// 누적 경험치가 초과하면 레벨업 반복
-		while (curExp >= GetTotalExp(level + 1))
+		while (curExp >= GetExpByLevel(level + 1))
 		{
 			Debug.Log($"{pokeName} :  레벨업! {level} → {level + 1}");
 			level++;
-			// TODO : 레벨업마다 진화, 기술 체크, 레벨업에서 종족값도 변해야함
 			// 1. 기술체크
 			CheckLearnableSkill();
 			// 2. 진화체크
 			CheckEvolution();
-
 		}
 
 		// 레벨업 후 경험치 계산
-		nextExp = GetTotalExp(level + 1) - curExp;
+		nextExp = GetExpByLevel(level + 1) - curExp;
 
 		// 재정산 전 최대체력
 		int prevMaxHp = maxHp;
@@ -271,9 +279,37 @@ public class Pokémon : MonoBehaviour
 			if (hp < 1)
 				hp = 1;
 
-			nextExp = GetTotalExp(level + 1) - curExp;
+			nextExp = GetExpByLevel(level + 1) - curExp;
 
 			Debug.Log($"진화 완료 {prevName} → {pokeName}");
 		}
+	}
+
+	/// <summary>
+	/// HP를 지정된 양 만틈 회복하고, 실제 회복한 값을 반환
+	/// </summary>
+	public int Heal(int value)
+	{
+		if (value <= 0) //오류
+			throw new ArgumentOutOfRangeException(nameof(value), "회복량은 양수여야 합니다.");
+		int hpGap = maxHp - hp;
+
+		//실제 회복량
+		int actualHeal = Mathf.Min(value, hpGap);
+		hp += actualHeal;
+
+		return actualHeal;
+	}
+
+	public bool RestoreStatus(Define.StatusCondition targetCondition)
+	{
+		if (condition == targetCondition)
+		{
+			condition = StatusCondition.None;
+			return true;
+		}
+
+		return false;
+
 	}
 }

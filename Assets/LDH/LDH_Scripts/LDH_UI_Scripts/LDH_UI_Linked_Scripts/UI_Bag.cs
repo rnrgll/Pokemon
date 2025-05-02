@@ -7,8 +7,8 @@ using UnityEngine.UI;
 using static Define;
 public class UI_Bag : UI_Linked
 {
-	private static BagPanel currentPanel = BagPanel.Items;
-	private static int[] currentCursorList = new int[(int)BagPanel.Count];
+	private static ItemCategory currentPanel = ItemCategory.Item;
+	private static int[] currentCursorList = new int[(int)ItemCategory.Count];
 	private int curCursorIdx = 0;
 	private int preCursorIdx = 0;
 	
@@ -64,12 +64,12 @@ public class UI_Bag : UI_Linked
 	void MovePanel(int direction)
 	{
 		int next = (int)currentPanel + direction;
-		int max = (int)Define.BagPanel.Count;
+		int max = (int)Define.ItemCategory.Count;
 
 		if (next < 0) next = max - 1;
 		else if (next >= max) next = 0;
 
-		currentPanel = (Define.BagPanel)next;
+		currentPanel = (Define.ItemCategory)next;
 
 		UpdateUI();
 	}
@@ -105,16 +105,16 @@ public class UI_Bag : UI_Linked
 
 
 
-	private void UpdateBagIcon(Define.BagPanel panel)
+	private void UpdateBagIcon(Define.ItemCategory panel)
 	{
 		bagIconImg.sprite = bagIconSprites[(int)panel];
 	}
 
-	private void UpdateTagImage(Define.BagPanel panel)
+	private void UpdateTagImage(Define.ItemCategory panel)
 	{
 		labelImg.sprite = labelSprites[(int)panel];
 	}
-	//private void UpdateItemList(Define.BagPanel panelType) { /* ... */ }
+	//private void UpdateItemList(Define.ItemCategory panelType) { /* ... */ }
 
 
 	
