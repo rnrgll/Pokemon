@@ -14,7 +14,8 @@ public abstract class SkillS
 
 
 	public PokeType type; //포켓몬 타입이랑 기술 타입이랑 동일한 타입 사용해서 추가함(이도현)
-	public int pp;
+	public int curPP;
+	public int maxPP;
 	public float accuracy; //위력
 	public bool isHM; //비전머신 기술인지의 여부
 	public GameObject Physicsparticle;
@@ -22,7 +23,7 @@ public abstract class SkillS
 	
 
 
-	public SkillS(string _name, string _description, float _damage, SkillType _skillType,bool _isMyStat, PokeType _type, int _pp, float _accuracy, bool isHm=false)
+	public SkillS(string _name, string _description, float _damage, SkillType _skillType,bool _isMyStat, PokeType _type, int _pp, float _accuracy, bool _isHm=false)
 	{
 		this.name = _name;
 		this.description = _description;
@@ -30,9 +31,10 @@ public abstract class SkillS
 		this.skillType = _skillType;
 		this.type = _type;
 		this.isMyStat = _isMyStat;
-		this.pp = _pp;
+		this.maxPP = _pp;
+		this.curPP = maxPP;
 		this.accuracy = _accuracy; //명중률 구현 안할꺼면 빼기
-		this.isHM = isHM;
+		this.isHM = _isHm;
 	}
 
 	public abstract void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill);
