@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
 {
+	private string previousScene;        // 이전 씬 이름
+
 	[Header("UI 관련")]
 	// [SerializeField] private PlayerPokemonPos;       // 플레이어 포켓몬 위치
 	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
 	[SerializeField] private BattleUIController ui;  // UI 요소
 	[SerializeField] private BattleHUD hud;          // hp 게이지·텍스트 제어
+	
 	private DialogManager dialogue => DialogManager.Instance;
 
 	[Header("전투 관련")]
@@ -29,24 +33,17 @@ public class BattleManager : MonoBehaviour
 
 
 	Coroutine battleCoroutine;
-	[SerializeField] string prevScene;
 
-	private void OnBattleDialogClosed()
-	{
-		dialogue.CloseDialog -= OnBattleDialogClosed; // 대사창이 닫힐때 이벤트 해제
 
-		hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 HUD 설정
-		hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 HUD 설정
-
-		ui.ShowActionMenu();
-		battleCoroutine = StartCoroutine(BattleLoop()); // 전투 루프 시작
-	}
+	
 
 	// TODO : 배틀매니저 싱글톤 풀고 awake나 start에서 처리하기
 
 
 	private void Start()
 	{
+		previousScene = SceneManager.GetActiveScene().name; // 이전 씬 이름 저장
+
 		// UI 이벤트 구독
 		ui.OnActionSelected.AddListener(OnActionButton);
 		ui.OnSkillSelected.AddListener(OnSkillButton);
@@ -76,6 +73,16 @@ public class BattleManager : MonoBehaviour
 		ui.OnActionSelected.RemoveListener(OnActionButton);
 		ui.OnSkillSelected.RemoveListener(OnSkillButton);
 	}
+	private void OnBattleDialogClosed()
+	{
+		dialogue.CloseDialog -= OnBattleDialogClosed; // 대사창이 닫힐때 이벤트 해제
+
+		hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 HUD 설정
+		hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 HUD 설정
+
+		ui.ShowActionMenu();
+		battleCoroutine = StartCoroutine(BattleLoop()); // 배틀은 대화창이 닫힌 후 시작하게
+	}
 
 	// 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
 	public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
@@ -96,13 +103,10 @@ public class BattleManager : MonoBehaviour
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
-		var lines = new List<string> {$"체육관 관장 {enemyTrainerName}이(가) 나타났다!"};
+		var lines = new List<string> { $"체육관 관장 {enemyTrainerName}이(가) 나타났다!" };
 
 		dialogue.CloseDialog += OnBattleDialogClosed;
 		dialogue.StartDialogue(new Dialog(lines));
-
-		if (battleCoroutine == null)
-			battleCoroutine = StartCoroutine(BattleLoop());
 	}
 
 	public void StartBattle(List<Pokémon> party, Pokémon enemy)
@@ -116,12 +120,9 @@ public class BattleManager : MonoBehaviour
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
-		var lines = new List<string> { $"체육관 관장 {enemyTrainerName}이(가) 나타났다!" };
+		var lines = new List<string> { $"야생의 {enemyPokemon.name}이(가) 나타났다!" };
 		dialogue.CloseDialog += OnBattleDialogClosed;
 		dialogue.StartDialogue(new Dialog(lines));
-
-		if (battleCoroutine == null)
-			battleCoroutine = StartCoroutine(BattleLoop());
 	}
 
 	private IEnumerator BattleLoop()
@@ -229,12 +230,13 @@ public class BattleManager : MonoBehaviour
 			Debug.Log("승리: 모든 적 포켓몬 격파");
 			// 트레이너 배틀일 경우 돈 + 경험치
 			// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
-
+			SceneManager.LoadScene(previousScene); // 이전 씬으로 이동
 			// 변수 초기화
 			istraner = false;
 			// 코루틴 초기화
-			StopCoroutine(battleCoroutine);
 			battleCoroutine = null;
+			StopCoroutine(battleCoroutine);
+			
 		}
 	}
 }
