@@ -115,6 +115,18 @@ public class PokemonS : MonoBehaviour
 
 	}
 
+	public void TakeMyStat(PokemonS attacker, SkillS skill)
+	{
+		if (attacker == null || isDead) return;
+		int basicStat = pokemonStat.defense;
+		pokemonStat.defense += (int)skill.damage;
+
+		//if(//게임이 끝났을 때)
+		//{
+		//	pokemonStat.defense = basicStat;
+		//}
+	}
+
 	//일반 데미지
 	public void TakeDamage(PokemonS attacker,PokemonS defender, SkillS skill)
 	{

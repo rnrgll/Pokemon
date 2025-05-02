@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
-public class SkillStatus : MonoBehaviour
+public class SkillStatus : SkillS
 {
-	// Start is called before the first frame update
-	void Start()
-    {
-        
-    }
+	public SkillStatus(string name, string description, float damage, bool isMyStat, SkillType skillType) :
+		base(name, description, damage, isMyStat, skillType)
+	{ }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	{
+	
+	}
 }
