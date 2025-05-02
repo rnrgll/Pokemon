@@ -33,6 +33,7 @@ public class BattleUIController : MonoBehaviour
 
 	void Awake()
 	{
+		actionButtons = new List<Button> { fightButton, bagButton, pokemonButton, runButton };
 		// 스킬 버튼을 리스트로 묶어 관리
 		skillButtons = new List<Button> { skillButton1, skillButton2, skillButton3, skillButton4 };
 		Debug.Log("배틀ui컨트롤러 초기화");
