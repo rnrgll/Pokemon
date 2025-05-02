@@ -20,7 +20,7 @@ public abstract class SkillS
 	public GameObject Physicsparticle;
 	public GameObject specialParticle;
 	
-
+	//비전머신 : 기술을 가리키는 아이템 //플레시 ->isHM = true 벼경해야됨
 
 	public SkillS(string _name, string _description, float _damage, SkillType _skillType,bool _isMyStat, PokeType _type, int _pp, float _accuracy, bool isHm=false)
 	{
