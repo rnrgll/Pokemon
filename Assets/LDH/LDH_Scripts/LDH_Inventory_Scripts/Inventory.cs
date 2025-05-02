@@ -83,5 +83,11 @@ public class Inventory
 		return selectItem.CanUseNow(InGameContextFactory.CreateBasic(isBattle: false)); //todo: 배틀중인지 아닌지 관리하는 변수 넣어줘야함
 
 	}
+
+	public List<InventorySlot> GetItemsByCategory(Define.ItemCategory itemCategory)
+	{
+		return _slots.Where(slot =>
+			Manager.Data.ItemDatabase.CheckItemCategory(slot.ItemName, itemCategory)).ToList();
+	}
 	
 }
