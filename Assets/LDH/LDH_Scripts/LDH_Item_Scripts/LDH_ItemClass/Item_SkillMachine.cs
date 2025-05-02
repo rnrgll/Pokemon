@@ -13,7 +13,7 @@ public class Item_SkillMachine : ItemBase
 	[SerializeField, ReadOnly] private string skillCode; //머신 코드(머신 넘버를 입력하면 TMnn HMnn으로 자동 생성)
 	[SerializeField] private string skillName;
 	
-	public string Description
+	public new string Description
 	{
 		get
 		{
