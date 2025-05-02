@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // 배틀 로직 및 흐름 제어
-public class BattleManager : Singleton<BattleManager>
+public class BattleManager : MonoBehaviour
 {
-	public static BattleManager Get => GetInstance();
 	private const int MaxPartySize = 6;              // 최대 파티 크기
 	// [SerializeField] private PlayerPokemonPos;       // 플레이어 포켓몬 위치
 	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
@@ -28,19 +28,36 @@ public class BattleManager : Singleton<BattleManager>
 
 	private bool istraner; // 상대가 트레이너 인지
 
+	Coroutine battleCoroutine;
+	[SerializeField] string prevScene;
 
-	private void Awake()
-    { 
-	// UI 이벤트 구독
-       ui.OnActionSelected.AddListener(OnActionButton);
-       ui.OnSkillSelected.AddListener(OnSkillButton);
-    }
-    
-    private void OnDestroy()
+	// TODO : 배틀매니저 싱글톤 풀고 awake나 start에서 처리하기
+
+	private void Start()
+	{
+		// UI 이벤트 구독
+		ui.OnActionSelected.AddListener(OnActionButton);
+		ui.OnSkillSelected.AddListener(OnSkillButton);
+		Debug.Log("배틀매니저 초기화");
+
+		// 트레이너
+		if (Manager.Poke.enemyParty.Count >= 1)
+		{
+			Debug.Log("트레이너 배틀 시작");
+			StartBattle(Manager.Poke.party, Manager.Poke.enemyParty);
+		}
+		else
+		{
+			Debug.Log("야생 배틀 시작");
+			StartBattle(Manager.Poke.party, Manager.Poke.enemyPokemon);
+		}
+	}
+
+	private void OnDestroy()
     {
-	// 구독 해제
-       ui.OnActionSelected.RemoveListener(OnActionButton);
-       ui.OnSkillSelected.RemoveListener(OnSkillButton);
+		// 구독 해제
+		ui.OnActionSelected.RemoveListener(OnActionButton);
+		ui.OnSkillSelected.RemoveListener(OnSkillButton);
     }
 
     // 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
@@ -48,36 +65,37 @@ public class BattleManager : Singleton<BattleManager>
     {
 		istraner = true; // 상대가 트레이너일경우
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
-	enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
+		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
 
-	if (playerParty.Count == 0 || enemyParty.Count == 0)
+		if (playerParty.Count == 0 || enemyParty.Count == 0)
         {
             Debug.LogError("플레이어 또는 적 포켓몬 파티가 비어있습니다!");
             return;
         }
-    
+		
         playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
         enemyPokemon = enemyParty[0];   // 적의 첫번째 포켓몬
 
-	 hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
-	 hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
+		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
+		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
-	 
-        StartCoroutine(BattleLoop());
-    }
+		if (battleCoroutine == null)
+			battleCoroutine = StartCoroutine(BattleLoop());
+	}
 
 	public void StartBattle(List<Pokémon> party, Pokémon enemy)
 	{
-		Debug.Log("배틀 시작");
 		istraner = false; // 상대가 트레이너가 아닐경우
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 
 		playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
 		enemyPokemon = enemy; // 적 포켓몬 설정
+
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
-		StartCoroutine(BattleLoop());
+		if (battleCoroutine == null)
+			battleCoroutine = StartCoroutine(BattleLoop());
 	}
 	
 	private IEnumerator BattleLoop()
@@ -194,6 +212,12 @@ public class BattleManager : Singleton<BattleManager>
 			Debug.Log("승리: 모든 적 포켓몬 격파");
 			// 트레이너 배틀일 경우 돈 + 경험치
 			// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
+
+			// 변수 초기화
+			istraner = false;
+			// 코루틴 초기화
+			StopCoroutine(battleCoroutine);
+			battleCoroutine = null;
 		}
 
 	}

@@ -25,6 +25,9 @@ public class BattleHUD : MonoBehaviour
 		playerHPBar.maxValue = p.maxHp;          // 최대 HP
 		playerHPBar.value = p.hp;                // 현재 HP
 		playerHPText.text = $"{p.hp}/{p.maxHp}"; // 숫자 표시
+
+		Debug.Log($"{p.pokeName} : Lv. {p.level} [{p.hp} / {p.maxHp}");
+
 		// 추후 상태 표시창 추가가능
 	}
 
@@ -35,6 +38,8 @@ public class BattleHUD : MonoBehaviour
 		enemyHPBar.maxValue = e.maxHp;
 		enemyHPBar.value = e.hp;
 		enemyHPText.text = $"{e.hp}/{e.maxHp}";
+
+		Debug.Log($"{e.pokeName} : Lv. {e.level} [{e.hp} / {e.maxHp}");
 		// 추후 상태 표시창 추가가능
 	}
 }

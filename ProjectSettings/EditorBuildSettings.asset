@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VioletCity.unity
     guid: 4c0a44bd89fbf6c41b2fc87dddc9dd2a
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: a50478c40efccd74285992b96c3a9b75
   m_configObjects: {}
