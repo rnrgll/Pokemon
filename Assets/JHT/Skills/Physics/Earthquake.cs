@@ -18,11 +18,11 @@ public class Earthquake : SkillPhysic
 		{
 			if (defender.pokeType2 == PokeType.Flying) return;
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			skill.pp--;
+			skill.curPP--;
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

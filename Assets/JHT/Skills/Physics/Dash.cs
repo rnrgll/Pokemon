@@ -18,11 +18,11 @@ public class Dash : SkillPhysic
 		{
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
 			attacker.pokemonStat.hp = Mathf.Max(0, (int)(attacker.pokemonStat.hp - skill.damage/4));
-			skill.pp--;
+			skill.curPP--;
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

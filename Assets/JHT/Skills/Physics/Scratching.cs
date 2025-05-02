@@ -24,12 +24,12 @@ public class Scratching : SkillPhysic
 				{
 					defender.TakeDamage(attacker, defender, skill);
 				}
-				skill.pp--;
+				skill.curPP--;
 			}
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

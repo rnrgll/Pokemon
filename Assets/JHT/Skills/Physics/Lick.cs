@@ -17,7 +17,7 @@ public class Lick : SkillPhysic
 		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			skill.pp--;
+			skill.curPP--;
 			//if (rand <= 30)
 			//{
 			//	//마비
@@ -25,7 +25,7 @@ public class Lick : SkillPhysic
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

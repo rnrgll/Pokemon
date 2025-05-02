@@ -17,7 +17,7 @@ public class BloodSucking : SkillPhysic
 		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
 			defender.TakeDamage(attacker, defender, skill);
-			skill.pp--;
+			skill.curPP--;
 			if (skill.damage > 2)
 			{
 				attacker.pokemonStat.hp = Mathf.Min(attacker.maxHp, (int)(attacker.pokemonStat.hp + skill.damage / 2));
@@ -29,7 +29,7 @@ public class BloodSucking : SkillPhysic
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

@@ -18,7 +18,7 @@ public class Winding : SkillPhysic
 		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			skill.pp--;
+			skill.curPP--;
 			if (rand < 10)
 			{
 				defender.pokemonStat.speed -= 1;
@@ -26,7 +26,7 @@ public class Winding : SkillPhysic
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

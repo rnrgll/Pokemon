@@ -19,20 +19,20 @@ public class SpeedStar : SkillPhysic
 			if(Mathf.RoundToInt(accuracy) >= rand)
 			{
 				defender.TakeDamage(attacker, defender, skill);
-				skill.pp--;
+				skill.curPP--;
 				return;
 			}
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 		else if (defender.pokeType2 != PokeType.Flying)
 		{
 			defender.TakeDamage(attacker, defender, skill);
-			skill.pp--;
+			skill.curPP--;
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

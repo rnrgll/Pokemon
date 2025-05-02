@@ -17,7 +17,7 @@ public class Anger : SkillPhysic
 		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
 			defender.TakeDamage(attacker,defender, skill);
-			skill.pp--;
+			skill.curPP--;
 			if (count >= 1)
 			{
 				skill.damage += 1;
@@ -32,7 +32,7 @@ public class Anger : SkillPhysic
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

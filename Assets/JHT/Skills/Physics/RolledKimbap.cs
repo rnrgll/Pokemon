@@ -20,7 +20,7 @@ public class RolledKimbap : SkillPhysic
 		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			skill.pp--;
+			skill.curPP--;
 			if (listRand <= 4)
 			{
 				//2턴동안 속박
@@ -41,7 +41,7 @@ public class RolledKimbap : SkillPhysic
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

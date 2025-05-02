@@ -21,7 +21,7 @@ public class CriticalFrontTeeth : SkillPhysic
 			{
 				defender.pokemonStat.attack -= 1;
 			}
-			skill.pp--;
+			skill.curPP--;
 			//if(전투 초기화시)
 			//{
 			//	초기화
@@ -29,7 +29,7 @@ public class CriticalFrontTeeth : SkillPhysic
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

@@ -20,7 +20,7 @@ public class DoubleNeedle : SkillPhysic
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
 			count++;
 			defender.TakeDamage(attacker, defender, skill);
-			skill.pp--;
+			skill.curPP--;
 			if (count > 1 && rand < 20)
 			{
 				//독상태에 빠짐
@@ -29,7 +29,7 @@ public class DoubleNeedle : SkillPhysic
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

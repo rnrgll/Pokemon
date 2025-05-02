@@ -21,13 +21,13 @@ public class Roll : SkillPhysic
 		{
 			if (count > 0)
 			{
-				skill.pp = curpp;
+				skill.curPP = curpp;
 				if (count >= 5)
 					count = 0;
 			}
 			defender.TakeDamage(attacker, defender, skill);
-			skill.pp--;
-			curpp = skill.pp;
+			skill.curPP--;
+			curpp = skill.curPP;
 			count++;
 		}
 		else

@@ -18,11 +18,11 @@ public class SelfDestruct : SkillPhysic
 		{
 			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
 			attacker.pokemonStat.hp = Mathf.Max(0, 0);
-			skill.pp--;
+			skill.curPP--;
 		}
 		else
 		{
-			skill.pp--;
+			skill.curPP--;
 			Debug.Log("공격을 회피하였습니다");
 		}
 	}

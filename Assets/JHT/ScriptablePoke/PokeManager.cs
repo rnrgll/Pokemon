@@ -48,7 +48,7 @@ public class PokeManager
 		curHp = Mathf.Max(0, curHp - amount);
 		if (curHp == 0)
 		{
-			Debug.Log($"{pokeClass.name}이 죽음");
+			Debug.Log($"{pokeClass.pokeName}이 죽음");
 		}
 	}
 
