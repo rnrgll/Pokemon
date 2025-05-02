@@ -15,6 +15,20 @@ public class BattleDialogue : MonoBehaviour
 	{
 		// 씬 로드 시 대사창은 숨겨둠
 		dialoguePanel.SetActive(false);
+		
+	}
+	void Update()
+	{
+		// ▶ 대사창이 열려 있을 때만 키 입력 처리
+		if (!dialoguePanel.activeSelf)
+		{
+			return;
+		}
+		// ▶ Z : 다음 대사 표시
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			
+		}
 	}
 
 	// 외부에서 대사 리스트를 넘겨받아 대사창을 열고

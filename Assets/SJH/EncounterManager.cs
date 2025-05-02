@@ -66,8 +66,10 @@ public class EncounterManager : Singleton<EncounterManager>
 				if (random <= target)
 				{
 					int level = ranPokeData.GetRandomLevel();
+					var pokeObject = Manager.Poke.AddEnemyPokemon(ranPokeData.Name, level);
 					Debug.Log($"포켓몬 랜덤인카운터 : {ranPokeData.Name} Lv. {level} 이/가 나타났다!");
 					// TODO : 배틀씬으로
+					Manager.Battle.StartBattle(Manager.Poke.party, pokeObject);
 					break;
 				}
 			}

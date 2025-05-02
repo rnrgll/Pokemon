@@ -325,6 +325,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 859746422573783556}
     m_Modifications:
+    - target: {fileID: 2889296312035224540, guid: 770465ad797e49442890a8f48ad81b78, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6700463598465222539, guid: 770465ad797e49442890a8f48ad81b78, type: 3}
       propertyPath: m_Name
       value: Shadow

@@ -35,7 +35,12 @@ public class PokemonManager : Singleton<PokemonManager>
 
 		AddParty(pokemon);
 	}
-
+	public Pokémon AddEnemyPokemon(string pokeName, int level)
+	{
+		Pokémon pokemon = Instantiate(pokemonPrefab).GetComponent<Pokémon>();
+		pokemon.Init(pokeName, level);
+		return pokemon;
+	}
 	private void AddParty(Pokémon pokemon)
 	{
 		pokemon.gameObject.name = pokemon.pokeName;
