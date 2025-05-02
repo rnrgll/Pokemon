@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class BattleUIController : MonoBehaviour
 {
@@ -26,10 +27,7 @@ public class BattleUIController : MonoBehaviour
 	public UnityEvent<string> OnActionSelected = new UnityEvent<string>();
 	public UnityEvent<int> OnSkillSelected = new UnityEvent<int>();
 
-	private List<Button> actionButtons;
 	private List<Button> skillButtons;
-
-
 
 	void Awake()
 	{
@@ -56,25 +54,24 @@ public class BattleUIController : MonoBehaviour
 			skillButtons[i].onClick.AddListener(() => {OnSkillSelected.Invoke(idx); skillPanel.SetActive(false);});
 		}
 	}
-	public void ShowActionMenu() => bottomPanel.SetActive(true);
-
-	public void HideActionMenu() => bottomPanel.SetActive(false);
-
-	// TODO 매뉴창 방향키 조작
-	//void Update()
-	//{
-	//	if (bottomPanel.activeSelf)
-	//	{
-	//		if (Input.GetKeyDown(KeyCode.Escape))
-	//		{
-	//			HideActionMenu();
-	//		}
-	//	}
-	//}
-
-	public void ShowSkillSelection(Pokemon pokemon)
+	public void ShowActionMenu()
 	{
-		var skills = pokemon.Skills;
+		bottomPanel.SetActive(true);
+		EventSystem.current.SetSelectedGameObject(fightButton.gameObject);
+	}
+
+
+	public void HideActionMenu()
+	{
+		bottomPanel.SetActive(false);
+		EventSystem.current.SetSelectedGameObject(null);
+	}
+
+	
+
+	public void ShowSkillSelection(Pokémon pokemon)
+	{
+		var skills = pokemon.skills;
 		for (int i = 0; i < skillButtons.Count; i++)
 		{
 			// 스킬 버튼에 스킬 이름 설정 및 한칸씩 채워넣기
@@ -82,7 +79,7 @@ public class BattleUIController : MonoBehaviour
 			var txt = btn.GetComponentInChildren<TMP_Text>();
 			if (skills.Count > i)
 			{
-				txt.text = skills[i].Name;
+				txt.text = skills[i];
 				btn.gameObject.SetActive(true);
 			}
 			else
@@ -91,6 +88,14 @@ public class BattleUIController : MonoBehaviour
 			}
 		}
 		skillPanel.SetActive(true);
+		// 스킬 버튼에 하이라이트 효과 추가
+		EventSystem.current.SetSelectedGameObject(skillButton1.gameObject);
 	}
-	public void HideSkillSelection() => skillPanel.SetActive(false);
+
+	// 스킬 선택 후 스킬 패널 숨김
+	public void HideSkillSelection()
+	{
+		skillPanel.SetActive(false);
+		EventSystem.current.SetSelectedGameObject(fightButton.gameObject);
+	}
 }

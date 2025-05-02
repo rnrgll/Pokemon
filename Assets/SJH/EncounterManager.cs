@@ -67,6 +67,9 @@ public class EncounterManager : Singleton<EncounterManager>
 					var pokeObject = Manager.Poke.AddEnemyPokemon(ranPokeData.Name, level);
 					Debug.Log($"포켓몬 랜덤인카운터 : {ranPokeData.Name} Lv. {level} 이/가 나타났다!");
 					// TODO : 배틀씬으로
+					Manager.Poke.enemyPokemon = pokeObject;
+					// 씬전환
+					SceneManager.LoadScene("BattleScene");
 					break;
 				}
 			}
