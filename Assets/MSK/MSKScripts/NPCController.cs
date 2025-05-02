@@ -42,6 +42,7 @@ public class NPCController : MonoBehaviour, IInteractable
 				currentDirection = Vector2.left;
 				Debug.Log("왼쪽");
 			}
+
 			anim.SetFloat("x", currentDirection.x);
 		}
 		else
@@ -57,6 +58,7 @@ public class NPCController : MonoBehaviour, IInteractable
 				currentDirection = Vector2.down;
 			}
 			anim.SetFloat("y", currentDirection.y);
+
 		}
 
 	}
