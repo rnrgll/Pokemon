@@ -120,4 +120,14 @@ public class Define
 	}
 
 	#endregion
+
+
+	#region
+	public enum NpcState
+	{
+		Idle,		//	대기
+		Moving,		//	윰직임
+		Waiting,	//	플레이어 대기
+	}
+	#endregion
 }

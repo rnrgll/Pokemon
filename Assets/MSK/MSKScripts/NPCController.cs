@@ -7,7 +7,12 @@ public class NPCController : MonoBehaviour, IInteractable
 
 	[SerializeField] public Vector2 currentDirection;
 	private Vector2 npcPos;
+	bool npcMoving;
+	Define.NpcState state;
+	
+	
 	Animator anim;
+
 
 	private void Awake()
 	{
@@ -44,6 +49,7 @@ public class NPCController : MonoBehaviour, IInteractable
 			}
 
 			anim.SetFloat("x", currentDirection.x);
+			anim.SetFloat("y", 0);
 		}
 		else
 		{
@@ -57,11 +63,9 @@ public class NPCController : MonoBehaviour, IInteractable
 				Debug.Log("아래");
 				currentDirection = Vector2.down;
 			}
+			anim.SetFloat("x", 0);
 			anim.SetFloat("y", currentDirection.y);
 
 		}
-
 	}
-
-	
 }
