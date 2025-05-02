@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInteractable
+public class NPCTrainer : MonoBehaviour
 {
-    public void Interact(Vector2 position);
+
 }
