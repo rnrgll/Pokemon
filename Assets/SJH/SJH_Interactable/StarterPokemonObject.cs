@@ -7,7 +7,7 @@ public class StarterPokemonObject : MonoBehaviour, IInteractable
 	[SerializeField] static bool isGet;
 	[SerializeField] string pokeName;
 
-	public void Interact()
+	public void Interact(Vector2 position)
 	{
 		if (isGet)
 		{

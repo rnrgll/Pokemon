@@ -28,7 +28,7 @@ public class UI_MenuButton : MonoBehaviour
 
 		if (isPlayerMenu)
 		{
-			_menuButtonText.text = Manager.Data.LdhPlayerData.PlayerName;
+			_menuButtonText.text = Manager.Data.PlayerData.PlayerName;
 		}
 		else
 		{

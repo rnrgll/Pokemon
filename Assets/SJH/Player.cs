@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
 		foreach (var hit in hits)
 		{
 			string tag = hit.transform.gameObject.tag;
-			//Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
+			Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
 			switch (tag)
 			{
 				case "Wall":
@@ -282,7 +282,7 @@ public class Player : MonoBehaviour
 						if (hit)
 						{
 							var check = hit.transform.GetComponent<IInteractable>();
-							check?.Interact();
+							check?.Interact(transform.position);
 						}
 						break;
 					case PlayerState.Battle:

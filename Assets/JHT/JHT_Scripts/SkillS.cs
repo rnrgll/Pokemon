@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SkillS : MonoBehaviour
+public abstract class SkillS
 {
 	//public Sprite icon;
 	public string name;
 	public string description;
 	public float damage;
 	public SkillType skillType;
+	public bool isMyStat;
+
+
 	public PokeType type; //포켓몬 타입이랑 기술 타입이랑 동일한 타입 사용해서 추가함(이도현)
 	public int pp;
 	public float accuracy; //위력
@@ -19,65 +22,61 @@ public class SkillS : MonoBehaviour
 	
 
 
-	public SkillS(string _name, string _description, float _damage, SkillType _skillType, PokeType _type, int _pp, float _accuracy, bool isHm=false)
+	public SkillS(string _name, string _description, float _damage, SkillType _skillType,bool _isMyStat, PokeType _type, int _pp, float _accuracy, bool isHm=false)
 	{
 		this.name = _name;
 		this.description = _description;
 		this.damage = _damage;
 		this.skillType = _skillType;
 		this.type = _type;
+		this.isMyStat = _isMyStat;
 		this.pp = _pp;
 		this.accuracy = _accuracy; //명중률 구현 안할꺼면 빼기
 		this.isHM = isHM;
 	}
 
+	public abstract void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill);
+
 	//스킬 사용시 Attack호출하고 attacker,defender,skill 사용시 타입별로 Attack실행
-	public void Attack(PokemonS attacker, PokemonS defender, SkillS skill)
-	{
-		if (skill.skillType == SkillType.Physical)
-		{
-			AttackPhysic(attacker, defender, skill);
-		}
-		else if (skill.skillType == SkillType.Special)
-		{
-			AttackSpecial(attacker,defender, skill);
-		}
-		else
-		{
-			AttackStat(attacker, defender, skill);
-		}
-	}
-	public void AttackSpecial(PokemonS attacker, PokemonS defender, SkillS skill)
-	{
-		//무슨효과?
-	}
-
-	public void AttackStat(PokemonS attacker, PokemonS defender, SkillS skill)
-	{
-		attacker.TakeStat(attacker,defender, skill);
-
-		//파티클은 어떻게 실행할건가
-		GameObject parti = Instantiate(specialParticle, defender.transform.position, Quaternion.identity);
-		Destroy(parti, 2f);
-	}
-
-	public void AttackPhysic(PokemonS attacker, PokemonS defender, SkillS skill)
-	{
-		int rand = Random.Range(0,10);
-		attacker.animator.SetTrigger(name);
-
-		//20 확률로 피함
-		if (rand > 2)
-		{
-			defender.TakeDamage(attacker,defender, skill); //skill.damage* attacker.pokemonStat.attack
-			//파티클은 어떻게 실행할건가
-			GameObject parti = Instantiate(Physicsparticle, defender.transform.position, Quaternion.identity);
-			Destroy(parti, 2f);
-
-		}
-		else
-		{
-			Debug.Log("공격을 회피하였습니다");
-		}
-	}
+	//public void Attack(PokemonS attacker, PokemonS defender, SkillS skill)
+	//{
+	//	if (skill.skillType == SkillType.Status)
+	//	{
+	//		AttackStat(attacker, defender, skill);
+	//	}
+	//	else
+	//	{
+	//		AttackDamage(attacker, defender, skill);
+	//	}
+	//}
+	//
+	//public virtual void AttackStat(PokemonS attacker, PokemonS defender, SkillS skill)
+	//{
+	//	if (skill.isMyStat)
+	//	{
+	//		attacker.TakeMyStat(attacker, skill);
+	//	}
+	//	else
+	//	{
+	//		defender.TakeStat(attacker, defender, skill);
+	//	}
+	//	
+	//}
+	//
+	//public void AttackDamage(PokemonS attacker, PokemonS defender, SkillS skill)
+	//{
+	//	int rand = Random.Range(0,10);
+	//	defender.animator.SetTrigger(name);
+	//
+	//	//20 확률로 피함
+	//	if (rand > 2)
+	//	{
+	//		defender.TakeDamage(attacker,defender, skill); //skill.damage* attacker.pokemonStat.attack
+	//
+	//	}
+	//	else
+	//	{
+	//		Debug.Log("공격을 회피하였습니다");
+	//	}
+	//}
 }

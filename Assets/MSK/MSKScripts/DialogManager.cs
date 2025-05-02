@@ -105,9 +105,4 @@ public class DialogManager : Singleton<DialogManager>
 		}
 		isTyping = false;
 	}
-
-
-
-
-
 }
