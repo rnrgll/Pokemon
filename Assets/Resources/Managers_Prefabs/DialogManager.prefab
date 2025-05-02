@@ -47,4 +47,5 @@ MonoBehaviour:
   dialogBox: {fileID: 0}
   dialogText: {fileID: 0}
   letterPerSec: 45
+  prefab: {fileID: 6180927550812566368, guid: 14037fbbe14353b4f924c572fbb14c22, type: 3}
   isTyping: 0
