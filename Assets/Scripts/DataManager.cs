@@ -11,16 +11,18 @@ public class DataManager : Singleton<DataManager>
 
 
 	//플레이어 데이터 충돌 방지를 위해 이니셜 붙임(추후 수정 예정)
-	public LDH_PlayerData LdhPlayerData { get; private set; }
-	public SJH_PokemonData SJH_PokemonData { get; private set; }
-	public DungeonMapData DungeonMapData { get; private set; }
-	public EncounterData EncounterData { get; private set; }
-	public SkillSData SkillSData { get; private set; }
+	public PlayerData PlayerData { get; private set; } //플레이어
+	public SJH_PokemonData SJH_PokemonData { get; private set; } //포켓몬
+	public DungeonMapData DungeonMapData { get; private set; } //던전 정보(연관 씬, 좌표)
+	public EncounterData EncounterData { get; private set; } //몬스터 출현
+	public SkillSData SkillSData { get; private set; } //스킬
+	
+	public ItemDatabase ItemDatabase { get; private set; } //아이템 데이터베이스
 
 	protected override void Init()
 	{
-		LdhPlayerData = new LDH_PlayerData();
-		LdhPlayerData.Init();
+		PlayerData = new PlayerData();
+		PlayerData.Init();
 
 		SJH_PokemonData = new SJH_PokemonData();
 		SJH_PokemonData.Init();
@@ -33,5 +35,8 @@ public class DataManager : Singleton<DataManager>
 
 		SkillSData = new SkillSData();
 		SkillSData.Init();
+
+		ItemDatabase = new ItemDatabase();
+		ItemDatabase.Init();
 	}
 }

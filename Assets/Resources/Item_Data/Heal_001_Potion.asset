@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4faa148ff5161449fba55976cde7671a, type: 3}
+  m_Name: Heal_001_Potion
+  m_EditorClassIdentifier: 
+  itemName: "\uC0C1\uCC98\uC57D"
+  description: "\uCCB4\uB825\uC744 20 \uD68C\uBCF5\uC2DC\uD0A8\uB2E4"
+  category: 0
+  useTarget: 2
+  useContext: 2
+  isSellable: 1
+  sellPrice: 150
+  isPurchasable: 1
+  purchasePrice: 300
+  isConsumable: 1
+  effectObjects:
+  - {fileID: 11400000, guid: 4fbc446e7036844f8b7df9592fb45e5e, type: 2}
