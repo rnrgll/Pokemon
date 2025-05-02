@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NPCController : MonoBehaviour, IInteractable
 {
@@ -16,17 +17,7 @@ public class NPCController : MonoBehaviour, IInteractable
 	public void Interact(Vector2 position)
 	{
 
-		//위치 비교
-		if (position.y == npcPos.y)
-		{
-			if (npcPos.x - position.x == -1)
-			{
-				currentDirection = Vector2.left;
-			}
-			else { currentDirection = Vector2.right; }
-
-		}
-		AnimChange();
+		AnimChange(position);
 		if (Manager.Dialog.isTyping == false)
 		{
 			Manager.Dialog.StartDialogue(dialog);
@@ -36,9 +27,39 @@ public class NPCController : MonoBehaviour, IInteractable
 
 	}
 
-	public void AnimChange()
+	//	NPC와 상호작용하는 방향 체크
+	public void AnimChange(Vector2 position)
 	{
-		anim.SetFloat("x", currentDirection.x);
-		anim.SetFloat("y", currentDirection.y);
+		if (position.y == npcPos.y)
+		{
+			if (npcPos.x - position.x == -2)
+			{
+				currentDirection = Vector2.right;
+				Debug.Log("오른쪽");
+			}
+			else
+			{
+				currentDirection = Vector2.left;
+				Debug.Log("왼쪽");
+			}
+			anim.SetFloat("x", currentDirection.x);
+		}
+		else
+		{
+			if (npcPos.y - position.y == -2)
+			{
+				Debug.Log("위");
+				currentDirection = Vector2.up;
+			}
+			else
+			{
+				Debug.Log("아래");
+				currentDirection = Vector2.down;
+			}
+			anim.SetFloat("y", currentDirection.y);
+		}
+
 	}
+
+	
 }
