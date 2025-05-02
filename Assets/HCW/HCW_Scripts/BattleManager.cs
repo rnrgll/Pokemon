@@ -2,13 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
 {
-	
-
 	[Header("UI 관련")]
 	// [SerializeField] private PlayerPokemonPos;       // 플레이어 포켓몬 위치
 	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
@@ -16,26 +13,37 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private BattleHUD hud;          // hp 게이지·텍스트 제어
 	private DialogManager dialogue => DialogManager.Instance;
 
-	[Header("씬 전환 관련")]
-	[SerializeField] private string battleScene = "BattleScene"; // 배틀 씬 이름
-	private bool hasLoaded = false; // 씬 로드 여부
-
 	[Header("전투 관련")]
 	private List<Pokémon> playerParty;    // 플레이어 포켓몬 리스트
-	private Pokémon playerPokemon;        // 플레이어 포켓몬
 	private List<Pokémon> enemyParty;     // 적 포켓몬 리스트
-	private int currentEnemyIndex;        // 현재 적 포켓몬 인덱스
+	private Pokémon playerPokemon;        // 플레이어 포켓몬
 	private Pokémon enemyPokemon;         // 적 포켓몬
+	private int currentEnemyIndex;        // 현재 적 포켓몬 인덱스
 	private string selectedAction;        // 선택된 행동
 	private string playerSelectedSkill;   // 선택된 스킬
 	private string enemySelectedSkill;    // 적 포켓몬이 사용할 기술
 	private const int MaxPartySize = 6;   // 최대 파티 크기
-	private bool istraner;                // 상대가 트레이너 인지
+
+	[SerializeField] private bool istraner;                // 상대가 트레이너 인지
+	[SerializeField] private string enemyTrainerName;    // 트레이너면 이름
+
 
 	Coroutine battleCoroutine;
 	[SerializeField] string prevScene;
 
+	private void OnBattleDialogClosed()
+	{
+		dialogue.CloseDialog -= OnBattleDialogClosed; // 대사창이 닫힐때 이벤트 해제
+
+		hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 HUD 설정
+		hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 HUD 설정
+
+		ui.ShowActionMenu();
+		battleCoroutine = StartCoroutine(BattleLoop()); // 전투 루프 시작
+	}
+
 	// TODO : 배틀매니저 싱글톤 풀고 awake나 start에서 처리하기
+
 
 	private void Start()
 	{
@@ -56,13 +64,18 @@ public class BattleManager : MonoBehaviour
 			StartBattle(Manager.Poke.party, Manager.Poke.enemyPokemon);
 		}
 	}
+	private void Update()
+	{
+		dialogue.HandleUpdate();
+	}
+
 
 	private void OnDestroy()
-    {
+	{
 		// 구독 해제
 		ui.OnActionSelected.RemoveListener(OnActionButton);
 		ui.OnSkillSelected.RemoveListener(OnSkillButton);
-    }
+	}
 
 	// 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
 	public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
@@ -72,16 +85,21 @@ public class BattleManager : MonoBehaviour
 		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
 
 		if (playerParty.Count == 0 || enemyParty.Count == 0)
-        {
-            Debug.LogError("플레이어 또는 적 포켓몬 파티가 비어있습니다!");
-            return;
-        }
-		
-        playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
-        enemyPokemon = enemyParty[0];   // 적의 첫번째 포켓몬
+		{
+			Debug.LogError("플레이어 또는 적 포켓몬 파티가 비어있습니다!");
+			return;
+		}
+
+		playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
+		enemyPokemon = enemyParty[0];   // 적의 첫번째 포켓몬
 
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
+
+		var lines = new List<string> {$"체육관 관장 {enemyTrainerName}이(가) 나타났다!"};
+
+		dialogue.CloseDialog += OnBattleDialogClosed;
+		dialogue.StartDialogue(new Dialog(lines));
 
 		if (battleCoroutine == null)
 			battleCoroutine = StartCoroutine(BattleLoop());
@@ -98,18 +116,16 @@ public class BattleManager : MonoBehaviour
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
+		var lines = new List<string> { $"체육관 관장 {enemyTrainerName}이(가) 나타났다!" };
+		dialogue.CloseDialog += OnBattleDialogClosed;
+		dialogue.StartDialogue(new Dialog(lines));
+
 		if (battleCoroutine == null)
 			battleCoroutine = StartCoroutine(BattleLoop());
 	}
 
 	private IEnumerator BattleLoop()
 	{
-		Debug.Log($"배틀 루프 시작 : {playerPokemon.pokeName} VS {enemyPokemon.pokeName}");
-		// 배틀 시작 대사 
-		// dialogue.StartDialogue(new[] { $"야생의 {enemyPokemon.pokeName}이(가) 나타났다!" });
-		// dialogue.StartDialogue(new[] { $"{NPC 이름}이(가) {enemyPokemon.pokeName}을(를) 내보냈다!" }); // NPC가 상대일경우
-
-		yield return new WaitForSeconds(1f);
 		ui.ShowActionMenu(); // 행동 선택 UI 표시
 		selectedAction = null;
 		yield return new WaitUntil(() => selectedAction != null); // 행동 선택 대기
@@ -142,6 +158,7 @@ public class BattleManager : MonoBehaviour
 			// 행동 선택 대기
 			selectedAction = null;
 			yield return new WaitUntil(() => selectedAction != null);
+			ui.HideActionMenu();
 
 			// 전투 수행
 			if (selectedAction == "Fight")
@@ -151,7 +168,9 @@ public class BattleManager : MonoBehaviour
 				yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
 				ui.HideSkillSelection();
 
-				enemySelectedSkill = EnemyChooseAction();
+				// 적 포켓몬 행동 선택
+				int idx = Random.Range(0, enemyPokemon.skills.Count);
+				enemySelectedSkill = enemyPokemon.skills[idx];
 
 				var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
                 {
@@ -159,7 +178,8 @@ public class BattleManager : MonoBehaviour
 					new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
 				};
 
-				actions.Sort((a, b) => b.Attacker.pokemonStat.speed.CompareTo(a.Attacker.pokemonStat.speed)); // 속도에 따라 정렬
+				// 속도에 따라 정렬
+				actions.Sort((a, b) => b.Attacker.pokemonStat.speed.CompareTo(a.Attacker.pokemonStat.speed));
 
 				foreach (var act in actions) ///
 				{
@@ -185,13 +205,6 @@ public class BattleManager : MonoBehaviour
 	private void OnActionButton(string action) => selectedAction = action;
 	private void OnSkillButton(int idx) => playerSelectedSkill = playerPokemon.skills[idx];
 
-	// 적 포켓몬 행동 선택 추후 로직 추가 가능
-	private string EnemyChooseAction()
-	{
-		int idx = Random.Range(0, enemyPokemon.skills.Count);
-		// 스킬 딕셔너리 완성되면 반환 타입을 스킬로바꾸기
-		return enemyPokemon.skills[idx];
-	}
 	// 행동 선택 후 행동 처리
 	private void ExecuteAction(BattleAction action)
 	{
@@ -223,6 +236,5 @@ public class BattleManager : MonoBehaviour
 			StopCoroutine(battleCoroutine);
 			battleCoroutine = null;
 		}
-
 	}
 }

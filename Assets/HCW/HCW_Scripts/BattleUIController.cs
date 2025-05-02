@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class BattleUIController : MonoBehaviour
 {
@@ -26,17 +27,12 @@ public class BattleUIController : MonoBehaviour
 	public UnityEvent<string> OnActionSelected = new UnityEvent<string>();
 	public UnityEvent<int> OnSkillSelected = new UnityEvent<int>();
 
-	private List<Button> actionButtons;
 	private List<Button> skillButtons;
-
-
 
 	void Awake()
 	{
-		actionButtons = new List<Button> { fightButton, bagButton, pokemonButton, runButton };
 		// 스킬 버튼을 리스트로 묶어 관리
 		skillButtons = new List<Button> { skillButton1, skillButton2, skillButton3, skillButton4 };
-		Debug.Log("배틀ui컨트롤러 초기화");
 	}
 	void Start()
 	{
@@ -58,21 +54,20 @@ public class BattleUIController : MonoBehaviour
 			skillButtons[i].onClick.AddListener(() => {OnSkillSelected.Invoke(idx); skillPanel.SetActive(false);});
 		}
 	}
-	public void ShowActionMenu() => bottomPanel.SetActive(true);
+	public void ShowActionMenu()
+	{
+		bottomPanel.SetActive(true);
+		EventSystem.current.SetSelectedGameObject(fightButton.gameObject);
+	}
 
-	public void HideActionMenu() => bottomPanel.SetActive(false);
 
-	// TODO 매뉴창 방향키 조작
-	//void Update()
-	//{
-	//	if (bottomPanel.activeSelf)
-	//	{
-	//		if (Input.GetKeyDown(KeyCode.Escape))
-	//		{
-	//			HideActionMenu();
-	//		}
-	//	}
-	//}
+	public void HideActionMenu()
+	{
+		bottomPanel.SetActive(false);
+		EventSystem.current.SetSelectedGameObject(null);
+	}
+
+	
 
 	public void ShowSkillSelection(Pokémon pokemon)
 	{
@@ -93,6 +88,14 @@ public class BattleUIController : MonoBehaviour
 			}
 		}
 		skillPanel.SetActive(true);
+		// 스킬 버튼에 하이라이트 효과 추가
+		EventSystem.current.SetSelectedGameObject(skillButton1.gameObject);
 	}
-	public void HideSkillSelection() => skillPanel.SetActive(false);
+
+	// 스킬 선택 후 스킬 패널 숨김
+	public void HideSkillSelection()
+	{
+		skillPanel.SetActive(false);
+		EventSystem.current.SetSelectedGameObject(fightButton.gameObject);
+	}
 }
