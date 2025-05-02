@@ -53,12 +53,9 @@ public class Inventory
 		
 		//아이템 사용에 성공하면 1개 감소 처리
 		//실패하면 아무것도 하지 않는다.
-		if (selectItem.ItemName != itemName)
-		{
-			 selectItem = Manager.Data.ItemDatabase.GetItemData(itemName);
-		}
+		var item = Manager.Data.ItemDatabase.GetItemData(itemName);
 		
-		if(selectItem.Use(null,InGameContextFactory.CreateBasic(isBattle: false))) //수정하기
+		if(item.Use(null,InGameContextFactory.CreateBasic(isBattle: false))) //수정하기
 		{
 			RemoveItem(itemName);
 		}
@@ -79,15 +76,55 @@ public class Inventory
 
 	public bool CanUse(string itemName)
 	{
-		selectItem = Manager.Data.ItemDatabase.GetItemData(itemName);
-		return selectItem.CanUseNow(InGameContextFactory.CreateBasic(isBattle: false)); //todo: 배틀중인지 아닌지 관리하는 변수 넣어줘야함
+		var item = Manager.Data.ItemDatabase.GetItemData(itemName);
+		return item.CanUseNow(InGameContextFactory.CreateBasic(isBattle: false)); //todo: 배틀중인지 아닌지 관리하는 변수 넣어줘야함
+	} 
 
-	}
+	
 
 	public List<InventorySlot> GetItemsByCategory(Define.ItemCategory itemCategory)
 	{
-		return _slots.Where(slot =>
-			Manager.Data.ItemDatabase.CheckItemCategory(slot.ItemName, itemCategory)).ToList();
+		if (itemCategory != Define.ItemCategory.TM_HM)
+		{
+			return _slots
+				.Where(slot => Manager.Data.ItemDatabase.CheckItemCategory(slot.ItemName, itemCategory))
+				.ToList();
+		}
+		
+		//기술머신 정렬
+		List<InventorySlot> tmList = new();
+		List<InventorySlot> hmList = new();
+		foreach (var slot in _slots)
+		{
+			var data = Manager.Data.ItemDatabase.GetItemData(slot.ItemName) as Item_SkillMachine;
+			if (data == null) continue;
+		
+			if (data.MachineType == SkillMachineType.TM)
+				tmList.Add(slot);
+			else if (data.MachineType == SkillMachineType.HM)
+				hmList.Add(slot);
+		}
+		
+		//각각 정렬
+		tmList.Sort(CompareByMachineNumber);
+		hmList.Sort(CompareByMachineNumber);
+		// 이어 붙이기
+		tmList.AddRange(hmList);
+		return tmList;
+		
 	}
+	
+	//기술 번호 기준 오름차순 정렬
+	private int CompareByMachineNumber(InventorySlot a, InventorySlot b)
+	{
+		var aData = Manager.Data.ItemDatabase.GetItemData(a.ItemName) as Item_SkillMachine;
+		var bData = Manager.Data.ItemDatabase.GetItemData(b.ItemName) as Item_SkillMachine;
+
+		if (aData == null || bData == null) return 0; // 예외 방지
+
+		return aData.MachineNumber.CompareTo(bData.MachineNumber);
+	}
+
+
 	
 }

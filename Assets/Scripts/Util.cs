@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Util
 {
@@ -26,4 +27,28 @@ public class Util
 		string separator = showColon ? ":" : " ";
 		return $"{ts.Hours:D2} {separator} {ts.Minutes:D2}";
 	}
+	
+	
+	public static void SetVisible(Graphic ui, bool isVisible)
+	{
+		if (ui.TryGetComponent<CanvasGroup>(out var group))
+		{
+			group.alpha = isVisible ? 1f : 0f;
+			group.interactable = isVisible;
+			group.blocksRaycasts = isVisible;
+		}
+		else
+		{
+			ui.gameObject.SetActive(isVisible);
+		}
+	}
+	
+
+	public static void SetVisible(CanvasGroup group, bool isVisible)
+	{
+		group.alpha = isVisible ? 1f : 0f;
+		group.interactable = isVisible;
+		group.blocksRaycasts = isVisible;
+	}
+
 }

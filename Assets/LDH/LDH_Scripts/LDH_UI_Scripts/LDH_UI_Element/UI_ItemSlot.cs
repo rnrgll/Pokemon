@@ -13,12 +13,12 @@ public class UI_ItemSlot : PoolObject<UI_ItemSlot>
 
 	public void Deselect()
 	{
-		SetVisible(redArrow, false);
+		Util.SetVisible(redArrow, false);
 	}
 
 	public void Select()
 	{
-		SetVisible(redArrow, true);
+		Util.SetVisible(redArrow, true);
 	}
 
 	private void OnDisable()
@@ -51,41 +51,20 @@ public class UI_ItemSlot : PoolObject<UI_ItemSlot>
 		}
 
 		// 기술머신 / 비전머신이면 tmCode 활성화 및 설정
-		SetVisible(tmCode, isSkillMachine);
+		Util.SetVisible(tmCode, isSkillMachine);
 		tmCode.text = skillCode;
 
 		// 개수 및 x 심볼 표시 여부
 		bool showCount =
 			!(itemData.Category == Define.ItemCategory.KeyItem || isHM);
 
-		SetVisible(xSymbol, showCount);
-		SetVisible(itemCnt, showCount);
+		Util.SetVisible(xSymbol, showCount);
+		Util.SetVisible(itemCnt, showCount);
 		itemCnt.text = showCount ? slotData.Count.ToString() : "";
 	}
 
 	#region 유틸리티 메서드
 
-	private void SetVisible(Graphic ui, bool isVisible)
-	{
-		if (ui.TryGetComponent<CanvasGroup>(out var group))
-		{
-			group.alpha = isVisible ? 1f : 0f;
-			group.interactable = isVisible;
-			group.blocksRaycasts = isVisible;
-		}
-		else
-		{
-			ui.gameObject.SetActive(isVisible);
-		}
-	}
-	
-
-	private void SetVisible(CanvasGroup group, bool isVisible)
-	{
-		group.alpha = isVisible ? 1f : 0f;
-		group.interactable = isVisible;
-		group.blocksRaycasts = isVisible;
-	}
 
 	#endregion
 }

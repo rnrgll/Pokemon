@@ -15,6 +15,7 @@ public class UI_Bag : UI_Linked
 	private static int[] currentCursorList = new int[(int)ItemCategory.Count];
 	private int curCursorIdx = 0;
 	private int preCursorIdx = 0;
+	private float slotHeight = -1f;
 
 	private List<InventorySlot> curItemList;
 	private List<UI_ItemSlot> activeItemSlots = new(); // 현재 UI에서 활성화된 슬롯만 추려서 저장
@@ -144,6 +145,7 @@ public class UI_Bag : UI_Linked
 		{
 			UI_ItemSlot slot = slotPool.Get();
 			slot.SetData(item);
+			slot.transform.SetAsLastSibling(); // 정렬보장!!!
 		}
 		
 		// "그만두다" 슬롯 추가
@@ -156,6 +158,7 @@ public class UI_Bag : UI_Linked
 			stopSlotInstance.transform.SetParent(itemSlotRoot, false);
 			stopSlotInstance.gameObject.SetActive(true);
 		}
+		stopSlotInstance.transform.SetAsLastSibling();
 	}
 
 	/// <summary>
@@ -201,6 +204,21 @@ public class UI_Bag : UI_Linked
 	{
 		labelImg.sprite = labelSprites[(int)category];
 	}
+	
+	
+	//스크롤 갱신
+	private void ScrollToIndexBySlotHeight(int index)
+	{
+		if (slotHeight < 0f)
+		{
+			slotHeight = uiItemSlotPrefab.GetComponent<RectTransform>().rect.height;
+		}
+		float offset = index * slotHeight;
+
+		Vector2 pos = scrollRect.content.anchoredPosition;
+		scrollRect.content.anchoredPosition = new Vector2(pos.x, offset);
+		
+	}
 
 	#endregion
 	
@@ -231,6 +249,9 @@ public class UI_Bag : UI_Linked
 		currentCursorList[panelIdx] = curCursorIdx;
 
 		UpdateCursor();
+		//UpdateScrollBySLotHeight(curCursorIdx, activeItemSlots.Count);
+		ScrollToIndexBySlotHeight(curCursorIdx); 
+
 	}
 
 	private List<UI_ItemSlot> GetActiveItemSlots()

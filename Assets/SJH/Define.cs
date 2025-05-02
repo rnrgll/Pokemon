@@ -86,7 +86,11 @@ public class Define
 		Select,
 		Cancel,
 	}
-	
+
+	public static Dictionary<string, string> ColorCode = new Dictionary<string, string>()
+	{
+		{ "hp_red", "#F82805" }, { "hp_yellow", "#F8A81E" }, { "hp_green", "#02B821" }
+	};
 
 	#endregion
 

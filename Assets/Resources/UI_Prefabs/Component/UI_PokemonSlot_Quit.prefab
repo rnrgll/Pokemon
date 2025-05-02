@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8799409503751103059}
   - component: {fileID: 3148809660712567504}
   - component: {fileID: 1755353102463953018}
+  - component: {fileID: 7164384522763069155}
   m_Layer: 5
   m_Name: RedArrow
   m_TagString: Untagged
@@ -30,12 +31,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5832424869037769283}
+  m_Father: {fileID: 4549687417582647811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 15, y: -39.24235}
-  m_SizeDelta: {x: 30, y: 78.4847}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 30, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3148809660712567504
 CanvasRenderer:
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &7164384522763069155
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348313635447256214}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1350010373239726605
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,10 +121,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4549687417582647811}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 208.49396, y: -39.24235}
-  m_SizeDelta: {x: 336.9879, y: 78.4847}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 336.9879, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8177137509312727189
 CanvasRenderer:
@@ -233,7 +246,7 @@ GameObject:
   - component: {fileID: 4549687417582647811}
   - component: {fileID: 7716574611332670016}
   - component: {fileID: 3291427936219804688}
-  - component: {fileID: 3700706977267049322}
+  - component: {fileID: 5650717027097768214}
   m_Layer: 5
   m_Name: UI_PokemonSlot_Quit
   m_TagString: Untagged
@@ -253,14 +266,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5832424869037769283}
+  - {fileID: 8799409503751103059}
   - {fileID: 6813695893341880899}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 400, y: -456.66586}
-  m_SizeDelta: {x: 800, y: 78.4847}
+  m_SizeDelta: {x: 800, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7716574611332670016
 MonoBehaviour:
@@ -296,7 +309,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3212038692183476825}
   m_CullTransparentMesh: 1
---- !u!114 &3700706977267049322
+--- !u!114 &5650717027097768214
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -305,102 +318,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3212038692183476825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9ac57ac0058a4def9435c17fd6d207d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e5f246bf55094e4f81442afba7c98fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tmCode: {fileID: 0}
-  redArrow: {fileID: 1755353102463953018}
-  itemName: {fileID: 3229195397395909529}
-  xSymbol: {fileID: 0}
-  itemCnt: {fileID: 0}
---- !u!1 &4369022939957251463
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5832424869037769283}
-  - component: {fileID: 7002371105699381692}
-  - component: {fileID: 8354342656786183877}
-  - component: {fileID: 2260368485588854111}
-  m_Layer: 5
-  m_Name: Img
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &5832424869037769283
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4369022939957251463}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8799409503751103059}
-  m_Father: {fileID: 4549687417582647811}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: -39.24235}
-  m_SizeDelta: {x: 30, y: 78.4847}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &7002371105699381692
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4369022939957251463}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &8354342656786183877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4369022939957251463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 3
-  m_Spacing: 10
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
---- !u!114 &2260368485588854111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4369022939957251463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 0
+  arrow: {fileID: 1755353102463953018}
+  icon: {fileID: 0}
+  pokemonName: {fileID: 3229195397395909529}
+  level: {fileID: 0}
+  curHp: {fileID: 0}
+  maxHp: {fileID: 0}
+  hpSlider: {fileID: 0}
