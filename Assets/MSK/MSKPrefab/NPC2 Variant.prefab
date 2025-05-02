@@ -89,6 +89,7 @@ MonoBehaviour:
     - 1
     - 2
     - 3
+  currentDirection: {x: 0, y: 0}
 --- !u!95 &8271531811629687762
 Animator:
   serializedVersion: 5
@@ -99,7 +100,7 @@ Animator:
   m_GameObject: {fileID: 2817950634812131084}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e54b487ac464c9d44a6daaa6a2acc11d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2e14158877a617741a2647cfb62b1c7d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

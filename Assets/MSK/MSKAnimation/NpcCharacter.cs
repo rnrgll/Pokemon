@@ -5,24 +5,26 @@ using UnityEngine.Windows;
 
 public class NpcCharacter : MonoBehaviour
 {
-	NPCAnimations npcAnimator;
+	Animator npcAnimator;
 	[SerializeField] int moveValue = 2;
+	
+
 	private void Awake()
 	{
-		npcAnimator = GetComponent<NPCAnimations>();
+		npcAnimator = GetComponent<Animator>();
 	}
 	public IEnumerator NpcMove(Vector2 direction)
 	{
-		npcAnimator.MoveX = Mathf.Clamp(direction.x, -1f,1f);
-		npcAnimator.MoveY = Mathf.Clamp(direction.y, -1f, 1f);
+		//npcAnimator.MoveX = Mathf.Clamp(direction.x, -1f,1f);
+		//npcAnimator.MoveY = Mathf.Clamp(direction.y, -1f, 1f);
 
 		var targetPos = transform.position;
 		targetPos.x += direction.x;
 		targetPos.y += direction.y;
-		if (IsWalkAble(targetPos))
-			yield break;
+		//if (IsWalkAble(targetPos))
+		//	yield break;
 
-		npcAnimator.IsNpcMoving = true;
+		//NpcMover.npcMoving = true;
 		
 		while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
 		{
@@ -31,18 +33,6 @@ public class NpcCharacter : MonoBehaviour
 		}
 		transform.position = targetPos;
 
-		npcAnimator.IsNpcMoving = false;
-	}
-
-	private bool IsWalkAble(Vector2 targetPos)
-	{
-		bool isWalk = true;
-		Vector2 inputDir = (targetPos - (Vector2)transform.position).normalized;
-		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + inputDir * 0.1f, inputDir, 1f);
-		if (hit && (hit.transform.CompareTag("Wall") || hit.transform.CompareTag("NPC")|| hit.transform.CompareTag("Player")))
-		{
-			return isWalk = false;
-		}
-		return isWalk;
+		//npcAnimator.npcMoving = false;
 	}
 }

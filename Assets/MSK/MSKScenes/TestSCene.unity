@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC2 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8271531811629687762, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2e14158877a617741a2647cfb62b1c7d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -195,7 +199,7 @@ PrefabInstance:
     - target: {fileID: -739553167485552534, guid: c70378c2dc6d9e84499b07055324fc10, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 2e14158877a617741a2647cfb62b1c7d, type: 2}
+      objectReference: {fileID: 9100000, guid: e54b487ac464c9d44a6daaa6a2acc11d, type: 2}
     - target: {fileID: 682994435189251626, guid: c70378c2dc6d9e84499b07055324fc10, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6
