@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NpcMover : MonoBehaviour
@@ -25,9 +23,9 @@ public class NpcMover : MonoBehaviour
 		npcPos = this.transform.position;
 		anim = GetComponent<Animator>();
 	}
-	private void Update()
+	private void FixedUpdate()
 	{
-		NpcMoveStart();
+		// NpcMoveStart();
 	}
 	public void NpcMoveStart()
 	{
@@ -35,37 +33,39 @@ public class NpcMover : MonoBehaviour
 		if (Manager.Dialog.isTyping != true)
 		{
 			npcMoving = true;
-		//	NpcMoving(npcMov);
-		} 
+			Debug.Log(this.name);
+			IsWalkAble(currentDirection);
+			if (isWalkAble)
+			{
+				//	StartCoroutine(NpcMoving(npcMov));
+			}
+		}
 		else
 		{
-			IsWalkAble(currentDirection);
 			npcMoving = false;
 		}
 	}
 
 	//public IEnumerator NpcMoving(NpcMovVector2 vector)
 	//{
-		//리스트 벡터2에 있는 값대로 움직이기
-		//리스트 카운트만큼 반복하기
-		//리스트[0]에 있는 벡터대로 움직이기
-		//리스트 카운트 ++
-		//일정 시간 대기
+	//		리스트 벡터2에 있는 값대로 움직이기
+	//		리스트 카운트만큼 반복하기
+	//		리스트[0]에 있는 벡터대로 움직이기
+	//		리스트 카운트 ++
+	//		일정 시간 대기
 	//}
 
 	// npc 전방 확인
-	private bool IsWalkAble(Vector2 targetPos)
+	private bool IsWalkAble(Vector2 currentDirection)
 	{
-
-		RaycastHit2D hit = Physics2D.Raycast(npcPos, targetPos, 2f);
-		if (hit && (hit.transform.CompareTag("Wall") || hit.transform.CompareTag("NPC") || hit.transform.CompareTag("Player")))
-		{
-			Debug.Log($"NPC 방향에 {hit.transform.tag} 있음");
-			return isWalkAble = false;
-		}else
-		{ 
-			Debug.Log("NPC 방향에 장애물 없음"); 
-		}
+		//  npcPos에서 NpcDir로 레이케스트 발사
+		RaycastHit2D hit = Physics2D.Raycast(npcPos, npcPos + currentDirection, 2f);
+		Debug.Log($"{hit.transform.name}에 명중");
+		//	발사거리는 2f
+		//	명중한 객체가 NPC, Player, Wall 일 경우
+		//	isWalkAble false
+		//	아닌 경우
+		//	isWalkAble true
 		return isWalkAble;
 	}
 }
