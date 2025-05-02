@@ -16,7 +16,7 @@ public class UI_Bag : UI_Linked
 	private int preCursorIdx = 0;
 
 	private List<InventorySlot> curItemList;
-
+	private List<UI_ItemSlot> activeItemSlots = new(); // 현재 UI에서 활성화된 슬롯만 추려서 저장
 	#endregion
 	
 	#region UI 요소 참조 및 리소스
@@ -112,6 +112,8 @@ public class UI_Bag : UI_Linked
 		UpdateBagIcon(currentCategory);
 		UpdateLabelImage(currentCategory);
 		UpdateItemSlots();
+		
+		activeItemSlots = GetActiveItemSlots(); // 커서 이동 & 선택 공용
 		UpdateCursor();
 	}
 
@@ -124,8 +126,14 @@ public class UI_Bag : UI_Linked
 		foreach (Transform child in itemSlotRoot)
 		{
 			var slot = child.GetComponent<UI_ItemSlot>();
-			if (slot != null && slot != stopSlotInstance)
-				slot.ReturnToPool();
+			if (slot != null)
+			{
+				slot.Deselect();
+				if(slot != stopSlotInstance)
+					slot.ReturnToPool();
+			}
+			
+			
 		}
 
 		// 새로운 슬롯 생성 및 데이터 반영
@@ -152,15 +160,15 @@ public class UI_Bag : UI_Linked
 	/// </summary>
 	private void UpdateCursor()
 	{
+		if (activeItemSlots.Count == 0) return;
+		
 		Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
-		if (itemSlotRoot.childCount == 0) return;
 
-		//오브젝트 풀 도입하면서 비활성화 처리된 
-		UI_ItemSlot preSlot = itemSlotRoot.GetChild(preCursorIdx).GetComponent<UI_ItemSlot>();
-		UI_ItemSlot curSlot = itemSlotRoot.GetChild(curCursorIdx).GetComponent<UI_ItemSlot>();
+		if (preCursorIdx < activeItemSlots.Count)
+			activeItemSlots[preCursorIdx].Deselect();
+		if (curCursorIdx < activeItemSlots.Count)
+			activeItemSlots[curCursorIdx].Select();
 
-		preSlot?.Deselect();
-		curSlot?.Select();
 	}
 
 	//가방 이미지 갱신
@@ -177,7 +185,7 @@ public class UI_Bag : UI_Linked
 	#endregion
 	
 	
-	#region 커서 및 탭 이동
+	#region 커서 및 탭 이동 관련
 
 	private void MovePanel(int direction)
 	{
@@ -195,7 +203,7 @@ public class UI_Bag : UI_Linked
 
 		preCursorIdx = curCursorIdx;
 		
-		int max = itemSlotRoot.childCount - 1;
+		int max = activeItemSlots.Count - 1;
 		int next = Mathf.Clamp(curCursorIdx + direction, 0, max);
 		
 		curCursorIdx = next;
@@ -203,6 +211,19 @@ public class UI_Bag : UI_Linked
 		currentCursorList[panelIdx] = curCursorIdx;
 
 		UpdateCursor();
+	}
+
+	private List<UI_ItemSlot> GetActiveItemSlots()
+	{
+		List<UI_ItemSlot> activeSlots = new();
+		for (int i = 0; i < itemSlotRoot.childCount; i++)
+		{
+			Transform slot = itemSlotRoot.GetChild(i);
+			if(slot.gameObject.activeSelf)
+				activeSlots.Add(slot.GetComponent<UI_ItemSlot>());
+		}
+
+		return activeSlots;
 	}
 
 	#endregion

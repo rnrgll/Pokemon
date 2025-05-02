@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,11 @@ public class UI_ItemSlot : PoolObject<UI_ItemSlot>
 	public void Select()
 	{
 		SetVisible(redArrow, true);
+	}
+
+	private void OnDisable()
+	{
+		Deselect();
 	}
 
 	public void SetData(InventorySlot slotData)
