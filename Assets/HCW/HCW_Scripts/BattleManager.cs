@@ -106,7 +106,7 @@ public class BattleManager : MonoBehaviour
 	{
 		Debug.Log($"배틀 루프 시작 : {playerPokemon.pokeName} VS {enemyPokemon.pokeName}");
 		// 배틀 시작 대사 
-		dialogue.StartDialogue(new[] { $"야생의 {enemyPokemon.pokeName}이(가) 나타났다!" });
+		// dialogue.StartDialogue(new[] { $"야생의 {enemyPokemon.pokeName}이(가) 나타났다!" });
 		// dialogue.StartDialogue(new[] { $"{NPC 이름}이(가) {enemyPokemon.pokeName}을(를) 내보냈다!" }); // NPC가 상대일경우
 
 		yield return new WaitForSeconds(1f);
