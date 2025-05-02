@@ -15,6 +15,7 @@ public class DataManager : Singleton<DataManager>
 	public SJH_PokemonData SJH_PokemonData { get; private set; }
 	public DungeonMapData DungeonMapData { get; private set; }
 	public EncounterData EncounterData { get; private set; }
+	public SkillSData SkillSData { get; private set; }
 
 	protected override void Init()
 	{
@@ -29,5 +30,8 @@ public class DataManager : Singleton<DataManager>
 
 		EncounterData = new EncounterData();
 		EncounterData.Init();
+
+		SkillSData = new SkillSData();
+		SkillSData.Init();
 	}
 }

@@ -13,7 +13,8 @@ public static class ItemMessage
 		{ItemMessageKey.RestoreFreeze, "{0}의 몸에\n얼음이 녹았다."},
 		{ItemMessageKey.RestoreSleep, "{0}는(은)\n눈을 떴다"},
 		{ItemMessageKey.RestoreParalysis, "{0}의 몸에\n마비가 사라졌다"},
-		{ItemMessageKey.RestoreConfusion, "{0}는(은)\n혼란이 풀렸다."}
+		{ItemMessageKey.RestoreConfusion, "{0}는(은)\n혼란이 풀렸다."},
+		{ItemMessageKey.CanNotUseBall, "트레이너가 볼을 쳐냈다!\n다른사람의 물건을 훔치면 도둑놈!"}
 	};
 	
 

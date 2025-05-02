@@ -9,13 +9,15 @@ public class LDH_RopeTest : MonoBehaviour
 	
 	public void UseRope()
 	{
-		InGameContext<DungeonMapData.DungeonLink> itemContext = InGameContext<DungeonMapData.DungeonLink>.With(info =>
-		{
-			SceneChanger sc = new GameObject().AddComponent<SceneChanger>();
-			sc.Change(info.entranceSceneName, info.entrancePosition);
-		});
-		itemContext.IsInDungeon = isInDungeon;
-		itemContext.NotifyMessage = msg => Debug.Log(msg);
+		var itemContext = InGameContextFactory.Create<DungeonMapData.DungeonLink>(
+			isDungeon: isInDungeon,
+			message: msg => Debug.Log(msg),
+			callback: info =>
+			{
+				SceneChanger sc = new GameObject().AddComponent<SceneChanger>();
+				sc.Change(info.entranceSceneName, info.entrancePosition);
+			});
+
 		_escapeRope.Use<DungeonMapData.DungeonLink>(null, itemContext);
 	}
 }

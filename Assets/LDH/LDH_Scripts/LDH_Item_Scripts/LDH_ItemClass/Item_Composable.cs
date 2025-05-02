@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Composable")]
+// [CreateAssetMenu(menuName = "Item/Composable")]
 public class Item_Composable : ItemBase
 {
 	[SerializeField] private List<ScriptableObject> effectObjects;
