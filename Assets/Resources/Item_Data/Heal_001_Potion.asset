@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4faa148ff5161449fba55976cde7671a, type: 3}
   m_Name: Heal_001_Potion
   m_EditorClassIdentifier: 
-  name: "\uC0C1\uCC98\uC57D"
+  itemName: "\uC0C1\uCC98\uC57D"
   description: "\uCCB4\uB825\uC744 20 \uD68C\uBCF5\uC2DC\uD0A8\uB2E4"
   category: 0
   useTarget: 2

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a11950d8436b4724ad8eb3dbcf8b073, type: 3}
   m_Name: Berry_002_BitterBerry
   m_EditorClassIdentifier: 
-  name: "\uC4F4\uB9DB \uB098\uBB34\uC5F4\uB9E4"
+  itemName: "\uC4F4\uB9DB \uB098\uBB34\uC5F4\uB9E4"
   description: "\uC9C0\uB2C8\uAC8C \uD558\uBA74 \uC790\uC2E0\uC758\\n\uD63C\uB780\uC744
     \uD68C\uBCF5\uD55C\uB2E4"
   category: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a11950d8436b4724ad8eb3dbcf8b073, type: 3}
   m_Name: Berry_003_AntidoteBerry
   m_EditorClassIdentifier: 
-  name: "\uD574\uB3C5\uC5F4\uB9E4"
+  itemName: "\uD574\uB3C5\uC5F4\uB9E4"
   description: "\uC9C0\uB2C8\uAC8C \uD558\uBA74 \uC790\uC2E0\uC758\\n\uC911\uB3C5\uC0C1\uD0DC\uB97C
     \uD68C\uBCF5\uD55C\uB2E4"
   category: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5971bfe67fa70470bbcb36cf3b6462fb, type: 3}
   m_Name: KeyItem_001_StrangeEgg
   m_EditorClassIdentifier: 
-  name: "\uC774\uC0C1\uD55C \uC54C"
+  itemName: "\uC774\uC0C1\uD55C \uC54C"
   description: "\uD3EC\uCF13\uBAAC \uD560\uC544\uBC84\uC9C0\uAC00 \uB9E1\uAE34 \uAC83\\n\uC5B4\uB5A4
     \uC54C\uC778\uC9C0 \uBAA8\uB978\uB2E4"
   category: 2
