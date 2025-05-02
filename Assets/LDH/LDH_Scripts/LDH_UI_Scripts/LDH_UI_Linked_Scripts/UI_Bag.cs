@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -25,6 +26,8 @@ public class UI_Bag : UI_Linked
 	[SerializeField] private Image bagIconImg;
 	[SerializeField] private Image labelImg;
 	[SerializeField] private ScrollRect scrollRect;
+	[SerializeField] private TMP_Text descriptionText;
+	
 	private Transform itemSlotRoot;
 
 	[Header("리소스")]
@@ -162,13 +165,30 @@ public class UI_Bag : UI_Linked
 	{
 		if (activeItemSlots.Count == 0) return;
 		
-		Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
+		//Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
 
 		if (preCursorIdx < activeItemSlots.Count)
 			activeItemSlots[preCursorIdx].Deselect();
 		if (curCursorIdx < activeItemSlots.Count)
 			activeItemSlots[curCursorIdx].Select();
+		
+		UpdateDescription();
+	}
 
+	private void UpdateDescription()
+	{
+		string description;
+		if (curCursorIdx == activeItemSlots.Count - 1)
+		{
+			//그만두다의 경우 설명 공란으로 표시
+			description = String.Empty;
+		}
+		else
+		{
+			string itemName = curItemList[curCursorIdx].ItemName;
+			description = Manager.Data.ItemDatabase.GetItemData(itemName).Description;
+		}
+		descriptionText.text = description;
 	}
 
 	//가방 이미지 갱신
