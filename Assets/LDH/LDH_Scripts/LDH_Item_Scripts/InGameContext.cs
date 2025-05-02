@@ -7,6 +7,7 @@ public class InGameContext
 {
 	public bool IsInBattle;
 	public bool IsInDungeon;
+	public bool IsWildBattle;
 	public Action<string> NotifyMessage;
 	public Action Callback;
 }
