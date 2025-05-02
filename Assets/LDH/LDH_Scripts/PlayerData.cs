@@ -6,25 +6,31 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public class LDH_PlayerData
+public class PlayerData
 {
+	//========플레이어 기본 정보==========//
 	[SerializeField] private string playerName;
-	public string PlayerName => playerName;
-
-	[SerializeField] private string playerID;
-	public string PlayerID => playerID;
-	
-
+	[SerializeField] private string playerID; //랜덤생성
 	[SerializeField] private int money;
+	public string PlayerName => playerName;
+	public string PlayerID => playerID;
 	public int Money => money;
 	
+	//========트레이너 카드 관련 정보==========//
 	[SerializeField] private float playStartTime;
-	
-
 	[SerializeField] private bool[] hasBadges = new bool[8];
 	public bool[] HasBadges => hasBadges;
 
 
+	//==========인벤토리 정보===========//
+	private Inventory _inventory;
+	public Inventory Inventory => _inventory;
+	public IReadOnlyList<InventorySlot> PlayerInventory => _inventory.Slots; //앝은 API 제공용..이 필요한가? 모르겠다
+	
+
+
+	#region Initailization
+	
 	// 초기화 함수 (처음 게임 시작할 때 호출)
 	public void Init()
 	{
@@ -48,7 +54,11 @@ public class LDH_PlayerData
 			hasBadges[i] = false;
 		}
 	}
+
+	#endregion
+
 	
+	#region PlayerInfo Get/Modify API
 	
 	// 플레이어 이름 변경
 	public void SetPlayerName(string newName)
@@ -73,7 +83,11 @@ public class LDH_PlayerData
 		return false;
 	}
 
-	
+	#endregion
+
+
+	#region Trainer Card Info API
+
 	/// <summary>
 	/// 플레이 누적 시간 초 단위로 반환(float)
 	/// </summary>
@@ -92,6 +106,9 @@ public class LDH_PlayerData
 			hasBadges[index] = true;
 		}
 	}
+	
+	#endregion
+
 	
 
 }

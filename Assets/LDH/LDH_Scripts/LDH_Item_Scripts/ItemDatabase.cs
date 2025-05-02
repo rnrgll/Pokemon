@@ -50,7 +50,7 @@ public class ItemDatabase
 	//조건에 따라 원하는 아이템 혹은 아이템 리스트를 조회할 수 있도록 API 구현
 	
 	//1. 아이템 이름으로 아이템을 검색하여 반환
-	public ItemBase GetItem(string itemName)
+	public ItemBase GetItemData(string itemName)
 	{
 		if (_itemDict.TryGetValue(itemName, out ItemBase item))
 		{

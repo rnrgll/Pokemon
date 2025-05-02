@@ -55,6 +55,6 @@ public class LDH_Test : MonoBehaviour
 
     public void AddBadge(int idx)
     {
-	    Manager.Data.LdhPlayerData.GetBadge(idx);
+	    Manager.Data.PlayerData.GetBadge(idx);
     }
 }

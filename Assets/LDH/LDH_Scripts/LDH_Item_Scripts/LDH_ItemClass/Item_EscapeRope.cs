@@ -11,7 +11,7 @@ public class Item_EscapeRope : ItemBase
     {
 	    if (!inGameContext.IsInDungeon)
 	    {
-		    inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUse, Manager.Data.LdhPlayerData.PlayerName));
+		    inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUse, Manager.Data.PlayerData.PlayerName));
 		    return false;
 	    }
 	    

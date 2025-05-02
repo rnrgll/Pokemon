@@ -26,7 +26,7 @@ public class UI_PlayerBadgesPanel : MonoBehaviour
 
 	private void RefreshUI()
 	{
-		LDH_PlayerData playerData = Manager.Data.LdhPlayerData;
+		PlayerData playerData = Manager.Data.PlayerData;
 		name_txt.text = playerData.PlayerName;
 		id_txt.text = playerData.PlayerID;
 		money_txt.text = $"{playerData.Money}원";
@@ -35,7 +35,7 @@ public class UI_PlayerBadgesPanel : MonoBehaviour
 
 	private void UpdateBadge()
 	{
-		bool[] hasBadges = Manager.Data.LdhPlayerData.HasBadges;
+		bool[] hasBadges = Manager.Data.PlayerData.HasBadges;
 		for (int i = 0; i < hasBadges.Length; i++)
 		{
 			badges.GetChild(i).GetChild(1).gameObject.SetActive(hasBadges[i]);

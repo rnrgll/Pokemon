@@ -9,7 +9,7 @@ public class Item_KeyItem : ItemBase
 	public override bool Use(Pokémon target, InGameContext inGameContext)
     {
 	    
-	    inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUse,Manager.Data.LdhPlayerData.PlayerName));
+	    inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUse,Manager.Data.PlayerData.PlayerName));
 
 	    return false;
     }
