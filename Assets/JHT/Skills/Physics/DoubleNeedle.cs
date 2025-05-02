@@ -1,36 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Profiling;
 using UnityEngine;
 using static Define;
 
-public class DoubleNeedle : SkillPhysic
+public class DoubleNeedle : SkillS
 {
 	int count = 0;
-    public DoubleNeedle() :base("더블니들", "2개의 뾰족한 바늘로 연달아 찌른다. 때때로 상대를 중독시킨다",
-		25, false, SkillType.Physical,PokeType.Bug,20,100) { }
+    public DoubleNeedle() : base(
+		"더블니들",
+		"2개의 뾰족한 바늘로 연달아 찌른다. 때때로 상대를 중독시킨다",
+		25,
+		SkillType.Physical,
+		false,
+		PokeType.Bug,
+		20,
+		100
+		) { }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	// 20%의 확률로 상대를 독 상태에 빠트린다.
+
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		int rand = Random.Range(0, 100);
-		defender.animator.SetTrigger(name);
-
-		//랜덤변수
-		if (Mathf.RoundToInt(accuracy) >= rand)
+		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			count++;
+			// 어떤식으로 2번 때리지 2번호출하면되나
 			defender.TakeDamage(attacker, defender, skill);
-			skill.curPP--;
-			if (count > 1 && rand < 20)
-			{
-				//독상태에 빠짐
-			}
 
-		}
-		else
-		{
-			skill.curPP--;
-			Debug.Log("공격을 회피하였습니다");
+			defender.TakeDamage(attacker, defender, skill);
+
+			float effectRan = Random.Range(0f, 1f);
+			if (effectRan > 0.2f)
+			{
+				defender.condition = StatusCondition.Poison;
+			}
 		}
 	}
 }

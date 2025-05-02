@@ -244,7 +244,7 @@ public class BattleManager : MonoBehaviour
 	// 공격처리 추후 계산기 따로만들던가 여기 추가
 	private void Attack(Pokémon atk, Pokémon tgt, string skl)
 	{
-		// int dmg = 
+		// TODO : 디펜더의 함수를 사용하지 말고 스킬 함수의 UseSkill 사용으로 대미지 구현하기
 		var skill = Manager.Data.SkillSData.GetSkillDataByName(skl);
 		int damage = GetTotalDamage(atk, tgt, skill);
 		tgt.TakeDamage(damage);

@@ -9,15 +9,15 @@ public class SkillSpecial : SkillS
 		base(name, description, damage, skillType, isMyStat, type, pp, accuracy, isHm)
 	{ }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		int rand = Random.Range(0, 10);
-		defender.animator.SetTrigger(name);
+		//defender.animator.SetTrigger(name);
 
 		
 		if (Mathf.RoundToInt(accuracy) >= rand)
 		{
-			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
+			//defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
 
 		}
 		else

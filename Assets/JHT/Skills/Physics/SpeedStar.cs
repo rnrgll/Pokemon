@@ -8,7 +8,7 @@ public class SpeedStar : SkillPhysic
 	public SpeedStar() : base("스피드스타", "빗나가지 않는 별 모양의 빛을 날린다",
 		60, false, SkillType.Physical,PokeType.Normal,20,100) { }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		int rand = Random.Range(0, 100);
 		defender.animator.SetTrigger(name);

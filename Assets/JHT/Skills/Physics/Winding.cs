@@ -9,7 +9,7 @@ public class Winding : SkillPhysic
 		10, false, SkillType.Physical, PokeType.Normal, 25, 100)
 	{ }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		int rand = Random.Range(0, 100);
 		defender.animator.SetTrigger(name);

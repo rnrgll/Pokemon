@@ -8,7 +8,7 @@ public class SelfDestruct : SkillPhysic
     public SelfDestruct() : base("자폭", "스스로 폭발하여 주변에 피해를 주고 자신은 전투불능이 된다",
 		200, false, SkillType.Physical,PokeType.Normal,5,100) { }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		int rand = Random.Range(0, 100);
 		defender.animator.SetTrigger(name);

@@ -11,7 +11,7 @@ public class Roll : SkillPhysic
 		30, false, SkillType.Physical, PokeType.Rock,20,89.45f)
 	{ }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		int rand = Random.Range(0, 100);
 		defender.animator.SetTrigger(name);

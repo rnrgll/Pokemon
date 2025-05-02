@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Earthquake : SkillPhysic
+public class Earthquake : SkillS
 {
-    public Earthquake() : base("지진", "강한 지진을 일으켜 주변 땅에 있는 것들에 피해를 준다",
-		100, false, SkillType.Physical,PokeType.Ground,10,100) { }
+    public Earthquake() : base(
+		"지진",
+		"강한 지진을 일으켜 주변 땅에 있는 것들에 피해를 준다",
+		100,
+		SkillType.Physical,
+		false,
+		PokeType.Ground,
+		10,
+		100
+		) { }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		int rand = Random.Range(0, 100);
-		defender.animator.SetTrigger(name);
-
-		//랜덤변수
-		if (Mathf.RoundToInt(accuracy) >= rand)
+		if (defender.TryHit(attacker, defender, skill))
 		{
-			if (defender.pokeType2 == PokeType.Flying) return;
-			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			skill.curPP--;
-		}
-		else
-		{
-			skill.curPP--;
-			Debug.Log("공격을 회피하였습니다");
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

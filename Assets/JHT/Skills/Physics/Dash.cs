@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Dash : SkillPhysic
+public class Dash : SkillS
 {
-    public Dash() : base("돌진", "자신도 다칠 수 있지만 앞뒤를 가리지 않고 돌진해 들이 받는다",
-		90, false, SkillType.Physical,PokeType.Normal,20,84.38f) { }
+    public Dash() : base(
+		"돌진",
+		"자신도 다칠 수 있지만 앞뒤를 가리지 않고 돌진해 들이 받는다",
+		90,
+		SkillType.Physical,
+		false,
+		PokeType.Normal,
+		20,
+		85
+		) { }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	// 상대방에게 준 데미지의 1/4만큼 자신도 대미지를 입는다.
+
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		int rand = Random.Range(0, 100);
-		defender.animator.SetTrigger(name);
-
-		//랜덤변수
-		if (Mathf.RoundToInt(accuracy) >= rand)
+		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			attacker.pokemonStat.hp = Mathf.Max(0, (int)(attacker.pokemonStat.hp - skill.damage/4));
-			skill.curPP--;
-		}
-		else
-		{
-			skill.curPP--;
-			Debug.Log("공격을 회피하였습니다");
+			int totalDamage = defender.GetTotalDamage(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
+			attacker.hp -= totalDamage / 4;
 		}
 	}
 }

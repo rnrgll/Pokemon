@@ -10,11 +10,11 @@ public abstract class SkillS
 	public string description;
 	public float damage;
 	public SkillType skillType;
-	public bool isMyStat;
+	public bool isMyStat;	// isMyStat?
 
 
 	public PokeType type; //포켓몬 타입이랑 기술 타입이랑 동일한 타입 사용해서 추가함(이도현)
-	public int curPP;
+	public int curPP;	// pp에서 curPP와 maxPP로 분류 (손재훈)
 	public int maxPP;
 	public float accuracy; //위력
 	public bool isHM; //비전머신 기술인지의 여부
@@ -37,7 +37,7 @@ public abstract class SkillS
 		this.isHM = _isHm;
 	}
 
-	public abstract void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill);
+	public abstract void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill);
 
 	//스킬 사용시 Attack호출하고 attacker,defender,skill 사용시 타입별로 Attack실행
 	//public void Attack(PokemonS attacker, PokemonS defender, SkillS skill)
