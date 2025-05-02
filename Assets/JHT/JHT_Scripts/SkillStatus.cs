@@ -5,8 +5,8 @@ using static Define;
 
 public class SkillStatus : SkillS
 {
-	public SkillStatus(string name, string description, float damage, bool isMyStat, SkillType skillType) :
-		base(name, description, damage, isMyStat, skillType)
+	public SkillStatus(string name, string description, float damage, bool isMyStat, SkillType skillType, PokeType type, int pp, float accuracy, bool isHm = false) :
+		base(name, description, damage, skillType, isMyStat, type,pp,accuracy,isHm)
 	{ }
 
 	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)

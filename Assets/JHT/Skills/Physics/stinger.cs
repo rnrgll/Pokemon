@@ -6,7 +6,8 @@ using static Define;
 public class stinger : SkillPhysic
 {
 
-	public stinger() : base("독침", "유독한 침으로 찌른다. 때때로 상대를 중독시킨다", 15, false, SkillType.Physical) { }
+	public stinger() : base("독침", "유독한 침으로 찌른다. 때때로 상대를 중독시킨다", 
+		15, false, SkillType.Physical,PokeType.Poison,35,100) { }
 	//public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
 	//{
 	//	int rand = Random.Range(0, 10);

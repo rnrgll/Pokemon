@@ -6,5 +6,5 @@ using static Define;
 public class SleepingPowder : SkillStatus
 {
     public SleepingPowder() : base("수면가루", "졸음을 유발하는 가루를 뿌려 재운다",
-		0, false, SkillType.Status) { }
+		0, false, SkillType.Status,PokeType.Grass,15,74.61f) { }
 }
