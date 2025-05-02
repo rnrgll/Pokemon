@@ -61,6 +61,7 @@ public class Pokémon : MonoBehaviour
 
 	private void SetData(SJH_PokemonData data, int _level)
 	{
+		DontDestroyOnLoad(gameObject);
 		// 고정데이터 Id, 이름, 종족값, 타입
 		id = data.Id;
 		pokeName = data.Name;
