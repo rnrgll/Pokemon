@@ -7,7 +7,6 @@ public enum SkillMachineType {TM, HM}
 [CreateAssetMenu(menuName = "Item/SkillMachine")]
 public class Item_SkillMachine : ItemBase
 {
-	[SerializeField] protected Define.ItemCategory category; 
 	[SerializeField] protected SkillMachineType machineType;
 	[SerializeField] protected int machineNumber;
 	[SerializeField] protected int skillID;
