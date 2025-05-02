@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3306e82e0ca6f4f93bb54348fdfa31c3, type: 3}
-  m_Name: New Item_Skill Machine
+  m_Name: HM_005_Flash
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: "\uD50C\uB798\uC2DC"
   description: 
-  category: 0
-  useTarget: 0
+  category: 3
+  useTarget: 2
   useContext: 0
   isSellable: 0
   sellPrice: 0
   isPurchasable: 0
   purchasePrice: 0
   isConsumable: 0
-  machineType: 0
-  machineNumber: 0
-  skillID: 0
-  pokemonIdList: 
+  machineType: 1
+  machineNumber: 5
+  skillCode: HM05
+  skillName: "\uD50C\uB798\uC2DC"
+  pokemonIdList: 0100000002000000030000000f000000100000001a0000001d000000200000004000000041000000

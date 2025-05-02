@@ -14,8 +14,7 @@ public class Item_EscapeRope : ItemBase
 		    inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUse, Manager.Data.LdhPlayerData.PlayerName));
 		    return false;
 	    }
-		
-		//todo: 탈출 처리 로직
+	    
 		if (Manager.Data.DungeonMapData.TryGetLink(SceneManager.GetActiveScene().name,
 				out var dungeonLink))
 		{
