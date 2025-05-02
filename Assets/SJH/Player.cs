@@ -52,6 +52,18 @@ public class Player : MonoBehaviour
 		jumpTime = new WaitForSeconds(0.03f);
 	}
 
+	private void OnEnable()
+	{
+		if(Manager.Game.Player==null)
+			Manager.Game.SetPlayer(this);
+	}
+
+	private void OnDisable()
+	{
+		if(Manager.Game!=null && Manager.Game.Player!=null)
+			Manager.Game.ReleasePlayer();
+	}
+
 	void Start()
 	{
 		// 그림자 / 풀 이펙트 비활성화
@@ -89,7 +101,7 @@ public class Player : MonoBehaviour
 			case Define.PlayerState.Menu:           // Menu 활성화중
 				break;
 			case Define.PlayerState.Dialog:         //	대화 활성화중
-				DialogManager.Instance.HandleUpdate();
+				
 				break;
 		}
 	}
@@ -282,6 +294,7 @@ public class Player : MonoBehaviour
 					case PlayerState.Menu:
 						break;
 					case PlayerState.Dialog:
+						DialogManager.Instance.HandleUpdate();
 						// 대화
 						break;
 				}
