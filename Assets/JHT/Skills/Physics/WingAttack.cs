@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class PoisonPowder : SkillS
+public class WingAttack : SkillS
 {
-	public PoisonPowder() : base(
-		"독가루",
-		"유독한 가루를 뿌려 중독시킨다",
-		0,
-		SkillType.Status,
+    public WingAttack() : base(
+		"날개치기",
+		"크게 펼친 훌륭한 날개를 상대에게 부딪쳐서 공격한다.",
+		60,
+		SkillType.Physical,
 		false,
-		PokeType.Poison,
+		PokeType.Flying,
 		35,
-		75
+		100
 		) { }
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeEffect(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

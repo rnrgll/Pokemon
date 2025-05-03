@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Growth : SkillS
+public class Agility : SkillS
 {
-    public Growth() : base(
-		"성장",
-		"몸을 일시에 크게 성장시켜 자신의 공격과 특수공격을 올린다.",
+    public Agility() : base(
+		"고속이동",
+		"힘을 빼고 몸을 가볍게 해서 고속으로 움직인다. 자신의 스피드를 크게 올린다.",
 		0,
 		SkillType.Status,
 		true,
-		PokeType.Normal,
-		40,
+		PokeType.Psychic,
+		30,
 		100
 		) { }
-
-	// 자신의 특수공격 능력치를 1랭크 상승시킨다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{

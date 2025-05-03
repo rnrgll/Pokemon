@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class PoisonPowder : SkillS
+public class Slam : SkillS
 {
-	public PoisonPowder() : base(
-		"독가루",
-		"유독한 가루를 뿌려 중독시킨다",
-		0,
-		SkillType.Status,
+    public Slam() : base(
+		"힘껏치기",
+		"긴 꼬리나 덩굴 등을 사용해 상대를 힘껏 쳐서 공격한다.",
+		80,
+		SkillType.Physical,
 		false,
-		PokeType.Poison,
-		35,
+		PokeType.Normal,
+		20,
 		75
 		) { }
 
@@ -20,7 +20,7 @@ public class PoisonPowder : SkillS
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeEffect(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class BodySlam : SkillS
+public class Constrict : SkillS
 {
-	public BodySlam() : base(
-		"누르기",
-		"몸 전체로 상대를 덮쳐눌러 공격한다. 마비 상태로 만들 때가 있다.", 
-		85,
+	public Constrict() : base(
+		"휘감기",
+		"넝쿨이나 촉수 등으로 휘감아 미미한 피해를 준다. 때때로 상대의 스피드를 떨어트린다",
+		10,
 		SkillType.Physical,
 		false,
 		PokeType.Normal,
-		15,
+		35,
 		100
-		) { }
+		){ }
 
-	// 상대를 30% 확률로 마비 상태로 만든다.
+	// 10%의 확률로 상대의 스피드를 1랭크 떨어뜨린다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		// 명중 체크를 포켓몬 클래스에서 검사
 		if (defender.TryHit(attacker, defender, skill))
 		{
 			defender.TakeDamage(attacker, defender, skill);
 			float effectRan = Random.Range(0f, 1f);
-			if (effectRan < 0.3f)
+			if (effectRan < 0.1f)
 			{
-				defender.condition = StatusCondition.Paralysis;
+				defender.pokemonBattleStack.speed--;
 			}
 		}
 	}

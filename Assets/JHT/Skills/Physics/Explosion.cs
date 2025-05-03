@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Selfdestruct : SkillS
+public class Explosion : SkillS
 {
-    public Selfdestruct() : base(
-		"자폭",
-		"스스로 폭발하여 주변에 피해를 주고 자신은 전투불능이 된다",
-		200,
+    public Explosion() : base(
+		"대폭발",
+		"커다란 폭발로 주위에 있는 모든 것을 공격한다. 사용한 다음 기절한다.",
+		250,
 		SkillType.Physical,
 		false,
 		PokeType.Normal,
 		5,
 		100
-		) { }
+		){ }
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{

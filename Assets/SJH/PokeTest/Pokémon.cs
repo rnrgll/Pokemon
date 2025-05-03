@@ -45,6 +45,11 @@ public class Pokémon : MonoBehaviour
 
 	[Tooltip("상태")] public StatusCondition condition;
 
+	[Tooltip("배틀중일 때 스택 0 ~ 6")]
+	public PokemonBattleStat pokemonBattleStack;
+
+	#region 포켓몬 효과 관리 변수
+
 	[Tooltip("분노 관리용")]
 	public bool isAnger;
 	public int angerStack;
@@ -53,9 +58,44 @@ public class Pokémon : MonoBehaviour
 	public bool isRollout;
 	public int rolloutStack;
 
-	[Tooltip("배틀중일 때 스택 0 ~ 6")]
-	public PokemonBattleStat pokemonBattleStack;
+	[Tooltip("김밥말이 관리용")]
+	public bool isBind;
+	public int bindStack;
 
+	[Tooltip("솔라빔 관리용")]
+	public bool isCharge;
+
+	[Tooltip("길동무 관리용")]
+	public bool isDestinyBond;
+
+	[Tooltip("리플렉터 관리용")]
+	public bool isReflect;
+	public int reflectCount;
+
+	[Tooltip("빛의장막 관리용")]
+	public bool isLightScreen;
+	public int lightScreenCount;
+
+	[Tooltip("저주 관리용")]
+	public bool isCurse;
+
+	[Tooltip("검은눈빛 관리용")]
+	public bool isMeanLook;
+
+	[Tooltip("신비의부적 관리용")]
+	public bool isSafeguard;
+	public int safeguardCount;
+
+	[Tooltip("꿰뚫어보기 관리용")]
+	public bool isForesight;
+
+	[Tooltip("원한 관리용")]
+	public string prevSkillName;
+
+	[Tooltip("잠자기 관리용")]
+	public int sleepCount;
+
+	#endregion
 
 	// 생성자는 사용할 수 없으니 Init함수를 실행해서 데이터 할당
 	public void Init(int _id, int _level)
@@ -383,11 +423,20 @@ public class Pokémon : MonoBehaviour
 					damage *= attacker.rolloutStack;
 				break;
 
+			case "솔라빔":
+				if (!attacker.isCharge)
+				{
+					attacker.isCharge = true;
+					Debug.Log($"{attacker.pokeName} 은/는 기를 모으고 있다");
+					goto AfterAtack;
+				}
+				break;
+
 			default:
 				// 분노 초기화
 				attacker.isAnger = false;
 				attacker.angerStack = 1; // 1로 유지
-				// 구르기 초기화
+										 // 구르기 초기화
 				attacker.isRollout = false;
 				attacker.rolloutStack = 1;
 				break;
@@ -399,13 +448,21 @@ public class Pokémon : MonoBehaviour
 		{
 			hp = 0;
 			isDead = true;
+			// 길동무 같이주금
+			if (isDestinyBond)
+			{
+				Debug.Log($"{pokeName} 의 길동무! {attacker.pokeName} 도 기절");
+				attacker.hp = 0;
+				attacker.isDead = true;
+			}
+			isMeanLook = false;
 		}
-
-		// PP감소
-		attackSkill.curPP--;
-
+		// 맞고도 살았으면 길동무 해제
+		isDestinyBond = false;
 		Debug.Log($"{pokeName} 이/가 {damage} 대미지를 입어 체력이 {hp}이/가 되었습니다.");
 
+
+	AfterAtack:
 		// 공격후
 		switch (attackSkill.name)
 		{
@@ -429,7 +486,233 @@ public class Pokémon : MonoBehaviour
 				}
 				break;
 
+			case "솔라빔":
+				attacker.isCharge = false;
+				break;
+
 			default:
+				// 김밥말이
+				if (defender.isBind)
+				{
+					// 매턴 공격후 1/16 퍼댐 감소
+					int bindDamage = Mathf.Max(1, maxHp / 16); // 최소 1 대미지
+					hp -= bindDamage;
+					Debug.Log($"김밥말이로 인해 체력이 {bindDamage} 감소");
+
+					// 감소 후 스택 감소
+					defender.bindStack--;
+					if (defender.bindStack <= 0)
+					{
+						defender.isBind = false;
+						Debug.Log("김밥말이 해제");
+					}
+				}
+				// 저주
+				if (defender.isCurse)
+				{
+					int curseDamage = Mathf.Max(1, maxHp / 4);
+					hp -= curseDamage;
+					Debug.Log($"저주로 인해 체력이 {curseDamage} 감소");
+
+					if (hp <= 0)
+					{
+						hp = 0;
+						isDead = true;
+						Debug.Log($"{pokeName} 은/는 저주로 쓰러졌다!");
+					}
+				}
+				break;
+		}
+		// PP감소
+		attackSkill.curPP--;
+	}
+
+	public void TakeEffect(Pokémon attacker, Pokémon defender, SkillS skill)
+	{
+		switch (skill.name)
+		{
+			case "길동무":
+				attacker.isDestinyBond = true;
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 사용");
+				break;
+
+			case "웅크리기":
+			case "단단해지기":
+				attacker.pokemonBattleStack.defense = Mathf.Min(6, attacker.pokemonBattleStack.defense + 1);
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 방어 1랭크 상승");
+				break;
+
+			case "울음소리":
+				defender.pokemonBattleStack.attack = Mathf.Max(-6, defender.pokemonBattleStack.attack - 1);
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 공격 1랭크 하락");
+				break;
+
+			case "리플렉터":
+				attacker.isReflect = true;
+				attacker.reflectCount = 5;
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 사용");
+				break;
+
+			case "빛의장막":
+				attacker.isLightScreen = true;
+				attacker.lightScreenCount = 5;
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 사용");
+				break;
+
+			case "싫은소리":
+				defender.pokemonBattleStack.defense = Mathf.Max(-6, defender.pokemonBattleStack.defense - 2);
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 방어 2랭크 하락");
+				break;
+
+			case "성장":
+				attacker.pokemonBattleStack.speAttack = Mathf.Min(6, attacker.pokemonBattleStack.speAttack + 1);
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 특공 1랭크 상승");
+				break;
+
+			case "고속이동":
+				attacker.pokemonBattleStack.speed = Mathf.Min(6, attacker.pokemonBattleStack.speed + 2);
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 스피드 2랭크 상승");
+				break;
+
+			case "저주":
+				if ((attacker.pokeType1 == PokeType.Ghost) || (attacker.pokeType2 == PokeType.Ghost))
+				{
+					if (!defender.isCurse)
+					{
+						// 고스트 타입이면 HP 절반 감소, 상대에 저주 상태 부여
+						int lostHp = Mathf.Max(1, attacker.hp / 2);
+						attacker.hp -= lostHp;
+						defender.isCurse = true;
+						Debug.Log($"{attacker.pokeName} 은/는 {defender.pokeName} 에게 저주를 걸었다! HP {lostHp} 감소");
+					}
+					else
+					{
+						Debug.Log($"{defender.pokeName} 은/는 이미 저주 상태");
+					}
+
+				}
+				else
+				{
+					// 아니면 공격/방어 1 상승 스피드 1 하락
+					attacker.pokemonBattleStack.attack = Mathf.Min(6, attacker.pokemonBattleStack.attack + 1);
+					attacker.pokemonBattleStack.defense = Mathf.Min(6, attacker.pokemonBattleStack.defense + 1);
+					attacker.pokemonBattleStack.speed = Mathf.Max(-6, attacker.pokemonBattleStack.speed - 1);
+					Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 공격/방어 1랭크 상승, 스피드 1랭크 하락");
+				}
+				break;
+
+			case "검은눈빛":
+				defender.isMeanLook = true;
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 인해 도망갈 수 없게 됐다.");
+				break;
+
+			case "최면술":
+			case "수면가루":
+				if (defender.isSafeguard)
+				{
+					Debug.Log($"{defender.pokeName} 은/는 신비의부적 기술로 인해 수면 면역!");
+				}
+				else
+				{
+					defender.condition = StatusCondition.Sleep;
+					Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 수면 상태");
+				}
+				break;
+
+			case "신비의부적":
+				attacker.condition = StatusCondition.Sleep;
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name}에 둘러싸였다.");
+				break;
+
+			case "겁나는얼굴":
+				defender.pokemonBattleStack.speed = Mathf.Max(-6, defender.pokemonBattleStack.speed - 2);
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 스피드 2랭크 하락");
+				break;
+
+			case "꿰뚫어보기":
+				defender.isForesight = true;
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술 맞음");
+				break;
+
+			case "망각술":
+				attacker.pokemonBattleStack.speDefense = Mathf.Min(6, attacker.pokemonBattleStack.speDefense + 2);
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 특방 2랭크 상승");
+				break;
+
+			case "광합성":
+				int healAmount = attacker.Heal(maxHp/2);
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 체력을 {healAmount} 회복");
+				break;
+
+			case "독가루":
+				if (defender.isSafeguard)
+				{
+					Debug.Log($"{defender.pokeName} 은/는 신비의부적 기술로 인해 독 면역!");
+				}
+				else
+				{
+					defender.condition = StatusCondition.Poison;
+					Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 독 상태");
+				}
+				break;
+
+			case "기충전":
+				attacker.pokemonBattleStack.critical = Mathf.Min(6, attacker.pokemonBattleStack.critical + 1);
+				Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 급소율 1랭크 상승");
+				break;
+
+			case "원한":
+				if (!string.IsNullOrEmpty(prevSkillName))
+					Debug.Log($"{attacker.pokeName} 은/는 {skill.name} 기술로 {defender.pokeName}의 {defender.prevSkillName} 기술의 PP를 감소");
+				break;
+
+			case "실뿜기":
+				defender.pokemonBattleStack.speed = Mathf.Max(-6, defender.pokemonBattleStack.speed - 1);
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 스피드 1랭크 하락");
+				break;
+
+			case "달콤한향기":
+				defender.pokemonBattleStack.evasion = Mathf.Max(-6, defender.pokemonBattleStack.evasion - 1);
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 회피율 1랭크 하락");
+				break;
+
+			case "꼬리흔들기":
+				defender.pokemonBattleStack.defense = Mathf.Max(-6, defender.pokemonBattleStack.defense - 1);
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 방어 1랭크 하락");
+				break;
+
+			case "이상한빛":
+			case "초음파":
+				if (defender.isSafeguard)
+				{
+					Debug.Log($"{defender.pokeName} 은/는 신비의부적 기술로 인해 혼란 면역!");
+				}
+				else
+				{
+					defender.condition = StatusCondition.Confusion;
+					Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 혼란 상태");
+				}
+				break;
+
+			case "잠자기":
+				if (attacker.hp == attacker.maxHp)
+				{
+					Debug.Log($"{attacker.pokeName} 은/는 체력이 가득찬 상태라 {skill.name} 기술이 실패");
+				}
+				else
+				{
+					int sleepHealAmount = attacker.Heal(maxHp);
+					if (attacker.condition != StatusCondition.Faint)
+						attacker.condition = StatusCondition.None;
+					sleepCount = 2;
+					Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 상태이상과 체력을 {sleepHealAmount} 회복했다!");
+				}
+				break;
+
+			case "모래뿌리기":
+			case "연막":
+				defender.pokemonBattleStack.accuracy = Mathf.Max(-6, defender.pokemonBattleStack.accuracy - 1);
+				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 명중 1랭크 하락");
 				break;
 		}
 	}
@@ -573,6 +856,10 @@ public class Pokémon : MonoBehaviour
 	{
 		int ran = UnityEngine.Random.Range(0, 100);
 		bool isHit = ran < skill.accuracy;
+		if (!isHit)
+		{
+			Debug.Log($"{attacker.pokeName} 의 {skill.name} 은/는 빗나갔다!");
+		}
 		return isHit;
 	}
 }

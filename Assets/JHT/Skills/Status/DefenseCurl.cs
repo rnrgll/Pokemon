@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Growth : SkillS
+public class DefenseCurl : SkillS
 {
-    public Growth() : base(
-		"성장",
-		"몸을 일시에 크게 성장시켜 자신의 공격과 특수공격을 올린다.",
+    public DefenseCurl() : base(
+		"웅크리기",
+		"몸을 둥글게 웅크려서 자신의 방어를 올린다.", 
 		0,
 		SkillType.Status,
 		true,
@@ -16,7 +16,7 @@ public class Growth : SkillS
 		100
 		) { }
 
-	// 자신의 특수공격 능력치를 1랭크 상승시킨다.
+	// 자신의 방어력을 1랭크 올린다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{

@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class PoisonPowder : SkillS
+public class RockThrow : SkillS
 {
-	public PoisonPowder() : base(
-		"독가루",
-		"유독한 가루를 뿌려 중독시킨다",
-		0,
-		SkillType.Status,
+	public RockThrow() : base(
+		"돌떨구기",
+		"작은 바위를 들어올려 상대에게 내던져서 공격한다.",
+		50,
+		SkillType.Physical,
 		false,
-		PokeType.Poison,
-		35,
-		75
+		PokeType.Rock,
+		15,
+		90
 		) { }
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeEffect(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

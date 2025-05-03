@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Selfdestruct : SkillS
+public class VineWhip : SkillS
 {
-    public Selfdestruct() : base(
-		"자폭",
-		"스스로 폭발하여 주변에 피해를 주고 자신은 전투불능이 된다",
-		200,
+	public VineWhip() : base(
+		"덩굴채찍",
+		"채찍처럼 휘어지는 가늘고 긴 덩굴로 상대를 힘껏 쳐서 공격한다.",
+		35,
 		SkillType.Physical,
 		false,
-		PokeType.Normal,
-		5,
+		PokeType.Grass,
+		10,
 		100
 		) { }
 
@@ -21,8 +21,6 @@ public class Selfdestruct : SkillS
 		if (defender.TryHit(attacker, defender, skill))
 		{
 			defender.TakeDamage(attacker, defender, skill);
-			attacker.hp = 0;
-			attacker.isDead = true;
 		}
 	}
 }

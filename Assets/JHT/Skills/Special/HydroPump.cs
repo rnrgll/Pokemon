@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Selfdestruct : SkillS
+public class HydroPump : SkillS
 {
-    public Selfdestruct() : base(
-		"자폭",
-		"스스로 폭발하여 주변에 피해를 주고 자신은 전투불능이 된다",
-		200,
-		SkillType.Physical,
+    public HydroPump() : base(
+		"하이드로펌프",
+		"대량의 물을 세찬 기세로 상대에게 발사하여 공격한다.", 
+		120,
+		SkillType.Special,
 		false,
-		PokeType.Normal,
+		PokeType.Water,
 		5,
-		100
+		80
+
 		) { }
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
@@ -21,8 +22,6 @@ public class Selfdestruct : SkillS
 		if (defender.TryHit(attacker, defender, skill))
 		{
 			defender.TakeDamage(attacker, defender, skill);
-			attacker.hp = 0;
-			attacker.isDead = true;
 		}
 	}
 }

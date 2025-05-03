@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class PoisonPowder : SkillS
+public class WaterGun : SkillS
 {
-	public PoisonPowder() : base(
-		"독가루",
-		"유독한 가루를 뿌려 중독시킨다",
-		0,
-		SkillType.Status,
+    public WaterGun() : base(
+		"물대포",
+		"물을 기세 좋게 상대에게 발사하여 공격한다.",
+		40,
+		SkillType.Special,
 		false,
-		PokeType.Poison,
-		35,
-		75
+		PokeType.Water,
+		25,
+		100
 		) { }
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeEffect(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

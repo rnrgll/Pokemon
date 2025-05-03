@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SweetScent : SkillS
+public class StringShot : SkillS
 {
-    public SweetScent() : base(
-		"달콤한향기",
-		"향기로 상대의 회피율을 크게 떨어뜨린다. 풀밭 등에서 쓰면 포켓몬이 다가온다.",
+    public StringShot() : base(
+		"실뿜기",
+		"입에서 뿜어낸 실을 휘감아서 상대의 스피드를 떨어뜨린다.",
 		0,
 		SkillType.Status,
 		false,
-		PokeType.Normal,
-		20,
-		100
+		PokeType.Bug,
+		40,
+		95
 		) { }
 
-	// 상대 포켓몬의 회피율을 1랭크 내린다.
+	// 상대의 스피드를 1랭크 떨어뜨린다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
