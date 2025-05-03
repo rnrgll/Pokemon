@@ -16,16 +16,16 @@ public class NpcMover : MonoBehaviour
 	//	NPC방향, 위치
 	public Vector2 currentDirection;
 	private Vector2 npcPos;
-
 	Animator anim;
 	private void Awake()
-	{
+	{   // 초기 방향 아래
+		currentDirection = Vector2.down;
 		npcPos = this.transform.position;
 		anim = GetComponent<Animator>();
 	}
 	private void FixedUpdate()
 	{
-		// NpcMoveStart();
+		NpcMoveStart();
 	}
 	public void NpcMoveStart()
 	{
@@ -59,13 +59,30 @@ public class NpcMover : MonoBehaviour
 	private bool IsWalkAble(Vector2 currentDirection)
 	{
 		//  npcPos에서 NpcDir로 레이케스트 발사
-		RaycastHit2D hit = Physics2D.Raycast(npcPos, npcPos + currentDirection, 2f);
-		Debug.Log($"{hit.transform.name}에 명중");
-		//	발사거리는 2f
-		//	명중한 객체가 NPC, Player, Wall 일 경우
-		//	isWalkAble false
-		//	아닌 경우
-		//	isWalkAble true
+		Debug.DrawRay(npcPos + currentDirection * 2f, currentDirection, Color.red);
+		//	Npc위치 + 방향에서 발사, 방향으로 1f만큼 발사
+		RaycastHit2D hit = Physics2D.Raycast(npcPos + currentDirection * 1.1f, currentDirection, 1f);
+		if (hit.collider != null)
+			Debug.Log($"{hit.transform.name}에 명중");
+		else
+			Debug.Log($"명중 없음");
+
+		//	hit.Tag 검사후 이동 가능 여부 판단
+		if (hit.transform.gameObject.transform.tag == "Wall" || hit.transform.gameObject.transform.tag == "NPC" || hit.transform.gameObject.transform.tag == "Player")
+			isWalkAble = false;
+		else
+			isWalkAble = true;
+
 		return isWalkAble;
 	}
+	//	Raycast 방향
+	public void DirChange()
+	{	
+	//	if ("Npc가 위를 보면") currentDirection = Vector2.up;
+	//	else if ("Npc가 아래를 보면") currentDirection = Vector2.down;
+	//	else if ("Npc가 왼쪽을 보면") currentDirection = Vector2.left;
+	//	else if ("Npc가 오른쪽을 보면") currentDirection = Vector2.right;
+	}
+
+
 }
