@@ -204,7 +204,7 @@ public class UI_PokemonParty : UI_Linked
 		popupUI.SetupOptions(popupUI.buttonParent,
 			new List<(string, ISelectableAction)>
 			{
-				("강한 정도", new OpenLinkedUIAction("")),
+				("강한 정도", new CustomAction(ShowPokemonInfo)),
 				("순서바꾸기", new CustomAction(ChangeOrder)),
 				("사용할 수 있는 기술",  new OpenLinkedUIAction("") ),
 				("닫다", new CustomAction(popupUI.OnCancle)),
@@ -218,6 +218,27 @@ public class UI_PokemonParty : UI_Linked
 		Debug.Log("UI_Pokemon: 닫힘 처리됨");
 	}
 
+	#region 포켓몬 정보 조회
+
+	private void ShowPokemonInfo()
+	{
+		var linkedUI = Manager.UI.ShowLinkedUI<UI_PokemonInfo>("UI_PokemonInfo", false);
+		if (party[curCursorIdx] == null)
+		{
+			Debug.Log("null");
+			return;
+		}
+		else
+		{
+			Debug.Log(
+				party[curCursorIdx].pokeName
+			);
+		}
+		linkedUI.SetPokemonInfo(party[curCursorIdx]);
+		linkedUI.Open();
+	}
+
+	#endregion
 
 
 	#region 순서바꾸기 기능

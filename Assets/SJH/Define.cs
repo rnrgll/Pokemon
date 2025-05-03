@@ -69,7 +69,7 @@ public class Define
 
 	public enum StatusCondition
 	{
-		None,
+		Normal,
 		Poison,			//독
 		Burn,			//화상
 		Freeze,			//얼음
@@ -93,7 +93,7 @@ public class Define
 
 	public static Dictionary<string, string> ColorCode = new Dictionary<string, string>()
 	{
-		{ "hp_red", "#F82805" }, { "hp_yellow", "#F8A81E" }, { "hp_green", "#02B821" }
+		{ "hp_red", "#F82805" }, { "hp_yellow", "#F8A81E" }, { "hp_green", "#02B821" }, {"bg_pink", "#F898F8"}, {"bg_green", "#A8F870"}, {"bg_blue","#88F8F8"}, {"bg_white","#F8F8F8"}
 	};
 
 	#endregion

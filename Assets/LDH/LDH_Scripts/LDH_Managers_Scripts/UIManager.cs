@@ -167,7 +167,7 @@ public class UIManager : Singleton<UIManager>
     /// <param name="prefabPath"></param>
     /// <typeparam name="T">Resources/UI_Prefabs/Linked 기준 상대경로</typeparam>
     /// <returns></returns>
-    public T ShowLinkedUI<T>(string prefabPath) where T : UI_Linked
+    public T ShowLinkedUI<T>(string prefabPath, bool autoOpen = true) where T : UI_Linked
     {
         if (string.IsNullOrEmpty(prefabPath))
         {
@@ -189,8 +189,12 @@ public class UIManager : Singleton<UIManager>
         linked.transform.SetAsLastSibling();
         _linkList.Add(linked); // 리스트에 추가
         
-        linked.Open();
-
+        if (autoOpen)
+	        linked.Open(); // 기존처럼 바로 Open
+        else
+        {
+	        linked.Close();
+        }
         
         return linked;
     }

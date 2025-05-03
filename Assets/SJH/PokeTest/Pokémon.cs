@@ -86,7 +86,7 @@ public class Pokémon : MonoBehaviour
 		SetSkills(data);
 
 		//상태 정상으로 설정
-		condition = StatusCondition.None;
+		condition = StatusCondition.Normal;
 	}
 
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
@@ -319,7 +319,7 @@ public class Pokémon : MonoBehaviour
 	{
 		if (condition == targetCondition)
 		{
-			condition = StatusCondition.None;
+			condition = StatusCondition.Normal;
 			return true;
 		}
 
