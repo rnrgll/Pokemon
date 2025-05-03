@@ -83,8 +83,12 @@ public class Define
 	#region UI
 	public enum UIInputType
 	{
+		Up,
+		Down,
+		Left,
+		Right,
 		Select,
-		Cancel,
+		Cancel
 	}
 
 	public static Dictionary<string, string> ColorCode = new Dictionary<string, string>()

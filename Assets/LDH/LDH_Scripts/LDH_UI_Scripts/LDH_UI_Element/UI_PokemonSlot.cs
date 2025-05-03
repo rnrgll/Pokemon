@@ -29,7 +29,7 @@ public class UI_PokemonSlot : MonoBehaviour
 	private void OnDisable()
 	{
 		Deselect();
-		ChangeArrow(false);
+		ChangeArrow(true);
 	}
 
 	public void SetData(Pokémon pokemon)

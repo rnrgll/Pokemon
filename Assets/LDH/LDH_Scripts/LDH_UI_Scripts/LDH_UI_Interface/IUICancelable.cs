@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public interface ICancelable
+public interface IUICancelable
 {
 	public void OnCancle();
 }

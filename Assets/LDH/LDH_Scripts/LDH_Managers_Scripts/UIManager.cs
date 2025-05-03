@@ -59,12 +59,13 @@ public class UIManager : Singleton<UIManager>
     private void Update()
     {
 	    if(!IsAnyUIOpen) return;
-	    if (Input.GetKeyDown(KeyCode.Z))
-	    {
-		    HandleUIInput(UIInputType.Select);
-	    }
-	    else if (Input.GetKeyDown(KeyCode.X))
-		    HandleUIInput(UIInputType.Cancel);
+	    if (Input.GetKeyDown(KeyCode.Z)) HandleUIInput(UIInputType.Select);
+	    else if (Input.GetKeyDown(KeyCode.X)) HandleUIInput(UIInputType.Cancel);
+	    else if (Input.GetKeyDown(KeyCode.UpArrow)) HandleUIInput(UIInputType.Up);
+	    else if (Input.GetKeyDown(KeyCode.DownArrow)) HandleUIInput(UIInputType.Down);
+	    else if(Input.GetKeyDown(KeyCode.RightArrow)) HandleUIInput(UIInputType.Right);
+	    else if(Input.GetKeyDown(KeyCode.LeftArrow)) HandleUIInput(UIInputType.Left);
+
     }
 
     #endregion
@@ -92,41 +93,30 @@ public class UIManager : Singleton<UIManager>
     //z키 선택 알림
     public void HandleUIInput(UIInputType inputType)
     {
-	    // 팝업 확인을 먼저한다.
 	    if (_popUpStack.Count > 0)
 	    {
-		    UI_PopUp topPopUp = _popUpStack.Peek();
-		    switch (inputType)
-		    {
-			    case UIInputType.Select:
-				    (topPopUp as IUISelectable)?.OnSelect();
-				    break;
-			    case UIInputType.Cancel:
-				    (topPopUp as ICancelable)?.OnCancle();
-				    break;
-		    }
+		    var top = _popUpStack.Peek() as IUIInputHandler;
+		    top?.HandleInput(inputType);
+		    HandleSelection(inputType, top);
 		    return;
 	    }
 
-	    // 팝업 없으면 연결 UI
 	    if (_linkList.Count > 0)
 	    {
-		    UI_Linked topLinked = _linkList[_linkList.Count - 1];
-		    switch (inputType)
-		    {
-			    case UIInputType.Select:
-				    (topLinked as IUISelectable)?.OnSelect();
-				    break;
-			    case UIInputType.Cancel:
-				    (topLinked as ICancelable)?.OnCancle();
-				    break;
-		    }
-		    return;
+		    var top = _linkList[^1] as IUIInputHandler;
+		    top?.HandleInput(inputType);
+		    HandleSelection(inputType, top);
 	    }
 	    // 둘 다 없으면 무시
     }
     
-    
+    private void HandleSelection(UIInputType inputType, object ui)
+    {
+	    if (inputType == UIInputType.Select && ui is IUISelectable sel)
+		    sel.OnSelect();
+	    else if (inputType == UIInputType.Cancel && ui is IUICancelable cancel)
+		    cancel.OnCancle();
+    }
     
 
     #region 팝업 UI

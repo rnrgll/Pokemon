@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_GenericButton : MonoBehaviour
+public class UI_GenericSelectButton : MonoBehaviour
 {
 	[SerializeField] protected TMP_Text _label;
 	[SerializeField] protected Image _arrow;

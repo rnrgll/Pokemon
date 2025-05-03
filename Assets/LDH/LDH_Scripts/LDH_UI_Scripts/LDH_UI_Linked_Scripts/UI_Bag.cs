@@ -67,12 +67,12 @@ public class UI_Bag : UI_Linked
 		Refresh();
 	}
 
-	private void Update()
+	public override void HandleInput(UIInputType inputType)
 	{
-		if (Input.GetKeyDown(KeyCode.LeftArrow)) MovePanel(-1);
-		else if (Input.GetKeyDown(KeyCode.RightArrow)) MovePanel(1);
-		else if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(-1);
-		else if (Input.GetKeyDown(KeyCode.DownArrow)) MoveCursor(1);
+		if (inputType == UIInputType.Up) MoveCursor(-1);
+		else if (inputType == UIInputType.Down) MoveCursor(1);
+		else if(inputType==UIInputType.Left) MovePanel(-1);
+		else if(inputType==UIInputType.Right) MovePanel(1);
 	}
 
 	#endregion

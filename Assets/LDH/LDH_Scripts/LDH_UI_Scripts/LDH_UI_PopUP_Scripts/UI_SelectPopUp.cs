@@ -6,35 +6,63 @@ using UnityEngine;
 public class UI_SelectPopUp : UI_PopUp
 {
 	
-	private List<UI_MenuButton> selectList;
-	private int preIdx;
-	private int curIdx;
+	private List<UI_GenericSelectButton> selectList = new ();
+	
+	private int _preIdx = 0;
+	private int _curIdx = 0;
+	public Transform buttonParent;
 
-	private void Awake()
+	protected void Awake()
 	{
-		foreach (Transform child in transform)
+		foreach (Transform child in buttonParent)
 		{
-			selectList.Add(child.GetComponent<UI_MenuButton>());
+			var button = child.GetComponent<UI_GenericSelectButton>();
+			button.SetArrowActive(false);
+			selectList.Add(button);
+			
 		}
 	}
 
 	private void OnEnable()
 	{
-		curIdx = 0;
+		_curIdx = 0;
 		UpdateArrow();
 	}
-	
 
-	private void Start()
+	public override void HandleInput(Define.UIInputType inputType)
 	{
-		
+		if (inputType == Define.UIInputType.Up)
+			MoveIdx(-1);
+		else if (inputType == Define.UIInputType.Down)
+			MoveIdx(1);
 	}
-	
+
+
+	void MoveIdx(int direction)
+	{
+		_preIdx = _curIdx;
+		_curIdx += direction;
+		if (_curIdx < 0)
+			_curIdx = selectList.Count - 1;
+		else if (_curIdx >= selectList.Count)
+			_curIdx = 0;
+        
+		UpdateArrow();
+	}
+
+
 	void UpdateArrow()
 	{ 
-		selectList[preIdx].SetArrowActive(false);
-		selectList[curIdx].SetArrowActive(true);
+		selectList[_preIdx].SetArrowActive(false);
+		selectList[_curIdx].SetArrowActive(true);
 	}
+
+	public override void OnSelect()
+	{
+		selectList[_curIdx].Trigger();
+		base.OnSelect();
+	}
+	
 
 	// private Dialog dialog;
 	//
@@ -48,65 +76,3 @@ public class UI_SelectPopUp : UI_PopUp
 	// 	}
 	// }
 }
-//
-//
-// // UI_SelectPopUp.cs
-// public class UI_SelectPopUp : UI_PopUp
-// {
-// 	private List<UI_GenericButton> selectList = new();
-// 	private int preIdx;
-// 	private int curIdx;
-//
-// 	private void Awake()
-// 	{
-// 		foreach (Transform child in transform)
-// 		{
-// 			var button = child.GetComponent<UI_GenericButton>();
-// 			if (button != null)
-// 				selectList.Add(button);
-// 		}
-// 	}
-//
-// 	private void OnEnable()
-// 	{
-// 		curIdx = 0;
-// 		UpdateArrow();
-// 	}
-//
-// 	private void Update()
-// 	{
-// 		if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(-1);
-// 		else if (Input.GetKeyDown(KeyCode.DownArrow)) MoveCursor(1);
-// 		else if (Input.GetKeyDown(KeyCode.Z)) selectList[curIdx].Trigger();
-// 	}
-//
-// 	void MoveCursor(int dir)
-// 	{
-// 		preIdx = curIdx;
-// 		curIdx = (curIdx + dir + selectList.Count) % selectList.Count;
-// 		UpdateArrow();
-// 	}
-//
-// 	void UpdateArrow()
-// 	{
-// 		selectList[preIdx].SetArrowActive(false);
-// 		selectList[curIdx].SetArrowActive(true);
-// 	}
-//
-// 	// 외부에서 버튼 세팅할 수 있도록 API 제공
-// 	public void SetupOptions(List<(string label, IMenuAction action)> options)
-// 	{
-// 		for (int i = 0; i < options.Count; i++)
-// 		{
-// 			var button = selectList[i];
-// 			button.Init(options[i].label, options[i].action);
-// 			button.gameObject.SetActive(true);
-// 		}
-//
-// 		// 나머지 비활성화
-// 		for (int i = options.Count; i < selectList.Count; i++)
-// 		{
-// 			selectList[i].gameObject.SetActive(false);
-// 		}
-// 	}
-// }

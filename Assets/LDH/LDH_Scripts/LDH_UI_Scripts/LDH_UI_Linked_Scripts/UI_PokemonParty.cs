@@ -53,13 +53,15 @@ public class UI_PokemonParty : UI_Linked
 
 	}
 	
-	private void Update()
+	public override void HandleInput(Define.UIInputType inputType)
 	{
-		if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(-1);
-		else if (Input.GetKeyDown(KeyCode.DownArrow)) MoveCursor(1);
+		if (inputType == Define.UIInputType.Up)
+			MoveCursor(-1);
+		else if (inputType == Define.UIInputType.Down)
+			MoveCursor(1);
 	}
-	
-	
+
+
 	private void InitSlots()
 	{
 		slotList.Clear();
@@ -89,10 +91,7 @@ public class UI_PokemonParty : UI_Linked
 
 
 	//파티 데이터 갱신
-	void RefreshPartyData()
-	{
-		party = Manager.Poke.party;
-	}
+	void RefreshPartyData() => party = Manager.Poke.party;
 
 	//ui 갱신
 	void RefreshUI()
@@ -141,7 +140,7 @@ public class UI_PokemonParty : UI_Linked
 	//커서 업데이트
 	void UpdateCursor()
 	{
-		//Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
+		Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
 		if (preCursorIdx < party.Count)
 			slotList[preCursorIdx].Deselect();
 		else
@@ -156,18 +155,19 @@ public class UI_PokemonParty : UI_Linked
 
 	public override void OnSelect()
 	{
-		if (curCursorIdx == slotList.Count - 1)
-		{
-			//그만두다 메뉴
-			CloseSelf();
-			return;
-		}
-		
 		//화살표 바꾸기
 		slotList[curCursorIdx].ChangeArrow(true);
 		//메시지창 비우기
 		msgText.text = "";
-		//Manager.UI.ShowPopupUI<>()
+		var popupUI = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_PokemonPopUp_1");
+		popupUI.SetupOptions(popupUI.buttonParent,
+			new List<(string, ISelectableAction)>
+			{
+				("강한 정도", new OpenLinkedUIAction("")),
+				("순서바꾸기", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+				("사용할 수 있는 기술",  new OpenLinkedUIAction("") ),
+				("닫다", new CustomAction(() => OnCancle())),
+			});
 	}
 
 
@@ -176,5 +176,17 @@ public class UI_PokemonParty : UI_Linked
 		base.OnCancle();
 		Debug.Log("UI_Pokemon: 닫힘 처리됨");
 	}
+
+
+
+	#region 순서바꾸기 기능
+
+	public void ChangeOrder()
+	{
+		
+	}
+	
+
+	#endregion
 
 }

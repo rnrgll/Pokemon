@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class UI_MenuButton : UI_GenericButton
+public class UIMenuSelectButton : UI_GenericSelectButton
 {
 	[SerializeField] private bool isOpened;
 	[SerializeField] private bool isPlayerMenu;
@@ -30,23 +30,6 @@ public class UI_MenuButton : UI_GenericButton
 	{
 		return _descriptasbleData.description;
 	}
-	
-	
 
-	// public override void OnSelect()
-	// {
-	// 	if (_onSelectAction != null)
-	// 	{
-	// 		_onSelectAction.Invoke(); // 외부에서 설정한 델리게이트 우선
-	// 	}
-	// 	else if (!string.IsNullOrEmpty(_linkedPrefabPath))
-	// 	{
-	// 		Manager.UI.ShowLinkedUI<UI_Linked>(_linkedPrefabPath); // 메뉴 전용 기능
-	// 	}
-	// 	else
-	// 	{
-	// 		Debug.Log("기능이 구현되지 않았습니다.");
-	// 	}
-	// }
 }
 
