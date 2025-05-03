@@ -27,18 +27,28 @@ public class UI_PlayerCard : UI_Linked
     }
 
 
-    private void Update()
+
+    public override void HandleInput(Define.UIInputType inputType)
     {
-	    if (Input.GetKeyDown(KeyCode.LeftArrow))
+	    switch (inputType)
 	    {
-		    curIdx = Mathf.Clamp(curIdx - 1, 0, infoPanels.Length - 1);
-		    UpdateInfoPanels();
+		    case Define.UIInputType.Left:
+			    curIdx = Mathf.Clamp(curIdx - 1, 0, infoPanels.Length - 1);
+			    UpdateInfoPanels();
+			    break;
+		    case Define.UIInputType.Right:
+			    curIdx = Mathf.Clamp(curIdx + 1, 0, infoPanels.Length - 1);
+			    UpdateInfoPanels();
+			    break;
+		    case Define.UIInputType.Select:
+			    OnSelect();
+			    break;
+		    case Define.UIInputType.Cancel:
+			    OnCancle();
+			    break;
 	    }
-	    else if (Input.GetKeyDown(KeyCode.RightArrow))
-	    {
-		    curIdx = Mathf.Clamp(curIdx + 1, 0, infoPanels.Length - 1);
-		    UpdateInfoPanels();
-	    }
+
+	    
     }
 
 

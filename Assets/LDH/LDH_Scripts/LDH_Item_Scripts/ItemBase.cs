@@ -8,7 +8,7 @@ public abstract class ItemBase : ScriptableObject
 	//메서드 : 설명 조회, 사용 가능 여부, 사용하기
 	
 	[SerializeField] protected string itemName;
-	[SerializeField] protected string description;
+	[TextArea(2,2)] [SerializeField] protected string description;
 	[SerializeField] protected ItemCategory category;
 	[SerializeField] protected ItemTarget useTarget;
 	[SerializeField] protected ItemUseContext useContext;   

@@ -23,6 +23,15 @@ public class PokemonManager : Singleton<PokemonManager>
 	{
 		// Test용 스타팅 포ㅓ켓몬 주기
 		AddPokemon(1, 5);
+		
+		//메뉴 구현 중 테스트를 위한 임시 데이터 추가
+		AddPokemon(5, 10);
+		// AddPokemon(7, 10);
+		//
+		// AddPokemon(8, 10);
+		AddPokemon(9, 20);
+		// AddPokemon(33, 10);
+
 	}
 
 	public void AddPokemon(string pokeName, int level)

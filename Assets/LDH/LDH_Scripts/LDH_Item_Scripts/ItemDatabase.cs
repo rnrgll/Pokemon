@@ -64,6 +64,19 @@ public class ItemDatabase
 			.Where(item => item.Category == category)
 			.ToList();
 	}
+	
+	//3. 아이템이 해당 카테고리인지 여부 반환
+	/// <summary>
+	/// 아이템이 해당 카테고리인지 여부 반환
+	/// </summary>
+	/// <param name="itemName"></param>
+	/// <param name="category"></param>
+	/// <returns></returns>
+	public bool CheckItemCategory(string itemName, Define.ItemCategory category)
+	{
+		return GetItemData(itemName)?.Category == category;
+	}
+	
 	//
 	// //3. 판매 가능한 아이템 추출
 	// public List<ItemBase> GetSellableItems()

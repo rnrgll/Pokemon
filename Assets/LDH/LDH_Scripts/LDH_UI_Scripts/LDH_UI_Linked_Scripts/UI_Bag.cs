@@ -1,134 +1,284 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using static Define;
 public class UI_Bag : UI_Linked
 {
-	private static ItemCategory currentPanel = ItemCategory.Item;
+	
+	#region 인벤토리 & 커서 상태 관리
+
+	private static ItemCategory currentCategory = ItemCategory.Item;
 	private static int[] currentCursorList = new int[(int)ItemCategory.Count];
 	private int curCursorIdx = 0;
 	private int preCursorIdx = 0;
+	private float slotHeight = -1f;
+
+	private List<InventorySlot> curItemList;
+	private List<UI_ItemSlot> activeItemSlots = new(); // 현재 UI에서 활성화된 슬롯만 추려서 저장
+	#endregion
 	
+	#region UI 요소 참조 및 리소스
+
 	[Header("UI 오브젝트 참조")]
 	[SerializeField] private Image bagIconImg;
 	[SerializeField] private Image labelImg;
 	[SerializeField] private ScrollRect scrollRect;
+	[SerializeField] private TMP_Text descriptionText;
+	
 	private Transform itemSlotRoot;
 
-	[Header("리소스")] 
+	[Header("리소스")]
 	[SerializeField] private Sprite[] bagIconSprites;
 	[SerializeField] private Sprite[] labelSprites;
+	[SerializeField] private UI_ItemSlot uiItemSlotPrefab;
+	[SerializeField] private UI_ItemSlot stopSlotPrefab;
+	
+	private ObjectPool<UI_ItemSlot> slotPool;
+	private UI_ItemSlot stopSlotInstance; // "그만두다" 슬롯 인스턴스
+
+
+	#endregion
+	
+	
+	#region Unity 라이프사이클
 
 	private void Awake()
 	{
 		itemSlotRoot = scrollRect.content;
+		uiItemSlotPrefab = Resources.Load<UI_ItemSlot>("UI_Prefabs/Component/UI_ItemSlot");
+		stopSlotPrefab = Resources.Load<UI_ItemSlot>("UI_Prefabs/Component/UI_ItemSlot_Quit");
+
+		slotPool = new ObjectPool<UI_ItemSlot>(uiItemSlotPrefab, itemSlotRoot);
+		slotPool.Init(20);
 	}
 
 	private void OnEnable()
 	{
-		UpdateUI();
+		Refresh(); // 진입 시 전체 UI 초기화
 	}
 
 	protected override void Init()
 	{
 		base.Init();
-		UpdateUI();
-		UpdateItemSlotUI();
+		Refresh();
 	}
 
-
-	void Update()
+	public override void HandleInput(UIInputType inputType)
 	{
-		if (Input.GetKeyDown(KeyCode.LeftArrow))
-		{
-			MovePanel(-1);
-		}
-		else if (Input.GetKeyDown(KeyCode.RightArrow))
-		{
-			MovePanel(1);
-		}
-		else if (Input.GetKeyDown(KeyCode.UpArrow))
-		{
-			MoveCursor(-1);
-		}
-		else if (Input.GetKeyDown(KeyCode.DownArrow))
-		{
-			MoveCursor(1);
-		}
-	}
-	
-	
-	void MovePanel(int direction)
-	{
-		int next = (int)currentPanel + direction;
-		int max = (int)Define.ItemCategory.Count;
-
-		if (next < 0) next = max - 1;
-		else if (next >= max) next = 0;
-
-		currentPanel = (Define.ItemCategory)next;
-
-		UpdateUI();
+		if (inputType == UIInputType.Up) MoveCursor(-1);
+		else if (inputType == UIInputType.Down) MoveCursor(1);
+		else if(inputType==UIInputType.Left) MovePanel(-1);
+		else if(inputType==UIInputType.Right) MovePanel(1);
+		else if(inputType==UIInputType.Cancel) OnCancle();
+		else if(inputType==UIInputType.Select) OnSelect();
 	}
 
-	void MoveCursor(int direction)
+	#endregion
+
+	#region 전체 갱신(데이터 갱신 + UI 갱신)
+
+	/// <summary>
+	/// 전체 갱신 루틴: 인벤토리 데이터 조회 + UI 갱신
+	/// </summary>
+	private void Refresh()
 	{
-		int panelIdx = (int)currentPanel;
-		
+		RefreshItemData();
+		RefreshUI();
+	}
+
+	#endregion
+
+	#region 인벤토리 데이터 갱신
+
+	/// <summary>
+	/// 현재 탭에 해당하는 카테고리의 아이템 리스트를 인벤토리에서 가져와 갱신
+	/// </summary>
+	private void RefreshItemData()
+	{
+		curItemList = Manager.Data.PlayerData.Inventory.GetItemsByCategory(currentCategory);
+
+		int panelIdx = (int)currentCategory;
+		curCursorIdx = currentCursorList[panelIdx];
 		preCursorIdx = curCursorIdx;
-		int next = curCursorIdx + direction;
-		int itemCount = itemSlotRoot.childCount;
-		next = Mathf.Clamp(next, 0, itemCount-1);
+	}
+	
+	#endregion
+
+	#region UI 갱신
+
+	/// <summary>
+	/// 전체 UI 구성 갱신 (아이콘, 태그, 슬롯, 커서)
+	/// </summary>
+	private void RefreshUI()
+	{
+		UpdateBagIcon(currentCategory);
+		UpdateLabelImage(currentCategory);
+		UpdateItemSlots();
 		
-		Debug.Log($"{itemCount} , {next}");
-		currentCursorList[panelIdx] = curCursorIdx = next;
-		UpdateItemSlotUI();
+		activeItemSlots = GetActiveItemSlots(); // 커서 이동 & 선택 공용
+		UpdateCursor();
 	}
 
-	void UpdateUI()
+	/// <summary>
+	/// 아이템 슬롯 UI 갱신 (오브젝트 풀 사용)
+	/// </summary>
+	private void UpdateItemSlots()
 	{
-		UpdateBagIcon(currentPanel);
-		UpdateTagImage(currentPanel);
-	}
+		// 기존 슬롯 전부 반납
+		foreach (Transform child in itemSlotRoot)
+		{
+			var slot = child.GetComponent<UI_ItemSlot>();
+			if (slot != null)
+			{
+				slot.Deselect();
+				if(slot != stopSlotInstance)
+					slot.ReturnToPool();
+			}
+			
+			
+		}
 
-	void UpdateItemSlotUI()
-	{
-		UI_ItemSlot preSlot = itemSlotRoot.GetChild(preCursorIdx).GetComponent<UI_ItemSlot>();
-		UI_ItemSlot curSlot = itemSlotRoot.GetChild(curCursorIdx).GetComponent<UI_ItemSlot>();
+		// 새로운 슬롯 생성 및 데이터 반영
+		foreach (InventorySlot item in curItemList)
+		{
+			UI_ItemSlot slot = slotPool.Get();
+			slot.SetData(item);
+			slot.transform.SetAsLastSibling(); // 정렬보장!!!
+		}
 		
-		preSlot.Deselect();
-		curSlot.Select();
+		// "그만두다" 슬롯 추가
+		if (stopSlotInstance == null)
+		{
+			stopSlotInstance = Instantiate(stopSlotPrefab, itemSlotRoot);
+		}
+		else
+		{
+			stopSlotInstance.transform.SetParent(itemSlotRoot, false);
+			stopSlotInstance.gameObject.SetActive(true);
+		}
+		stopSlotInstance.transform.SetAsLastSibling();
 	}
 
-
-
-	private void UpdateBagIcon(Define.ItemCategory panel)
+	/// <summary>
+	/// 현재 커서 위치 UI 반영
+	/// </summary>
+	private void UpdateCursor()
 	{
-		bagIconImg.sprite = bagIconSprites[(int)panel];
+		if (activeItemSlots.Count == 0) return;
+		
+		//Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
+
+		if (preCursorIdx < activeItemSlots.Count)
+			activeItemSlots[preCursorIdx].Deselect();
+		if (curCursorIdx < activeItemSlots.Count)
+			activeItemSlots[curCursorIdx].Select();
+		
+		UpdateDescription();
 	}
 
-	private void UpdateTagImage(Define.ItemCategory panel)
+	private void UpdateDescription()
 	{
-		labelImg.sprite = labelSprites[(int)panel];
+		string description;
+		if (curCursorIdx == activeItemSlots.Count - 1)
+		{
+			//그만두다의 경우 설명 공란으로 표시
+			description = String.Empty;
+		}
+		else
+		{
+			string itemName = curItemList[curCursorIdx].ItemName;
+			description = Manager.Data.ItemDatabase.GetItemData(itemName).Description;
+		}
+		descriptionText.text = description;
 	}
-	//private void UpdateItemList(Define.ItemCategory panelType) { /* ... */ }
 
+	//가방 이미지 갱신
+	private void UpdateBagIcon(ItemCategory category)
+	{
+		bagIconImg.sprite = bagIconSprites[(int)category];
+	}
+	//라벨 이미지 갱신
+	private void UpdateLabelImage(ItemCategory category)
+	{
+		labelImg.sprite = labelSprites[(int)category];
+	}
+	
+	
+	//스크롤 갱신
+	private void ScrollToIndexBySlotHeight(int index)
+	{
+		if (slotHeight < 0f)
+		{
+			slotHeight = uiItemSlotPrefab.GetComponent<RectTransform>().rect.height;
+		}
+		float offset = index * slotHeight;
 
+		Vector2 pos = scrollRect.content.anchoredPosition;
+		scrollRect.content.anchoredPosition = new Vector2(pos.x, offset);
+		
+	}
+
+	#endregion
 	
 	
-	
-	
-	
-	
-    //해당 UI는 선택 항목 처리가 필요 없는 화면이므로 OnSelect()는 오버라이드하지 않음
-    // OnCancle()은 UI_Linked의 기본 닫기 로직(CloseSelf)을 그대로 사용
-    public override void OnCancle()
-    {
-	    base.OnCancle();
-	    Debug.Log("ui_bag 캔슬 호출");
-    }
+	#region 커서 및 탭 이동 관련
+
+	private void MovePanel(int direction)
+	{
+		int max = (int)ItemCategory.Count;
+		int next = ((int)currentCategory + direction + max) % max;
+
+		currentCategory = (ItemCategory)next;
+
+		Refresh(); // 카테고리 변경 시 전체 갱신
+	}
+
+	private void MoveCursor(int direction)
+	{
+		int panelIdx = (int)currentCategory;
+
+		preCursorIdx = curCursorIdx;
+		
+		int max = activeItemSlots.Count - 1;
+		int next = Mathf.Clamp(curCursorIdx + direction, 0, max);
+		
+		curCursorIdx = next;
+
+		currentCursorList[panelIdx] = curCursorIdx;
+
+		UpdateCursor();
+		//UpdateScrollBySLotHeight(curCursorIdx, activeItemSlots.Count);
+		ScrollToIndexBySlotHeight(curCursorIdx); 
+
+	}
+
+	private List<UI_ItemSlot> GetActiveItemSlots()
+	{
+		List<UI_ItemSlot> activeSlots = new();
+		for (int i = 0; i < itemSlotRoot.childCount; i++)
+		{
+			Transform slot = itemSlotRoot.GetChild(i);
+			if(slot.gameObject.activeSelf)
+				activeSlots.Add(slot.GetComponent<UI_ItemSlot>());
+		}
+
+		return activeSlots;
+	}
+
+	#endregion
+
+	#region UI_Linked 오버라이드
+	//해당 UI는 선택 항목 처리가 필요 없는 화면이므로 OnSelect()는 오버라이드하지 않음
+	// OnCancle()은 UI_Linked의 기본 닫기 로직(CloseSelf)을 그대로 사용
+	public override void OnCancle()
+	{
+		base.OnCancle();
+		Debug.Log("UI_Bag: 닫힘 처리됨");
+	}
+
+	#endregion
 }
-

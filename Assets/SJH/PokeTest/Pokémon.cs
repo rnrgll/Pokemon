@@ -138,10 +138,11 @@ public class Pokémon : MonoBehaviour
 		SetSkills(data);
 
 		//상태 정상으로 설정
-		condition = StatusCondition.None;
+		condition = StatusCondition.Normal;
 
 		// 배틀용 스택 0으로 초기화
 		pokemonBattleStack = new PokemonBattleStat(0);
+		
 	}
 
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
@@ -377,7 +378,7 @@ public class Pokémon : MonoBehaviour
 	{
 		if (condition == targetCondition)
 		{
-			condition = StatusCondition.None;
+			condition = StatusCondition.Normal;
 			return true;
 		}
 
@@ -753,7 +754,7 @@ public class Pokémon : MonoBehaviour
 				{
 					int sleepHealAmount = attacker.Heal(maxHp);
 					if (attacker.condition != StatusCondition.Faint)
-						attacker.condition = StatusCondition.None;
+						attacker.condition = StatusCondition.Normal;
 					sleepCount = 2;
 					Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 상태이상과 체력을 {sleepHealAmount} 회복했다! {ran}");
 				}

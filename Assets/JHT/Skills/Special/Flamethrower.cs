@@ -27,7 +27,7 @@ public class Flamethrower : SkillS
 			defender.TakeDamage(attacker, defender, skill);
 			// 얼음 해제
 			if (defender.condition == StatusCondition.Freeze)
-				defender.condition = StatusCondition.None;
+				defender.condition = StatusCondition.Normal;
 
 			// 10% 화상
 			float effectRan = Random.Range(0f, 1f);
