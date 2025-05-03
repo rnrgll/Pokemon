@@ -272,8 +272,12 @@ public class UI_Bag : UI_Linked
 	#endregion
 
 	#region UI_Linked 오버라이드
-	//해당 UI는 선택 항목 처리가 필요 없는 화면이므로 OnSelect()는 오버라이드하지 않음
-	// OnCancle()은 UI_Linked의 기본 닫기 로직(CloseSelf)을 그대로 사용
+
+	public override void OnSelect()
+	{
+		
+	}
+
 	public override void OnCancle()
 	{
 		base.OnCancle();

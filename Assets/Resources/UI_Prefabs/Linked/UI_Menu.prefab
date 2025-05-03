@@ -118,7 +118,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _UI_MenuBox: {fileID: 0}
   _UI_WhiteBox: {fileID: 0}
-  menuButtonsList: []
 --- !u!1 &3070834080222135261
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +246,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1627117773794337123, guid: ea7d988b7d83344c993dc264758bce4c, type: 3}
+      propertyPath: m_VerticalFit
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1927629743461018807, guid: ea7d988b7d83344c993dc264758bce4c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -365,7 +368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3444154907280680516, guid: ea7d988b7d83344c993dc264758bce4c, type: 3}
       propertyPath: m_Pivot.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3444154907280680516, guid: ea7d988b7d83344c993dc264758bce4c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -381,7 +384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3444154907280680516, guid: ea7d988b7d83344c993dc264758bce4c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3444154907280680516, guid: ea7d988b7d83344c993dc264758bce4c, type: 3}
       propertyPath: m_SizeDelta.x
