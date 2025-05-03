@@ -783,7 +783,7 @@ public class Pokémon : MonoBehaviour
 				{
 					int sleepHealAmount = attacker.Heal(maxHp);
 					if (attacker.condition != StatusCondition.Faint)
-						attacker.condition = StatusCondition.None;
+						attacker.condition = StatusCondition.Normal;
 					sleepCount = 2;
 					Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 상태이상과 체력을 {sleepHealAmount} 회복했다!");
 				}
