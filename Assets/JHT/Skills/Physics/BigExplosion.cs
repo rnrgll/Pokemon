@@ -7,7 +7,7 @@ public class BigExplosion : SkillS
 {
     public BigExplosion() : base(
 		"대폭발",
-		"큰 폭발을 일으켜 주변에 피해를 주고 자신은 전투불능이 된다",
+		"커다란 폭발로 주위에 있는 모든 것을 공격한다. 사용한 다음 기절한다.",
 		250,
 		SkillType.Physical,
 		false,

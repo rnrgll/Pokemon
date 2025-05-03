@@ -7,7 +7,7 @@ public class CriticalFrontTeeth : SkillS
 {
     public CriticalFrontTeeth() : base(
 		"필살앞니",
-		"날카로운 앞니로 콱 물어 본때를 보여 떄때로 상대를 풀이 죽게 한다",
+		"날카로운 앞니로 강하게 물어서 공격한다. 상대를 풀죽게 만들 때가 있다.",
 		80,
 		SkillType.Physical,
 		false,

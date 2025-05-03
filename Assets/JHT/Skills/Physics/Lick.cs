@@ -7,7 +7,7 @@ public class Lick : SkillS
 {
 	public Lick() : base(
 		"핥기",
-		"혀로 소름 끼치게 핥는다. 때때로 상대를 마비시킨다",
+		"긴 혀로 상대를 핥아서 공격한다. 마비 상태로 만들 때가 있다.",
 		20,
 		SkillType.Physical,
 		false,

@@ -1,30 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
-public class Solution : SkillPhysic
+public class Solution : SkillS
 {
-	public Solution() : base("용해액", "부식성의 강한 산성액을 뿌린다. 때때로 상대의 방어를 떨어트린다",
-		40, false, Define.SkillType.Physical,Define.PokeType.Poison,30,100) { }
+	public Solution() : base(
+		"용해액",
+		"부식성의 강한 산성액을 뿌린다. 때때로 상대의 방어를 떨어트린다",
+		40,
+		SkillType.Special,
+		false,
+		PokeType.Poison,
+		30,
+		100
+		) { }
+
+	// 10% 의 확률로 상대의 특수방어력 을 1랭크 떨어 뜨린다.
+
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		int rand = Random.Range(0, 100);
-		defender.animator.SetTrigger(name);
-
-		//랜덤변수
-		if (Mathf.RoundToInt(accuracy) >= rand)
+		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeDamage(attacker, defender, skill); //skill.damage* attacker.pokemonStat.attack
-			skill.curPP--;
-			if (rand <= 10)
+			defender.TakeDamage(attacker, defender, skill);
+			float effectRan = Random.Range(0f, 1f);
+			if (effectRan < 0.1f)
 			{
-				defender.pokemonStat.defense -= 1;
+				defender.pokemonBattleStack.speDefense--;
 			}
-		}
-		else
-		{
-			skill.curPP--;
-			Debug.Log("공격을 회피하였습니다");
 		}
 	}
 }

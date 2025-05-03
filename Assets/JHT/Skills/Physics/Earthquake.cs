@@ -7,7 +7,7 @@ public class Earthquake : SkillS
 {
     public Earthquake() : base(
 		"지진",
-		"강한 지진을 일으켜 주변 땅에 있는 것들에 피해를 준다",
+		"지진의 충격으로 주위에 있는 모든 것을 공격한다.",
 		100,
 		SkillType.Physical,
 		false,

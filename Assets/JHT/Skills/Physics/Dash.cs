@@ -7,7 +7,7 @@ public class Dash : SkillS
 {
     public Dash() : base(
 		"돌진",
-		"자신도 다칠 수 있지만 앞뒤를 가리지 않고 돌진해 들이 받는다",
+		"굉장한 기세로 상대에게 부딪쳐 공격한다. 자신도 조금 데미지를 입는다.",
 		90,
 		SkillType.Physical,
 		false,

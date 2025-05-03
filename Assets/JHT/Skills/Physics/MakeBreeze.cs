@@ -7,7 +7,7 @@ public class MakeBreeze : SkillS
 {
     public MakeBreeze() : base(
 		"바람일으키기",
-		"세찬 바람을 일으켜 적을 타격한다",
+		"날개로 일으킨 격한 바람을 상대에게 부딪혀서 공격한다.",
 		40,
 		SkillType.Physical,
 		false,

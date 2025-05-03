@@ -7,13 +7,14 @@ public class BodySlam : SkillS
 {
 	public BodySlam() : base(
 		"몸통박치기",
-		"몸전체를 이용해 들이받는다",
+		"상대를 향해서 몸 전체를 부딪쳐가며 공격한다.",
 		35,
 		SkillType.Physical,
 		false,
 		PokeType.Normal,
 		35,
-		95) { }
+		95
+		) { }
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{

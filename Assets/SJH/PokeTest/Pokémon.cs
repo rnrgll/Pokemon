@@ -49,6 +49,10 @@ public class Pokémon : MonoBehaviour
 	public bool isAnger;
 	public int angerStack;
 
+	[Tooltip("구르기 관리용")]
+	public bool isRollout;
+	public int rolloutStack;
+
 	[Tooltip("배틀중일 때 스택 1 ~ 6")]
 	public PokemonBattleStat pokemonBattleStack;
 
@@ -364,48 +368,70 @@ public class Pokémon : MonoBehaviour
 		// 기술적중 체크
 		// TODO : 배틀 중 명중감소 당했을 때 생각
 		// 명중률 = 기술 명중률 * (공격자 명중 스택 / 수비자 회피 스택)
-		//int accu = (int)(attackSkill.accuracy * ((float)attacker.pokemonBattleStack.accuracy / defender.pokemonBattleStack.evasion));
-		int ran = UnityEngine.Random.Range(0, 100);
-		bool isHit = ran < attackSkill.accuracy;
+		// int accu = (int)(attackSkill.accuracy * ((float)attacker.pokemonBattleStack.accuracy / defender.pokemonBattleStack.evasion));
 
-		if (isHit)
+		// 공격전
+		switch (attackSkill.name)
 		{
-			// 어태커가 사용한 기술이 분노일 때
-			if (attackSkill.name == "분노")
-			{
+			case "분노":
+				if (attacker.isAnger)
+					damage *= attacker.angerStack;
+				break;
+
+			case "구르기":
+				if (attacker.isRollout)
+					damage *= attacker.rolloutStack;
+				break;
+
+			default:
+				// 분노 초기화
+				attacker.isAnger = false;
+				attacker.angerStack = 1; // 1로 유지
+				// 구르기 초기화
+				attacker.isRollout = false;
+				attacker.rolloutStack = 1;
+				break;
+		}
+
+		// 대미지 연산
+		hp -= damage;
+		if (hp < 0)
+		{
+			hp = 0;
+			isDead = true;
+		}
+
+		// PP감소
+		attackSkill.curPP--;
+
+		Debug.Log($"{pokeName} 이/가 {damage} 대미지를 입어 체력이 {hp}이/가 되었습니다.");
+
+		// 공격후
+		switch (attackSkill.name)
+		{
+			case "분노":
 				// 디펜더가 분노상태면 분노 스택 증가
 				if (defender.isAnger)
 					defender.angerStack++;
+				break;
 
-				// 어태커가 분노상태면 대미지에 분노스택 연산
-				if (attacker.isAnger)
-					damage *= attacker.angerStack;
-			}
-			// 어태커가 분노가 아닌 기술을 사용할 때
-			else
-			{
-				// 분노 상태 해제
-				if (attacker.isAnger)
+			case "구르기":
+				// 어태커가 구르기 상태면 스택 증가
+				if (attacker.isRollout)
 				{
-					attacker.isAnger = false;
-					attacker.angerStack = 1; // 1로 유지
+					attacker.rolloutStack *= 2;
 				}
-			}
+				// 어태커가 첫 구르기면 true, 다음 구르기 대미지 2
+				else
+				{
+					attacker.isRollout = true;
+					attacker.rolloutStack = 2;
+				}
+				break;
 
-			// 대미지 연산
-			hp -= damage;
-			if (hp < 0)
-			{
-				hp = 0;
-				isDead = true;
-			}
-
-			// PP감소
-			attackSkill.curPP--;
-
-			Debug.Log($"{pokeName} 이/가 {damage} 대미지를 입어 체력이 {hp}이/가 되었습니다.");
+			default:
+				break;
 		}
-
 	}
 
 	float TypesCalculator(PokeType attack, PokeType defense1, PokeType defense2)

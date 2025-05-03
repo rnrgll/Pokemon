@@ -8,7 +8,7 @@ public class Anger : SkillS
 
 	public Anger() : base(
 			"분노",
-			"공격 받을수록 점점 더 격한 분노를 표출한다",
+			"기술을 썼을 때 공격을 받으면 분노의 힘으로 주는 대미지가 올라간다.",
 			20,
 			SkillType.Physical,
 			false,
@@ -16,9 +16,6 @@ public class Anger : SkillS
 			20,
 			100
 			){ }
-
-	//public Anger() : base("분노", "공격 받을수록 점점 더 격한 분노를 표출한다",
-	//	20, false, SkillType.Physical,PokeType.Normal,20,100) { }
 
 	/*
 	 데미지를 받을 때마다 데미지가 2배, 3배, 4배...로 점점 증가한다. 다른 기술을 사용하면 원래대로 돌아온다.

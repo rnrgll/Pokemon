@@ -7,7 +7,7 @@ public class CutApart : SkillS
 {
     public CutApart() : base(
 		"베어가르기",
-		"예리한 발톱이나 칼날로 벤다. 급소에 맞히기 쉽다",
+		"발톱이나 낫 등으로 상대를 베어 갈라서 공격한다. 급소에 맞을 확률이 높다.",
 		70,
 		SkillType.Physical,
 		false,

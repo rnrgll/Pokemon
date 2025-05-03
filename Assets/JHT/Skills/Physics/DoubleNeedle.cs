@@ -9,7 +9,7 @@ public class DoubleNeedle : SkillS
 	int count = 0;
     public DoubleNeedle() : base(
 		"더블니들",
-		"2개의 뾰족한 바늘로 연달아 찌른다. 때때로 상대를 중독시킨다",
+		"2개의 침을 상대에게 꿰찔러 공격한다. 2회 연속으로 공격한다.",
 		25,
 		SkillType.Physical,
 		false,

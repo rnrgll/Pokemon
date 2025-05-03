@@ -7,7 +7,7 @@ public class BloodSucking : SkillS
 {
     public BloodSucking() : base(
 		"흡혈",
-		"이빨로 깨물고 피를 빨아 생명력을 빼앗는다",
+		"피를 빨아서 공격한다. 준 데미지의 절반을 HP로 회복한다.",
 		20,
 		SkillType.Physical,
 		false,
