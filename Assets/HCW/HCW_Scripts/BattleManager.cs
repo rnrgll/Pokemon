@@ -138,8 +138,7 @@ public class BattleManager : MonoBehaviour
 		//while ((playerPokemon.hp > 0) && currentEnemyIndex < enemyParty.Count)
 		while ((playerPokemon.hp > 0) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
-			Debug.Log($"배틀로그 : 현재 턴 : {currentTurn}");
-			Debug.Log($"배틀로그 : 배틀 진행중 [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
+			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
 			// 적 포켓몬 교체 체크
 			if (enemyPokemon.hp <= 0)
 			{
@@ -188,7 +187,7 @@ public class BattleManager : MonoBehaviour
 				ui.ShowSkillSelection(playerPokemon);
 				Debug.Log($"Fight! 기술 선택대기중");
 				yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
-				Debug.Log($"배틀로그 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
+				Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
 				ui.HideSkillSelection();
 
 				// 적 포켓몬 행동 선택
@@ -209,7 +208,7 @@ public class BattleManager : MonoBehaviour
 					int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 					int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 
-					Debug.Log($"배틀로그 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
+					Debug.Log($"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
 					if (speedA != speedB)
 						return speedB.CompareTo(speedA);
 
@@ -221,11 +220,11 @@ public class BattleManager : MonoBehaviour
 				{
 					if (act.Attacker.hp <= 0)
 					{
-						Debug.Log($"배틀로그 : {act.Attacker.pokeName} 은/는 기절 행동불가");
+						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
 						continue;
 					}
 
-					Debug.Log($"배틀로그 : {act.Attacker.pokeName} ! {act.Skill} !");
+					Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
 					ExecuteAction(act);
 					//Debug.Log($"{act.Attacker.pokeName} 이/가 {act.Skill} 사용완료!");
 					yield return battleDelay;
@@ -242,13 +241,13 @@ public class BattleManager : MonoBehaviour
 				Debug.Log($"플레이어 액션: {selectedAction}");
 				yield return battleDelay;
 			}
-			Debug.Log($"배틀로그 : {currentTurn} 턴 종료");
+			Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
 			currentTurn++;
 			playerPokemon.TurnEnd();
 			enemyPokemon.TurnEnd();
 
 		}
-		Debug.Log("배틀로그 : 배틀종료");
+		Debug.Log($"배틀로그 {currentTurn}턴 : 배틀종료");
 		EndBattle();
 	}
 
@@ -279,7 +278,7 @@ public class BattleManager : MonoBehaviour
 	{
 		if (playerPokemon.hp <= 0)
 		{
-			Debug.Log("배틀로그 : 게임 오버: 플레이어 전멸");
+			Debug.Log($"배틀로그 {currentTurn}턴 : 게임 오버: 플레이어 전멸");
 			Destroy(Manager.Poke.enemyPokemon);
 
 			// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
@@ -297,7 +296,7 @@ public class BattleManager : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("배틀로그 : 승리: 모든 적 포켓몬 격파");
+			Debug.Log($"배틀로그 {currentTurn}턴 : 승리: 모든 적 포켓몬 격파");
 			// 트레이너 배틀일 경우 돈 + 경험치
 			// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
 			var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
@@ -312,7 +311,7 @@ public class BattleManager : MonoBehaviour
 			// 경험치 계산
 			int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
 			playerPokemon.AddExp(totalExp);
-			Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
+			Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 
 			// 상대 포켓몬 파괴
 			Destroy(Manager.Poke.enemyPokemon);
