@@ -206,7 +206,7 @@ public class UI_PokemonParty : UI_Linked
 			{
 				("강한 정도", new CustomAction(ShowPokemonInfo)),
 				("순서바꾸기", new CustomAction(ChangeOrder)),
-				("사용할 수 있는 기술",  new OpenLinkedUIAction("") ),
+				("사용할 수 있는 기술",  new CustomAction(ShowSkillInfo) ),
 				("닫다", new CustomAction(popupUI.OnCancle)),
 			});
 	}
@@ -223,24 +223,25 @@ public class UI_PokemonParty : UI_Linked
 	private void ShowPokemonInfo()
 	{
 		var linkedUI = Manager.UI.ShowLinkedUI<UI_PokemonInfo>("UI_PokemonInfo", false);
-		if (party[curCursorIdx] == null)
-		{
-			Debug.Log("null");
-			return;
-		}
-		else
-		{
-			Debug.Log(
-				party[curCursorIdx].pokeName
-			);
-		}
+
 		linkedUI.SetPokemonInfo(party[curCursorIdx]);
 		linkedUI.Open();
 	}
 
 	#endregion
 
+	#region 포켓몬 스킬 정보 조회
+	private void ShowSkillInfo()
+	{
+		var linkedUI = Manager.UI.ShowLinkedUI<UI_PokemonSkillInfo>("UI_PokemonSkillInfo", false);
+		
+		linkedUI.SetPartyIdx(curCursorIdx);
+		Debug.Log(curCursorIdx);
+		linkedUI.Open();
+	}
+	
 
+	#endregion
 	#region 순서바꾸기 기능
 
 	public void ChangeOrder()
