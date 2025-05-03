@@ -76,7 +76,8 @@ public class Define
 		Sleep,			//잠듦
 		Paralysis,		//마비 
 		Confusion,		//혼란
-		Faint,			//기절
+		Faint,          //기절
+		Flinch,			//풀죽음
 	}
 
 

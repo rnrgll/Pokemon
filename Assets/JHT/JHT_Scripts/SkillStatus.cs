@@ -9,7 +9,7 @@ public class SkillStatus : SkillS
 		base(name, description, damage, skillType, isMyStat, type,pp,accuracy,isHm)
 	{ }
 
-	public override void UseSkill(PokemonS attacker, PokemonS defender, SkillS skill)
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 	
 	}

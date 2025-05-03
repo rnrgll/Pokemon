@@ -63,6 +63,7 @@ public class BattleUIController : MonoBehaviour
 
 	public void HideActionMenu()
 	{
+		Debug.Log("액션메뉴 비활성화");
 		bottomPanel.SetActive(false);
 		EventSystem.current.SetSelectedGameObject(null);
 	}
