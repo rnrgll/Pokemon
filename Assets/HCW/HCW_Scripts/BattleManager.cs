@@ -138,6 +138,7 @@ public class BattleManager : MonoBehaviour
 		//while ((playerPokemon.hp > 0) && currentEnemyIndex < enemyParty.Count)
 		while ((playerPokemon.hp > 0) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
+			Debug.Log($"배틀로그 : 현재 턴 : {currentTurn}");
 			Debug.Log($"배틀로그 : 배틀 진행중 [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
 			// 적 포켓몬 교체 체크
 			if (enemyPokemon.hp <= 0)
@@ -235,11 +236,17 @@ public class BattleManager : MonoBehaviour
 
 				yield return battleDelay;
 			}
-			else // Fight가 아닌 선택지 추가 필요
+			// TODO : Fight가 아닌 선택지 추가 필요
+			else
 			{
 				Debug.Log($"플레이어 액션: {selectedAction}");
 				yield return battleDelay;
 			}
+			Debug.Log($"배틀로그 : {currentTurn} 턴 종료");
+			currentTurn++;
+			playerPokemon.TurnEnd();
+			enemyPokemon.TurnEnd();
+
 		}
 		Debug.Log("배틀로그 : 배틀종료");
 		EndBattle();

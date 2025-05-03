@@ -567,36 +567,6 @@ public class Pokémon : MonoBehaviour
 				break;
 
 			default:
-				// 김밥말이
-				if (defender.isBind)
-				{
-					// 매턴 공격후 1/16 퍼댐 감소
-					int bindDamage = Mathf.Max(1, maxHp / 16); // 최소 1 대미지
-					hp -= bindDamage;
-					Debug.Log($"{defender.pokeName} 은/는 김밥말이로 인해 체력 {bindDamage} 감소");
-
-					// 감소 후 스택 감소
-					defender.bindStack--;
-					if (defender.bindStack <= 0)
-					{
-						defender.isBind = false;
-						Debug.Log("김밥말이 해제");
-					}
-				}
-				// 저주
-				if (defender.isCurse)
-				{
-					int curseDamage = Mathf.Max(1, maxHp / 4);
-					hp -= curseDamage;
-					Debug.Log($"{defender.pokeName} 은/는 저주로 인해 체력 {curseDamage} 감소");
-
-					if (hp <= 0)
-					{
-						hp = 0;
-						isDead = true;
-						Debug.Log($"{pokeName} 은/는 저주로 쓰러졌다!");
-					}
-				}
 				break;
 		}
 		// PP감소
@@ -977,5 +947,84 @@ public class Pokémon : MonoBehaviour
 			return stat * (rank + 2) / 2;
 		else
 			return stat * 2 / (Mathf.Abs(rank) + 2);
+	}
+
+	public void TurnEnd()
+	{
+		// TODO : 턴종료들 여기에 상태이상같은거
+		// 김밥말이
+		if (isBind)
+		{
+			int bindDamage = Mathf.Max(1, maxHp / 16); // 최소 1 대미지
+			hp -= bindDamage;
+			Debug.Log($"배틀로그 : {pokeName} 은/는 김밥말이로 인해 체력 {bindDamage} 감소");
+
+			bindStack--;
+			if (bindStack <= 0)
+			{
+				isBind = false;
+				Debug.Log($"배틀로그 : {pokeName}의 김밥말이 상태 종료");
+			}
+		}
+
+		// 저주
+		if (isCurse)
+		{
+			int curseDamage = Mathf.Max(1, maxHp / 4);
+			hp -= curseDamage;
+			Debug.Log($"{pokeName} 은/는 저주로 인해 체력 {curseDamage} 감소");
+		}
+
+		// 리플렉터
+		if (isReflect)
+		{
+			reflectCount--;
+			if (reflectCount <= 0)
+			{
+				isReflect = false;
+				Debug.Log($"배틀로그 : {pokeName} 의 리플렉터 효과가 사라졌다!");
+
+			}
+		}
+		// 빛의장막
+		if (isLightScreen)
+		{
+			lightScreenCount--;
+			if (lightScreenCount <= 0)
+			{
+				isLightScreen = false;
+				Debug.Log($"배틀로그 : {pokeName} 의 빛의장막 효과가 사라졌다!");
+
+			}
+		}
+		// 신비의부적
+		if (isSafeguard)
+		{
+			safeguardCount--;
+			if (safeguardCount <= 0)
+			{
+				isSafeguard = false;
+				Debug.Log($"배틀로그 : {pokeName} 의 신비의부적 효과가 사라졌다");
+
+			}
+		}
+
+		// 잠자기
+		if (condition == StatusCondition.Sleep && sleepCount > 0)
+		{
+			sleepCount--;
+			if (sleepCount <= 0)
+			{
+				condition = StatusCondition.None;
+			}
+		}
+
+		// 턴 종료 후 사망 체크
+		if (hp <= 0)
+		{
+			hp = 0;
+			isDead = true;
+			Debug.Log($"배틀로그 : {pokeName} 은/는 쓰러졌다!");
+		}
 	}
 }
