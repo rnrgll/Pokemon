@@ -3,27 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SandAttack : SkillS
+public class Magnitude : SkillS
 {
-	public SandAttack() : base(
-		"모래뿌리기",
-		"상대의 얼굴에 모래를 뿌려서 명중률을 떨어뜨린다.",
+	public Magnitude() : base(
+		"매그니튜드",
+		"땅을 흔들어서 주위에 있는 모두를 공격한다. 기술의 위력이 여러모로 바뀐다.",
 		0,
-		SkillType.Status,
+		SkillType.Physical,
 		false,
 		PokeType.Ground,
-		15,
+		30,
 		100
 		)
 	{ }
-
-	// 상대의 명중률이 1랭크 내려간다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeEffect(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

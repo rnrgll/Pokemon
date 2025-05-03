@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SandAttack : SkillS
+public class Flash : SkillS
 {
-	public SandAttack() : base(
-		"모래뿌리기",
-		"상대의 얼굴에 모래를 뿌려서 명중률을 떨어뜨린다.",
+	public Flash() : base(
+		"플래쉬",
+		"눈이 부신 빛으로 상대의 명중률을 떨어뜨린다.",
 		0,
 		SkillType.Status,
 		false,
-		PokeType.Ground,
-		15,
-		100
+		PokeType.Normal,
+		20,
+		70
 		)
 	{ }
 

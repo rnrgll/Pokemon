@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor.PackageManager;
 using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -43,7 +44,12 @@ public class SkillSData
 			["덩굴채찍"] = new VineWhip(),
 			["전광석화"] = new QuickAttack(),
 			["잎날가르기"] = new RazorLeaf(),
-
+			["화염자동차"] = new FlameWheel(),
+			["마구찌르기"] = new FuryAttack(),
+			["회전부리"] = new DrillPeck(),
+			["벌레먹음"] = new BugBite(),
+			["매그니튜드"] = new Magnitude(),
+			["분노의앞니"] = new SuperFang(),
 
 			// Special
 			["스피드스타"] = new Swift(),
@@ -58,6 +64,7 @@ public class SkillSData
 			["하이드로펌프"] = new HydroPump(),
 			["용해액"] = new Acid(),
 			["바람일으키기"] = new Gust(),
+			["나이트헤드"] = new NightShade(),
 
 
 			// Status
@@ -91,14 +98,14 @@ public class SkillSData
 			["광합성"] = new Synthesis(),
 			["빛의장막"] = new LightScreen(),
 			["신비의부적"] = new Safeguard(),
+			["거미집"] = new SpiderWeb(),
+			["째려보기"] = new Leer(),
+			["따라하기"] = new MirrorMove(),
 
-			//["37"] = new SkillS(" ", " ", , SkillType.),
-			//["벌레먹음"] = new SkillS(" ", " ", , SkillType.),
-			//["저리가루"] = new SkillS(" ", " ", , SkillType.),
-			//["화염자동차"] = new SkillS(" ", " ", , SkillType.),
-			//["분노의앞니"] = new SkillS("분노의앞니", " ", ? , SkillType.Physical),
-			//["나이트헤드"] = new SkillS("나이트헤드", " ", ? , SkillType.Physical),
-			//["매그니튜드"] = new SkillS("매그니튜드", " ", ? , SkillType.Physical),
+			// HM
+			["플래시"] = new Flash(),
+			// TM
+			["진흙뿌리기"] = new MudSlap(),
 		};
 	}
 	public SkillS GetSkillDataByName(string name)

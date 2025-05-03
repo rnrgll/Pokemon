@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SandAttack : SkillS
+public class Leer : SkillS
 {
-	public SandAttack() : base(
-		"모래뿌리기",
-		"상대의 얼굴에 모래를 뿌려서 명중률을 떨어뜨린다.",
+	public Leer() : base(
+		"째려보기",
+		"날카로운 눈초리로 겁을 주어 상대의 방어를 떨어뜨린다.",
 		0,
 		SkillType.Status,
 		false,
-		PokeType.Ground,
-		15,
+		PokeType.Normal,
+		30,
 		100
 		)
 	{ }
 
-	// 상대의 명중률이 1랭크 내려간다.
+	// 상대의 방어력을 1랭크 떨어뜨린다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{

@@ -415,12 +415,18 @@ public class Pokémon : MonoBehaviour
 		{
 			case "분노":
 				if (attacker.isAnger)
+				{
 					damage *= attacker.angerStack;
+					Debug.Log($"{attacker.pokeName} 의 {attackSkill.name} ! 대미지 [{damage}]");
+				}
 				break;
 
 			case "구르기":
 				if (attacker.isRollout)
+				{
 					damage *= attacker.rolloutStack;
+					Debug.Log($"{attacker.pokeName} 의 {attackSkill.name} ! 대미지 [{damage}]");
+				}
 				break;
 
 			case "솔라빔":
@@ -432,13 +438,83 @@ public class Pokémon : MonoBehaviour
 				}
 				break;
 
+			case "매그니튜드":
+				attackSkill.damage = 0;
+				int magnitudeRandom = UnityEngine.Random.Range(1, 8);
+				
+				switch (magnitudeRandom)
+				{
+					case 1: attackSkill.damage = 10; break;
+					case 2: attackSkill.damage = 30; break;
+					case 3: attackSkill.damage = 50; break;
+					case 4: attackSkill.damage = 60; break;
+					case 5: attackSkill.damage = 90; break;
+					case 6: attackSkill.damage = 110; break;
+					default: attackSkill.damage = 150; break;
+				}
+				damage = GetTotalDamage(attacker, defender, attackSkill);
+
+				Debug.Log($"{attacker.pokeName} 의 매그니튜드 {magnitudeRandom} ! 대미지 [{damage}]");
+				break;
+
+			case "분노의앞니":
+				// 고스트 타입이면 무효
+				if ((defender.pokeType1 == PokeType.Ghost) || (defender.pokeType2 == PokeType.Ghost))
+				{
+					Debug.Log($"{attacker.pokeName} 의 {attackSkill.name}! 하지만 효과가 없다...");
+					damage = 0;
+				}
+				else
+				{
+					// 고정피해라 여기서 대미지 계산
+					damage = Mathf.Max(1, defender.hp / 2);
+					Debug.Log($"{attacker.pokeName} 의 {attackSkill.name}! 대미지 [{damage}]");
+				}
+				break;
+
+			case "나이트헤드":
+				if (defender.pokeType1 == PokeType.Normal || defender.pokeType2 == PokeType.Normal)
+				{
+					Debug.Log($"{attacker.pokeName} 의 {attackSkill.name}! 하지만 효과가 없다...");
+					damage = 0;
+				}
+				else
+				{
+					damage = attacker.level;
+					Debug.Log($"{attacker.pokeName} 의 {attackSkill.name}! 대미지 [{damage}]");
+				}
+				break;
+
+			case "따라하기":
+				if (string.IsNullOrEmpty(defender.prevSkillName))
+				{
+					Debug.Log($"{defender.pokeName} 은/는 기술을 사용하지 않았다! 따라하기 실패.");
+					break;
+				}
+				if (defender.prevSkillName == "따라하기")
+				{
+					Debug.Log("따라하기는 따라할 수 없다!");
+					break;
+				}
+				SkillS copySkill = Manager.Data.SkillSData.GetSkillDataByName(prevSkillName);
+				if (copySkill == null)
+				{
+					Debug.Log("따라할 스킬이 없다!");
+				}
+
+				copySkill.UseSkill(attacker, defender, copySkill);
+				break;
+
 			default:
 				// 분노 초기화
 				attacker.isAnger = false;
 				attacker.angerStack = 1; // 1로 유지
-										 // 구르기 초기화
+
+				// 구르기 초기화
 				attacker.isRollout = false;
 				attacker.rolloutStack = 1;
+
+				Debug.Log($"{attacker.pokeName} 의 {attackSkill.name} ! 대미지 [{damage}]");
 				break;
 		}
 
@@ -497,7 +573,7 @@ public class Pokémon : MonoBehaviour
 					// 매턴 공격후 1/16 퍼댐 감소
 					int bindDamage = Mathf.Max(1, maxHp / 16); // 최소 1 대미지
 					hp -= bindDamage;
-					Debug.Log($"김밥말이로 인해 체력이 {bindDamage} 감소");
+					Debug.Log($"{defender.pokeName} 은/는 김밥말이로 인해 체력 {bindDamage} 감소");
 
 					// 감소 후 스택 감소
 					defender.bindStack--;
@@ -512,7 +588,7 @@ public class Pokémon : MonoBehaviour
 				{
 					int curseDamage = Mathf.Max(1, maxHp / 4);
 					hp -= curseDamage;
-					Debug.Log($"저주로 인해 체력이 {curseDamage} 감소");
+					Debug.Log($"{defender.pokeName} 은/는 저주로 인해 체력 {curseDamage} 감소");
 
 					if (hp <= 0)
 					{
@@ -602,6 +678,7 @@ public class Pokémon : MonoBehaviour
 				break;
 
 			case "검은눈빛":
+			case "거미집":
 				defender.isMeanLook = true;
 				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 인해 도망갈 수 없게 됐다.");
 				break;
@@ -620,7 +697,8 @@ public class Pokémon : MonoBehaviour
 				break;
 
 			case "신비의부적":
-				attacker.condition = StatusCondition.Sleep;
+				attacker.isSafeguard = true;
+				attacker.safeguardCount = 5;
 				Debug.Log($"{attacker.pokeName} 은/는 {skill.name}에 둘러싸였다.");
 				break;
 
@@ -677,6 +755,7 @@ public class Pokémon : MonoBehaviour
 				break;
 
 			case "꼬리흔들기":
+			case "째려보기":
 				defender.pokemonBattleStack.defense = Mathf.Max(-6, defender.pokemonBattleStack.defense - 1);
 				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 방어 1랭크 하락");
 				break;
@@ -711,8 +790,21 @@ public class Pokémon : MonoBehaviour
 
 			case "모래뿌리기":
 			case "연막":
+			case "진흙뿌리기":
 				defender.pokemonBattleStack.accuracy = Mathf.Max(-6, defender.pokemonBattleStack.accuracy - 1);
 				Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 명중 1랭크 하락");
+				break;
+
+			case "저리가루":
+				if (defender.isSafeguard)
+				{
+					Debug.Log($"{defender.pokeName} 은/는 신비의부적 기술로 인해 마비 면역!");
+				}
+				else
+				{
+					defender.condition = StatusCondition.Paralysis;
+					Debug.Log($"{defender.pokeName} 은/는 {skill.name} 기술로 마비 상태");
+				}
 				break;
 		}
 	}

@@ -3,27 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SandAttack : SkillS
+public class MirrorMove : SkillS
 {
-	public SandAttack() : base(
-		"모래뿌리기",
-		"상대의 얼굴에 모래를 뿌려서 명중률을 떨어뜨린다.",
+	public MirrorMove() : base(
+		"따라하기",
+		"상대가 사용한 기술을 흉내 내어 자신도 똑같은 기술을 쓴다.",
 		0,
 		SkillType.Status,
 		false,
-		PokeType.Ground,
-		15,
+		PokeType.Flying,
+		20,
 		100
 		)
 	{ }
-
-	// 상대의 명중률이 1랭크 내려간다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
-			defender.TakeEffect(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

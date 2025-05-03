@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SandAttack : SkillS
+public class MudSlap : SkillS
 {
-	public SandAttack() : base(
-		"모래뿌리기",
-		"상대의 얼굴에 모래를 뿌려서 명중률을 떨어뜨린다.",
-		0,
-		SkillType.Status,
+	public MudSlap() : base(
+		"진흙뿌리기",
+		"상대의 얼굴 등에 진흙을 내던져서 공격한다. 명중률을 떨어뜨린다.",
+		20,
+		SkillType.Special,
 		false,
 		PokeType.Ground,
-		15,
+		10,
 		100
 		)
 	{ }
@@ -23,6 +23,7 @@ public class SandAttack : SkillS
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
+			defender.TakeDamage(attacker, defender, skill);
 			defender.TakeEffect(attacker, defender, skill);
 		}
 	}
