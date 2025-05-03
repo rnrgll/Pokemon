@@ -80,4 +80,13 @@ public class PokemonManager : Singleton<PokemonManager>
 		return false;
 	}
 
+	public Pokémon GetFirtstPokemon()
+	{
+		foreach (var poke in party)
+		{
+			if (!poke.isDead)
+				return poke;
+		}
+		return null;
+	}
 }
