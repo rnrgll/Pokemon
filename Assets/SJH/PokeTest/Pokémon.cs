@@ -87,7 +87,7 @@ public class Pokémon : MonoBehaviour
 	public int safeguardCount;
 
 	[Tooltip("꿰뚫어보기 관리용")]
-	public bool isForesight;
+	public bool isForesight;	// Defender
 
 	[Tooltip("원한 관리용")]
 	public string prevSkillName;
@@ -395,7 +395,7 @@ public class Pokémon : MonoBehaviour
 			isDead = true;
 		}
 
-		Debug.Log($"{pokeName} 이/가 {damage} 대미지를 입어 체력이 {hp}이/가 되었습니다.");
+		Debug.Log($"배틀로그 : {pokeName} 이/가 {damage} 대미지를 입었습니다. 현재체력 : {hp}");
 	}
 
 	public void TakeDamage(Pokémon attacker, Pokémon defender, SkillS attackSkill)
@@ -535,7 +535,7 @@ public class Pokémon : MonoBehaviour
 		}
 		// 맞고도 살았으면 길동무 해제
 		isDestinyBond = false;
-		Debug.Log($"{pokeName} 이/가 {damage} 대미지를 입어 체력이 {hp}이/가 되었습니다.");
+		Debug.Log($"배틀로그 : {pokeName} 이/가 {damage} 대미지를 입었습니다. 현재체력 : {hp}");
 
 
 	AfterAtack:
@@ -603,6 +603,7 @@ public class Pokémon : MonoBehaviour
 		attackSkill.curPP--;
 	}
 
+	// Status 스킬 적용
 	public void TakeEffect(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		switch (skill.name)
@@ -809,23 +810,24 @@ public class Pokémon : MonoBehaviour
 		}
 	}
 
-	float TypesCalculator(PokeType attack, PokeType defense1, PokeType defense2)
+	float TypesCalculator(PokeType attack, Pokémon defender)
 	{
-		float firstDamageRate = TypeCalculator(attack, defense1);
-		float secondDamageRate = TypeCalculator(attack, defense2);
+		PokeType defense1 = defender.pokeType1;
+		PokeType defense2 = defender.pokeType2;
+		float firstDamageRate = TypeCalculator(attack, defense1, defender.isForesight);
+		float secondDamageRate = TypeCalculator(attack, defense2, defender.isForesight);
 
 		return firstDamageRate * secondDamageRate;
 	}
 
-	float TypeCalculator(PokeType attack, PokeType defense)
+	float TypeCalculator(PokeType attack, PokeType defense, bool isForesight)
 	{
-
 		if (defense == PokeType.None) return 1f;
 
 		if (attack == PokeType.Normal)
 		{
 			if (defense == PokeType.Rock || defense == PokeType.Steel) return 0.5f;
-			if (defense == PokeType.Ghost) return 0.0f;
+			if (defense == PokeType.Ghost) return isForesight ? 1f : 0f;
 		}
 		else if (attack == PokeType.Fire)
 		{
@@ -856,7 +858,7 @@ public class Pokémon : MonoBehaviour
 		{
 			if (defense == PokeType.Normal || defense == PokeType.Ice || defense == PokeType.Rock || defense == PokeType.Dark || defense == PokeType.Steel) return 2f;
 			if (defense == PokeType.Poison || defense == PokeType.Flying || defense == PokeType.Psychic || defense == PokeType.Bug) return 0.5f;
-			if (defense == PokeType.Ghost) return 0f;
+			if (defense == PokeType.Ghost) return isForesight ? 1f : 0f;
 		}
 		else if (attack == PokeType.Poison)
 		{
@@ -920,10 +922,22 @@ public class Pokémon : MonoBehaviour
 	{
 		int level = attacker.level;
 		int power = (int)skill.damage;
+		// 물리 / 특수 체크
 		bool isSpecial = skill.skillType == SkillType.Special;
 
-		int attackStat = isSpecial ? attacker.pokemonStat.speAttack : attacker.pokemonStat.attack;
-		int defenseStat = isSpecial ? defender.pokemonStat.speDefense : defender.pokemonStat.defense;
+		int attackStat = isSpecial
+			? attacker.GetModifyStat(attacker.pokemonStat.speAttack, attacker.pokemonBattleStack.speAttack)
+			: attacker.GetModifyStat(attacker.pokemonStat.attack, attacker.pokemonBattleStack.attack);
+		int defenseStat = isSpecial
+			? defender.GetModifyStat(attacker.pokemonStat.speDefense, attacker.pokemonBattleStack.speDefense)
+			: defender.GetModifyStat(attacker.pokemonStat.defense, attacker.pokemonBattleStack.defense);
+
+		// 리플렉터 / 빛의장막 체크
+		if (!isSpecial && defender.isReflect)
+			defenseStat *= 2; // 물리 데미지 반감
+
+		else if (isSpecial && defender.isLightScreen)
+			defenseStat *= 2; // 특수 데미지 반감
 
 		float damageRate = 1f;
 
@@ -932,7 +946,7 @@ public class Pokémon : MonoBehaviour
 			damageRate *= 1.5f;
 
 		// 타입 체크
-		damageRate *= TypesCalculator(skill.type, defender.pokeType1, defender.pokeType2);
+		damageRate *= TypesCalculator(skill.type, defender);
 
 		// 랜덤 난수 0.85 ~ 1
 		damageRate *= UnityEngine.Random.Range(85, 101) / 100f;
@@ -953,5 +967,15 @@ public class Pokémon : MonoBehaviour
 			Debug.Log($"{attacker.pokeName} 의 {skill.name} 은/는 빗나갔다!");
 		}
 		return isHit;
+	}
+
+	public int GetModifyStat(int stat, int rank)
+	{
+		// 배틀중 스탯 = 원래 스탯 × (랭크 + 2) / 2
+		rank = Mathf.Clamp(rank, -6, 6);
+		if (rank >= 0)
+			return stat * (rank + 2) / 2;
+		else
+			return stat * 2 / (Mathf.Abs(rank) + 2);
 	}
 }

@@ -75,8 +75,6 @@ public class EncounterManager : Singleton<EncounterManager>
 					Manager.Poke.enemyPokemon = pokeObject;
 					// 씬전환 전 정보 저장
 					prevSceneName = SceneManager.GetActiveScene().name; // SceneManager.GetActiveScene().name == "BattleScene"
-					//prevPosition = transform.position;
-					Debug.Log($"플레이어 씬 이동 전 위치 저장 : {prevPosition}");
 					// 애니메이션 종료
 					var player = Manager.Game.Player;
 					player.GetComponent<Player>().StopMoving();
