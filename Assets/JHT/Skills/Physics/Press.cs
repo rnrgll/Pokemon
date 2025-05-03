@@ -7,7 +7,7 @@ public class Press : SkillS
 {
 	public Press() : base(
 		"누르기",
-		"몸 전체의 무게로 짓누른다. 때때로 혈액순환을 방해해 마비시킨다", 
+		"몸 전체로 상대를 덮쳐눌러 공격한다. 마비 상태로 만들 때가 있다.", 
 		85,
 		SkillType.Physical,
 		false,

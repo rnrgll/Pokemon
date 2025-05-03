@@ -53,7 +53,7 @@ public class Pokémon : MonoBehaviour
 	public bool isRollout;
 	public int rolloutStack;
 
-	[Tooltip("배틀중일 때 스택 1 ~ 6")]
+	[Tooltip("배틀중일 때 스택 0 ~ 6")]
 	public PokemonBattleStat pokemonBattleStack;
 
 

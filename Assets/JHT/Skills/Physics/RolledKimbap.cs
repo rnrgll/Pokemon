@@ -8,7 +8,7 @@ public class RolledKimbap : SkillS
 	
     public RolledKimbap() : base(
 		"김밥말이",
-		"긴 몸이나 넝쿨 등으로 말아 묶어서 지속적인 피해를 준다",
+		"긴 몸이나 덩굴을 사용해 2-5턴 동안 상대를 휘감아 공격한다.",
 		15,
 		SkillType.Physical,
 		false,
@@ -17,7 +17,7 @@ public class RolledKimbap : SkillS
 		85
 		) { }
 
-	// 2~5턴동안 지속
+	// 이 기술에 걸린 포켓몬은 2 ~ 5턴동안 체력이 매턴 최대 체력의 1/16만큼 감소한다.
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
