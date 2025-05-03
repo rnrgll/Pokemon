@@ -14,8 +14,10 @@ public class UI_Menu : UI_Linked
     [SerializeField] private Transform _UI_MenuBox;
     [SerializeField] private Transform _UI_WhiteBox;
     private TMP_Text _UI_WhiteBoxText;
+    [SerializeField] private List<UI_MenuButton> menuButtonsList;
     
-   [SerializeField] private List<UI_MenuButton> _activeMenuButtons;
+    
+   private List<UI_MenuButton> _activeMenuButtons = new();
    
     private void Awake()
     {
@@ -24,6 +26,16 @@ public class UI_Menu : UI_Linked
 	    
 	    _UI_WhiteBoxText = _UI_WhiteBox.GetComponentInChildren<TMP_Text>();
        
+	    SetupOptions(new List<(string, ISelectableAction)>
+	    {
+		    ("포켓몬", new OpenLinkedUIAction("UI_PokemonParty")),
+		    ("가방", new OpenLinkedUIAction("UI_Bag")),
+		    ("포켓기어", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+		    ("이름", new OpenLinkedUIAction("UI_Bag")),
+		    ("레포트",new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+		    ("설정", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+		    ("닫다", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+	    });
         
     }
 
@@ -59,7 +71,7 @@ public class UI_Menu : UI_Linked
 	    foreach (Transform child in _UI_MenuBox)
 	    {
 		    UI_MenuButton menuButton = child.GetComponent<UI_MenuButton>();
-		    if (menuButton.IsOpend)
+		    if (menuButton.IsOpened)
 		    {
 			    _activeMenuButtons.Add(menuButton);
 			    
@@ -79,6 +91,9 @@ public class UI_Menu : UI_Linked
        UpdateUI();
     }
 
+
+    #region UI
+
     void UpdateUI()
     {
 	    UpdateArrow();
@@ -88,14 +103,16 @@ public class UI_Menu : UI_Linked
     void UpdateArrow()
     { 
 	    _activeMenuButtons[_preIdx].SetArrowActive(false);
-		_activeMenuButtons[_curIdx].SetArrowActive(true);
+	    _activeMenuButtons[_curIdx].SetArrowActive(true);
     }
+    
+    
 
     void UpdateMenuDescription()
     {
 	    _UI_WhiteBoxText.text = _activeMenuButtons[_curIdx].GetMenuDescription();
     }
-
+    
     void SetInActiveAllArrow()
     {
 	    foreach (UI_MenuButton activeMenuButton in _activeMenuButtons)
@@ -103,21 +120,48 @@ public class UI_Menu : UI_Linked
 		    activeMenuButton.SetArrowActive(false);
 	    }
     }
+
+    #endregion
+   
+
     
     public override void OnSelect()
     {
-	    if (_curIdx == _activeMenuButtons.Count - 1)
-	    {
-		    //'닫다' 메뉴
-		    CloseSelf();
-		    return;
-	    }
 	    
-	    //그 외 메뉴는 각자 UI 띄우기
-	    UI_MenuButton selectedButton = _activeMenuButtons[_curIdx];
-	    selectedButton.OpenMenu();
+	    _activeMenuButtons[_curIdx].Trigger();
+	    // if (_curIdx == _activeMenuButtons.Count - 1)
+	    // {
+		   //  //'닫다' 메뉴
+		   //  CloseSelf();
+		   //  return;
+	    // }
+	    //
+	    // //그 외 메뉴는 각자 UI 띄우기
+	    // UI_MenuButton selectedButton = _activeMenuButtons[_curIdx];
+	    // selectedButton.OpenMenu();
 	    
     }
-    
+
+
+    public void SetupOptions(List<(string label, ISelectableAction action)> options)
+    {
+	    _activeMenuButtons.Clear();
+	    for (int i = 0; i < _UI_MenuBox.childCount; i++)
+	    {
+		    UI_MenuButton menuButton = _UI_MenuBox.GetChild(i).GetComponent<UI_MenuButton>();
+		    
+		    if (menuButton.IsOpened)
+		    {
+			    _activeMenuButtons.Add(menuButton);
+			    
+		    }
+		    
+		    menuButton.SetAction(options[i].action);
+		    
+		    //menuButton.SetArrowActive(false);
+		    
+	    }
+    }
+
     
 }

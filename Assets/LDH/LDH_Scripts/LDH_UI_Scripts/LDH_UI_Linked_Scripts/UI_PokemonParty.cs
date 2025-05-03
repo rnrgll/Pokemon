@@ -153,9 +153,24 @@ public class UI_PokemonParty : UI_Linked
 			stopSlotInstance.Select();
 	
 	}
-	
-	
-	
+
+	public override void OnSelect()
+	{
+		if (curCursorIdx == slotList.Count - 1)
+		{
+			//그만두다 메뉴
+			CloseSelf();
+			return;
+		}
+		
+		//화살표 바꾸기
+		slotList[curCursorIdx].ChangeArrow(true);
+		//메시지창 비우기
+		msgText.text = "";
+		//Manager.UI.ShowPopupUI<>()
+	}
+
+
 	public override void OnCancle()
 	{
 		base.OnCancle();

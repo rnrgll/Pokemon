@@ -14,7 +14,8 @@ public class UI_PokemonSlot : MonoBehaviour
 	[SerializeField] private TMP_Text curHp;
 	[SerializeField] private TMP_Text maxHp;
 	[SerializeField] private Slider hpSlider;
-	
+	[SerializeField] private Sprite emptyArrow;
+	[SerializeField] private Sprite originalArrow;
 	public void Deselect()
 	{
 		Util.SetVisible(arrow, false);
@@ -28,6 +29,7 @@ public class UI_PokemonSlot : MonoBehaviour
 	private void OnDisable()
 	{
 		Deselect();
+		ChangeArrow(false);
 	}
 
 	public void SetData(Pokémon pokemon)
@@ -59,5 +61,9 @@ public class UI_PokemonSlot : MonoBehaviour
 		hpSlider.fillRect.GetComponent<Image>().color = color;
 	}
 
+	public void ChangeArrow(bool toFullArrow)
+	{
+		arrow.sprite = toFullArrow ? originalArrow : emptyArrow;
+	}
 	
 }

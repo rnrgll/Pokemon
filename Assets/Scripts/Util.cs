@@ -31,6 +31,7 @@ public class Util
 	
 	public static void SetVisible(Graphic ui, bool isVisible)
 	{
+		if(ui==null) Debug.Log("ui 가 null");
 		if (ui.TryGetComponent<CanvasGroup>(out var group))
 		{
 			group.alpha = isVisible ? 1f : 0f;
