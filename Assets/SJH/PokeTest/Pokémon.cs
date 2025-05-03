@@ -930,6 +930,9 @@ public class Pokémon : MonoBehaviour
 
 	public bool TryHit(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
+
+		int baseAccuracy = (int)skill.accuracy;
+
 		int ran = UnityEngine.Random.Range(0, 100);
 		bool isHit = ran < skill.accuracy;
 		if (!isHit)
