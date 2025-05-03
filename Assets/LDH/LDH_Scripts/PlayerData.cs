@@ -36,7 +36,7 @@ public class PlayerData
 	{
 		//플레이어 이름 입력받으면 데이터 초기화해주는걸로 바꿀 예정
 		InitData("골드");
-        
+
 		
 	}
 
@@ -53,6 +53,10 @@ public class PlayerData
 		{
 			hasBadges[i] = false;
 		}
+		
+		//인벤토리 생성
+		_inventory = new();
+		_inventory.Init();
 	}
 
 	#endregion

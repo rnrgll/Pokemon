@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edacdef20447549be977ada4eabb1fa0, type: 3}
   m_Name: BoostStat_003_SpeedUp
   m_EditorClassIdentifier: 
-  itemName: "\uC2A4\uD53C\uB4DC\uC5C5"
+  itemName: "\uC2A4\uD53C\uB4DC \uC5C5"
   description: "\uC0AC\uC6A9\uD558\uBA74, \uBC30\uD2C0 \uC911\uC5D0\uB9CC \uC2A4\uD53C\uB4DC\uB97C
     \uB192\uD78C\uB2E4"
   category: 0

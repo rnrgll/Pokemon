@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 548673298974317893, guid: 8bc77806f6e674e8dbc84d512158d1cc, type: 3}
       propertyPath: m_Name
-      value: UI_Quit Variant
+      value: UI_ItemSlot_Quit
       objectReference: {fileID: 0}
     - target: {fileID: 634397587408000880, guid: 8bc77806f6e674e8dbc84d512158d1cc, type: 3}
       propertyPath: m_AnchorMax.y
@@ -162,7 +162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8484361118332487892, guid: 8bc77806f6e674e8dbc84d512158d1cc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 48
       objectReference: {fileID: 0}
     - target: {fileID: 8484361118332487892, guid: 8bc77806f6e674e8dbc84d512158d1cc, type: 3}
       propertyPath: m_LocalPosition.x

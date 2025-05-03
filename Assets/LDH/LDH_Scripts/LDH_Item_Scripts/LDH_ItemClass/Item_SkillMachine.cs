@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -32,7 +33,18 @@ public class Item_SkillMachine : ItemBase
 		}
 	}
 
-	public string SkillCode => skillCode;
+	public SkillMachineType MachineType => machineType;
+	public string SkillCode
+	{
+		get
+		{
+			if (machineType == SkillMachineType.HM)
+				return $"비{machineNumber:D1}";
+			else
+				return $"{machineNumber:D2}";
+		}
+	}
+	
 	[SerializeField] protected List<int> pokemonIdList;
 	public int MachineNumber => machineNumber;
 	public bool CanLearn(Pokémon pokemon)
@@ -56,12 +68,4 @@ public class Item_SkillMachine : ItemBase
 		return isSuccess;
 
 	}
-	
-#if UNITY_EDITOR
-	private void OnValidate()
-	{
-		skillCode = $"{machineType}{machineNumber:D2}";
-	}
-#endif
-	
 }

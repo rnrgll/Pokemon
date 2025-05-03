@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_PopUp : MonoBehaviour, IUISelectable, ICancelable
+
+public class UI_PopUp : MonoBehaviour, IUIInputHandler, IUISelectable, IUICancelable
 {
     private void Start()
     {
@@ -16,19 +17,40 @@ public class UI_PopUp : MonoBehaviour, IUISelectable, ICancelable
     }
 
 
-public virtual void ClosePopupUI()
+	public virtual void ClosePopupUI()
     {
         Manager.UI.ClosePopupUI(this);
     }
 
     public virtual void OnSelect()
     {
-	    //일단 아무 기능 없이 둠
-	    //추후 구현 예정
+	    ClosePopupUI();
     }
     public virtual void OnCancle()
     {
 	    ClosePopupUI();
     }
     
+    
+    
+    public void SetupOptions(Transform selectButtonParent, List<(string label, ISelectableAction action)> options)
+    {
+	    
+	    // List<UI_GenericSelectButton> selectButtons
+	    for (int i = 0; i < selectButtonParent.childCount; i++)
+	    {
+		    if (selectButtonParent.GetChild(i).TryGetComponent<UI_GenericSelectButton>(out var selectButton))
+		    {
+			    selectButton.SetAction(options[i].action);
+		    }
+		   
+	    }
+    }
+
+    public virtual  void HandleInput(Define.UIInputType inputType)
+    {
+
+    }
+    
+ 
 }

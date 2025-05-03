@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edacdef20447549be977ada4eabb1fa0, type: 3}
   m_Name: BoostStat_001_PlusPower
   m_EditorClassIdentifier: 
-  itemName: "\uD50C\uB7EC\uC2A4\uD30C\uC6CC"
+  itemName: "\uD50C\uB7EC\uC2A4 \uD30C\uC6CC"
   description: "\uC0AC\uC6A9\uD558\uBA74, \uBC30\uD2C0 \uC911\uC5D0\uB9CC \uACF5\uACA9\uB825\uC744
     \uB192\uD78C\uB2E4"
   category: 0
