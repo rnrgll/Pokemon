@@ -189,7 +189,9 @@ public class UI_PokemonParty : UI_Linked
 
 	public override void OnSelect()
 	{
-		if (curCursorIdx == slotList.Count)
+		Debug.Log(curCursorIdx);
+		Debug.Log(party.Count);
+		if (curCursorIdx == party.Count)
 		{
 			CloseSelf();
 			return;
