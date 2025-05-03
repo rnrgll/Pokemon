@@ -73,6 +73,8 @@ public class UI_Bag : UI_Linked
 		else if (inputType == UIInputType.Down) MoveCursor(1);
 		else if(inputType==UIInputType.Left) MovePanel(-1);
 		else if(inputType==UIInputType.Right) MovePanel(1);
+		else if(inputType==UIInputType.Cancel) OnCancle();
+		else if(inputType==UIInputType.Select) OnSelect();
 	}
 
 	#endregion

@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,6 +18,21 @@ public class UI_PokemonSlot : MonoBehaviour
 	[SerializeField] private Slider hpSlider;
 	[SerializeField] private Sprite emptyArrow;
 	[SerializeField] private Sprite originalArrow;
+	
+	
+	//애니메이션 용
+	private CanvasGroup canvasGroup;
+	private RectTransform rectTransform;
+
+	private Vector2 originPos;
+
+	private void Awake()
+	{
+		canvasGroup = GetComponent<CanvasGroup>();
+		rectTransform = GetComponent<RectTransform>();
+	}
+
+
 	public void Deselect()
 	{
 		Util.SetVisible(arrow, false);
@@ -64,6 +81,36 @@ public class UI_PokemonSlot : MonoBehaviour
 	public void ChangeArrow(bool toFullArrow)
 	{
 		arrow.sprite = toFullArrow ? originalArrow : emptyArrow;
+	}
+	
+	
+	//애니메이션
+	
+	public IEnumerator PlayExitLeftAnimation()
+	{
+		originPos = rectTransform.anchoredPosition;
+		float duration = 0.25f;
+		Vector3 targetPos = rectTransform.anchoredPosition + new Vector2(50f, 0); // 오른쪽으로 살짝 이동
+
+		Sequence seq = DOTween.Sequence();
+		seq.Join(rectTransform.DOAnchorPos(targetPos, duration))
+			.Join(canvasGroup.DOFade(0f, duration));
+        
+		yield return seq.WaitForCompletion();
+	}
+
+	public IEnumerator PlayEnterLeftAnimation()
+	{
+		float duration = 0.25f;
+		Vector2 startPos = originPos + new Vector2(-50f, 0); // 왼쪽 밖에서 시작
+		rectTransform.anchoredPosition = startPos;
+		canvasGroup.alpha = 0f;
+
+		Sequence seq = DOTween.Sequence();
+		seq.Join(rectTransform.DOAnchorPos(startPos + new Vector2(50f, 0), duration))
+			.Join(canvasGroup.DOFade(1f, duration));
+        
+		yield return seq.WaitForCompletion();
 	}
 	
 }

@@ -97,7 +97,6 @@ public class UIManager : Singleton<UIManager>
 	    {
 		    var top = _popUpStack.Peek() as IUIInputHandler;
 		    top?.HandleInput(inputType);
-		    HandleSelection(inputType, top);
 		    return;
 	    }
 
@@ -105,17 +104,8 @@ public class UIManager : Singleton<UIManager>
 	    {
 		    var top = _linkList[^1] as IUIInputHandler;
 		    top?.HandleInput(inputType);
-		    HandleSelection(inputType, top);
 	    }
 	    // 둘 다 없으면 무시
-    }
-    
-    private void HandleSelection(UIInputType inputType, object ui)
-    {
-	    if (inputType == UIInputType.Select && ui is IUISelectable sel)
-		    sel.OnSelect();
-	    else if (inputType == UIInputType.Cancel && ui is IUICancelable cancel)
-		    cancel.OnCancle();
     }
     
 

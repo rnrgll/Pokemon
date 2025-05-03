@@ -30,16 +30,25 @@ public class UI_PlayerCard : UI_Linked
 
     public override void HandleInput(Define.UIInputType inputType)
     {
-	    if (inputType==Define.UIInputType.Left)
+	    switch (inputType)
 	    {
-		    curIdx = Mathf.Clamp(curIdx - 1, 0, infoPanels.Length - 1);
-		    UpdateInfoPanels();
+		    case Define.UIInputType.Left:
+			    curIdx = Mathf.Clamp(curIdx - 1, 0, infoPanels.Length - 1);
+			    UpdateInfoPanels();
+			    break;
+		    case Define.UIInputType.Right:
+			    curIdx = Mathf.Clamp(curIdx + 1, 0, infoPanels.Length - 1);
+			    UpdateInfoPanels();
+			    break;
+		    case Define.UIInputType.Select:
+			    OnSelect();
+			    break;
+		    case Define.UIInputType.Cancel:
+			    OnCancle();
+			    break;
 	    }
-	    else if (inputType==Define.UIInputType.Right)
-	    {
-		    curIdx = Mathf.Clamp(curIdx + 1, 0, infoPanels.Length - 1);
-		    UpdateInfoPanels();
-	    }
+
+	    
     }
 
 

@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 8593929066143878172}
   - component: {fileID: 6041376310309798845}
   - component: {fileID: 3933712984989651042}
+  - component: {fileID: 964852713099084120}
   m_Layer: 5
   m_Name: UI_PokemonSlot
   m_TagString: Untagged
@@ -618,6 +619,18 @@ MonoBehaviour:
   hpSlider: {fileID: 7775260407753720314}
   emptyArrow: {fileID: 343188502, guid: 2ee38c3db31dd4cef8c03d71cb2fc77c, type: 3}
   originalArrow: {fileID: -592559406, guid: 2ee38c3db31dd4cef8c03d71cb2fc77c, type: 3}
+--- !u!225 &964852713099084120
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7778113316833884144}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &5473115347650666751
 PrefabInstance:
   m_ObjectHideFlags: 0

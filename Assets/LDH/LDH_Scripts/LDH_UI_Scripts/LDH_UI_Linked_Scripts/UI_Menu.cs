@@ -55,10 +55,22 @@ public class UI_Menu : UI_Linked
 
     public override void HandleInput(Define.UIInputType inputType)
     {
-	    if (inputType == Define.UIInputType.Up)
-		    MoveIdx(-1);
-	    else if (inputType == Define.UIInputType.Down)
-		    MoveIdx(1);
+	    
+	    switch (inputType)
+	    {
+		    case Define.UIInputType.Up:
+			    MoveIdx(-1);
+			    break;
+		    case Define.UIInputType.Down:
+			    MoveIdx(1);
+			    break;
+		    case Define.UIInputType.Select:
+			    OnSelect();
+			    break;
+		    case Define.UIInputType.Cancel:
+			    OnCancle();
+			    break;
+	    }
     }
 
     void RefreshActiveMenuList()
