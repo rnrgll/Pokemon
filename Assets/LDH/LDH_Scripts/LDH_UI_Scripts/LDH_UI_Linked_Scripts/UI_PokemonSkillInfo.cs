@@ -167,8 +167,8 @@ public class UI_PokemonSkillInfo : UI_Linked
 		{
 			nameText = data.name;
 			ppText = "PP";
-			curPP = $"{data.pp}/";
-			maxPP = data.pp.ToString();
+			curPP = $"{data.curPP}/";
+			maxPP = data.maxPP.ToString();
 		}
 		else if (hasSkill && data == null)
 		{

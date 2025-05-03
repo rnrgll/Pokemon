@@ -132,7 +132,7 @@ public class UI_PokemonInfo : UI_Linked
 							TMP_Text ppText = skillSlot.GetChild(1).GetChild(1).GetComponent<TMP_Text>();
 							if (skillSData != null)
 								ppText.text =
-									$"{skillSData.pp} / {skillSData.pp}";
+									$"{skillSData.curPP} / {skillSData.maxPP}";
 							else
 							{
 								ppText.text = "스킬데이터없음";
