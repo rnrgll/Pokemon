@@ -9,14 +9,44 @@ public class Follower : MonoBehaviour
 	[SerializeField] public Queue<Vector3> prevPos = new Queue<Vector3>();
 	[SerializeField] int followDelay = 5;
 
+	Coroutine initCoroutine;
 	Coroutine followCoroutine;
 
 	[SerializeField] Vector2 curDirection;
 	[SerializeField] Animator anim;
 
+	float testTimer;
+	Vector2[] directions = new Vector2[]
+	{
+		new Vector2(0, -1), // ↓
+		new Vector2(1, 0),  // →
+		new Vector2(0, 1),  // ↑
+		new Vector2(-1, 0), // ←
+	};
+	int dirIndex = 0;
+
 	void Start()
 	{
-		StartCoroutine(InitFollower());
+		initCoroutine = StartCoroutine(InitFollower());
+	}
+
+	void Update()
+	{
+		if (anim == null)
+			return;
+
+		testTimer += Time.deltaTime;
+		if (testTimer >= 1f)
+		{
+			testTimer = 0f;
+
+			// 방향 변경
+			Vector2 dir = directions[dirIndex];
+			anim.SetFloat("x", dir.x);
+			anim.SetFloat("y", dir.y);
+
+			dirIndex = (dirIndex + 1) % directions.Length;
+		}
 	}
 
 	IEnumerator InitFollower()
