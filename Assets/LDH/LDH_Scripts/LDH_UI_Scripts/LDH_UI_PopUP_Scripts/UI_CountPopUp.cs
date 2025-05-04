@@ -53,8 +53,9 @@ public class UI_CountPopUp : UI_PopUp
 
 	public override void OnSelect()
 	{
-		_onConfirm?.Invoke(_curCount);
 		base.OnSelect();
+		_onConfirm?.Invoke(_curCount);
+		
 	}
 	
 	public override void OnCancel()

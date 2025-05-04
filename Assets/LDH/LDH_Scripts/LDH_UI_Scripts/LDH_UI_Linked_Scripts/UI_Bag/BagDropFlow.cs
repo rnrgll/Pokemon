@@ -1,5 +1,6 @@
 //아이템 버리기 흐름을 담당하는 클래스
 
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class BagDropFlow
 	private InventorySlot _targetSlot;
 	private int _maxAmount;
 	private int _currentAmount;
+	private string confirmMsg = "{0}를(을) {1}개 버리시겠습니까?";
 
 	public BagDropFlow(UI_Bag bag)
 	{
@@ -27,40 +29,44 @@ public class BagDropFlow
 	
 	private void ShowAmountSelectUI()
 	{
-		// TODO: UI_DropAmountPopup 만들고 이곳에서 Show
-		
 		_bag.SetDescription("몇 개 버리시겠습니까?");
 		
 		_bag.PopupManager.ShowCountPopup(_maxAmount,
 			onConfirm: (amount) =>
 			{
 				_currentAmount = amount;
-				ShowConfirmPopup();
+				ShowConfirmPopUp();
 			},
 			onCancel: () => Cancel());
 	}
-
-	private void ShowConfirmPopup()
+	
+	private void ShowConfirmPopUp()
 	{
-		// TODO: 확인 창 생성
-		Debug.Log($"[DropFlow] {_currentAmount}개를 버릴까요? 예/아니오");
+		//문구 바꾸기
+		_bag.SetDescription($"{_targetSlot.ItemName}를(을) {_currentAmount}개 버리시겠습니까?");
+		
+		_bag.PopupManager.ShowConfirmPopup(
+			onYes: DropItem,
+			onNo: Cancel
+		);
 	}
-
 	private void DropItem()
 	{
-		// TODO: 인벤토리에서 실제 아이템 제거
+		Manager.Data.PlayerData.Inventory.RemoveItem(_targetSlot);
 		Debug.Log($"[DropFlow] {_currentAmount}개 버리기 실행");
+		ShowResultMessage();
 	}
+
 
 	private void ShowResultMessage()
 	{
-		// TODO: "버렸습니다" 메시지 출력
 		Debug.Log("[DropFlow] 버리기 완료 메시지 출력");
-		_bag.Refresh(); // UI 갱신
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(new List<string> {$"{_targetSlot.ItemName}을 버렸습니다!"}, _bag.Refresh);
 	}
 
 	public void Cancel()
 	{
 		Debug.Log("[DropFlow] 버리기 취소됨");
+		_bag.Refresh();
 	}
 }

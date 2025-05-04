@@ -10,6 +10,10 @@ public class UI_SelectPopUp : UI_PopUp
 	private int _preIdx = 0;
 	private int _curIdx = 0;
 	
+	
+	//그만두다 선택지가 있는 팝업의 경우 그만두다 = 취소키랑 동일 기능
+	//따라서 똑같은 동작을 하도록 oncancel을 오버라이딩 할 수 있게 해줘야한다.
+	private ISelectableAction _overrideCancelAction = null;
 
 	protected void Awake()
 	{
@@ -84,5 +88,19 @@ public class UI_SelectPopUp : UI_PopUp
 		_preIdx = 0;
 		UpdateArrow();
 	}
-	
+
+
+	public void OverrideCancelAction(ISelectableAction overrideAction)
+	{
+		_overrideCancelAction = overrideAction;
+	}
+
+	public override void OnCancel()
+	{
+		if (_overrideCancelAction != null)
+		{
+			_overrideCancelAction.Execute();
+		}
+		base.OnCancel();
+	}
 }
