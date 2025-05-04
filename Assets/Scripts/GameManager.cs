@@ -7,6 +7,14 @@ public class GameManager : Singleton<GameManager>
 	private Player player;
 	public Player Player => player;
 
+	//게임 상황 판단용 플래그
+	public bool IsInBattle { get; private set; }
+	public bool IsWildBattle { get; private set; }
+	public bool IsInDungeon { get; private set; }
+	
+	//적 대상 포켓몬 
+	public Pokémon EnemyPokemon { get; private set; }
+	
 	public void SetPlayer(Player player)
 	{
 		this.player = player;
@@ -15,5 +23,29 @@ public class GameManager : Singleton<GameManager>
 	public void ReleasePlayer()
 	{
 		player = null;
+	}
+
+	public void SetBattleState(bool isBattle, bool isWild = false, Pokémon enemyPokemon = null)
+	{
+		IsInBattle = isBattle;
+		IsWildBattle = isWild;
+		EnemyPokemon = enemyPokemon;
+	}
+
+	public void SetDungeonState(bool isInDungeon)
+	{
+		IsInDungeon = isInDungeon;
+	}
+	
+	public void UpdateEnemyPokemon(Pokémon newEnemy)
+	{
+		EnemyPokemon = newEnemy;
+	}
+
+	public void EndBattle()
+	{
+		IsInBattle = false;
+		IsWildBattle = false;
+		EnemyPokemon = null;
 	}
 }

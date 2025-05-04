@@ -37,4 +37,13 @@ public static class InGameContextFactory
 			NotifyMessage = message
 		};
 	}
+	
+	public static InGameContext CreateFromGameManager()
+	{
+		return CreateBasic(
+			Manager.Game.IsInBattle,
+			Manager.Game.IsWildBattle,
+			Manager.Game.IsInDungeon
+		);
+	}
 }

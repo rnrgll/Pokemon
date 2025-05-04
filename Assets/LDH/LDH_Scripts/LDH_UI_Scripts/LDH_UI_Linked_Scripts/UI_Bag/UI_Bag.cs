@@ -16,6 +16,7 @@ public class UI_Bag : UI_Linked
 	#region  현재 탭(카테고리) 정보와 커서 위치 관리
 
 	private static ItemCategory currentCategory = ItemCategory.Item;
+	public ItemCategory CurrentCategory => currentCategory;
 	private static int[] currentCursorList = new int[(int)ItemCategory.Count];
 	private int curCursorIdx = 0;
 	private int preCursorIdx = 0;

@@ -24,7 +24,20 @@ public class BattleManager : MonoBehaviour
 	private List<Pokémon> playerParty;    // 플레이어 포켓몬 리스트
 	private List<Pokémon> enemyParty;     // 적 포켓몬 리스트
 	private Pokémon playerPokemon;        // 플레이어 포켓몬
-	private Pokémon enemyPokemon;         // 적 포켓몬
+	
+	//자동 반영을 위해 프로퍼티로 변경
+	private Pokémon _enemyPokemon;
+	private Pokémon enemyPokemon    // 적 포켓몬
+	{
+		get => _enemyPokemon;
+		set
+		{
+			_enemyPokemon = value;
+			Manager.Game.UpdateEnemyPokemon(value); //자동반영
+		}
+	}       
+
+	
 	private int currentEnemyIndex;        // 현재 적 포켓몬 인덱스
 	private string selectedAction;        // 선택된 행동
 	private string playerSelectedSkill;   // 선택된 스킬
@@ -56,11 +69,15 @@ public class BattleManager : MonoBehaviour
 		if (Manager.Poke.enemyParty.Count >= 1)
 		{
 			Debug.Log("트레이너 배틀 시작");
+			//게임 데이터 설정
+			//게임 매니저에 정보 업데이트
+			Manager.Game.SetBattleState(true,false);
 			StartBattle(Manager.Poke.party, Manager.Poke.enemyParty);
 		}
 		else
 		{
 			Debug.Log("야생 배틀 시작");
+			Manager.Game.SetBattleState(true,true);
 			StartBattle(Manager.Poke.party, Manager.Poke.enemyPokemon);
 		}
 	}
@@ -91,6 +108,7 @@ public class BattleManager : MonoBehaviour
 	public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
 	{
 		isTrainer = true; // 상대가 트레이너일경우
+		
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
 
@@ -102,6 +120,8 @@ public class BattleManager : MonoBehaviour
 
 		playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
 		enemyPokemon = enemyParty[0];   // 적의 첫번째 포켓몬
+		
+
 
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
@@ -120,6 +140,8 @@ public class BattleManager : MonoBehaviour
 		playerPokemon = playerParty[0]; // 파티의 첫번째 포켓몬
 		enemyPokemon = enemy; // 적 포켓몬 설정
 
+
+		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
@@ -284,6 +306,9 @@ public class BattleManager : MonoBehaviour
 			setting.allowSceneActivation = true;
 			
 		}
+		
+		//게임 데이터 업데이트
+		Manager.Game.EndBattle();
 	}
 
 	float TypesCalculator(PokeType attack, PokeType defense1, PokeType defense2)

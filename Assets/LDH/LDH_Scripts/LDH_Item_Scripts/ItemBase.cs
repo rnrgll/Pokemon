@@ -23,7 +23,7 @@ public abstract class ItemBase : ScriptableObject
 	public string ItemName => itemName;
 	public string Description => description;
 	public ItemCategory Category => category; //카테고리
-	public ItemTarget UseTartget => useTarget; //사용 대상
+	public ItemTarget TargetType => useTarget; //사용 대상
 	public ItemUseContext UseContext => useContext; //사용 환경
 
 	
