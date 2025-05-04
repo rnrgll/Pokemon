@@ -21,7 +21,7 @@ public abstract class ItemBase : ScriptableObject
 	[SerializeField] protected bool isConsumable;
 	
 	public string ItemName => itemName;
-	public string Description => description;
+	public virtual string Description => description;
 	public ItemCategory Category => category; //카테고리
 	public ItemTarget TargetType => useTarget; //사용 대상
 	public ItemUseContext UseContext => useContext; //사용 환경

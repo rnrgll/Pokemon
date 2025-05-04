@@ -11,4 +11,9 @@ public static class ItemMessageKey
 	public const string RestoreParalysis = "Item.RestoreParalysis";
 	public const string RestoreConfusion = "Item.RestoreConfusion";
 	public const string CanNotUseBall = "Item.CannotUseBall";
+	public const string TMHMBeforeUse = "Item.TMHMBeforeUse";
+	public const string LearnSuccess = "Item.LearnSuccess";
+	public const string LearnFail = "Item.LearnFail";
+	public const string CanNotLearn = "Item.CanNotLearn";
+
 }

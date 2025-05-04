@@ -24,16 +24,30 @@ public class BagPopupManager
 
 		if (canUse == true)
 		{
-			popup.SetupOptions(new()
+			switch (item.Category)
 			{
-				("사용하다", new CustomAction(() => _bag.StartUseFlow(slot))),
-				("버리다", new CustomAction(() =>
-				{
-					_bag.StartDropFlow(slot);
+				case Define.ItemCategory.KeyItem:
+					case Define.ItemCategory.TM_HM:
+						popup.SetupOptions(new()
+						{
+							("사용하다", new CustomAction(() => _bag.StartUseFlow(slot))),
+							("그만두다", new CustomAction(popup.OnCancel))
+						});
+						break;
+				default:
+					popup.SetupOptions(new()
+					{
+						("사용하다", new CustomAction(() => _bag.StartUseFlow(slot))),
+						("버리다", new CustomAction(() =>
+						{
+							_bag.StartDropFlow(slot);
 					
-				})),
-				("그만두다", new CustomAction(popup.OnCancel))
-			});
+						})),
+						("그만두다", new CustomAction(popup.OnCancel))
+					});
+					break;
+			}
+	
 		}
 		else
 		{

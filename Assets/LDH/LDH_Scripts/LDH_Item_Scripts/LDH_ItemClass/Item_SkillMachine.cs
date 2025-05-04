@@ -14,7 +14,7 @@ public class Item_SkillMachine : ItemBase
 	[SerializeField, ReadOnly] private string skillCode; //머신 코드(머신 넘버를 입력하면 TMnn HMnn으로 자동 생성)
 	[SerializeField] private string skillName;
 	
-	public new string Description
+	public override string Description
 	{
 		get
 		{
@@ -56,14 +56,12 @@ public class Item_SkillMachine : ItemBase
 		//해당 기술을 배울 수 있는 포켓몬인지 확인
 		if (!CanLearn(target))
 		{
-			string message = $"{target.pokeName}과(와) {skillName}는(은) 상성이 좋지 않았다!\n{skillName}은(는) 배울 수 없다!";
-			
-			inGameContext.NotifyMessage?.Invoke(message);
+			inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotLearn,target.pokeName,skillName));
 			inGameContext.Callback?.Invoke();
 			return false;
 		}
 		bool isSuccess = target.TryLearnSkill(skillName);
-		inGameContext.NotifyMessage?.Invoke(isSuccess.ToString());
+		inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.LearnSuccess,target.pokeName,skillName));
 		inGameContext.Callback?.Invoke();
 		return isSuccess;
 

@@ -20,14 +20,17 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 	private Coroutine _displayCoroutine;
 
 	private bool _needNextButton;
+	
+	[SerializeField] private float typingSpeed = 0.5f; // 타이핑 속도 (글자당 지연 시간)
+	private bool _useTypingEffect = false;
 
-	public void ShowMessage(List<string> lines, Action onFinished = null, bool needNextButton = true)
+	public void ShowMessage(List<string> lines, Action onFinished = null, bool needNextButton = true,  bool useTypingEffect = false)
 	{
 		_lines = lines;
 		_curIndex = 0;
 		_needNextButton = needNextButton;
 		_onFinished = onFinished;
-		
+		_useTypingEffect = useTypingEffect;
 		
 		if (_displayCoroutine != null)
 			StopCoroutine(_displayCoroutine);
@@ -35,27 +38,51 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 		_displayCoroutine = StartCoroutine(DisplayRoutine());
 	}
 
-	public void ShowMessage(string line, Action onFinished = null, bool needNextButton = true)
+	public void ShowMessage(string line, Action onFinished = null, bool needNextButton = true,   bool useTypingEffect = false)
 	{
 		List<string> lines = line.Split("\n").ToList();
-		ShowMessage(lines, onFinished, needNextButton);
+		foreach (string splitline in lines)
+		{
+			Debug.LogFormat($"<color=yellow>{splitline}</color>");
+		}
+		ShowMessage(lines, onFinished, needNextButton, useTypingEffect);
 	}
 
 	private IEnumerator DisplayRoutine()
 	{
 		_canReceiveInput = false;
 		messageText.text = string.Empty;
-		for (int i = 0; i < 2; i++)
+		
+		int lineCount = 2;
+		for (int i = 0; i < lineCount; i++)
 		{
 			int lineIdx = _curIndex + i;
 			if (lineIdx < _lines.Count)
 			{
-				// 타이핑 효과 대용: 한 줄씩 딜레이 출력 (옵션)
-				messageText.text += _lines[lineIdx] + "\n";
+				string line = _lines[lineIdx];
+				if (_useTypingEffect)
+				{
+					//한자씩 출력
+					foreach (char c in line)
+					{
+						messageText.text += c;
+						yield return new WaitForSeconds(typingSpeed);
+					}
+
+					messageText.text += '\n';
+				}
+
+				else
+				{
+					//그냥 출력
+					messageText.text += _lines[lineIdx] + "\n";
+				}
+				
+				
 				
 			}
 		}
-		yield return new WaitForSeconds(0.5f); // 지연
+		yield return new WaitForSeconds( _useTypingEffect? 0.2f : 0.5f); // 지연
 
 		if (_needNextButton)
 		{
@@ -91,9 +118,10 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 
 	private void Quit()
 	{
+		base.OnSelect(); 
 		nextButton.gameObject.SetActive(false);
 		_onFinished?.Invoke();
-		base.OnSelect(); 
+		
 	}
 	
 }
