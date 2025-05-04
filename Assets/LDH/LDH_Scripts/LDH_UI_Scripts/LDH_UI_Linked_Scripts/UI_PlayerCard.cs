@@ -44,7 +44,7 @@ public class UI_PlayerCard : UI_Linked
 			    OnSelect();
 			    break;
 		    case Define.UIInputType.Cancel:
-			    OnCancle();
+			    OnCancel();
 			    break;
 	    }
 

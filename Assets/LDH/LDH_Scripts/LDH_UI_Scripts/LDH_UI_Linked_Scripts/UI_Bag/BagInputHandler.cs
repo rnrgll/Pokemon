@@ -32,7 +32,7 @@ public class BagInputHandler
 				_bag.OnSelect();
 				break;
 			case UIInputType.Cancel:
-				_bag.OnCancle();
+				_bag.OnCancel();
 				break;
 		}
 	}

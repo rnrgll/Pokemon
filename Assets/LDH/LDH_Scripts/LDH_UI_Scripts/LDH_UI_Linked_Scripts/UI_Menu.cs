@@ -68,7 +68,7 @@ public class UI_Menu : UI_Linked
 			    OnSelect();
 			    break;
 		    case Define.UIInputType.Cancel:
-			    OnCancle();
+			    OnCancel();
 			    break;
 	    }
     }

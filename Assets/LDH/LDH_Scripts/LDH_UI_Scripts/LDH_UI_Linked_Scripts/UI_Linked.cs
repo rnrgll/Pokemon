@@ -24,7 +24,7 @@ public class UI_Linked : MonoBehaviour, IUIInputHandler, IUISelectable, IUICance
     }
 
     
-    public virtual void OnCancle()
+    public virtual void OnCancel()
     {
 	   CloseSelf();
     }

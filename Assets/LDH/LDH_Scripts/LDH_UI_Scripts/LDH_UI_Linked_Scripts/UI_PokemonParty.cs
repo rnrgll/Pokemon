@@ -71,7 +71,7 @@ public class UI_PokemonParty : UI_Linked
 					OnSelect();
 					break;
 				case Define.UIInputType.Cancel:
-					OnCancle();
+					OnCancel();
 					break;
 			}
 		}
@@ -207,14 +207,14 @@ public class UI_PokemonParty : UI_Linked
 				("강한정도를 보다", new CustomAction(ShowPokemonInfo)),
 				("순서바꾸기", new CustomAction(ChangeOrder)),
 				("사용할 수 있는 기술",  new CustomAction(ShowSkillInfo) ),
-				("돌아가다", new CustomAction(popupUI.OnCancle)),
+				("돌아가다", new CustomAction(popupUI.OnCancel)),
 			});
 	}
 
 
-	public override void OnCancle()
+	public override void OnCancel()
 	{
-		base.OnCancle();
+		base.OnCancel();
 		Debug.Log("UI_Pokemon: 닫힘 처리됨");
 	}
 
