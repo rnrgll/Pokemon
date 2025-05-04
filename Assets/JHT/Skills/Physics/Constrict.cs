@@ -26,7 +26,7 @@ public class Constrict : SkillS
 			float effectRan = Random.Range(0f, 1f);
 			if (effectRan < 0.1f)
 			{
-				defender.pokemonBattleStack.speed--;
+				defender.TakeEffect(attacker, defender, skill);
 			}
 		}
 	}

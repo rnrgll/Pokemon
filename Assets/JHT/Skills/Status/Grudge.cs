@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class Spite : SkillS
+public class Grudge : SkillS
 {
-    public Spite() : base(
+    public Grudge() : base(
 		"원한",
 		"상대의 마지막 기술에 앙심을 품어 기술을 선보일 기회를 줄여버린다",
 		0,

@@ -68,8 +68,6 @@ public class BattleManager : MonoBehaviour
 	{
 		dialogue.HandleUpdate();
 	}
-
-
 	private void OnDestroy()
 	{
 		// 구독 해제
@@ -93,6 +91,9 @@ public class BattleManager : MonoBehaviour
 		isTrainer = true; // 상대가 트레이너일경우
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
+
+		// 내 포켓몬 배틀스탯 초기화
+		Manager.Poke.PartyBattleStatInit();
 
 		if (playerParty.Count == 0 || enemyParty.Count == 0)
 		{
@@ -135,36 +136,60 @@ public class BattleManager : MonoBehaviour
 		selectedAction = null;
 		yield return new WaitUntil(() => selectedAction != null); // 행동 선택 대기
 
-		//while ((playerPokemon.hp > 0) && currentEnemyIndex < enemyParty.Count)
-		while ((playerPokemon.hp > 0) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
+		//while ((playerPokemon.hp > 0) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
+		while ((Manager.Poke.AlivePokemonCheck()) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
+			// 내 포켓몬 교체 체크
+			if (playerPokemon.hp <= 0 || playerPokemon.isDead)
+			{
+				Debug.Log($"배틀로그 : 교체할 포켓몬을 선택해주세요.");
+
+				// TODO : 교체 UI 활성화
+
+				// 행동 선택 대기
+				selectedAction = null;
+				//Debug.Log($"행동 선택대기중");
+				yield return new WaitUntil(() => selectedAction != null);
+				//Debug.Log($"행동 {selectedAction} 선택!");
+				ui.HideActionMenu();
+
+
+			}
+
 			// 적 포켓몬 교체 체크
-			if (enemyPokemon.hp <= 0)
+			if (enemyPokemon.hp <= 0 || enemyPokemon.isDead)
 			{
 				// 포켓몬 경험치 + 해줘야함
 				// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
-				Debug.Log($"{playerPokemon.pokeName}가 {totalExp} 경험치를 얻었다");
+				Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 				playerPokemon.AddExp(totalExp);
 
-				// 트레이너
+				// 트레이너 다음 포켓몬 교체
 				if (isTrainer)
 				{
 					currentEnemyIndex++; // 다음 포켓몬
 					if (currentEnemyIndex < enemyParty.Count)
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
-						Debug.Log($"상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
+						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
 						yield return battleDelay;
 						continue;
 					}
-
+					else
+					{
+						// 상대 전멸
+						EndBattle("Win");
+						yield break;
+					}
 				}
 				// 야생
-				yield return battleDelay;
-				Debug.Log("Break");
-				break;
+				else
+				{
+					EndBattle("Win");
+					yield break;
+				}
 			}
 			else
 			{
@@ -172,12 +197,11 @@ public class BattleManager : MonoBehaviour
 				ui.ShowActionMenu(); // 행동 선택 UI 표시
 			}
 
-
 			// 행동 선택 대기
 			selectedAction = null;
-			Debug.Log($"행동 선택대기중");
+			//Debug.Log($"행동 선택대기중");
 			yield return new WaitUntil(() => selectedAction != null);
-			Debug.Log($"행동 {selectedAction} 선택!");
+			//Debug.Log($"행동 {selectedAction} 선택!");
 			ui.HideActionMenu();
 
 			// 전투 수행
@@ -185,9 +209,9 @@ public class BattleManager : MonoBehaviour
 			{
 				playerSelectedSkill = null;
 				ui.ShowSkillSelection(playerPokemon);
-				Debug.Log($"Fight! 기술 선택대기중");
+				//Debug.Log($"Fight! 기술 선택대기중");
 				yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
-				Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
+				//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
 				ui.HideSkillSelection();
 
 				// 적 포켓몬 행동 선택
@@ -204,6 +228,15 @@ public class BattleManager : MonoBehaviour
 				// 속도에 따라 정렬
 				actions.Sort((a, b) =>
 				{
+					// 우선도가 없고 선공기는 전광석화 뿐이니 단순하게
+					bool aIsQuickAttack = a.Skill == "전광석화";
+					bool bIsQuickAttack = b.Skill == "전광석화";
+
+					if (aIsQuickAttack && !bIsQuickAttack)
+						return -1; // a가 먼저
+					if (!aIsQuickAttack && bIsQuickAttack)
+						return 1;  // b가 먼저
+
 					// 스피드에 랭크 계산
 					int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 					int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
@@ -235,6 +268,11 @@ public class BattleManager : MonoBehaviour
 
 				yield return battleDelay;
 			}
+			else if (selectedAction == "Run")
+			{
+				EndBattle("Run");
+				break;
+			}
 			// TODO : Fight가 아닌 선택지 추가 필요
 			else
 			{
@@ -242,13 +280,36 @@ public class BattleManager : MonoBehaviour
 				yield return battleDelay;
 			}
 			Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
+			// 턴카운트 증가
 			currentTurn++;
+			// 각 포켓몬 턴종료 액션 실행
 			playerPokemon.TurnEnd();
 			enemyPokemon.TurnEnd();
 
+			hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
+			hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
+
+			// 플레이어 포켓몬 체크
+			if (!Manager.Poke.AlivePokemonCheck())
+			{
+				Debug.Log($"배틀로그 {currentTurn}턴 : 플레이어 전멸");
+				EndBattle("Lose");
+				yield break;
+			}
+
+			// 야생 포켓몬 체크
+			if (!isTrainer && enemyPokemon.hp <= 0)
+			{
+				int totalExp = (int)((enemyPokemon.baseExp * enemyPokemon.level) / 7);
+				Debug.Log($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
+				playerPokemon.AddExp(totalExp);
+
+				Debug.Log($"배틀로그 {currentTurn}턴 : 야생 포켓몬 쓰러짐");
+				EndBattle("Win");
+				yield break;
+			}
 		}
 		Debug.Log($"배틀로그 {currentTurn}턴 : 배틀종료");
-		EndBattle();
 	}
 
 	private void OnActionButton(string action) => selectedAction = action;
@@ -263,63 +324,74 @@ public class BattleManager : MonoBehaviour
 		skill.UseSkill(action.Attacker, action.Target, skill);
 	}
 
-	// 공격처리 추후 계산기 따로만들던가 여기 추가
-	private void Attack(Pokémon atk, Pokémon tgt, string skl)
-	{
-		// TODO : 디펜더의 함수를 사용하지 말고 스킬 함수의 UseSkill 사용으로 대미지 구현하기
-		var skill = Manager.Data.SkillSData.GetSkillDataByName(skl);
-		//int damage = GetTotalDamage(atk, tgt, skill);
-		//tgt.TakeDamage(damage);
-		skill.UseSkill(atk, tgt, skill);
-	}
-
 	// 배틀 종료 처리
-	private void EndBattle()
+	private void EndBattle(string Reason)
 	{
-		if (playerPokemon.hp <= 0)
+		switch (Reason)
 		{
-			Debug.Log($"배틀로그 {currentTurn}턴 : 게임 오버: 플레이어 전멸");
-			Destroy(Manager.Poke.enemyPokemon);
+			case "Win":
+				{
+					Debug.Log($"배틀로그 {currentTurn}턴 : 승리: 모든 적 포켓몬 격파");
+					// 트레이너 배틀일 경우 돈 + 경험치
+					// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
+					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
+					setting.allowSceneActivation = false;
 
-			// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
-			var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
-			setting.allowSceneActivation = false;
+					// 변수 초기화
+					isTrainer = false;
+					// 코루틴 초기화
+					StopCoroutine(battleCoroutine);
+					battleCoroutine = null;
 
-			// 변수 초기화
-			isTrainer = false;
-			// 코루틴 초기화
-			StopCoroutine(battleCoroutine);
-			battleCoroutine = null;
-			Destroy(Manager.Poke.enemyPokemon);
+					//// 경험치 계산
+					//int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
+					//playerPokemon.AddExp(totalExp);
+					//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 
-			setting.allowSceneActivation = true;
-		}
-		else
-		{
-			Debug.Log($"배틀로그 {currentTurn}턴 : 승리: 모든 적 포켓몬 격파");
-			// 트레이너 배틀일 경우 돈 + 경험치
-			// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
-			var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
-			setting.allowSceneActivation = false;
+					// 상대 포켓몬 파괴
+					Destroy(Manager.Poke.enemyPokemon);
+					Destroy(enemyPokemon);
 
-			// 변수 초기화
-			isTrainer = false;
-			// 코루틴 초기화
-			StopCoroutine(battleCoroutine);
-			battleCoroutine = null;
+					// 씬활성화
+					setting.allowSceneActivation = true;
+				}
+				break;
+			case "Lose":
+				{
+					Debug.Log($"배틀로그 {currentTurn}턴 : 게임 오버: 플레이어 전멸");
+					Destroy(Manager.Poke.enemyPokemon);
 
-			// 경험치 계산
-			int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
-			playerPokemon.AddExp(totalExp);
-			Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
+					// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
+					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
+					setting.allowSceneActivation = false;
 
-			// 상대 포켓몬 파괴
-			Destroy(Manager.Poke.enemyPokemon);
-			Destroy(enemyPokemon);
+					// 변수 초기화
+					isTrainer = false;
+					// 코루틴 초기화
+					StopCoroutine(battleCoroutine);
+					battleCoroutine = null;
+					Destroy(Manager.Poke.enemyPokemon);
 
-			// 씬활성화
-			setting.allowSceneActivation = true;
-			
+					setting.allowSceneActivation = true;
+				}
+				break;
+			case "Run":
+				{
+					Debug.Log($"배틀로그 {currentTurn}턴 : 성공적으로 도망쳤다!");
+
+					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
+					setting.allowSceneActivation = false;
+
+					// 변수 초기화
+					isTrainer = false;
+					// 코루틴 초기화
+					StopCoroutine(battleCoroutine);
+					battleCoroutine = null;
+					Destroy(Manager.Poke.enemyPokemon);
+
+					setting.allowSceneActivation = true;
+				}
+				break;
 		}
 	}
 }

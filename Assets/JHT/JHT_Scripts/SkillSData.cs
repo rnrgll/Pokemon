@@ -73,7 +73,7 @@ public class SkillSData
 			["망각술"] = new Amnesia(),
 			["초음파"] = new Supersonic(),
 			["단단해지기"] = new Harden(),
-			["원한"] = new Spite(),
+			["원한"] = new Grudge(),
 			["기충전"] = new FocusEnergy(),
 			["검은눈빛"] = new MeanLook(),
 			["싫은소리"] = new Screech(),
@@ -101,6 +101,7 @@ public class SkillSData
 			["거미집"] = new SpiderWeb(),
 			["째려보기"] = new Leer(),
 			["따라하기"] = new MirrorMove(),
+			["저리가루"] = new StunSpore(),
 
 			// HM
 			["플래시"] = new Flash(),
