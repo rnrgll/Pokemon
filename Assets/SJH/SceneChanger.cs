@@ -15,10 +15,6 @@ public class SceneChanger : MonoBehaviour
 	[SerializeField] Vector2 keyDirection;
 	Coroutine sceneCoroutine;
 	[SerializeField] bool isChange;
-	void Awake()
-	{
-
-	}
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
