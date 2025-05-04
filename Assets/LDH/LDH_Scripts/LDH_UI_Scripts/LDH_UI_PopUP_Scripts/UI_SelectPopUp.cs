@@ -43,7 +43,7 @@ public class UI_SelectPopUp : UI_PopUp
 				OnSelect();
 				break;
 			case Define.UIInputType.Cancel:
-				OnCancle();
+				OnCancel();
 				break;
 		}
 	}
@@ -71,8 +71,9 @@ public class UI_SelectPopUp : UI_PopUp
 
 	public override void OnSelect()
 	{
-		_buttonList[_curIdx].Trigger();
 		base.OnSelect();
+		_buttonList[_curIdx].Trigger();
+
 	}
 	
 	
@@ -83,16 +84,5 @@ public class UI_SelectPopUp : UI_PopUp
 		_preIdx = 0;
 		UpdateArrow();
 	}
-
-	// private Dialog dialog;
-	//
-	//
-	// public void SetDialog(string message)
-	// {
-	// 	string[] lines = message.Split('\n');
-	// 	foreach (string line in lines)
-	// 	{
-	// 		dialog.Lines.Add(line);
-	// 	}
-	// }
+	
 }

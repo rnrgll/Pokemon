@@ -27,13 +27,14 @@ public class UI_PopUp : MonoBehaviour, IUIInputHandler, IUISelectable, IUICancel
 	public virtual void ClosePopupUI()
     {
         Manager.UI.ClosePopupUI(this);
+        Debug.Log(this.gameObject.name);
     }
 
     public virtual void OnSelect()
     {
 	    ClosePopupUI();
     }
-    public virtual void OnCancle()
+    public virtual void OnCancel()
     {
 	    ClosePopupUI();
     }

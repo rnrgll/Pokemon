@@ -14,8 +14,9 @@ public class BagPopupManager
 		_bag = bag;
 	}
 
-	public void ShowItemActionPopup(ItemBase item)
+	public void ShowItemActionPopup(InventorySlot slot)
 	{
+		ItemBase item = Manager.Data.ItemDatabase.GetItemData(slot.ItemName);
 		// 현재 전투 중인지 확인 (아이템 사용 가능 여부 판단에 필요)
 		bool isBattle = SceneManager.GetActiveScene().name == "BattleScene";
 
@@ -29,34 +30,43 @@ public class BagPopupManager
 			popup.SetupOptions(new()
 			{
 				("사용하다", new CustomAction(() => Debug.Log("아이템 사용"))),
-				("버리다", new CustomAction(() => Debug.Log("아이템 버리기"))),
-				("그만두다", new CustomAction(popup.OnCancle))
+				("버리다", new CustomAction(() =>
+				{
+					_bag.StartDropFlow(slot);
+					
+				})),
+				("그만두다", new CustomAction(popup.OnCancel))
 			});
 		}
 		else
 		{
 			popup.SetupOptions(new()
 			{
-				("그만두다", new CustomAction(popup.OnCancle))
+				("그만두다", new CustomAction(popup.OnCancel))
 			});
 		}
 
-		SetPopupPosition(popup);
-	}
-
-	
-	// 팝업 UI의 시각적 위치 조정
-	private void SetPopupPosition(UI_SelectPopUp popup)
-	{
 		RectTransform boxRT = popup.transform.GetChild(0).GetComponent<RectTransform>();
-
-		boxRT.anchorMin = new Vector2(0f, 0f);
-		boxRT.anchorMax = new Vector2(0f, 0f);
-		boxRT.pivot = new Vector2(0f, 0f);
-
-		float canvasHeight = ((RectTransform)popup.transform).rect.height;
-		float y = canvasHeight * 0.34f;
-
-		boxRT.anchoredPosition = new Vector2(0f, y);
+		// float canvasHeight = ((RectTransform)popup.transform).rect.height;
+		// Util.SetPositionFromBottomLeft(boxRT, 0f, canvasHeight * 0.34f);
+		Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+		Util.SetPositionFromBottomLeft(boxRT, 0f, 0f);
+		Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
 	}
+
+	public void ShowCountPopup(int maxAmount, Action<int> onConfirm, Action onCancel)
+	{
+		var countUI = Manager.UI.ShowPopupUI<UI_CountPopUp>("UI_CountPopUp");
+		countUI.Init(
+			maxAmount, onConfirm, onCancel
+		);
+		
+		RectTransform boxRT = countUI.transform.GetChild(0).GetComponent<RectTransform>();
+		Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+		
+		Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
+		Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
+	}
+	
+
 }

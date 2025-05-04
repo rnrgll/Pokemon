@@ -47,9 +47,16 @@ public class UI_Bag : UI_Linked
 
 	private BagInputHandler _inputHandler; // 입력 처리 담당 (↑↓←→ 선택 취소 등)
 	private BagPopupManager _popupManager; // 아이템 선택 시 팝업 생성 및 구성 담당
+	public BagPopupManager PopupManager => _popupManager; // 아이템 선택 시 팝업 생성 및 구성 담당
 	private BagSlotRenderer _slotRenderer; // 슬롯 UI 갱신 및 설명창 출력 담당
 	#endregion
 
+	#region 인벤토리 기능 관련 클래스들
+
+	private BagDropFlow _bagDropFlow;
+
+	#endregion
+	
 	
 	#region Unity 라이프사이클
 
@@ -67,7 +74,9 @@ public class UI_Bag : UI_Linked
 			Resources.Load<UI_ItemSlot>("UI_Prefabs/Component/UI_ItemSlot"),
 			Resources.Load<UI_ItemSlot>("UI_Prefabs/Component/UI_ItemSlot_Quit")
 		);
-		
+
+		_bagDropFlow = new BagDropFlow(this);
+
 	}
 
 	private void OnEnable()
@@ -93,7 +102,7 @@ public class UI_Bag : UI_Linked
 	/// <summary>
 	/// 전체 갱신 루틴: 인벤토리 데이터 조회 + UI 갱신
 	/// </summary>
-	private void Refresh()
+	public void Refresh()
 	{
 		RefreshItemData();
 		RefreshUI();
@@ -127,6 +136,8 @@ public class UI_Bag : UI_Linked
 		UpdateBagIcon(currentCategory);
 		UpdateLabelImage(currentCategory);
 		_slotRenderer.RenderSlots(curItemList);
+		_slotRenderer.UpdateCursor(preCursorIdx, curCursorIdx, curItemList);
+
 	}
 	
 	
@@ -188,18 +199,33 @@ public class UI_Bag : UI_Linked
 		//화살표 바꾸기 (빈 빨강 화살표로)
 		_slotRenderer.ActiveSlots[curCursorIdx].ChangeArrow(false);
 		
-		//조건에 따라 팝업 생성하는건 팝업 매니저가 처리하기
-		_popupManager.ShowItemActionPopup(_slotRenderer.SelectedItem); //위임
+		//조건에 따라 팝업 생성하는건 팝업 매니저가 처리하기 - 선택한 아이템 슬롯 정보 넘기기
+		_popupManager.ShowItemActionPopup(curItemList[curCursorIdx]); //위임
 	}
 
-	public override void OnCancle()
+	public override void OnCancel()
 	{
-		base.OnCancle();
+		base.OnCancel();
 		Debug.Log("UI_Bag: 닫힘 처리됨");
 	}
 
 	#endregion
 
 
+	public void SetDescription(string text)
+	{
+		descriptionText.text = text;
+	}
+	
+	
+	//인벤토리 기능 호출용
+	//버리기 기능 - 버릴 아이템의 슬롯 정보(인벤토리 슬롯 정보)을 넘겨준다.
+	public void StartDropFlow(InventorySlot slot)
+	{
+		_bagDropFlow.Start(slot);
+		
+	}
+	
+	
 
 }

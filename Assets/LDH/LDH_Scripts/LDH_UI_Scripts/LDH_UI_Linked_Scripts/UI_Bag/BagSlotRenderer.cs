@@ -72,6 +72,8 @@ public class BagSlotRenderer
         _stopSlotInstance.transform.SetAsLastSibling();
 
         ActiveSlots = GetActiveSlots();
+
+        
     }
     
     // 커서 이동 시 선택 상태 변경, 설명 갱신, 스크롤 이동까지 처리
