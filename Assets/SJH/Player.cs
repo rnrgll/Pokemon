@@ -251,7 +251,7 @@ public class Player : MonoBehaviour
 			}
 		}
 		prevPosQueue.Enqueue(startPos);
-		Debug.Log($"플레이어 위치 저장 : {startPos}");
+		//Debug.Log($"플레이어 위치 저장 : {startPos}");
 	}
 
 	public void StopMoving()
