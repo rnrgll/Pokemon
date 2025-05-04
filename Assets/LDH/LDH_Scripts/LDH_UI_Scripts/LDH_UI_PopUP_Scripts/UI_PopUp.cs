@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -13,7 +14,8 @@ public class UI_PopUp : MonoBehaviour, IUIInputHandler, IUISelectable, IUICancel
 	[SerializeField] protected Transform buttonParent;
 	public Transform ButtonParent => buttonParent;
 	protected readonly List<UI_GenericSelectButton> _buttonList = new();
-
+	
+	
     private void Start()
     {
         Init();
@@ -84,6 +86,7 @@ public class UI_PopUp : MonoBehaviour, IUIInputHandler, IUISelectable, IUICancel
 		    _buttonList[i].gameObject.SetActive(false);
 	    }
     }
+
 
 
     public virtual  void HandleInput(Define.UIInputType inputType)

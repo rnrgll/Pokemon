@@ -51,15 +51,15 @@ public class BagUseFlow
 	private void UseOnPlayer()
 	{
 		_bag.SetDescription($"{_item.ItemName}를(을) 사용했다!");
-		
-		//context 변경 필요 없음
+		_context.SetMessage(msg => 
+			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(msg, _bag.Refresh));
 		bool success = _item.Use(null, _context);
 		if (success)
 		{
 			Manager.Data.PlayerData.Inventory.RemoveItem(_slot, 1);
 		}
 
-		ShowResultMessage(success);
+		// ShowResultMessage(success);
 	}
 
 	private void UseMonsterBall()
@@ -78,7 +78,7 @@ public class BagUseFlow
 		// TODO: 기술 설명 출력 → 예/아니오 팝업 → 포켓몬 선택 UI → 사용 처리
 	}
 	
-	private void ShowPokemonSelectFlow(InGameContext context)
+	private void ShowPokemonSelectFlow()
 	{
 		// TODO: 포켓몬 선택 UI → 포켓몬 넘겨서 사용 처리 → 성공 여부 메시지
 	}
@@ -92,6 +92,7 @@ public class BagUseFlow
 		// else
 		// 	_bag.PopupManager.ShowMultiLineMessage(new() { "사용할 수 없습니다." }, _bag.Refresh);
 	}
+	
 
 
 }

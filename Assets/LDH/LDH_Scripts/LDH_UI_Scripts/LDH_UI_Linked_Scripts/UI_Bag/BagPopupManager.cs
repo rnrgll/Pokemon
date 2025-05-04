@@ -29,7 +29,7 @@ public class BagPopupManager
 		{
 			popup.SetupOptions(new()
 			{
-				("사용하다", new CustomAction(() => Debug.Log("아이템 사용"))),
+				("사용하다", new CustomAction(() => _bag.StartUseFlow(slot))),
 				("버리다", new CustomAction(() =>
 				{
 					_bag.StartDropFlow(slot);

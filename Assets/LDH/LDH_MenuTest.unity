@@ -785,6 +785,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264506912}
   - component: {fileID: 264506911}
+  - component: {fileID: 264506913}
   m_Layer: 0
   m_Name: TestInventoryData
   m_TagString: Untagged
@@ -807,6 +808,8 @@ MonoBehaviour:
   tempInventoryData:
   - ItemName: "\uD50C\uB798\uC2DC"
     Count: 1
+  - ItemName: "\uB3D9\uAD74\uD0C8\uCD9C \uB85C\uD504"
+    Count: 2
   - ItemName: "\uC0C1\uCC98\uC57D"
     Count: 2
   - ItemName: "\uB098\uBB34\uC5F4\uB9E4"
@@ -838,6 +841,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &264506913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264506910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d36b83e3a0da405897b732c6a2a362e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &274025319
 GameObject:
   m_ObjectHideFlags: 0
@@ -3515,8 +3530,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36b83e3a0da405897b732c6a2a362e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _escapeRope: {fileID: 11400000, guid: 5c5f3f7947b194b73a200e5a8ddc6b2f, type: 2}
-  isInDungeon: 1
 --- !u!1 &671531153
 GameObject:
   m_ObjectHideFlags: 0

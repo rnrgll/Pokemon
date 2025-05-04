@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -17,12 +18,14 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 	private bool _canReceiveInput = false;
 	
 	private Coroutine _displayCoroutine;
-	
 
-	public void ShowMessage(List<string> lines, Action onFinished = null)
+	private bool _needNextButton;
+
+	public void ShowMessage(List<string> lines, Action onFinished = null, bool needNextButton = true)
 	{
 		_lines = lines;
 		_curIndex = 0;
+		_needNextButton = needNextButton;
 		_onFinished = onFinished;
 		
 		
@@ -30,6 +33,12 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 			StopCoroutine(_displayCoroutine);
 
 		_displayCoroutine = StartCoroutine(DisplayRoutine());
+	}
+
+	public void ShowMessage(string line, Action onFinished = null, bool needNextButton = true)
+	{
+		List<string> lines = line.Split("\n").ToList();
+		ShowMessage(lines, onFinished, needNextButton);
 	}
 
 	private IEnumerator DisplayRoutine()
@@ -47,9 +56,13 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 			}
 		}
 		yield return new WaitForSeconds(0.5f); // 지연
-		
-		// 출력 완료 후 버튼 활성화 및 입력 허용
-		nextButton.gameObject.SetActive(true);
+
+		if (_needNextButton)
+		{
+			// 출력 완료 후 버튼 활성화
+			nextButton.gameObject.SetActive(true);
+		}
+		 // 입력 허용
 		_canReceiveInput = true;
 		
 		_displayCoroutine = null;

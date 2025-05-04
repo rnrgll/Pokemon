@@ -201,6 +201,11 @@ public class UIManager : Singleton<UIManager>
 
     public void UndoLinkedUI()
     {
+	    if (_popUpStack.Count != 0)
+	    {
+		    CloseAllPopUp();
+	    }
+	    
         if (_linkList.Count == 0)
             return;
 
@@ -215,6 +220,24 @@ public class UIManager : Singleton<UIManager>
         //모든 UI가 다 닫혔으면 이벤트 호출
         if(!IsAnyUIOpen)
 	        OnAllUIClosed?.Invoke();
+    }
+
+    private void CloseAllPopUp()
+    {
+	    while (_popUpStack.Count != 0)
+	    {
+		    ClosePopupUI(_popUpStack.Peek());
+	    }
+	    Debug.Log("열려있는 팝업을 모두 닫았습니다.");
+    }
+
+    public void CloseAllUI()
+    {
+	    while (_linkList.Count != 0)
+	    {
+		    UndoLinkedUI();
+	    }
+	    Debug.Log("열려있는 모든 UI를 닫았습니다.");
     }
 
     #endregion

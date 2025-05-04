@@ -55,6 +55,7 @@ public class UI_Bag : UI_Linked
 	#region 인벤토리 기능 관련 클래스들
 
 	private BagDropFlow _bagDropFlow;
+	private BagUseFlow _bagUseFlow;
 
 	#endregion
 	
@@ -77,6 +78,7 @@ public class UI_Bag : UI_Linked
 		);
 
 		_bagDropFlow = new BagDropFlow(this);
+		_bagUseFlow = new BagUseFlow(this);
 
 	}
 
@@ -225,6 +227,12 @@ public class UI_Bag : UI_Linked
 	{
 		_bagDropFlow.Start(slot);
 		
+	}
+	
+	//사용하기 기능
+	public void StartUseFlow(InventorySlot slot)
+	{
+		_bagUseFlow.Start(slot);
 	}
 	
 	

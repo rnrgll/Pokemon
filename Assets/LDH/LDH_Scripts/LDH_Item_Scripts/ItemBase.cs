@@ -64,8 +64,5 @@ public abstract class ItemBase : ScriptableObject
 		}
 	}
 	public abstract bool Use(Pokémon target, InGameContext inGameContext);
-	public virtual bool Use<T>(Pokémon target, InGameContext<T> inGameContext)
-	{
-		return Use(target, (InGameContext)inGameContext); // 캐스팅 or 기본 처리
-	}
+
 }
