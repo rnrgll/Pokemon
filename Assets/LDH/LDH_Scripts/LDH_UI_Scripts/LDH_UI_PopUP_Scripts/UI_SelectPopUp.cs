@@ -6,11 +6,10 @@ using UnityEngine;
 public class UI_SelectPopUp : UI_PopUp
 {
 	
-	private List<UI_GenericSelectButton> selectList = new ();
 	
 	private int _preIdx = 0;
 	private int _curIdx = 0;
-	public Transform buttonParent;
+	
 
 	protected void Awake()
 	{
@@ -18,7 +17,7 @@ public class UI_SelectPopUp : UI_PopUp
 		{
 			var button = child.GetComponent<UI_GenericSelectButton>();
 			button.SetArrowActive(false);
-			selectList.Add(button);
+			_buttonList.Add(button);
 			
 		}
 	}
@@ -55,8 +54,8 @@ public class UI_SelectPopUp : UI_PopUp
 		_preIdx = _curIdx;
 		_curIdx += direction;
 		if (_curIdx < 0)
-			_curIdx = selectList.Count - 1;
-		else if (_curIdx >= selectList.Count)
+			_curIdx = _buttonList.Count - 1;
+		else if (_curIdx >= _buttonList.Count)
 			_curIdx = 0;
         
 		UpdateArrow();
@@ -65,16 +64,25 @@ public class UI_SelectPopUp : UI_PopUp
 
 	void UpdateArrow()
 	{ 
-		selectList[_preIdx].SetArrowActive(false);
-		selectList[_curIdx].SetArrowActive(true);
+		if (_buttonList.Count == 0) return;
+		_buttonList[_preIdx].SetArrowActive(false);
+		_buttonList[_curIdx].SetArrowActive(true);
 	}
 
 	public override void OnSelect()
 	{
-		selectList[_curIdx].Trigger();
+		_buttonList[_curIdx].Trigger();
 		base.OnSelect();
 	}
 	
+	
+	public override void SetupOptions(List<(string label, ISelectableAction action)> options)
+	{
+		base.SetupOptions(options);
+		_curIdx = 0;
+		_preIdx = 0;
+		UpdateArrow();
+	}
 
 	// private Dialog dialog;
 	//

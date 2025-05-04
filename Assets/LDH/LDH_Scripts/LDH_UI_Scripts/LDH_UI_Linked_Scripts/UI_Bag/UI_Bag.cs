@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using static Define;
@@ -19,6 +20,8 @@ public class UI_Bag : UI_Linked
 
 	private List<InventorySlot> curItemList;
 	private List<UI_ItemSlot> activeItemSlots = new(); // 현재 UI에서 활성화된 슬롯만 추려서 저장
+
+	private ItemBase selectItem;
 	#endregion
 	
 	#region UI 요소 참조 및 리소스
@@ -43,6 +46,9 @@ public class UI_Bag : UI_Linked
 
 	#endregion
 	
+	//======== 코드 분리 중에 생성한 변수들 =======//
+	private BagInputHandler _inputHandler; //입력 처리 로직 분리, 핸들러에게 위임
+	private BagPopupManager _popupManager; //팝업 생성 매니져
 	
 	#region Unity 라이프사이클
 
@@ -54,6 +60,10 @@ public class UI_Bag : UI_Linked
 
 		slotPool = new ObjectPool<UI_ItemSlot>(uiItemSlotPrefab, itemSlotRoot);
 		slotPool.Init(20);
+		
+		//초기화 필요한 것들 초기화~
+		_inputHandler = new BagInputHandler(this);
+		_popupManager = new BagPopupManager(this);
 	}
 
 	private void OnEnable()
@@ -69,12 +79,7 @@ public class UI_Bag : UI_Linked
 
 	public override void HandleInput(UIInputType inputType)
 	{
-		if (inputType == UIInputType.Up) MoveCursor(-1);
-		else if (inputType == UIInputType.Down) MoveCursor(1);
-		else if(inputType==UIInputType.Left) MovePanel(-1);
-		else if(inputType==UIInputType.Right) MovePanel(1);
-		else if(inputType==UIInputType.Cancel) OnCancle();
-		else if(inputType==UIInputType.Select) OnSelect();
+		_inputHandler.Handle(inputType); //위임
 	}
 
 	#endregion
@@ -180,6 +185,7 @@ public class UI_Bag : UI_Linked
 		UpdateDescription();
 	}
 
+	//여기서 아이템 정보를 캐싱한다.
 	private void UpdateDescription()
 	{
 		string description;
@@ -187,11 +193,15 @@ public class UI_Bag : UI_Linked
 		{
 			//그만두다의 경우 설명 공란으로 표시
 			description = String.Empty;
+			
+			//선택된 아이템 null로 초기화
+			selectItem = null;
 		}
 		else
 		{
 			string itemName = curItemList[curCursorIdx].ItemName;
-			description = Manager.Data.ItemDatabase.GetItemData(itemName).Description;
+			selectItem = Manager.Data.ItemDatabase.GetItemData(itemName);
+			description = selectItem.Description;
 		}
 		descriptionText.text = description;
 	}
@@ -227,7 +237,7 @@ public class UI_Bag : UI_Linked
 	
 	#region 커서 및 탭 이동 관련
 
-	private void MovePanel(int direction)
+	public void MovePanel(int direction)
 	{
 		int max = (int)ItemCategory.Count;
 		int next = ((int)currentCategory + direction + max) % max;
@@ -237,7 +247,7 @@ public class UI_Bag : UI_Linked
 		Refresh(); // 카테고리 변경 시 전체 갱신
 	}
 
-	private void MoveCursor(int direction)
+	public void MoveCursor(int direction)
 	{
 		int panelIdx = (int)currentCategory;
 
@@ -270,12 +280,24 @@ public class UI_Bag : UI_Linked
 	}
 
 	#endregion
-
+	
+	
 	#region UI_Linked 오버라이드
 
 	public override void OnSelect()
 	{
+		//그만두다를 선택한 경우
+		if (curCursorIdx == activeItemSlots.Count - 1)
+		{
+			CloseSelf();
+			return;
+		}
 		
+		//화살표 바꾸기 (빈 빨강 화살표로)
+		activeItemSlots[curCursorIdx].ChangeArrow(false);
+		
+		//조건에 따라 팝업 생성하는건 팝업 매니저가 처리하기
+		_popupManager.ShowItemActionPopup(selectItem); //위임
 	}
 
 	public override void OnCancle()
@@ -285,4 +307,25 @@ public class UI_Bag : UI_Linked
 	}
 
 	#endregion
+
+
+
+	void SetPopUpPosition(UI_SelectPopUp selectPopUp)
+	{
+		// Box의 RectTransform
+		RectTransform boxRT = selectPopUp.transform.GetChild(0).GetComponent<RectTransform>();
+
+		// 1. 앵커: 왼쪽 하단 고정
+			boxRT.anchorMin = new Vector2(0f, 0f);
+			boxRT.anchorMax = new Vector2(0f, 0f);
+
+		// 2. 피벗: 왼쪽 하단
+			boxRT.pivot = new Vector2(0f, 0f);
+
+		// 3. 캔버스 높이 기준 위치 지정
+			float canvasHeight = ((RectTransform)selectPopUp.transform).rect.height;
+			float y = canvasHeight * 0.34f;
+
+		boxRT.anchoredPosition = new Vector2(0f, y);
+	}
 }

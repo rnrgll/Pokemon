@@ -189,8 +189,6 @@ public class UI_PokemonParty : UI_Linked
 
 	public override void OnSelect()
 	{
-		Debug.Log(curCursorIdx);
-		Debug.Log(party.Count);
 		if (curCursorIdx == party.Count)
 		{
 			CloseSelf();
@@ -203,13 +201,13 @@ public class UI_PokemonParty : UI_Linked
 	
 	
 		var popupUI = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_PokemonPopUp_1");
-		popupUI.SetupOptions(popupUI.buttonParent,
+		popupUI.SetupOptions(popupUI.ButtonParent,
 			new List<(string, ISelectableAction)>
 			{
-				("강한 정도", new CustomAction(ShowPokemonInfo)),
+				("강한정도를 보다", new CustomAction(ShowPokemonInfo)),
 				("순서바꾸기", new CustomAction(ChangeOrder)),
 				("사용할 수 있는 기술",  new CustomAction(ShowSkillInfo) ),
-				("닫다", new CustomAction(popupUI.OnCancle)),
+				("돌아가다", new CustomAction(popupUI.OnCancle)),
 			});
 	}
 
