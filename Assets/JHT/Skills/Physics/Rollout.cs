@@ -24,10 +24,18 @@ public class Rollout : SkillS
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
+		int ran = Random.Range(0, 100);
 		// TODO : 5턴동안 강제로 공격이 구르기가 돼야함
-		if (defender.TryHit(attacker, defender, skill))
+		bool isHit = defender.TryHit(attacker, defender, skill);
+		if (isHit)
 		{
 			defender.TakeDamage(attacker, defender, skill);
-		}	
+		}
+		else
+		{
+			attacker.isRollout = false;
+			attacker.rolloutStack = 1;
+			Debug.Log($"배틀로그 : {attacker.pokeName} 의 {skill.name} 는 빗나감! 대미지 초기화 {ran}");
+		}
 	}
 }

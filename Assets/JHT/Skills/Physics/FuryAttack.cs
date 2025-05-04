@@ -40,6 +40,7 @@ public class FuryAttack : SkillS
 			else
 				attackCount = 5;
 
+			Debug.Log($"배틀로그 : {attacker.pokeName} 의 {skill.name} {attackCount}회 사용!");
 			for (int i = 1; i <= attackCount; i++)
 			{
 				defender.TakeDamage(attacker, defender, skill);

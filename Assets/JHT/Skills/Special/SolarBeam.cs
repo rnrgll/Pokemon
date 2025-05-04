@@ -19,8 +19,6 @@ public class SolarBeam : SkillS
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		// TODO : 기술 사용 후 다음 턴에 공격
-		// 컨트롤러에서 2번 사용해야함
 		if (defender.TryHit(attacker, defender, skill))
 		{
 			defender.TakeDamage(attacker, defender, skill);

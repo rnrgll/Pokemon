@@ -24,6 +24,8 @@ public class DreamEater : SkillS
 		{
 			if (defender.condition == StatusCondition.Sleep)
 				defender.TakeDamage(attacker, defender, skill);
+			else
+				Debug.Log($"배틀로그 : {defender.pokeName} 은/는 수면 상태가 아니라 {skill.name} 기술 실패!");
 		}
 	}
 }
