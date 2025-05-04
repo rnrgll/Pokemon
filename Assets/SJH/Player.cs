@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements.Experimental;
 using static Define;
 
 public class Player : MonoBehaviour
@@ -42,6 +44,8 @@ public class Player : MonoBehaviour
 
 	[SerializeField] public Queue<Vector3> prevPosQueue = new Queue<Vector3>();
 
+	[SerializeField] public string curSceneName;
+
 	Animator anim;
 
 	void Awake()
@@ -53,6 +57,8 @@ public class Player : MonoBehaviour
 		zInput = StartCoroutine(ZInput());
 		// 점프 시간
 		jumpTime = new WaitForSeconds(0.03f);
+
+		curSceneName = SceneManager.GetActiveScene().name;
 	}
 
 	private void OnEnable()
@@ -251,7 +257,7 @@ public class Player : MonoBehaviour
 			}
 		}
 		prevPosQueue.Enqueue(startPos);
-		Debug.Log($"플레이어 위치 저장 : {startPos}");
+		//Debug.Log($"플레이어 위치 저장 : {startPos}");
 	}
 
 	public void StopMoving()

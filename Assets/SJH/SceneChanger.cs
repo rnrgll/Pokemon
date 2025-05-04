@@ -15,10 +15,6 @@ public class SceneChanger : MonoBehaviour
 	[SerializeField] Vector2 keyDirection;
 	Coroutine sceneCoroutine;
 	[SerializeField] bool isChange;
-	void Awake()
-	{
-
-	}
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -85,7 +81,7 @@ public class SceneChanger : MonoBehaviour
 		{
 			if (asyncLoad.progress >= 0.9f)
 			{
-				Debug.Log(gameObject.name);
+				//Debug.Log(gameObject.name);
 				player.transform.position = exitPos;
 				yield return new WaitForSeconds(0.1f);
 				asyncLoad.allowSceneActivation = true;
@@ -94,7 +90,7 @@ public class SceneChanger : MonoBehaviour
 				isChange = false;
 				pc.state = Define.PlayerState.Field;
 				sceneCoroutine = null;
-				Debug.Log("state init");
+				//Debug.Log("state init");
 
 				break;  // 루프 탈출
 			}
