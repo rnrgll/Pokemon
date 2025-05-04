@@ -1,0 +1,135 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+// 아이템 슬롯 렌더링 및 커서 선택 상태 갱신 담당
+// 슬롯 오브젝트 풀링, 설명창 출력, 스크롤 위치 조정 등 포함
+public class BagSlotRenderer
+{
+    private readonly Transform _slotRoot;
+    private readonly ScrollRect _scrollRect;
+    private readonly TMP_Text _descriptionText;
+    private readonly UI_ItemSlot _slotPrefab;
+    private readonly UI_ItemSlot _stopSlotPrefab;
+    private readonly ObjectPool<UI_ItemSlot> _slotPool;
+
+    private UI_ItemSlot _stopSlotInstance;
+    private float _slotHeight = -1f;
+
+    // 현재 표시된 슬롯들
+    public List<UI_ItemSlot> ActiveSlots { get; private set; } = new();
+    // 현재 선택된 아이템
+    public ItemBase SelectedItem { get; private set; }
+
+    public BagSlotRenderer(Transform slotRoot, ScrollRect scroll, TMP_Text descText,
+                           UI_ItemSlot slotPrefab, UI_ItemSlot stopSlotPrefab)
+    {
+        _slotRoot = slotRoot;
+        _scrollRect = scroll;
+        _descriptionText = descText;
+        _slotPrefab = slotPrefab;
+        _stopSlotPrefab = stopSlotPrefab;
+
+        _slotPool = new ObjectPool<UI_ItemSlot>(_slotPrefab, _slotRoot);
+        _slotPool.Init(20);
+    }
+
+    // 슬롯 렌더링 메서드
+    public void RenderSlots(List<InventorySlot> data)
+    {
+        // 기존 슬롯 반환
+        foreach (Transform child in _slotRoot)
+        {
+            var slot = child.GetComponent<UI_ItemSlot>();
+            if (slot != null && slot != _stopSlotInstance)
+            {
+                slot.Deselect();
+                slot.ReturnToPool();
+            }
+        }
+
+        // 새로운 슬롯 생성
+        foreach (var item in data)
+        {
+            var slot = _slotPool.Get();
+            slot.SetData(item);
+            slot.transform.SetAsLastSibling();
+        }
+
+        // "그만두다" 슬롯 추가
+        if (_stopSlotInstance == null)
+        {
+            _stopSlotInstance = UnityEngine.Object.Instantiate(_stopSlotPrefab, _slotRoot);
+        }
+        else
+        {
+            _stopSlotInstance.transform.SetParent(_slotRoot, false);
+            _stopSlotInstance.gameObject.SetActive(true);
+        }
+
+        _stopSlotInstance.transform.SetAsLastSibling();
+
+        ActiveSlots = GetActiveSlots();
+    }
+    
+    // 커서 이동 시 선택 상태 변경, 설명 갱신, 스크롤 이동까지 처리
+    public void UpdateCursor(int preIdx, int curIdx, List<InventorySlot> data)
+    {
+        if (ActiveSlots.Count == 0) return;
+
+        if (preIdx < ActiveSlots.Count) ActiveSlots[preIdx].Deselect();
+        if (curIdx < ActiveSlots.Count) ActiveSlots[curIdx].Select();
+
+        UpdateDescription(curIdx, data);
+        ScrollToIndex(curIdx);
+    }
+
+    //설명 갱신
+    private void UpdateDescription(int curIdx, List<InventorySlot> data)
+    {
+        string description;
+        if (curIdx == ActiveSlots.Count - 1)
+        {
+            description = string.Empty;
+            SelectedItem = null;
+        }
+        else
+        {
+            string itemName = data[curIdx].ItemName;
+            SelectedItem = Manager.Data.ItemDatabase.GetItemData(itemName);
+            description = SelectedItem.Description;
+        }
+
+        _descriptionText.text = description;
+    }
+
+    
+    private void ScrollToIndex(int index)
+    {
+        if (_slotHeight < 0f)
+        {
+            _slotHeight = _slotPrefab.GetComponent<RectTransform>().rect.height;
+        }
+
+        float offset = index * _slotHeight;
+        Vector2 pos = _scrollRect.content.anchoredPosition;
+        _scrollRect.content.anchoredPosition = new Vector2(pos.x, offset);
+    }
+
+    
+    
+    private List<UI_ItemSlot> GetActiveSlots()
+    {
+        List<UI_ItemSlot> slots = new();
+        for (int i = 0; i < _slotRoot.childCount; i++)
+        {
+            Transform child = _slotRoot.GetChild(i);
+            if (child.gameObject.activeSelf)
+                slots.Add(child.GetComponent<UI_ItemSlot>());
+        }
+
+        return slots;
+    }
+}

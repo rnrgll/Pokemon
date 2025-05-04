@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// 아이템 선택 시 나타나는 팝업(UI_SelectPopUp)을 생성하고 구성하는 책임
+// 팝업 내부의 버튼 옵션 구성과 위치 조정까지 담당
 public class BagPopupManager
 {
 	private readonly UI_Bag _bag;
@@ -14,10 +16,12 @@ public class BagPopupManager
 
 	public void ShowItemActionPopup(ItemBase item)
 	{
+		// 현재 전투 중인지 확인 (아이템 사용 가능 여부 판단에 필요)
 		bool isBattle = SceneManager.GetActiveScene().name == "BattleScene";
 
 		bool? canUse = item?.CanUseNow(InGameContextFactory.CreateBasic(isBattle));
 
+		// 팝업 생성 및 옵션 설정
 		var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
 
 		if (canUse == true)
@@ -40,6 +44,8 @@ public class BagPopupManager
 		SetPopupPosition(popup);
 	}
 
+	
+	// 팝업 UI의 시각적 위치 조정
 	private void SetPopupPosition(UI_SelectPopUp popup)
 	{
 		RectTransform boxRT = popup.transform.GetChild(0).GetComponent<RectTransform>();

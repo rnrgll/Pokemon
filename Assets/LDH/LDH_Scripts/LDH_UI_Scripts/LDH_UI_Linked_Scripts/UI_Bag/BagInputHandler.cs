@@ -1,6 +1,7 @@
 using UnityEngine;
 using static Define;
 
+// UI_Bag에서 받은 입력을 분석해 UI_Bag의 행동을 호출
 public class BagInputHandler
 {
 	private readonly UI_Bag _bag;
@@ -10,6 +11,7 @@ public class BagInputHandler
 		_bag = bag;
 	}
 
+	// UIInputType에 따라 해당 동작을 호출 (UI_Bag 메서드)
 	public void Handle(UIInputType inputType)
 	{
 		switch (inputType)
