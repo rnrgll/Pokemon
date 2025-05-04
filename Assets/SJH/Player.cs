@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
@@ -38,6 +39,8 @@ public class Player : MonoBehaviour
 	[SerializeField] GameObject grassEffect;
 
 	public static event Action OnGrassEntered;
+
+	[SerializeField] public Queue<Vector3> prevPosQueue = new Queue<Vector3>();
 
 	Animator anim;
 
@@ -247,7 +250,8 @@ public class Player : MonoBehaviour
 				OnGrassEntered?.Invoke();
 			}
 		}
-		
+		prevPosQueue.Enqueue(startPos);
+		Debug.Log($"플레이어 위치 저장 : {startPos}");
 	}
 
 	public void StopMoving()
