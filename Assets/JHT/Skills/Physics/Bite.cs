@@ -26,7 +26,7 @@ public class Bite : SkillS
 			float effectRan = Random.Range(0f, 1f);
 			if (effectRan < 0.3f)
 			{
-				defender.condition = StatusCondition.Flinch;
+				defender.TakeEffect(attacker, defender, skill);
 			}
 		}
 	}

@@ -21,7 +21,7 @@ public class LeechLife : SkillS
 		{
 			int healAmount = attacker.Heal(attacker.GetTotalDamage(attacker, defender, skill));
 			defender.TakeDamage(attacker, defender, skill);
-			Debug.Log($"{attacker.pokeName} 의 체력 {healAmount} 회복");
+			Debug.Log($"배틀로그 : {attacker.pokeName} 의 체력 {healAmount} 회복");
 		}
 	}
 }

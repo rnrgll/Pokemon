@@ -187,7 +187,7 @@ public class BattleManager : MonoBehaviour
 				ui.ShowSkillSelection(playerPokemon);
 				Debug.Log($"Fight! 기술 선택대기중");
 				yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
-				Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
+				//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
 				ui.HideSkillSelection();
 
 				// 적 포켓몬 행동 선택

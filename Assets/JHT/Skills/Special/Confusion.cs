@@ -26,7 +26,7 @@ public class Confusion : SkillS
 			float effectRan = Random.Range(0f, 1f);
 			if (effectRan < 0.1f)
 			{
-				defender.condition = StatusCondition.Confusion;
+				defender.TakeEffect(attacker, defender, skill);
 			}
 		}
 	}
