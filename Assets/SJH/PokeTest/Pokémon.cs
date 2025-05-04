@@ -418,7 +418,6 @@ public class Pokémon : MonoBehaviour
 				if (attacker.isAnger)
 				{
 					damage *= attacker.angerStack;
-					Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name} ! 대미지 [{damage}] {ran}");
 				}
 				else if (!attacker.isAnger)
 				{
@@ -431,7 +430,6 @@ public class Pokémon : MonoBehaviour
 				if (attacker.isRollout)
 				{
 					damage *= attacker.rolloutStack;
-					Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name} ! 대미지 [{damage}] {ran}");
 				}
 				break;
 
@@ -459,35 +457,29 @@ public class Pokémon : MonoBehaviour
 					default: attackSkill.damage = 150; break;
 				}
 				damage = GetTotalDamage(attacker, defender, attackSkill);
-
-				Debug.Log($"배틀로그 : {attacker.pokeName} 의 매그니튜드 {magnitudeRandom} ! 대미지 [{damage}] {ran}");
 				break;
 
 			case "분노의앞니":
-				// 고스트 타입이면 무효
 				if ((defender.pokeType1 == PokeType.Ghost) || (defender.pokeType2 == PokeType.Ghost))
 				{
-					Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name}! 하지만 효과가 없다... {ran}");
+					// 고스트 타입이면 무효
 					damage = 0;
 				}
 				else
 				{
 					// 고정피해라 여기서 대미지 계산
 					damage = Mathf.Max(1, defender.hp / 2);
-					Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name}! 대미지 [{damage}] {ran}");
 				}
 				break;
 
 			case "나이트헤드":
 				if (defender.pokeType1 == PokeType.Normal || defender.pokeType2 == PokeType.Normal)
 				{
-					Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name}! 하지만 효과가 없다... {ran}");
 					damage = 0;
 				}
 				else
 				{
 					damage = attacker.level;
-					Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name}! 대미지 [{damage}] {ran}");
 				}
 				break;
 
@@ -519,8 +511,6 @@ public class Pokémon : MonoBehaviour
 				// 구르기 초기화
 				attacker.isRollout = false;
 				attacker.rolloutStack = 1;
-
-				Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name} ! 대미지 [{damage}] {ran}");
 				break;
 		}
 
@@ -536,7 +526,7 @@ public class Pokémon : MonoBehaviour
 			// 길동무 같이주금
 			if (isDestinyBond)
 			{
-				Debug.Log($"배틀로그 : {pokeName} 의 길동무! {attacker.pokeName} 도 기절 {ran}");
+				Debug.Log($"배틀로그 : {pokeName} 의 길동무! {attacker.pokeName} 도 기절했다 {ran}");
 				attacker.hp = 0;
 				attacker.isDead = true;
 			}
@@ -544,7 +534,30 @@ public class Pokémon : MonoBehaviour
 		}
 		// 맞고도 살았으면 길동무 해제
 		isDestinyBond = false;
-		Debug.Log($"배틀로그 : {pokeName} 이/가 {damage} 대미지를 입었습니다. 현재체력 : {hp} {ran}");
+
+		// 대미지 계산 후 로그
+		#region 대미지 계산 후 로그
+
+		Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name} 공격! 대미지 [{damage}] {ran}");
+		float typeEffectiveness = TypesCalculator(attackSkill.type, defender);
+
+		int effectiveness = Mathf.RoundToInt(typeEffectiveness * 100);
+
+		switch (effectiveness)
+		{
+			case 0: Debug.Log($"배틀로그 : 그러나 {defender.pokeName} 에게는 효과가 없었다..."); break;
+			case 25: Debug.Log("배틀로그 : 그러나 효과는 미미했다"); break;
+			case 50: Debug.Log("배틀로그 : 효과는 조금 부족한 듯 하다"); break;
+			case 100: // 효과는 보통일 경우 메시지 없음 break;
+			case 200: Debug.Log("배틀로그 : 효과는 뛰어났다!"); break;
+			case 400: Debug.Log("배틀로그 : 효과는 굉장했다!!"); break;
+			default: Debug.Log($"배틀로그 : 버그 [{typeEffectiveness}]"); break;
+		}
+
+		if (damage > 0)
+			Debug.Log($"배틀로그 : {pokeName} 이/가 {damage} 대미지를 입었습니다. 현재체력 : [{hp}] {ran}");
+
+		#endregion
 
 		// 공격후
 		switch (attackSkill.name)
@@ -1012,6 +1025,9 @@ public class Pokémon : MonoBehaviour
 		// 타입 체크
 		damageRate *= TypesCalculator(skill.type, defender);
 
+		if (damageRate == 0f)
+			return 0;
+
 		// 랜덤 난수 0.85 ~ 1
 		damageRate *= UnityEngine.Random.Range(85, 101) / 100f;
 
@@ -1037,7 +1053,7 @@ public class Pokémon : MonoBehaviour
 		bool isHit = ran < finalAccuracy;
 		if (!isHit)
 		{
-			Debug.Log($"배틀로그 : {attacker.pokeName} 의 {skill.name} 은/는 빗나갔다! {ran} >= {finalAccuracy}");
+			Debug.Log($"배틀로그 : {attacker.pokeName} 의 {skill.name} 공격은 빗나갔다! [{ran}% >= {finalAccuracy}%]");
 		}
 		return isHit;
 	}
