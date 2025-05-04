@@ -89,4 +89,12 @@ public class PokemonManager : Singleton<PokemonManager>
 		}
 		return null;
 	}
+
+	public void PartyBattleStatInit()
+	{
+		foreach (var poke in party)
+		{
+			poke.pokemonBattleStack = new PokemonBattleStat(0);
+		}
+	}
 }

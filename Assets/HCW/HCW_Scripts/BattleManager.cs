@@ -68,8 +68,6 @@ public class BattleManager : MonoBehaviour
 	{
 		dialogue.HandleUpdate();
 	}
-
-
 	private void OnDestroy()
 	{
 		// 구독 해제
@@ -93,6 +91,9 @@ public class BattleManager : MonoBehaviour
 		isTrainer = true; // 상대가 트레이너일경우
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
+
+		// 내 포켓몬 배틀스탯 초기화
+		Manager.Poke.PartyBattleStatInit();
 
 		if (playerParty.Count == 0 || enemyParty.Count == 0)
 		{
@@ -135,7 +136,6 @@ public class BattleManager : MonoBehaviour
 		selectedAction = null;
 		yield return new WaitUntil(() => selectedAction != null); // 행동 선택 대기
 
-		//while ((playerPokemon.hp > 0) && currentEnemyIndex < enemyParty.Count)
 		while ((playerPokemon.hp > 0) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
@@ -145,7 +145,7 @@ public class BattleManager : MonoBehaviour
 				// 포켓몬 경험치 + 해줘야함
 				// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
-				Debug.Log($"{playerPokemon.pokeName}가 {totalExp} 경험치를 얻었다");
+				Debug.Log($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 				playerPokemon.AddExp(totalExp);
 
 				// 트레이너
@@ -175,9 +175,9 @@ public class BattleManager : MonoBehaviour
 
 			// 행동 선택 대기
 			selectedAction = null;
-			Debug.Log($"행동 선택대기중");
+			//Debug.Log($"행동 선택대기중");
 			yield return new WaitUntil(() => selectedAction != null);
-			Debug.Log($"행동 {selectedAction} 선택!");
+			//Debug.Log($"행동 {selectedAction} 선택!");
 			ui.HideActionMenu();
 
 			// 전투 수행
@@ -185,7 +185,7 @@ public class BattleManager : MonoBehaviour
 			{
 				playerSelectedSkill = null;
 				ui.ShowSkillSelection(playerPokemon);
-				Debug.Log($"Fight! 기술 선택대기중");
+				//Debug.Log($"Fight! 기술 선택대기중");
 				yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
 				//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
 				ui.HideSkillSelection();
@@ -204,6 +204,15 @@ public class BattleManager : MonoBehaviour
 				// 속도에 따라 정렬
 				actions.Sort((a, b) =>
 				{
+					// 우선도가 없고 선공기는 전광석화 뿐이니 단순하게
+					bool aIsQuickAttack = a.Skill == "전광석화";
+					bool bIsQuickAttack = b.Skill == "전광석화";
+
+					if (aIsQuickAttack && !bIsQuickAttack)
+						return -1; // a가 먼저
+					if (!aIsQuickAttack && bIsQuickAttack)
+						return 1;  // b가 먼저
+
 					// 스피드에 랭크 계산
 					int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 					int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
