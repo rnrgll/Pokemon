@@ -22,8 +22,13 @@ public class LDH_RopeTest : MonoBehaviour
 	// 	_escapeRope.Use<DungeonMapData.DungeonLink>(null, itemContext);
 	// }
 
+	public bool iswild;
 	private void Start()
 	{
 		Manager.Game.SetDungeonState(true);
+		
+		Manager.Poke.AddEnemyPokemon("치코리타", 20);
+		Manager.Game.SetBattleState(true,iswild,Manager.Game.EnemyPokemon);
+
 	}
 }

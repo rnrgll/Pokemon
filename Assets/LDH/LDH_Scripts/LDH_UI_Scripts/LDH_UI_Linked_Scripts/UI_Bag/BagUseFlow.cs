@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,15 +31,20 @@ public class BagUseFlow
 			UseOnPlayer();
 		}
 		// 2. 기술머신/비전머신
-		else if (_bag.CurrentCategory == Define.ItemCategory.TM_HM)
+		else if (_item.Category == Define.ItemCategory.TM_HM)
 		{
 			ShowSkillMachineFlow();
 		}
 		// 3. 몬스터볼
-		else if (_item is Item_MonsterBall)
+		else if (_item.Category==Define.ItemCategory.Ball)
 		{
 			//야생 포켓몬인지 체크해서 넘기기
 			UseMonsterBall();
+		}
+		//중요한 물건
+		else if (_item.Category == Define.ItemCategory.KeyItem)
+		{
+			UseKeyItem();		
 		}
 		// 4. 그 외 포켓몬 대상 아이템
 		else
@@ -51,49 +57,85 @@ public class BagUseFlow
 	private void UseOnPlayer()
 	{
 		_bag.SetDescription($"{_item.ItemName}를(을) 사용했다!");
-		_context.SetMessage(msg => 
-			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(msg, _bag.Refresh));
+		_context.SetMessage(ShowMultiLineMessage);
 		bool success = _item.Use(null, _context);
-		if (success)
-		{
-			Manager.Data.PlayerData.Inventory.RemoveItem(_slot, 1);
-		}
-
-		// ShowResultMessage(success);
+		UseResult(success);
 	}
 
 	private void UseMonsterBall()
 	{
+		//todo: 몬스터볼 배틀에서 수정하기
 		//타갯 포켓몬
 		bool success = _item.Use(Manager.Game.EnemyPokemon, _context);
-		if (success)
-			Manager.Data.PlayerData.Inventory.RemoveItem(_slot, 1);
+		UseResult(success);
 		Debug.Log("몬스터볼 사용 함");
 		//ShowResultMessage(success);
 	}
 
+	private void UseKeyItem()
+	{
+		_context.SetMessage(ShowMultiLineMessage);
+		bool success = _item.Use(null, _context);
+		UseResult(success);
+	}
 	
 	private void ShowSkillMachineFlow()
 	{
 		// TODO: 기술 설명 출력 → 예/아니오 팝업 → 포켓몬 선택 UI → 사용 처리
 	}
 	
+	
+
 	private void ShowPokemonSelectFlow()
 	{
 		// TODO: 포켓몬 선택 UI → 포켓몬 넘겨서 사용 처리 → 성공 여부 메시지
-	}
-	private void ShowResultMessage(bool success)
-	{
 		
-		//여기는 상황에 따라 다르기 때문에 내가 다르게 구현해야함
+		//context 설정
+		_context.SetMessage((msg) =>
+		{
+			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+				.ShowMessage(msg,
+					() =>
+					{
+						Manager.UI.UndoLinkedUI();
+						_bag.Refresh();
+					});
+		});
+
 		
-		// if (success)
-		// 	_bag.PopupManager.ShowMultiLineMessage(new() { "아이템을 사용했습니다." }, _bag.Refresh);
-		// else
-		// 	_bag.PopupManager.ShowMultiLineMessage(new() { "사용할 수 없습니다." }, _bag.Refresh);
+		var partyUI = Manager.UI.ShowLinkedUI<UI_PokemonParty>("UI_PokemonParty", false);
+		partyUI.onPokemonSelected
+			= (poke, slot) =>
+			{
+				_context.PokemonSlot = slot;
+				bool success = _item.Use(poke, _context);
+				partyUI.Refresh();
+				UseResult(success);
+			};
+		partyUI.gameObject.SetActive(true);
+
 	}
 	
+	
+	private void UseResult(bool success)
+	{
+		if (!success) return;
 
+		// 소모 가능한 아이템인지 검사
+		if (_item.IsConsumable)
+		{
+			Manager.Data.PlayerData.Inventory.RemoveItem(_slot, 1);
+		}
+	}
 
+	private void ShowMultiLineMessage(string msg)
+	{
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+			.ShowMessage(msg, _bag.Refresh);
+		
+	}
+	
+	
+	
 }
 

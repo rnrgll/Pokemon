@@ -17,10 +17,7 @@ public class BagPopupManager
 	public void ShowItemActionPopup(InventorySlot slot)
 	{
 		ItemBase item = Manager.Data.ItemDatabase.GetItemData(slot.ItemName);
-		// 현재 전투 중인지 확인 (아이템 사용 가능 여부 판단에 필요)
-		bool isBattle = SceneManager.GetActiveScene().name == "BattleScene";
-
-		bool? canUse = item?.CanUseNow(InGameContextFactory.CreateBasic(isBattle));
+		bool? canUse = item?.CanUseNow(InGameContextFactory.CreateFromGameManager());
 
 		// 팝업 생성 및 옵션 설정
 		var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");

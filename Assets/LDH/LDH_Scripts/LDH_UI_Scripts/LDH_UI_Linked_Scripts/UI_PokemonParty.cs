@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
@@ -30,6 +31,10 @@ public class UI_PokemonParty : UI_Linked
 	private int changeFromIdx = -1;
 	private int changeToIdx = -1;
 	private bool isChangingOrder = false;
+	
+	
+	//콜백용
+	public Action<Pokémon, UI_PokemonSlot> onPokemonSelected;
 	
 	
 	private void Awake()
@@ -115,7 +120,7 @@ public class UI_PokemonParty : UI_Linked
 		stopSlotInstance.transform.SetAsLastSibling();
 	}
 	
-	private void Refresh()
+	public void Refresh()
 	{
 		RefreshPartyData();
 		RefreshUI();
@@ -148,7 +153,9 @@ public class UI_PokemonParty : UI_Linked
 		stopSlotInstance.transform.SetAsLastSibling();
 
 		UpdateCursor();
-		msgText.text = "포켓몬을 골라 주십시오";
+		msgText.text = onPokemonSelected != null 
+			? "어느 포켓몬에 사용하겠습니까?"
+			: "포켓몬을 골라 주십시오";
 	}
 
 	
@@ -199,6 +206,11 @@ public class UI_PokemonParty : UI_Linked
 		slotList[curCursorIdx].ChangeArrow(true);
 
 	
+		if (onPokemonSelected != null)
+		{
+			onPokemonSelected.Invoke(party[curCursorIdx], slotList[curCursorIdx]); // 등록된 동작 호출
+			return;
+		}
 	
 		var popupUI = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_PokemonPopUp_1");
 		popupUI.SetupOptions(popupUI.ButtonParent,

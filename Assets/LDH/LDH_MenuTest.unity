@@ -826,6 +826,10 @@ MonoBehaviour:
     Count: 2
   - ItemName: "\uBC15\uD558\uC5F4\uB9E4"
     Count: 2
+  - ItemName: "\uBAAC\uC2A4\uD130\uBCFC"
+    Count: 2
+  - ItemName: "\uC774\uC0C1\uD55C \uC54C"
+    Count: 1
 --- !u!4 &264506912
 Transform:
   m_ObjectHideFlags: 0
