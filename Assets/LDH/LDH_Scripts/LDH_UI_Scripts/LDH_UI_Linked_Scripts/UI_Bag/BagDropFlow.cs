@@ -54,6 +54,7 @@ public class BagDropFlow
 	{
 		Manager.Data.PlayerData.Inventory.RemoveItem(_targetSlot);
 		Debug.Log($"[DropFlow] {_currentAmount}개 버리기 실행");
+		_bag.Refresh();
 		ShowResultMessage();
 	}
 
@@ -61,7 +62,7 @@ public class BagDropFlow
 	private void ShowResultMessage()
 	{
 		Debug.Log("[DropFlow] 버리기 완료 메시지 출력");
-		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(new List<string> {$"{_targetSlot.ItemName}을 버렸습니다!"}, _bag.Refresh);
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(new List<string> {$"{_targetSlot.ItemName}을 버렸습니다!"});
 	}
 
 	public void Cancel()

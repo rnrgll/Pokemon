@@ -168,7 +168,12 @@ public class UI_Bag : UI_Linked
 
 		currentCategory = (ItemCategory)next;
 
+		//패널이동시에만 인덱스를 초기화시킨다.
+		preCursorIdx = curCursorIdx = 0;
+		currentCursorList[(int)currentCategory] = curCursorIdx;
+		
 		Refresh(); // 카테고리 변경 시 전체 갱신
+		
 	}
 
 	public void MoveCursor(int direction)
