@@ -253,7 +253,6 @@ public class UIManager : Singleton<UIManager>
 		
 	    var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
 		
-	    popup.gameObject.SetActive(false);
 		
 
 	    popup.SetupOptions(new()
@@ -265,10 +264,10 @@ public class UIManager : Singleton<UIManager>
 	    });
 		
 	    popup.OverrideCancelAction(noAction);
-
+	    popup.gameObject.SetActive(false);
 	    // 위치 설정
 	    RectTransform boxRT = popup.transform.GetChild(0).GetComponent<RectTransform>();
-	    Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+	    Canvas canvas = boxRT.GetComponentInParent<Canvas>(true);
 	    Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
 	    Util.SetRelativeVerticalOffset(boxRT, canvas, 0.34f);
 	    
@@ -286,7 +285,7 @@ public class UIManager : Singleton<UIManager>
 	    countUI.gameObject.SetActive(false);
 		
 	    RectTransform boxRT = countUI.transform.GetChild(0).GetComponent<RectTransform>();
-	    Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+	    Canvas canvas = boxRT.GetComponentInParent<Canvas>(true);
 		
 	    Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
 	    Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
