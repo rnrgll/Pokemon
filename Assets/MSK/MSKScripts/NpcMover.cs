@@ -10,11 +10,13 @@ public class NpcMover : MonoBehaviour
 	bool npcMoving;
 	int moveIndex = 0;
 	Vector2 currentDirection;
+	float moveSpeed;
 
 	Animator anim;
 
 	private void Awake()
 	{
+		moveSpeed = 1f / moveDuration;
 		anim = GetComponent<Animator>();
 	}
 
@@ -34,33 +36,34 @@ public class NpcMover : MonoBehaviour
 		Vector2 targetPos = destinationPoints[moveIndex];
 		currentDirection = (targetPos - currentPos).normalized;
 
-		// 이동 가능 여부 확인
-		if (!IsWalkAble(currentDirection))
-		{
-			Debug.Log("이동 불가, 다음 목적지로");
-			moveIndex = (moveIndex + 1) % destinationPoints.Count;
-			npcMoving = false;
-			yield break;
-		}
-
-		// 애니메이션
 		anim.SetFloat("x", currentDirection.x);
 		anim.SetFloat("y", currentDirection.y);
 		anim.SetBool("npcMoving", true);
 
-		float time = 0f;
-		while (time < moveDuration && npcMoving)
+		while (Vector2.Distance(transform.position, targetPos) > 0.1f)
 		{
-			time += Time.deltaTime;
-			float percent = time / moveDuration;
-			transform.position = Vector2.Lerp(currentPos, targetPos, percent);
+			// 이동 중에도 전방 장애물 감지
+			if (!IsWalkAble(currentDirection))
+			{
+				// 애니메이션 멈추고 대기
+				anim.SetBool("npcMoving", false);
+				yield return null;
+				continue;
+			}
+			else
+			{
+				// 다시 이동 시작
+				anim.SetBool("npcMoving", true);
+				transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+			}
+
 			yield return null;
 		}
+
 		transform.position = targetPos;
-
 		anim.SetBool("npcMoving", false);
-
 		moveIndex = (moveIndex + 1) % destinationPoints.Count;
+
 		yield return new WaitForSeconds(1f);
 		npcMoving = false;
 	}
@@ -69,11 +72,14 @@ public class NpcMover : MonoBehaviour
 	{
 		Vector2 startPos;
 		startPos.x = transform.position.x;
-		startPos.y = transform.position.y - 0.5f; // 하단 보정 유지
-
-		Debug.DrawRay(startPos + currentDirection * 1.1f, currentDirection, Color.red, 1f);
-
+		startPos.y = transform.position.y - 0.5f;
 		RaycastHit2D hit = Physics2D.Raycast(startPos + currentDirection * 1.1f, currentDirection, 1f);
+
+		// 자기 자신 무시
+		if (hit.collider != null && hit.collider.transform.root == transform.root)
+		{
+			return true;
+		}
 
 		if (hit.collider != null)
 		{
