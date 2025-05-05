@@ -143,16 +143,21 @@ public class BattleManager : MonoBehaviour
 			// 내 포켓몬 교체 체크
 			if (playerPokemon.hp <= 0 || playerPokemon.isDead)
 			{
-				Debug.Log($"배틀로그 : 교체할 포켓몬을 선택해주세요.");
+				Debug.Log($"배틀로그 {currentTurn}턴 : 교체할 포켓몬을 선택해주세요.");
 
 				// TODO : 교체 UI 활성화
-
+				// 테스트 코드
+				Debug.Log($"배틀로그 {currentTurn}턴 : 나와라! {playerPokemon.pokeName}! ");
+				playerPokemon = Manager.Poke.GetFirtstPokemon();
+				hud.SetPlayerHUD(playerPokemon);
+				ui.ShowActionMenu();
+				//
 				// 행동 선택 대기
-				selectedAction = null;
-				//Debug.Log($"행동 선택대기중");
-				yield return new WaitUntil(() => selectedAction != null);
-				//Debug.Log($"행동 {selectedAction} 선택!");
-				ui.HideActionMenu();
+				//selectedAction = null;
+				////Debug.Log($"행동 선택대기중");
+				//yield return new WaitUntil(() => selectedAction != null);
+				////Debug.Log($"행동 {selectedAction} 선택!");
+				//ui.HideActionMenu();
 
 
 			}
@@ -241,6 +246,11 @@ public class BattleManager : MonoBehaviour
 					int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 					int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 
+					if (a.Attacker.condition == StatusCondition.Paralysis)
+						speedA = speedA / 4;
+					if (b.Attacker.condition == StatusCondition.Paralysis)
+						speedB = speedB / 4;
+
 					Debug.Log($"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
 					if (speedA != speedB)
 						return speedB.CompareTo(speedA);
@@ -258,7 +268,12 @@ public class BattleManager : MonoBehaviour
 					}
 
 					Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
-					ExecuteAction(act);
+
+					// 상태이상체크
+					if (act.Attacker.CanActionCheck())
+					{
+						ExecuteAction(act);
+					}
 					//Debug.Log($"{act.Attacker.pokeName} 이/가 {act.Skill} 사용완료!");
 					yield return battleDelay;
 				}
@@ -270,8 +285,17 @@ public class BattleManager : MonoBehaviour
 			}
 			else if (selectedAction == "Run")
 			{
-				EndBattle("Run");
-				break;
+				// 도망못가게함
+				if (playerPokemon.isCantRun || playerPokemon.isBind)
+				{
+					// 검은눈빛, 거미집, 김밥말이
+					Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 도망칠 수 없다!");
+				}
+				else
+				{
+					EndBattle("Run");
+					break;
+				}
 			}
 			// TODO : Fight가 아닌 선택지 추가 필요
 			else

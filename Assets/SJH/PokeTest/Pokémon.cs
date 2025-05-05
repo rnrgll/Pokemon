@@ -547,14 +547,14 @@ public class Pokémon : MonoBehaviour
 		Debug.Log($"배틀로그 : {attacker.pokeName} 의 {attackSkill.name} 공격! 대미지 [{damage}] {ran}");
 		float typeEffectiveness = TypesCalculator(attackSkill.type, defender);
 
-		int effectiveness = Mathf.RoundToInt(typeEffectiveness * 100);
-
+		int effectiveness = (int)(typeEffectiveness * 100);
+		Debug.Log($"테스트로그 : {typeEffectiveness} / {effectiveness}");
 		switch (effectiveness)
 		{
 			case 0: Debug.Log($"배틀로그 : 그러나 {defender.pokeName} 에게는 효과가 없었다..."); break;
 			case 25: Debug.Log("배틀로그 : 그러나 효과는 미미했다"); break;
 			case 50: Debug.Log("배틀로그 : 효과는 조금 부족한 듯 하다"); break;
-			case 100: // 효과는 보통일 경우 메시지 없음 break;
+			case 100: /*효과는 보통일 경우 메시지 없음*/ break;
 			case 200: Debug.Log("배틀로그 : 효과는 뛰어났다!"); break;
 			case 400: Debug.Log("배틀로그 : 효과는 굉장했다!!"); break;
 			default: Debug.Log($"배틀로그 : 버그 [{typeEffectiveness}]"); break;
@@ -1021,6 +1021,9 @@ public class Pokémon : MonoBehaviour
 	{
 		int level = attacker.level;
 		int power = (int)skill.damage;
+
+		bool isCritical = IsCritical(attacker.pokemonBattleStack.critical + (skill.name == "베어가르기" ? 1 : 0));
+
 		// 물리 / 특수 체크
 		bool isSpecial = skill.skillType == SkillType.Special;
 
@@ -1031,11 +1034,17 @@ public class Pokémon : MonoBehaviour
 			? defender.GetModifyStat(attacker.pokemonStat.speDefense, attacker.pokemonBattleStack.speDefense)
 			: defender.GetModifyStat(attacker.pokemonStat.defense, attacker.pokemonBattleStack.defense);
 
-		// 리플렉터 / 빛의장막 체크
-		if (!isSpecial && defender.isReflect)
+		// 화상 공격력 반감 / 급소면 무시
+		if (attacker.condition == StatusCondition.Burn && !isSpecial)
+		{
+			attackStat /= 2;
+		}
+
+		// 리플렉터 / 빛의장막 체크 / 급소면 무시
+		if (!isSpecial && defender.isReflect && !isCritical)
 			defenseStat *= 2; // 물리 데미지 반감
 
-		else if (isSpecial && defender.isLightScreen)
+		else if (isSpecial && defender.isLightScreen && !isCritical)
 			defenseStat *= 2; // 특수 데미지 반감
 
 		float damageRate = 1f;
@@ -1046,9 +1055,12 @@ public class Pokémon : MonoBehaviour
 
 		// 타입 체크
 		damageRate *= TypesCalculator(skill.type, defender);
-
 		if (damageRate == 0f)
 			return 0;
+
+		// 급소 체크
+		if (isCritical)
+			damageRate *= 1.5f;
 
 		// 랜덤 난수 0.85 ~ 1
 		damageRate *= UnityEngine.Random.Range(85, 101) / 100f;
@@ -1099,6 +1111,26 @@ public class Pokémon : MonoBehaviour
 		else
 			return 2f / (2f - rank);
 	}
+
+	public bool IsCritical(int rank)
+	{
+		// 1~4
+		float ran = UnityEngine.Random.Range(0f, 1f);
+		switch (rank)
+		{
+			case 1:
+				return ran < 0.125f;   // 12.5%
+			case 2:
+				return ran < 0.25f;    // 25%
+			case 3:
+				return ran < 0.333f;   // 33.3%
+			case 4:
+				return ran < 0.5f;     // 50%
+			default:
+				return ran < 0.0625f;  // 6.25%
+		}
+	}
+
 
 	public void TurnEnd()
 	{
@@ -1177,7 +1209,7 @@ public class Pokémon : MonoBehaviour
 					}
 				}
 
-				if (sleepCount > 0)
+				else if (sleepCount > 0)
 				{
 					sleepCount--;
 					Debug.Log($"배틀로그 : {pokeName} 은/는 쿨쿨 잠들어 있다 {restCount}턴 남음 {ran}");
