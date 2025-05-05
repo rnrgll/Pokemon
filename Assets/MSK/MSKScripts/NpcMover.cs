@@ -18,7 +18,6 @@ public class NpcMover : MonoBehaviour
 
 	private Coroutine moveCoroutine;
 
-
 	private void Awake()
 	{
 		moveSpeed = 1f / moveDuration;
@@ -33,7 +32,7 @@ public class NpcMover : MonoBehaviour
 		}
 	}
 
-	//	사전 입력된 좌료로 이동
+	//	사전 입력된 좌료 리스트로 이동
 	private IEnumerator MoveOneStep()
 	{
 		npcMoving = true;
@@ -76,20 +75,20 @@ public class NpcMover : MonoBehaviour
 	}
 
 	// NPC가 특정 방향으로 이동
-	public bool MoveTowardsPosition(Vector2 targetPos)
+	public void MoveTowardsPosition(Vector2 targetPos)
 	{
-		Vector2 currentPos = transform.position;
-		Vector2 direction = targetPos - currentPos;
-
+		// 애니메이션 방향 설정
+		Vector2 direction = targetPos - (Vector2)transform.position;
 		anim.SetFloat("y", direction.y);
 		anim.SetFloat("x", direction.x);
-
-		transform.position = Vector2.MoveTowards(currentPos, targetPos, moveSpeed * Time.deltaTime);
+		
+		transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+		// 이동 중 여부 판단
 
 		bool hasReached = Vector2.Distance(transform.position, targetPos) < 0.01f;
+
 		anim.SetBool("npcMoving", !hasReached);
 
-		return hasReached;  // 도착 여부 반환
 	}
 
 	//	코루틴 정지
@@ -106,6 +105,7 @@ public class NpcMover : MonoBehaviour
 		Manager.Dialog.npcState = NpcState.Idle;  // 멈출 때 Idle 상태로 변경
 	}
 
+	//이동 가능 여부
 	private bool IsWalkAble(Vector2 currentDirection)
 	{
 		Vector2 startPos;
