@@ -31,7 +31,7 @@ public class BagDropFlow
 	{
 		_bag.SetDescription("몇 개 버리시겠습니까?");
 		
-		_bag.PopupManager.ShowCountPopup(_maxAmount,
+		Manager.UI.ShowCountPopup(_maxAmount,
 			onConfirm: (amount) =>
 			{
 				_currentAmount = amount;
@@ -45,14 +45,14 @@ public class BagDropFlow
 		//문구 바꾸기
 		_bag.SetDescription($"{_targetSlot.ItemName}를(을) {_currentAmount}개 버리시겠습니까?");
 		
-		_bag.PopupManager.ShowConfirmPopup(
+		Manager.UI.ShowConfirmPopup(
 			onYes: DropItem,
 			onNo: Cancel
 		);
 	}
 	private void DropItem()
 	{
-		Manager.Data.PlayerData.Inventory.RemoveItem(_targetSlot);
+		Manager.Data.PlayerData.Inventory.RemoveItem(_targetSlot, _currentAmount);
 		Debug.Log($"[DropFlow] {_currentAmount}개 버리기 실행");
 		_bag.Refresh();
 		ShowResultMessage();

@@ -243,7 +243,7 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
-    #region 반복사용 UI
+    #region 자주 사용하는 팝업 ui 생성 메소드
 
     
     public void ShowConfirmPopup(Action onYes, Action onNo = null)
@@ -253,6 +253,7 @@ public class UIManager : Singleton<UIManager>
 		
 	    var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
 		
+	    popup.gameObject.SetActive(false);
 		
 
 	    popup.SetupOptions(new()
@@ -270,8 +271,27 @@ public class UIManager : Singleton<UIManager>
 	    Canvas canvas = boxRT.GetComponentInParent<Canvas>();
 	    Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
 	    Util.SetRelativeVerticalOffset(boxRT, canvas, 0.34f);
+	    
+	    popup.gameObject.SetActive(true);
     }
 
+    
+    public void ShowCountPopup(int maxAmount, Action<int> onConfirm, Action onCancel)
+    {
+	    var countUI = Manager.UI.ShowPopupUI<UI_CountPopUp>("UI_CountPopUp");
+	    countUI.Init(
+		    maxAmount, onConfirm, onCancel
+	    );
+		
+	    countUI.gameObject.SetActive(false);
+		
+	    RectTransform boxRT = countUI.transform.GetChild(0).GetComponent<RectTransform>();
+	    Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+		
+	    Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
+	    Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
+	    countUI.gameObject.SetActive(true);
+    }
 
     #endregion
 }
