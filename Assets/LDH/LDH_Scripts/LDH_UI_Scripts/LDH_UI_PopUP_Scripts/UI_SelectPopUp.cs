@@ -97,10 +97,11 @@ public class UI_SelectPopUp : UI_PopUp
 
 	public override void OnCancel()
 	{
+		base.OnCancel();
 		if (_overrideCancelAction != null)
 		{
 			_overrideCancelAction.Execute();
 		}
-		base.OnCancel();
+
 	}
 }

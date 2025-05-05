@@ -21,6 +21,7 @@ public class BagPopupManager
 
 		// 팝업 생성 및 옵션 설정
 		var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
+	
 		popup.OverrideCancelAction(new CustomAction(() =>
 		{
 			_bag.Refresh();
@@ -59,54 +60,16 @@ public class BagPopupManager
 				("그만두다", new CustomAction(popup.OnCancel))
 			});
 		}
-
+		popup.gameObject.SetActive(false);
 		RectTransform boxRT = popup.transform.GetChild(0).GetComponent<RectTransform>();
 		// float canvasHeight = ((RectTransform)popup.transform).rect.height;
 		// Util.SetPositionFromBottomLeft(boxRT, 0f, canvasHeight * 0.34f);
-		Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+		Canvas canvas = boxRT.GetComponentInParent<Canvas>(true);
 		Util.SetPositionFromBottomLeft(boxRT, 0f, 0f);
 		Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
+		popup.gameObject.SetActive(true);
 	}
 
-	public void ShowCountPopup(int maxAmount, Action<int> onConfirm, Action onCancel)
-	{
-		var countUI = Manager.UI.ShowPopupUI<UI_CountPopUp>("UI_CountPopUp");
-		countUI.Init(
-			maxAmount, onConfirm, onCancel
-		);
-		
-		RectTransform boxRT = countUI.transform.GetChild(0).GetComponent<RectTransform>();
-		Canvas canvas = boxRT.GetComponentInParent<Canvas>();
-		
-		Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
-		Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
-	}
-	
-	public void ShowConfirmPopup(Action onYes, Action onNo = null)
-	{
-		//아니오 액션 저장
-		ISelectableAction noAction = new CustomAction(() => onNo?.Invoke());
-		
-		var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
-		
-		
-
-		popup.SetupOptions(new()
-		{
-			("예", new CustomAction(() => {
-				onYes?.Invoke();
-			})),
-			("아니오", noAction)
-		});
-		
-		popup.OverrideCancelAction(noAction);
-
-		// 위치 설정
-		RectTransform boxRT = popup.transform.GetChild(0).GetComponent<RectTransform>();
-		Canvas canvas = boxRT.GetComponentInParent<Canvas>();
-		Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
-		Util.SetRelativeVerticalOffset(boxRT, canvas, 0.34f);
-	}
 
 
 }
