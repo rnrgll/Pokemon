@@ -7,7 +7,6 @@ public class Follower : MonoBehaviour
 	[SerializeField] Transform player;
 	[SerializeField] Player p;
 	[SerializeField] public Queue<Vector3> prevPos = new Queue<Vector3>();
-	[SerializeField] int followDelay = 5;
 
 	Coroutine initCoroutine;
 	Coroutine followCoroutine;

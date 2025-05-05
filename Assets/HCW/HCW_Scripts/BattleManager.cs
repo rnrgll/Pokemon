@@ -158,6 +158,7 @@ public class BattleManager : MonoBehaviour
 		//while ((playerPokemon.hp > 0) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		while ((Manager.Poke.AlivePokemonCheck()) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
+			bool isAction = false;
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
 			// 내 포켓몬 교체 체크
 			if (playerPokemon.hp <= 0 || playerPokemon.isDead)
@@ -285,6 +286,7 @@ public class BattleManager : MonoBehaviour
 						{
 							ExecuteAction(act);
 						}
+						isAction = true;
 						yield return battleDelay;
 					}
 
@@ -301,6 +303,8 @@ public class BattleManager : MonoBehaviour
 
 						hud.SetPlayerHUD(playerPokemon);
 						hud.SetEnemyHUD(enemyPokemon);
+
+						isAction = true;
 
 						yield return new WaitForSeconds(1f);
 					}
@@ -324,20 +328,27 @@ public class BattleManager : MonoBehaviour
 							yield break;
 						}
 					}
-					yield break;
+					break;
+					
 				default:
 					Debug.LogWarning($"지정하지 않은 액션 선택");
 					break;
 			}
-			Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
-			// 턴카운트 증가
-			currentTurn++;
-			// 각 포켓몬 턴종료 액션 실행
-			playerPokemon.TurnEnd();
-			enemyPokemon.TurnEnd();
 
-			hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
-			hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
+			// TODO : 턴종료 조건 추가하기
+			// 도망을 실패해도 턴이 증가함
+			if (isAction)
+			{
+				Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
+				// 턴카운트 증가
+				currentTurn++;
+				// 각 포켓몬 턴종료 액션 실행
+				playerPokemon.TurnEnd();
+				enemyPokemon.TurnEnd();
+
+				hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
+				hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
+			}
 
 			// 플레이어 포켓몬 체크
 			if (!Manager.Poke.AlivePokemonCheck())
