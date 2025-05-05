@@ -222,7 +222,7 @@ public class UIManager : Singleton<UIManager>
 	        OnAllUIClosed?.Invoke();
     }
 
-    private void CloseAllPopUp()
+    public void CloseAllPopUp()
     {
 	    while (_popUpStack.Count != 0)
 	    {
@@ -239,6 +239,39 @@ public class UIManager : Singleton<UIManager>
 	    }
 	    Debug.Log("열려있는 모든 UI를 닫았습니다.");
     }
+    
+
+    #endregion
+
+    #region 반복사용 UI
+
+    
+    public void ShowConfirmPopup(Action onYes, Action onNo = null)
+    {
+	    //아니오 액션 저장
+	    ISelectableAction noAction = new CustomAction(() => onNo?.Invoke());
+		
+	    var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
+		
+		
+
+	    popup.SetupOptions(new()
+	    {
+		    ("예", new CustomAction(() => {
+			    onYes?.Invoke();
+		    })),
+		    ("아니오", noAction)
+	    });
+		
+	    popup.OverrideCancelAction(noAction);
+
+	    // 위치 설정
+	    RectTransform boxRT = popup.transform.GetChild(0).GetComponent<RectTransform>();
+	    Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+	    Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
+	    Util.SetRelativeVerticalOffset(boxRT, canvas, 0.34f);
+    }
+
 
     #endregion
 }

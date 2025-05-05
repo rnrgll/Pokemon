@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum SkillMachineType {TM, HM}
@@ -54,16 +55,24 @@ public class Item_SkillMachine : ItemBase
 	public override bool Use(Pokémon target, InGameContext inGameContext)
 	{
 		//해당 기술을 배울 수 있는 포켓몬인지 확인
-		if (!CanLearn(target))
-		{
-			inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotLearn,target.pokeName,skillName));
-			inGameContext.Callback?.Invoke();
-			return false;
-		}
-		bool isSuccess = target.TryLearnSkill(skillName);
-		inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.LearnSuccess,target.pokeName,skillName));
-		inGameContext.Callback?.Invoke();
-		return isSuccess;
+		 if (!CanLearn(target))
+		 {
+		 	Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(ItemMessage.Get(ItemMessageKey.CanNotLearn,target.pokeName,skillName),Manager.UI.UndoLinkedUI,true,true);
+		 	// inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotLearn,target.pokeName,skillName));
+		 	inGameContext.Callback?.Invoke();
+		 	return false;
+		 }
+		 
+
+
+		 target.TryLearnSkill(skillName, (bool isSuccess) =>
+		 {
+			 inGameContext.Result = isSuccess;
+			 inGameContext.Callback?.Invoke();
+		 });
+
+		return false; //일단 무조건 false 반환
+		//기술머신 아이템만 콜백으로 결과 값이용한다!
 
 	}
 }

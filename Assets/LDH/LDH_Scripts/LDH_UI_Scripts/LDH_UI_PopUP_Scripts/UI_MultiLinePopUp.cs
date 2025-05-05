@@ -23,29 +23,29 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 	
 	[SerializeField] private float typingSpeed = 0.5f; // 타이핑 속도 (글자당 지연 시간)
 	private bool _useTypingEffect = false;
-
-	public void ShowMessage(List<string> lines, Action onFinished = null, bool needNextButton = true,  bool useTypingEffect = false)
+	private bool _dontClose;
+	public void ShowMessage(List<string> lines, Action onFinished = null, bool needNextButton = true,  bool useTypingEffect = false, bool dontClose = false)
 	{
 		_lines = lines;
 		_curIndex = 0;
 		_needNextButton = needNextButton;
 		_onFinished = onFinished;
 		_useTypingEffect = useTypingEffect;
-		
+		_dontClose = dontClose;
 		if (_displayCoroutine != null)
 			StopCoroutine(_displayCoroutine);
 
 		_displayCoroutine = StartCoroutine(DisplayRoutine());
 	}
 
-	public void ShowMessage(string line, Action onFinished = null, bool needNextButton = true,   bool useTypingEffect = false)
+	public void ShowMessage(string line, Action onFinished = null, bool needNextButton = true,   bool useTypingEffect = false,  bool dontClose = false)
 	{
 		List<string> lines = line.Split("\n").ToList();
 		foreach (string splitline in lines)
 		{
 			Debug.LogFormat($"<color=yellow>{splitline}</color>");
 		}
-		ShowMessage(lines, onFinished, needNextButton, useTypingEffect);
+		ShowMessage(lines, onFinished, needNextButton, useTypingEffect, dontClose);
 	}
 
 	private IEnumerator DisplayRoutine()
@@ -118,7 +118,8 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 
 	private void Quit()
 	{
-		base.OnSelect(); 
+		if(!_dontClose)
+			base.OnSelect(); 
 		nextButton.gameObject.SetActive(false);
 		_onFinished?.Invoke();
 		

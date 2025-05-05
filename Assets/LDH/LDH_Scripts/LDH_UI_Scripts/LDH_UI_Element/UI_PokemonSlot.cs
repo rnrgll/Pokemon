@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class UI_PokemonSlot : MonoBehaviour
 {
+	
 	//인스펙터에서 할당
 	[SerializeField] private Image arrow;
 	[SerializeField] private Image icon;
@@ -19,6 +20,9 @@ public class UI_PokemonSlot : MonoBehaviour
 	[SerializeField] private Slider hpSlider;
 	[SerializeField] private Sprite emptyArrow;
 	[SerializeField] private Sprite originalArrow;
+	[SerializeField] private TMP_Text canLearn;
+	[SerializeField] private Transform hpUIRoot;
+	
 	
 	
 	//애니메이션 용
@@ -50,7 +54,7 @@ public class UI_PokemonSlot : MonoBehaviour
 		ChangeArrow(true);
 	}
 
-	public void SetData(Pokémon pokemon)
+	public void SetData(Pokémon pokemon, Item_SkillMachine skillMachine = null)
 	{
 		//아이콘..
 		pokemonName.text = pokemon.pokeName;
@@ -67,8 +71,20 @@ public class UI_PokemonSlot : MonoBehaviour
 			condition.text = pokemon.condition.ToString();
 			condition.gameObject.SetActive(true);
 		}
+
+		if (Manager.Game.SlotType == UI_PokemonParty.PartySlotType.Skill && skillMachine != null)
+		{
+			hpUIRoot.gameObject.SetActive(false);
+			canLearn.text = skillMachine.CanLearn(pokemon) ? "배울 수 있다" : "배울 수 없다";
+			canLearn.gameObject.SetActive(true);
+		}
+		else
+		{
+			canLearn.gameObject.SetActive(false);
+			SetHpSlider(pokemon.hp,pokemon.maxHp);
+			hpUIRoot.gameObject.SetActive(true);
+		}
 		
-		SetHpSlider(pokemon.hp,pokemon.maxHp);
 		
 
 	}

@@ -7,6 +7,12 @@ using UnityEngine;
 
 public class UI_PokemonParty : UI_Linked
 {
+	public enum PartySlotType
+	{
+		Menu,
+		Item,
+		Skill
+	}
 	
 	//인덱스
 	private static int curCursorIdx = 0;
@@ -31,11 +37,19 @@ public class UI_PokemonParty : UI_Linked
 	private int changeFromIdx = -1;
 	private int changeToIdx = -1;
 	private bool isChangingOrder = false;
-	
+
+	private PartySlotType _slotType => Manager.Game.SlotType;
 	
 	//콜백용
 	public Action<Pokémon, UI_PokemonSlot> onPokemonSelected;
-	
+	//스킬 가르치기 시 필요한 데이터 밖에서 주입
+	private Item_SkillMachine skillMachineItem = null;
+
+	public void SetSkillMachine(Item_SkillMachine item)
+	{
+		skillMachineItem = item;
+	}
+
 	
 	private void Awake()
 	{
@@ -141,7 +155,7 @@ public class UI_PokemonParty : UI_Linked
 			if (i < party.Count)
 			{
 				slotList[i].gameObject.SetActive(true);
-				slotList[i].SetData(party[i]);
+				slotList[i].SetData(party[i], skillMachineItem);
 			}
 			else
 			{
@@ -153,9 +167,19 @@ public class UI_PokemonParty : UI_Linked
 		stopSlotInstance.transform.SetAsLastSibling();
 
 		UpdateCursor();
-		msgText.text = onPokemonSelected != null 
-			? "어느 포켓몬에 사용하겠습니까?"
-			: "포켓몬을 골라 주십시오";
+		switch (_slotType)
+		{
+			case (PartySlotType)0:
+				msgText.text = "포켓몬을 골라 주십시오";
+				break;
+			case (PartySlotType)1:
+				msgText.text = "어느 포켓몬에 사용하시겠습니까?";
+				break;
+			case (PartySlotType)2:
+				msgText.text = "어느 포켓몬에게 가르치겠습니까?";
+				break;
+		}
+		
 	}
 
 	

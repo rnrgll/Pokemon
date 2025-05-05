@@ -21,7 +21,10 @@ public class BagPopupManager
 
 		// 팝업 생성 및 옵션 설정
 		var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
-
+		popup.OverrideCancelAction(new CustomAction(() =>
+		{
+			_bag.Refresh();
+		}));
 		if (canUse == true)
 		{
 			switch (item.Category)

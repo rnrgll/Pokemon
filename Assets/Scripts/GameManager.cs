@@ -15,6 +15,9 @@ public class GameManager : Singleton<GameManager>
 	//적 대상 포켓몬 
 	public Pokémon EnemyPokemon { get; private set; }
 	
+	//슬롯 타입
+	public UI_PokemonParty.PartySlotType SlotType { get; private set; }
+	
 	public void SetPlayer(Player player)
 	{
 		this.player = player;
@@ -47,5 +50,10 @@ public class GameManager : Singleton<GameManager>
 		IsInBattle = false;
 		IsWildBattle = false;
 		EnemyPokemon = null;
+	}
+
+	public void SetSlotType(UI_PokemonParty.PartySlotType type)
+	{
+		SlotType = type;
 	}
 }

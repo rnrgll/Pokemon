@@ -15,6 +15,8 @@ public class BagUseFlow
 		_bag = bag;
 	}
 
+	private UI_PokemonParty.PartySlotType _slotType;
+
 	public void Start(InventorySlot slot)
 	{
 		_slot = slot;
@@ -34,6 +36,7 @@ public class BagUseFlow
 		// 2. 기술머신/비전머신
 		else if (_item.Category == Define.ItemCategory.TM_HM)
 		{
+			_slotType = UI_PokemonParty.PartySlotType.Skill;
 			ShowSkillMachineFlow();
 		}
 		// 3. 몬스터볼
@@ -50,7 +53,8 @@ public class BagUseFlow
 		// 4. 그 외 포켓몬 대상 아이템
 		else
 		{
-			ShowPokemonSelectFlow();
+			_slotType = UI_PokemonParty.PartySlotType.Item;
+			ShowPokemon_ItemFlow();
 		}
 	}
 	
@@ -91,7 +95,7 @@ public class BagUseFlow
 				//2. 가르치겠냐는 메시지
 				_bag.SetDescription($"{_item.ItemName}를(을)\n포켓몬에게 가르치겠습니까?");
 				//2. 예/아니오 팝업 -> //3.포켓몬 선택 및 사용처리 콜백 연결
-				_bag.PopupManager.ShowConfirmPopup(ShowPokemonSelectFlow, 
+				_bag.PopupManager.ShowConfirmPopup(ShowPokemon_TMFlow, 
 					()=>
 					{
 						_bag.Refresh();
@@ -101,7 +105,7 @@ public class BagUseFlow
 	
 	
 
-	private void ShowPokemonSelectFlow()
+	private void ShowPokemon_ItemFlow()
 	{
 		
 		//context 설정
@@ -113,17 +117,35 @@ public class BagUseFlow
 					{
 						Manager.UI.UndoLinkedUI();
 						_bag.Refresh();
-					});
+					},true,true);
 		});
 
 		
-		OpenPokePartyUI();
+		OpenPokePartByType(_slotType);
+
+	}
+	private void ShowPokemon_TMFlow()
+	{
+		//context 설정
+		_context.Callback = () =>
+		{
+			Manager.UI.UndoLinkedUI();
+			//기술머신만 여기서 result로 아이템 개수 갱신 처리
+			UseResult(_context.Result);
+		};
+		
+		OpenPokePartByType(_slotType);
 
 	}
 
-	private void OpenPokePartyUI()
+	private void OpenPokePartByType(UI_PokemonParty.PartySlotType slotType)
 	{
+		Manager.Game.SetSlotType(slotType);
 		var partyUI = Manager.UI.ShowLinkedUI<UI_PokemonParty>("UI_PokemonParty", false);
+		if(slotType==UI_PokemonParty.PartySlotType.Skill)
+			partyUI.SetSkillMachine((Item_SkillMachine)_item);
+		else
+			partyUI.SetSkillMachine(null);
 		partyUI.onPokemonSelected
 			= (poke, slot) =>
 			{
@@ -137,15 +159,18 @@ public class BagUseFlow
 	
 	
 	private void UseResult(bool success)
-	{
-		_bag.Refresh();
-		if (!success) return;
-
-		// 소모 가능한 아이템인지 검사
-		if (_item.IsConsumable)
+	{ 
+		if (success)
 		{
-			Manager.Data.PlayerData.Inventory.RemoveItem(_slot, 1);
+			
+			// 소모 가능한 아이템인지 검사
+			if (_item.IsConsumable)
+			{
+				Manager.Data.PlayerData.Inventory.RemoveItem(_slot, 1);
+			}
 		}
+
+		_bag.Refresh();
 	}
 
 	private void ShowMultiLineNotifyMsg(string msg)

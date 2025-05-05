@@ -295,31 +295,135 @@ public class Pokémon : MonoBehaviour
 			if (!skills.Contains(newSkill))
 			{
 				//메소드로 분리했습니다.(이도현)
-				TryLearnSkill(newSkill);
+				TryLearnSkill(newSkill, null );
 			}
 		}
 	}
+	
 
-	public bool TryLearnSkill(string newSkill)
+	
+	#region LearSkillFlow
+
+	public void TryLearnSkill(string newSkill, Action<bool> onFinish)
 	{
-		if (skills.Count >= 4)
+		if (skills.Contains(newSkill))
 		{
-			Debug.Log("보유스킬이 4개입니다. 스킬 배울 수 없음");
-			return false;
-			//todo:가지고 있는 기술 지우기
-			//지우려고 하는 스킬이 비전머신이냐 여부에 따라 결정
-			//지우기 실패시 return false
+			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+				.ShowMessage(
+					ItemMessage.Get(ItemMessageKey.AlreadyKnow, pokeName, newSkill),()=>onFinish?.Invoke(false), true, true
+						);
+			return;
+		}
+		
+		if (skills.Count < 4)
+		{
+			skills.Add(newSkill);
+			ShowLearnSuccess(newSkill, onFinish);
+			return;
 		}
 
-		//지우기 성공 후 새스킬 배우기
-		skills.Add(newSkill);
-		Debug.Log($"{pokeName}은/는 {newSkill}을/를 배웠다!");
-		//Manager.UI.ShowPopupUI<UI_PopUp>("UI_Dialogue");
-		//todo:ui 띄우기
-		return true;
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+			.ShowMessage(
+				ItemMessage.Get(ItemMessageKey.LearnFail, pokeName,
+					newSkill), //어느 기술을 잊게 할껀지 다이얼로그 띄우고 -> 콜백으로 선택지 창 띄우기
+				() =>
+				{
+					Manager.UI.ShowConfirmPopup(
+						onYes: () =>
+						{
+							Manager.UI.CloseAllPopUp();
+							AskSkillToForget(newSkill, onFinish);
+						},
+						onNo: () =>
+						{
+							ShowCancelConfirmPopup(newSkill, onFinish);
+						});
+				}, true, true, true);
 
 	}
 
+	private void ShowCancelConfirmPopup(string newSkill, Action<bool> onFinish)
+	{
+		Manager.UI.CloseAllPopUp();
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+			.ShowMessage($"그렇다면...{newSkill}를(을)\n배우는 것을 그만두겠습니까?", () =>
+			{
+				Manager.UI.ShowConfirmPopup(
+					onYes: () =>
+					{
+						onFinish?.Invoke(false); // 진짜 취소
+					},
+					onNo: () =>
+					{
+						Manager.UI.CloseAllPopUp();
+						// 다시 가르칠지 묻는 창으로 복귀
+						TryLearnSkill(newSkill, onFinish);
+					});
+			},true,true,true);
+	}
+
+	private void AskSkillToForget(string newSkill, Action<bool> onFinish)
+	{
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+			.ShowMessage("어느 기술을\n잊게 하겠습니까?", () =>
+			{
+				ShowForgetChoicePopup(newSkill, onFinish);
+			}, true, true, true);
+	}
+
+	//잊게할 기술 선택 팝업창 띄우는 메소드
+	private void ShowForgetChoicePopup(string newSkill, Action<bool> onFinish)
+	{
+		var skillListUI = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
+		skillListUI.SetupOptions(new List<(string label, ISelectableAction action)>
+		{
+			($"{skills[0]}", new CustomAction(()=>ForgetAndLearn(0, newSkill, onFinish))),
+			($"{skills[1]}", new CustomAction(()=>ForgetAndLearn(1, newSkill, onFinish))),
+			($"{skills[2]}", new CustomAction(()=>ForgetAndLearn(2, newSkill, onFinish))),
+			($"{skills[3]}", new CustomAction(()=>ForgetAndLearn(3, newSkill, onFinish)))
+		}
+		);
+		skillListUI.OverrideCancelAction(new CustomAction(() =>
+		{
+			ShowCancelConfirmPopup(newSkill, onFinish);
+		}));
+		RectTransform boxRT = skillListUI.transform.GetChild(0).GetComponent<RectTransform>();
+		Canvas canvas = boxRT.GetComponentInParent<Canvas>();
+		Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
+		Util.SetRelativeVerticalOffset(boxRT, canvas, 0.34f);
+	}
+	
+	//기술 잊게하기
+	private void ForgetAndLearn(int idx, string newSkill, Action<bool> onFinish)
+	{
+		string oldSkill = skills[idx];
+		if (Manager.Data.SkillSData.GetSkillDataByName(skills[idx]).isHM) // HM은 삭제 불가라면
+		{
+			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage("중요한 기술입니다\n잊게할 수 없습니다!", () =>
+			{
+				ShowForgetChoicePopup(newSkill, onFinish); // 다시 선택
+			},true,true);
+			return;
+		}
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(ItemMessage.Get(ItemMessageKey.ForgetSkill,pokeName,oldSkill), () =>
+		{
+			skills[idx] = newSkill;
+			ShowLearnSuccess(newSkill, onFinish);
+		},true,true);
+	}
+	private void ShowLearnSuccess(string skill, Action<bool> onFinish)
+	{
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+			.ShowMessage(ItemMessage.Get(ItemMessageKey.LearnSuccess, pokeName, skill),
+				() =>
+				{
+					Manager.UI.CloseAllPopUp();
+					onFinish?.Invoke(true);
+				}, true, true);
+	}
+	
+	
+	#endregion
 
 	void CheckEvolution()
 	{

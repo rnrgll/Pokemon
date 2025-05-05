@@ -15,5 +15,7 @@ public static class ItemMessageKey
 	public const string LearnSuccess = "Item.LearnSuccess";
 	public const string LearnFail = "Item.LearnFail";
 	public const string CanNotLearn = "Item.CanNotLearn";
+	public const string ForgetSkill = "Item.ForgetSkill";
+	public const string AlreadyKnow = "Item.AlreadyKnow";
 
 }
