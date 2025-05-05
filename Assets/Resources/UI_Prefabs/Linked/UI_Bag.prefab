@@ -1101,7 +1101,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 165706742986111494, guid: 657e04bd803684926ac0778bf578dcb1, type: 3}
       propertyPath: m_Name
-      value: UI_SelectPopUp
+      value: UI_MainBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 165706742986111494, guid: 657e04bd803684926ac0778bf578dcb1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1013893392225749457, guid: 657e04bd803684926ac0778bf578dcb1, type: 3}
       propertyPath: m_Pivot.x

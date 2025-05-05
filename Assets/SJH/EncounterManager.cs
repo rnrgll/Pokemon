@@ -79,8 +79,8 @@ public class EncounterManager : Singleton<EncounterManager>
 					var player = Manager.Game.Player;
 					player.GetComponent<Player>().StopMoving();
 					// 씬전환
-					player.CurSceneName = "BattleScene";
-					SceneManager.LoadScene("BattleScene");
+					player.CurSceneName = "BattleScene_UIFix";
+					SceneManager.LoadScene("BattleScene_UIFix");
 					break;
 				}
 			}
