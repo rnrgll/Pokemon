@@ -25,7 +25,6 @@ public class Rollout : SkillS
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
 		int ran = Random.Range(0, 100);
-		// TODO : 5턴동안 강제로 공격이 구르기가 돼야함
 		bool isHit = defender.TryHit(attacker, defender, skill);
 		if (isHit)
 		{

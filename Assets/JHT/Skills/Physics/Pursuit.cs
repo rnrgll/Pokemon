@@ -19,7 +19,7 @@ public class Pursuit : SkillS
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		// TODO : 상대 포켓몬이 교체인걸 알아야함
+		// 상대 포켓몬이 교체인걸 알아야함 > 상대는 교체를 안하게 설계
 		if (defender.TryHit(attacker, defender, skill))
 		{
 			defender.TakeDamage(attacker, defender, skill);

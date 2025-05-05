@@ -16,6 +16,7 @@ public static class Manager
 
 	public static PokemonManager Poke { get { return PokemonManager.GetInstance(); } }
 	public static EncounterManager Encounter { get { return EncounterManager.GetInstance(); } }
+	public static EventManager Event { get { return EventManager.GetInstance(); } }
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 	private static void Initialize()
@@ -27,5 +28,6 @@ public static class Manager
 		DialogManager.CreateInstance();
 		GameManager.CreateInstance();
 		EncounterManager.CreateInstance();
+		EventManager.CreateInstance();
 	}
 }

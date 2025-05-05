@@ -18,7 +18,6 @@ public class QuickAttack: SkillS
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		// TODO : 선제공격 구현하기
 		if (defender.TryHit(attacker, defender, skill))
 		{
 			defender.TakeDamage(attacker, defender, skill);

@@ -18,6 +18,12 @@ public class PokemonManager : Singleton<PokemonManager>
 	public Pokémon enemyPokemon;
 	// 배틀할 상대 포켓몬들
 	public List<Pokémon> enemyParty;
+	
+	// 필드에 따라다니는 포켓몬
+	public GameObject fieldPokemon;
+
+	// 배틀을 할 트레이너 데이터
+	public TrainerData enemyData;
 
 	void Start()
 	{
@@ -95,6 +101,56 @@ public class PokemonManager : Singleton<PokemonManager>
 		foreach (var poke in party)
 		{
 			poke.pokemonBattleStack = new PokemonBattleStat(0);
+		}
+	}
+
+	// 필드에 포켓몬 생성
+	public void FieldPokemonInstantiate()
+	{
+		FieldPokemonDestroy();
+
+		Pokémon poke = GetFirtstPokemon();
+
+		if (poke == null)
+			return;
+
+		Follower follower = Manager.Data.SJH_PokemonData.GetFieldPokemon(poke.pokeName);
+		Player player = Manager.Game.Player;
+
+		if (follower == null)
+			return;
+
+		fieldPokemon = Instantiate(follower.gameObject, player.transform.position, Quaternion.identity);
+	}
+
+	public void FieldPokemonInstantiate(string pokeName)
+	{
+		FieldPokemonDestroy();
+
+		Follower follower = Manager.Data.SJH_PokemonData.GetFieldPokemon(pokeName);
+		Player player = Manager.Game.Player;
+
+		if (follower == null)
+			return;
+
+		// 플레이어 오른쪽에 생성
+		//Vector3 spawnPos = player.transform.position + Vector3.right * 2f;
+		fieldPokemon = Instantiate(follower.gameObject, player.transform.position, Quaternion.identity);
+	}
+
+	public void FieldPokemonDestroy()
+	{
+		if (fieldPokemon != null)
+		{
+			Destroy(fieldPokemon);
+		}
+	}
+
+	public void ClearPartyState()
+	{
+		foreach (var poke in party)
+		{
+			poke.StackReset();
 		}
 	}
 }

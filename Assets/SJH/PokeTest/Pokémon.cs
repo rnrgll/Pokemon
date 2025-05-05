@@ -254,7 +254,6 @@ public class Pokémon : MonoBehaviour
 	public void AddExp(int baseExp)
 	{
 		// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
-		// TODO : 경험치를 주는쪽에서 계산할지 받는쪽에서 계산할지
 		Debug.Log($"{pokeName} : {baseExp} 경험치를 얻었습니다!");
 		curExp += baseExp;
 
@@ -499,7 +498,6 @@ public class Pokémon : MonoBehaviour
 
 	public void TakeDamage(int damage)
 	{
-		// TODO : 대미지 입음
 		hp -= damage;
 		if (hp < 0)
 		{
@@ -652,7 +650,6 @@ public class Pokémon : MonoBehaviour
 		float typeEffectiveness = TypesCalculator(attackSkill.type, defender);
 
 		int effectiveness = (int)(typeEffectiveness * 100);
-		Debug.Log($"테스트로그 : {typeEffectiveness} / {effectiveness}");
 		switch (effectiveness)
 		{
 			case 0: Debug.Log($"배틀로그 : 그러나 {defender.pokeName} 에게는 효과가 없었다..."); break;
@@ -1126,7 +1123,7 @@ public class Pokémon : MonoBehaviour
 		int level = attacker.level;
 		int power = (int)skill.damage;
 
-		bool isCritical = IsCritical(attacker.pokemonBattleStack.critical + (skill.name == "베어가르기" ? 1 : 0));
+		bool isCritical = IsCritical(attacker.pokemonBattleStack.critical + (skill.name == "베어가르기" || skill.name == "잎날가르기" ? 1 : 0));
 
 		// 물리 / 특수 체크
 		bool isSpecial = skill.skillType == SkillType.Special;
@@ -1238,7 +1235,6 @@ public class Pokémon : MonoBehaviour
 
 	public void TurnEnd()
 	{
-		// TODO : 턴종료들 여기에 상태이상같은거
 		// 김밥말이
 		int ran = UnityEngine.Random.Range(0, 100);
 		if (isBind)
@@ -1448,4 +1444,38 @@ public class Pokémon : MonoBehaviour
 		// 최소 대미지 1
 		return Mathf.Max(1, (int)damage);
 	}
+
+	public void StackReset()
+	{
+		// 분노
+		isAnger = false;
+		angerStack = 0;
+		// 구르기
+		isRollout = false;
+		rolloutStack = 0;
+		// 김밥말이
+		isBind = false;
+		bindStack = 0;
+		// 솔라빔
+		isCharge = false;
+		// 길동무
+		isDestinyBond = false;
+		// 리플렉터
+		isReflect = false;
+		reflectCount = 0;
+		// 리플렉터
+		isLightScreen = false;
+		lightScreenCount = 0;
+		// 저주
+		isCurse = false;
+		// 검은눈빛, 거미집
+		isCantRun = false;
+		// 신비의부적
+		isSafeguard = false;
+		safeguardCount = 0;
+		// 꿰뚫어보기
+		isForesight = false;
+		// 원한, 따라하기
+		prevSkillName = null;
+}
 }
