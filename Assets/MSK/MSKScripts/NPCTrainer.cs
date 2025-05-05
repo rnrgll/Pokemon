@@ -2,38 +2,53 @@ using UnityEngine;
 
 public class NPCTrainer : MonoBehaviour
 {
+
 	public float detectionRange = 8f;
 	public bool isChasingPlayer { get; private set; } = false;
-	
-	bool isBattled;
 
+	bool isBattled;
 	private NpcMover npcMover;
-	Vector2 currentDirection = Vector2.down;
+	Vector2 currentDirection;
 	Vector2 playerPos;
+	NpcTurnRound NpcTurnRound;
+	Animator anim;
+
+	Coroutine detectCoroutine;
+
+
 	private void Awake()
-	{	
-		isBattled = false;	//	기본 전투 미진행
+	{
+		isBattled = false;  //	기본 전투 미진행
 		npcMover = GetComponent<NpcMover>();
+		anim = GetComponent<Animator>();
+		NpcTurnRound = GetComponent<NpcTurnRound>();
 	}
-	private void FixedUpdate()
-	{	// 전투하지 않았을 경우
+
+	private void Update()
+	{
+		// 전투하지 않았을 경우
 		if (!isBattled)
 		{
+			currentDirection = NpcTurnRound.dir;
 			isChasingPlayer = PcDetect(currentDirection, out playerPos);
 			Debug.Log($"추격상태 : {isChasingPlayer}");
 			if (isChasingPlayer)
 			{
+
 				Debug.Log($"추격 호출");
-				npcMover.MoveTowardsDirection(playerPos);
+				NpcTurnRound.StopRotation();
+				npcMover.MoveTowardsPosition(playerPos - currentDirection);
 			}
 		}
+
 	}
 
 	private bool PcDetect(Vector2 currentDirection, out Vector2 playerPos)
 	{
+
 		Vector2 startPos;
 		startPos.x = transform.position.x;
-		startPos.y = transform.position.y - 0.5f;
+		startPos.y = transform.position.y - 0.1f;   // PC box에 위치 조정
 
 		playerPos.x = 0;
 		playerPos.y = 0;
@@ -53,6 +68,8 @@ public class NPCTrainer : MonoBehaviour
 			{
 				playerPos.x = hit.transform.position.x;
 				playerPos.y = hit.transform.position.y;
+
+				Debug.Log($"{playerPos.x}, {playerPos.y}로 이동");
 				return true;
 			}
 		}
