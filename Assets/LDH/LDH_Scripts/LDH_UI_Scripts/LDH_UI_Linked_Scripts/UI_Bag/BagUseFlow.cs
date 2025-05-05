@@ -95,7 +95,7 @@ public class BagUseFlow
 				//2. 가르치겠냐는 메시지
 				_bag.SetDescription($"{_item.ItemName}를(을)\n포켓몬에게 가르치겠습니까?");
 				//2. 예/아니오 팝업 -> //3.포켓몬 선택 및 사용처리 콜백 연결
-				_bag.PopupManager.ShowConfirmPopup(ShowPokemon_TMFlow, 
+				Manager.UI.ShowConfirmPopup(ShowPokemon_TMFlow, 
 					()=>
 					{
 						_bag.Refresh();
