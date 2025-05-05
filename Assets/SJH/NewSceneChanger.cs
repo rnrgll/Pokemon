@@ -22,9 +22,7 @@ public class NewSceneChanger : MonoBehaviour
 			{
 				SceneManager.LoadScene(exitSceneName, LoadSceneMode.Additive);
 				// 이동할 씬 저장
-				Debug.Log("사운드 이벤트 실행");
-				player.curSceneName = SceneManager.GetActiveScene().name;
-				player.OnSceneChangeEvent?.Invoke(player.curSceneName);
+				player.CurSceneName = SceneManager.GetActiveScene().name;
 			}
 		}
 	}
@@ -38,17 +36,15 @@ public class NewSceneChanger : MonoBehaviour
 			// 콜라이더를 나갈 때 방향이 같으면 이전 씬 언로드
 			if (player != null && player.currentDirection == exitDirection && SceneManager.GetSceneByName(exitSceneName).isLoaded)
 			{
-				if (player.curSceneName != exitSceneName)
+				if (player.CurSceneName != exitSceneName)
 				{
-					SceneManager.UnloadSceneAsync(player.curSceneName);
+					SceneManager.UnloadSceneAsync(player.CurSceneName);
 				}
-				Debug.Log("사운드 이벤트 실행");
-				player.curSceneName = SceneManager.GetActiveScene().name;
-				player.OnSceneChangeEvent?.Invoke(player.curSceneName);
+				player.CurSceneName = SceneManager.GetActiveScene().name;
 			}
 			else if (player != null && player.currentDirection != exitDirection)
 			{
-				if (player.curSceneName != exitSceneName && SceneManager.GetSceneByName(exitSceneName).isLoaded)
+				if (player.CurSceneName != exitSceneName && SceneManager.GetSceneByName(exitSceneName).isLoaded)
 				{
 					SceneManager.UnloadSceneAsync(exitSceneName);
 				}

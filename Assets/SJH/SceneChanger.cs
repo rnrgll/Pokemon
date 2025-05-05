@@ -77,9 +77,7 @@ public class SceneChanger : MonoBehaviour
 		pc.currentDirection = keyDirection;
 		pc.AnimChange();
 
-		Debug.Log("사운드 이벤트 실행");
-		pc.curSceneName = exitSceneName;
-		pc.OnSceneChangeEvent?.Invoke(pc.curSceneName);
+		pc.CurSceneName = exitSceneName;
 
 		while (!asyncLoad.isDone)
 		{

@@ -88,13 +88,19 @@ public class Pokémon : MonoBehaviour
 	public int safeguardCount;
 
 	[Tooltip("꿰뚫어보기 관리용")]
-	public bool isForesight;	// Defender
+	public bool isForesight;    // Defender
 
 	[Tooltip("원한 관리용")]
 	public string prevSkillName;
 
 	[Tooltip("잠자기 관리용")]
+	public int restCount;
+
+	[Tooltip("상태이상 : 수면 관리용")]
 	public int sleepCount;
+
+	[Tooltip("상태이상 : 혼란 관리용")]
+	public int confusionCount;
 
 	#endregion
 
@@ -143,7 +149,7 @@ public class Pokémon : MonoBehaviour
 
 		// 배틀용 스택 0으로 초기화
 		pokemonBattleStack = new PokemonBattleStat(0);
-		
+
 	}
 
 	// 개체값 종족값 레벨을 계산해서 기본 스탯 반환
@@ -445,7 +451,7 @@ public class Pokémon : MonoBehaviour
 			case "매그니튜드":
 				attackSkill.damage = 0;
 				int magnitudeRandom = UnityEngine.Random.Range(1, 8);
-				
+
 				switch (magnitudeRandom)
 				{
 					case 1: attackSkill.damage = 10; break;
@@ -694,7 +700,8 @@ public class Pokémon : MonoBehaviour
 				else
 				{
 					defender.condition = StatusCondition.Sleep;
-					Debug.Log($"배틀로그 : {defender.pokeName} 은/는 {skill.name} 기술로 수면 상태 {ran}");
+					defender.sleepCount = UnityEngine.Random.Range(1, 7);
+					Debug.Log($"배틀로그 : {defender.pokeName} 은/는 {skill.name} 기술로 잠들어 버렸다! {ran}");
 				}
 				break;
 
@@ -803,7 +810,7 @@ public class Pokémon : MonoBehaviour
 					int sleepHealAmount = attacker.Heal(maxHp);
 					if (attacker.condition != StatusCondition.Faint)
 						attacker.condition = StatusCondition.Sleep;
-					sleepCount = 3; // 2로하면 턴종료가 바로되서 1턴되버림
+					restCount = 3; // 2로하면 턴종료가 바로되서 1턴되버림
 					Debug.Log($"배틀로그 : {defender.pokeName} 은/는 {skill.name} 기술로 상태이상과 체력을 {sleepHealAmount} 회복했다! {ran}");
 				}
 				break;
@@ -863,7 +870,7 @@ public class Pokémon : MonoBehaviour
 				break;
 
 			case "광합성":
-				int healAmount = attacker.Heal(maxHp/2);
+				int healAmount = attacker.Heal(maxHp / 2);
 				Debug.Log($"배틀로그 : {attacker.pokeName} 은/는 {skill.name} 기술로 체력을 {healAmount} 회복 {ran}");
 				break;
 
@@ -1103,7 +1110,7 @@ public class Pokémon : MonoBehaviour
 		{
 			int curseDamage = Mathf.Max(1, maxHp / 4);
 			hp -= curseDamage;
-			Debug.Log($"{pokeName} 은/는 저주로 인해 체력 {curseDamage} 감소 {ran}");
+			Debug.Log($"배틀로그 : {pokeName} 은/는 저주로 인해 체력 {curseDamage} 감소 {ran}");
 		}
 
 		// 리플렉터
@@ -1140,16 +1147,42 @@ public class Pokémon : MonoBehaviour
 			}
 		}
 
-		// 잠자기
-		if (condition == StatusCondition.Sleep && sleepCount > 0)
+		// 상태이상 체크
+		switch (condition)
 		{
-			sleepCount--;
-			Debug.Log($"배틀로그 : {pokeName}의 잠자기 {sleepCount}턴 남음 {ran}");
-			if (sleepCount <= 0)
-			{
-				condition = StatusCondition.Normal;
-				Debug.Log($"배틀로그 : {pokeName} 은/는 잠에서 깨어났다 {ran}");
-			}
+			case StatusCondition.Sleep:
+				if (restCount > 0)
+				{
+					restCount--;
+					Debug.Log($"배틀로그 : {pokeName}의 잠자기! {restCount}턴 남음 {ran}");
+					if (restCount <= 0)
+					{
+						condition = StatusCondition.Normal;
+						Debug.Log($"배틀로그 : {pokeName} 은/는 잠에서 깨어났다 {ran}");
+					}
+				}
+
+				if (sleepCount > 0)
+				{
+					sleepCount--;
+					Debug.Log($"배틀로그 : {pokeName} 은/는 쿨쿨 잠들어 있다 {restCount}턴 남음 {ran}");
+					if (sleepCount <= 0)
+					{
+						condition = StatusCondition.Normal;
+						Debug.Log($"배틀로그 : {pokeName} 은/는 잠에서 깨어났다 {ran}");
+					}
+				}
+				break;
+			case StatusCondition.Burn: // 1/8
+				int burnDamage = Mathf.Max(1, maxHp / 8);
+				hp -= burnDamage;
+				Debug.Log($"배틀로그 : {pokeName} 은/는 화상 데미지를 입었다! [{burnDamage}] {ran}");
+				break;
+			case StatusCondition.Poison:
+				int poisonDamage = Mathf.Max(1, maxHp / 8);
+				hp -= poisonDamage;
+				Debug.Log($"배틀로그 : {pokeName} 은/는 독에 의한 데미지를 입었다! [{poisonDamage}] {ran}");
+				break;
 		}
 
 		// 턴 종료 후 사망 체크
@@ -1163,9 +1196,105 @@ public class Pokémon : MonoBehaviour
 		{
 			hp = 0;
 			isDead = true;
+			condition = StatusCondition.Faint;
 			Debug.Log($"배틀로그 : {pokeName} 은/는 쓰러졌다! {ran}");
 			return true;
 		}
 		return false;
+	}
+
+	public bool CanActionCheck()
+	{
+		int ran = UnityEngine.Random.Range(0, 100);
+		switch (condition)
+		{
+			case StatusCondition.Poison:
+				{
+					return true;
+				}
+			case StatusCondition.Burn:
+				{
+					return true;
+				}
+			case StatusCondition.Freeze:
+				{
+					// 해제되어도 공격불가
+					if (UnityEngine.Random.Range(0, 1f) > 0.1f)
+					{
+						Debug.Log($"배틀로그 : {pokeName} 은/는 얼어버려서 움직일 수 없다! {ran}");
+						return false;
+					}
+					else
+					{
+						Debug.Log($"배틀로그 : {pokeName} 은/는 얼음이 해제됐다! {ran}");
+						condition = StatusCondition.Normal;
+						return false;
+					}
+				}
+			case StatusCondition.Sleep:
+				{
+					Debug.Log($"배틀로그 : {pokeName} 은/는 쿨쿨 잠들어 있다 {restCount}턴 남음 {ran}");
+					return false;
+				}
+			case StatusCondition.Paralysis:
+				{
+					if (UnityEngine.Random.Range(0, 1f) > 0.25f)
+					{
+						Debug.Log($"배틀로그 : {pokeName} 은/는 몸이 저려서 움직일 수 없다! {ran}");
+						return false;
+					}
+					return true;
+				}
+			case StatusCondition.Confusion:
+				{
+					confusionCount--;
+					if (confusionCount <= 0)
+					{
+						Debug.Log($"배틀로그 : {pokeName}의 혼란이 풀렸다! {ran}");
+						condition = StatusCondition.Normal;
+					}
+					else
+					{
+						// 50% 확률로 실패
+						if (UnityEngine.Random.Range(0f, 1f) < 0.5f)
+						{
+							int damage = GetConfusionDamage(); // 물리, 타입무시, 40 고정
+							TakeDamage(damage);
+							Debug.Log($"배틀로그 : {pokeName} 은/는 영문도 모른 채 자신을 공격했다! {ran}");
+						}
+					}
+					return false;
+				}
+			case StatusCondition.Flinch:
+				{
+					// 한턴 날리고 행동 가능
+					Debug.Log($"배틀로그 : {pokeName} 은/는 풀이 죽어 기술을 쓸 수 없다! {ran}");
+					condition = StatusCondition.Normal;
+					return false;
+				}
+			default:	// 노말
+				return true;
+		}
+	}
+
+	// 혼란 자신 공격 대미지 계산
+	public int GetConfusionDamage()
+	{
+		int power = 40;
+
+		// 물리
+		int attackStat = GetModifyStat(pokemonStat.attack, pokemonBattleStack.attack);
+		int defenseStat = GetModifyStat(pokemonStat.defense, pokemonBattleStack.defense);
+
+		float damageRate = 1f;
+
+		// 랜덤 난수 0.85 ~ 1
+		damageRate *= UnityEngine.Random.Range(0.85f, 1f);
+
+		// 데미지 계산 공식
+		float damage = (((((2f * level) / 5 + 2) * power * attackStat / defenseStat) / 50) + 2) * damageRate;
+
+		// 최소 대미지 1
+		return Mathf.Max(1, (int)damage);
 	}
 }

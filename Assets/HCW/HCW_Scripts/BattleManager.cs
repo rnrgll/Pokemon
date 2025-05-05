@@ -279,6 +279,7 @@ public class BattleManager : MonoBehaviour
 				Debug.Log($"플레이어 액션: {selectedAction}");
 				yield return battleDelay;
 			}
+
 			Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
 			// 턴카운트 증가
 			currentTurn++;

@@ -44,8 +44,18 @@ public class Player : MonoBehaviour
 
 	[SerializeField] public Queue<Vector3> prevPosQueue = new Queue<Vector3>();
 
-	[SerializeField] public string curSceneName;
-	[SerializeField] public Action<string> OnSceneChangeEvent;
+	[SerializeField] string curSceneName;
+	public string CurSceneName
+	{
+		get => curSceneName;
+		set
+		{
+			Debug.Log("씬 이름 변경 / 사운드 이벤트 실행");
+			curSceneName = value;
+			OnSceneChangeEvent?.Invoke(curSceneName);
+		}
+	}
+	[SerializeField] public event Action<string> OnSceneChangeEvent;
 
 	Animator anim;
 
@@ -59,7 +69,7 @@ public class Player : MonoBehaviour
 		// 점프 시간
 		jumpTime = new WaitForSeconds(0.03f);
 
-		curSceneName = SceneManager.GetActiveScene().name;
+		CurSceneName = SceneManager.GetActiveScene().name;
 	}
 
 	private void OnEnable()
