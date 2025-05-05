@@ -31,7 +31,7 @@ public class NPCController : MonoBehaviour, IInteractable
 		anim.SetBool("npcMoving", false);
 		if (Manager.Dialog.isTyping == false)
 		{
-			npcMover.npcState = Define.NpcState.Talking;
+			Manager.Dialog.npcState = Define.NpcState.Talking;
 			Manager.Dialog.StartDialogue(dialog);
 		}
 	}

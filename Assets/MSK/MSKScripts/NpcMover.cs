@@ -18,7 +18,6 @@ public class NpcMover : MonoBehaviour
 
 	private Coroutine moveCoroutine;
 
-	public Define.NpcState npcState = Define.NpcState.Idle;
 
 	private void Awake()
 	{
@@ -28,12 +27,13 @@ public class NpcMover : MonoBehaviour
 
 	private void Update()
 	{
-		if (npcState != NpcState.Talking && !npcMoving)
+		if (Manager.Dialog.npcState != NpcState.Talking && !npcMoving)
 		{
 			moveCoroutine = StartCoroutine(MoveOneStep());
 		}
 	}
 
+	//	사전 입력된 좌료로 이동
 	private IEnumerator MoveOneStep()
 	{
 		npcMoving = true;
@@ -82,11 +82,18 @@ public class NpcMover : MonoBehaviour
 		Vector2 targetPos = (Vector2)transform.position + direction;
 
 		// 애니메이션 방향 설정
-		anim.SetFloat("x", direction.x);
-		anim.SetFloat("y", direction.y);
-		anim.SetBool("npcMoving", true);
-
-		transform.position = Vector2.Lerp(transform.position, targetPos, moveSpeed * Time.deltaTime);
+		if (targetPos.x == transform.position.x)
+		{
+			anim.SetFloat("y", direction.y);
+			anim.SetBool("npcMoving", true);
+			transform.position = Vector2.Lerp(transform.position, targetPos, moveSpeed * Time.deltaTime);
+		}
+		else if (targetPos.y == transform.position.y)
+		{			
+			anim.SetFloat("x", direction.x);
+			anim.SetBool("npcMoving", true);
+			transform.position = Vector2.Lerp(transform.position, targetPos, moveSpeed * Time.deltaTime);
+		}
 	}
 
 	//	코루틴 정지
@@ -100,7 +107,7 @@ public class NpcMover : MonoBehaviour
 		npcMoving = false;
 		anim.SetBool("npcMoving", false);
 
-		npcState = NpcState.Idle;  // 멈출 때 Idle 상태로 변경
+		Manager.Dialog.npcState = NpcState.Idle;  // 멈출 때 Idle 상태로 변경
 	}
 
 	private bool IsWalkAble(Vector2 currentDirection)
