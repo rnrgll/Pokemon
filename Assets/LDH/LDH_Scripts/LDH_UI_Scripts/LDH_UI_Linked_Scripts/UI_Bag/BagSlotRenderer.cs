@@ -18,6 +18,8 @@ public class BagSlotRenderer
     private UI_ItemSlot _stopSlotInstance;
     private float _slotHeight = -1f;
 
+    //나열된 
+    private List<InventorySlot> _curItemList;
     // 현재 표시된 슬롯들
     public List<UI_ItemSlot> ActiveSlots { get; private set; } = new();
     // 현재 선택된 아이템
@@ -72,7 +74,7 @@ public class BagSlotRenderer
         _stopSlotInstance.transform.SetAsLastSibling();
 
         ActiveSlots = GetActiveSlots();
-
+        ResetAllSlotStates();
         
     }
     
@@ -134,4 +136,18 @@ public class BagSlotRenderer
 
         return slots;
     }
+    
+    
+    public void ResetAllSlotStates()
+    {
+	    for (int i = 0; i < ActiveSlots.Count; i++)
+	    {
+		    // if (i == activeIdx)
+			   //  ActiveSlots[i].Select(); // 꽉찬 화살표 + 활성화
+		    // else
+			    ActiveSlots[i].Deselect(); // 빈 화살표 + 비활성화
+			    ActiveSlots[i].ChangeArrow(true);
+	    }
+    }
+
 }
