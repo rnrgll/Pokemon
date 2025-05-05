@@ -2600,7 +2600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &1607383482685770324
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3796,7 +3796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &4416224863096383594
 GameObject:
   m_ObjectHideFlags: 0
@@ -4825,6 +4825,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -35
       objectReference: {fileID: 0}
+    - target: {fileID: 7371418114880051381, guid: 95f87832ad90949a8977e90a5029f8d1, type: 3}
+      propertyPath: m_Name
+      value: PokemonButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794932180820688706, guid: 95f87832ad90949a8977e90a5029f8d1, type: 3}
+      propertyPath: m_Name
+      value: RunButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8088602557672652108, guid: 95f87832ad90949a8977e90a5029f8d1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4836,6 +4844,10 @@ PrefabInstance:
     - target: {fileID: 8088602557672652108, guid: 95f87832ad90949a8977e90a5029f8d1, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418386479337345092, guid: 95f87832ad90949a8977e90a5029f8d1, type: 3}
+      propertyPath: m_Name
+      value: BagButton
       objectReference: {fileID: 0}
     - target: {fileID: 9003322674092542410, guid: 95f87832ad90949a8977e90a5029f8d1, type: 3}
       propertyPath: m_Name
