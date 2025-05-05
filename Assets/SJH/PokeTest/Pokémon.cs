@@ -652,7 +652,6 @@ public class Pokémon : MonoBehaviour
 		float typeEffectiveness = TypesCalculator(attackSkill.type, defender);
 
 		int effectiveness = (int)(typeEffectiveness * 100);
-		Debug.Log($"테스트로그 : {typeEffectiveness} / {effectiveness}");
 		switch (effectiveness)
 		{
 			case 0: Debug.Log($"배틀로그 : 그러나 {defender.pokeName} 에게는 효과가 없었다..."); break;

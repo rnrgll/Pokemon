@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 using static Define;
 
 public class SJH_PokemonData
@@ -111,8 +112,9 @@ public class SJH_PokemonData
 	public Dictionary<int, string> SkillDic;
 	// 기본 경험치
 	public int BaseExp;
-	// TODO : 스프라이트 1, 스프라이트 2
-
+	
+	// 따라다니는 포켓몬 오브젝트
+	Dictionary<string, Follower> fieldPokemon = new();
 
 	public void Init()
 	{
@@ -1020,6 +1022,17 @@ public class SJH_PokemonData
 				backSprites.Add(name, sprite);
 			}
 		}
+
+		Follower[] followers = Resources.LoadAll<Follower>("PokemonField_Prefabs");
+		foreach (Follower prefab in followers)
+		{
+			string name = prefab.name;
+
+			if (prefab != null && !fieldPokemon.ContainsKey(name))
+			{
+				fieldPokemon.Add(name, prefab);
+			}
+		}
 	}
 
 	public SJH_PokemonData GetPokemonData(int index)
@@ -1052,6 +1065,15 @@ public class SJH_PokemonData
 	public Sprite GetBattleBackSprite(string pokeName)
 	{
 		var check = backSprites[pokeName];
+		if (check == null)
+			return null;
+		else
+			return check;
+	}
+
+	public Follower GetFieldPokemon(string pokeName)
+	{
+		var check = fieldPokemon[pokeName];
 		if (check == null)
 			return null;
 		else

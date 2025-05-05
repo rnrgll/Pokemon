@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventManager : MonoBehaviour
+public class EventManager : Singleton<EventManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public static EventManager Get => GetInstance();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

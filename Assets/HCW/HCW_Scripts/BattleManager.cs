@@ -433,8 +433,7 @@ public class BattleManager : MonoBehaviour
 					//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 
 					// 상대 포켓몬 파괴
-					Destroy(Manager.Poke.enemyPokemon);
-					Destroy(enemyPokemon);
+					Destroy(Manager.Poke.enemyPokemon.gameObject);
 
 					// 씬활성화
 					setting.allowSceneActivation = true;
@@ -443,7 +442,7 @@ public class BattleManager : MonoBehaviour
 			case "Lose":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 게임 오버: 플레이어 전멸");
-					Destroy(Manager.Poke.enemyPokemon);
+					Destroy(Manager.Poke.enemyPokemon.gameObject);
 
 					// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
 					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
@@ -454,7 +453,7 @@ public class BattleManager : MonoBehaviour
 					// 코루틴 초기화
 					StopCoroutine(battleCoroutine);
 					battleCoroutine = null;
-					Destroy(Manager.Poke.enemyPokemon);
+					Destroy(Manager.Poke.enemyPokemon.gameObject);
 
 					setting.allowSceneActivation = true;
 				}
@@ -471,7 +470,7 @@ public class BattleManager : MonoBehaviour
 					// 코루틴 초기화
 					StopCoroutine(battleCoroutine);
 					battleCoroutine = null;
-					Destroy(Manager.Poke.enemyPokemon);
+					Destroy(Manager.Poke.enemyPokemon.gameObject);
 
 					setting.allowSceneActivation = true;
 				}

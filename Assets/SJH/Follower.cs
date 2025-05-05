@@ -27,13 +27,14 @@ public class Follower : MonoBehaviour
 		player = Manager.Game.Player.transform;
 		p = player.gameObject.GetComponent<Player>();
 
-		followCoroutine = StartCoroutine(FollowPlayer());
 
 		anim = GetComponent<Animator>();
 
 		curDirection = p.currentDirection;
 		anim.SetFloat("x", curDirection.x);
 		anim.SetFloat("y", curDirection.y);
+
+		followCoroutine = StartCoroutine(FollowPlayer());
 	}
 
 	IEnumerator FollowPlayer()
