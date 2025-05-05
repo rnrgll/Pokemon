@@ -28,14 +28,13 @@ public class FlameWheel : SkillS
 		{
 			defender.TakeDamage(attacker, defender, skill);
 			// 얼음 해제
-			if (defender.condition == StatusCondition.Freeze)
-				defender.condition = StatusCondition.Normal;
+			defender.RestoreStatus(StatusCondition.Freeze);
 
 			// 10% 화상
 			float effectRan = Random.Range(0f, 1f);
 			if (effectRan < 0.1f)
 			{
-				defender.condition = StatusCondition.Burn;
+				defender.TakeEffect(attacker, defender, skill);
 			}
 		}
 	}

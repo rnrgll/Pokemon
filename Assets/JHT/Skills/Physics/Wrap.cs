@@ -24,14 +24,7 @@ public class Wrap : SkillS
 		if (defender.TryHit(attacker, defender, skill))
 		{
 			defender.TakeDamage(attacker, defender, skill);
-			int effectRan = Random.Range(2, 6);
-			// TODO : 포켓몬 김밥말이 상태 추가 필요 Bind
-			// 김밥말이 상태일 때는 교체 및 도망가기 불가하게
-			int bindTurns = Random.Range(2, 6); // 2~5턴
-			defender.isBind = true;
-			defender.bindStack = bindTurns;
-
-			Debug.Log($"{defender.pokeName} 은/는 {bindTurns}턴 동안 Bind");
+			defender.TakeEffect(attacker, defender, skill);
 		}
 	}
 

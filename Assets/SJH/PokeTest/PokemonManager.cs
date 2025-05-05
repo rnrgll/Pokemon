@@ -79,4 +79,22 @@ public class PokemonManager : Singleton<PokemonManager>
 		return false;
 	}
 
+	public Pokémon GetFirtstPokemon()
+	{
+		foreach (var poke in party)
+		{
+			if (!poke.isDead)
+				return poke;
+		}
+		return null;
+	}
+
+	// 플레이어 파티 랭크 초기화
+	public void PartyBattleStatInit()
+	{
+		foreach (var poke in party)
+		{
+			poke.pokemonBattleStack = new PokemonBattleStat(0);
+		}
+	}
 }

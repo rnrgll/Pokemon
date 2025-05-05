@@ -27,7 +27,7 @@ public class Lick : SkillS
 			float effectRan = Random.Range(0f, 1f);
 			if (effectRan < 0.1f)
 			{
-				defender.condition = StatusCondition.Paralysis;
+				defender.TakeEffect(attacker, defender, skill);
 			}
 		}
 	}

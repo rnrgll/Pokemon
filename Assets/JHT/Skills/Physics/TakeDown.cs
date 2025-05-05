@@ -24,7 +24,12 @@ public class TakeDown: SkillS
 		{
 			int totalDamage = defender.GetTotalDamage(attacker, defender, skill);
 			defender.TakeDamage(attacker, defender, skill);
-			attacker.hp -= totalDamage / 4;
+			int reboundDamage = totalDamage / 4;
+			attacker.hp -= reboundDamage;
+			Debug.Log($"배틀로그 : {attacker.pokeName} 은/는 반동으로 {reboundDamage} 대미지를 입었다!");
+
+			// 안에서 체크하니 그냥 실행
+			attacker.GetPokemonDeadCheck();
 		}
 	}
 }

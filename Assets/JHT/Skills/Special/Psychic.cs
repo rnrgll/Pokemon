@@ -26,7 +26,7 @@ public class Psychic : SkillS
 			float effectRan = Random.Range(0f, 1f);
 			if (effectRan < 0.1f)
 			{
-				defender.pokemonBattleStack.speDefense--;
+				defender.TakeEffect(attacker, defender, skill);
 			}
 		}
 	}
