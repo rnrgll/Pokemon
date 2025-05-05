@@ -28,7 +28,7 @@ public class LDH_RopeTest : MonoBehaviour
 		Manager.Game.SetDungeonState(true);
 		
 		Manager.Poke.AddEnemyPokemon("치코리타", 20);
-		Manager.Game.SetBattleState(true,iswild,Manager.Game.EnemyPokemon);
+		Manager.Game.SetBattleState(false,iswild,Manager.Game.EnemyPokemon);
 
 	}
 }

@@ -76,6 +76,7 @@ public class BagSlotRenderer
         ActiveSlots = GetActiveSlots();
         ResetAllSlotStates();
         
+        
     }
     
     // 커서 이동 시 선택 상태 변경, 설명 갱신, 스크롤 이동까지 처리
@@ -87,7 +88,16 @@ public class BagSlotRenderer
         if (curIdx < ActiveSlots.Count) ActiveSlots[curIdx].Select();
 
         UpdateDescription(curIdx, data);
-        ScrollToIndex(curIdx);
+        int direction;
+        if (curIdx == preIdx)
+        {
+	        direction = 0;
+        }
+        else
+        {
+	        direction = (int)Mathf.Sign(curIdx - preIdx);
+        }
+        ScrollWithinBoundary(curIdx,direction);
     }
 
     //설명 갱신
@@ -110,16 +120,70 @@ public class BagSlotRenderer
     }
 
     
-    private void ScrollToIndex(int index)
+    private void ScrollWithinBoundary(int index, int direction)
     {
+	    Debug.Log("<color=red>뷰포트 갱신</color>");
         if (_slotHeight < 0f)
         {
             _slotHeight = _slotPrefab.GetComponent<RectTransform>().rect.height;
+            Debug.Log($"슬롯 높이 : {_slotHeight}");
         }
+        
+        // 전체 콘텐츠   뷰포트  슬롯 
+        RectTransform contentRT = _scrollRect.content;
+        RectTransform viewportRT = _scrollRect.viewport;
+        RectTransform slotRT = ActiveSlots[index].GetComponent<RectTransform>();
+		
+        Debug.Log($"뷰포트 높이 : {viewportRT.rect.height}");
+        
+        // 슬롯의 월드 영역
+        Vector3[] slotWorldCorners = new Vector3[4];
+        slotRT.GetWorldCorners(slotWorldCorners);
 
-        float offset = index * _slotHeight;
-        Vector2 pos = _scrollRect.content.anchoredPosition;
-        _scrollRect.content.anchoredPosition = new Vector2(pos.x, offset);
+        // 뷰포트의 월드 영역
+        Vector3[] viewportWorldCorners = new Vector3[4];
+        viewportRT.GetWorldCorners(viewportWorldCorners);
+        
+        float slotTop = slotWorldCorners[1].y;
+        float slotBottom = slotWorldCorners[0].y;
+        float viewportTop = viewportWorldCorners[1].y;
+        float viewportBottom = viewportWorldCorners[0].y;
+
+        
+        bool isAbove = slotTop > viewportTop;     // 위로 삐져나감
+        bool isBelow = slotBottom < viewportBottom; // 아래로 삐져나감
+
+        
+        
+        // 뷰포트 밖으로 나간 경우만 이동
+        if (isAbove || isBelow)
+        {
+	        float offset;
+	        if (direction != 0)
+	        {
+		        offset = direction * _slotHeight;
+	        }
+	        else
+	        {
+		        if (slotTop > viewportTop) offset = -(slotTop - viewportTop);
+		        else if (slotBottom < viewportBottom) offset = viewportBottom - slotBottom;
+		        else offset = 0;
+	        }
+
+
+	        // 기존 위치에서 슬롯 높이만큼 위/아래로 이동
+	        Vector2 pos = contentRT.anchoredPosition;
+	        pos.y += offset;
+
+	        // y값 클램핑 (스크롤 범위 넘어가지 않게)
+	        float contentHeight = contentRT.rect.height;
+	        float viewHeight = viewportRT.rect.height;
+	        float maxScrollY = Mathf.Max(0, contentHeight - viewHeight);
+
+	        pos.y = Mathf.Clamp(pos.y, 0, maxScrollY);
+
+	        contentRT.anchoredPosition = pos;
+        }
     }
 
     
