@@ -48,44 +48,4 @@ public class NPCController : MonoBehaviour, IInteractable
 
 		}
 	}
-	private void Update()
-	{
-		IsWalkAble(currentDirection);
-	}
-
-	//	이동이 가능한지 여부
-	bool isWalkAble;
-	private bool IsWalkAble(Vector2 currentDirection)
-	{
-		//	Npc위치 + 방향에서 발사, 방향으로 1f만큼 발사
-
-		RaycastHit2D hit = Physics2D.Raycast(npcPos + currentDirection* 1.1f, currentDirection, 1f);
-
-
-		if (hit.collider != null)
-		{
-			Debug.Log($"{hit.transform.name}에 명중");
-		}
-		else
-		{
-
-			Debug.Log($"명중 없음");
-		}
-
-
-
-		//	hit.Tag 검사후 이동 가능 여부 판단
-		if (hit.transform.gameObject.transform.tag == "Wall" || hit.transform.gameObject.transform.tag == "NPC" || hit.transform.gameObject.transform.tag == "Player")
-		{
-			Debug.Log($"{hit.transform.gameObject.transform.tag} 이동 불가");
-			isWalkAble = false;
-		}
-		else
-		{
-			isWalkAble = true;
-		}
-		Debug.Log($"이동 가능 여부는 : {isWalkAble} 입니다.");
-
-		return isWalkAble;
-	}
 }
