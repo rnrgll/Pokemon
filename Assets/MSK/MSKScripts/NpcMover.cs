@@ -114,7 +114,7 @@ public class NpcMover : MonoBehaviour
 	{
 		Vector2 startPos;
 		startPos.x = transform.position.x;
-		startPos.y = transform.position.y - 0.5f;
+		startPos.y = transform.position.y - 0.1f;
 		RaycastHit2D hit = Physics2D.Raycast(startPos + currentDirection * 1.1f, currentDirection, 1f);
 
 		// 자기 자신 무시
