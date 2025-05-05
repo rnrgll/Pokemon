@@ -133,12 +133,12 @@ public class Define
 	#endregion
 
 
-	#region
+	#region Npc
 	public enum NpcState
 	{
 		Idle,		//	대기
-		Moving,		//	윰직임
-		Waiting,	//	플레이어 대기
+		Moving,     //	윰직임
+		Talking,    //	대화중
 	}
 	#endregion
 

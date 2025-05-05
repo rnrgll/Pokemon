@@ -15,6 +15,7 @@ public class DialogManager : Singleton<DialogManager>
 	[SerializeField] GameObject dialogBox;
 	GameObject dialogInstance = null;
 
+	public Define.NpcState npcState = Define.NpcState.Idle;
 
 
 	Dialog dialog;
@@ -55,6 +56,8 @@ public class DialogManager : Singleton<DialogManager>
 					dialogBox.SetActive(false);
 					//--------------------//
 					Manager.Game.Player.state = Define.PlayerState.Field;
+
+					Manager.Dialog.npcState = Define.NpcState.Idle;
 					//--------------------//
 					CloseDialog?.Invoke();
 				}

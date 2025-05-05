@@ -4,26 +4,39 @@ using UnityEngine.UIElements;
 
 public class NPCController : MonoBehaviour, IInteractable
 {
-	[SerializeField] Dialog dialog;
-	public Vector2 currentDirection;
+	[SerializeField] Dialog dialog; 
+	
+	private NpcMover npcMover;
+	public Vector2 currentDirection = Vector2.down;
 	private Vector2 npcPos;
-	Define.NpcState state;
 	Animator anim;
 
 	private void Awake()
 	{
-		npcPos = this.transform.position;
 		anim = GetComponent<Animator>();
+		npcMover = GetComponent<NpcMover>();
 	}
 	public void Interact(Vector2 position)
 	{
+		// Npc위치 현재 위치로 갱신
 
+		npcPos = transform.position;
 		AnimChange(position);
+
+		if (npcMover != null)
+		{
+			npcMover.StopMoving();
+		}
+
+		anim.SetBool("npcMoving", false);
 		if (Manager.Dialog.isTyping == false)
 		{
+			Manager.Dialog.npcState = Define.NpcState.Talking;
 			Manager.Dialog.StartDialogue(dialog);
 		}
 	}
+
+
 	//	NPC와 상호작용하는 방향 체크
 	public void AnimChange(Vector2 position)
 	{
@@ -35,6 +48,7 @@ public class NPCController : MonoBehaviour, IInteractable
 				currentDirection = Vector2.left;
 			anim.SetFloat("x", currentDirection.x);
 			anim.SetFloat("y", 0);
+
 		}
 		else
 		{	// 상하
@@ -47,4 +61,5 @@ public class NPCController : MonoBehaviour, IInteractable
 
 		}
 	}
+
 }
