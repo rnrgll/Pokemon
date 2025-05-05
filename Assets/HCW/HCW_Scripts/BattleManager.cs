@@ -160,19 +160,20 @@ public class BattleManager : MonoBehaviour
 		{
 			bool isAction = false;
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
+			
 			// 내 포켓몬 교체 체크
 			if (playerPokemon.hp <= 0 || playerPokemon.isDead)
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : 교체할 포켓몬을 선택해주세요.");
 
-				// TODO : 교체 UI 활성화
-				
-				// 행동 선택 대기
-				selectedAction = null;
-				//Debug.Log($"행동 선택대기중");
-				yield return new WaitUntil(() => selectedAction != null);
-				//Debug.Log($"행동 {selectedAction} 선택!");
-				ui.HideActionMenu();
+				yield return StartCoroutine(PokemonSwitch());
+				{
+					hud.SetPlayerHUD(playerPokemon);
+					hud.SetEnemyHUD(enemyPokemon);
+
+					yield return new WaitForSeconds(1f);
+					continue;
+				}
 			}
 
 			// 적 포켓몬 교체 체크

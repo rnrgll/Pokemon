@@ -16,6 +16,7 @@ public class Follower : MonoBehaviour
 
 	void Start()
 	{
+		DontDestroyOnLoad(gameObject);
 		initCoroutine = StartCoroutine(InitFollower());
 	}
 	

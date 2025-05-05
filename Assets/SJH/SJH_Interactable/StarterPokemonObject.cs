@@ -18,11 +18,8 @@ public class StarterPokemonObject : MonoBehaviour, IInteractable
 		isGet = true;
 		Manager.Poke.AddPokemon(pokeName, 5);
 
-		// TODO : 필드에 포켓몬 생성 x+2
-		Follower follower = Manager.Data.SJH_PokemonData.GetFieldPokemon(pokeName);
-		Player player = Manager.Game.Player;
-
-		Vector3 spawnPos = player.transform.position + Vector3.right * 2f;
-		Instantiate(follower, spawnPos, Quaternion.identity);
+		// 필드에 포켓몬 생성
+		//Manager.Poke.FieldPokemonInstantiate(pokeName);
+		Manager.Poke.FieldPokemonInstantiate();
 	}
 }
