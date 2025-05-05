@@ -81,7 +81,7 @@ public class Pokémon : MonoBehaviour
 	public bool isCurse;
 
 	[Tooltip("검은눈빛 관리용")]
-	public bool isMeanLook;
+	public bool isCantRun;
 
 	[Tooltip("신비의부적 관리용")]
 	public bool isSafeguard;
@@ -536,7 +536,7 @@ public class Pokémon : MonoBehaviour
 				attacker.hp = 0;
 				attacker.isDead = true;
 			}
-			isMeanLook = false;
+			isCantRun = false;
 		}
 		// 맞고도 살았으면 길동무 해제
 		isDestinyBond = false;
@@ -707,6 +707,13 @@ public class Pokémon : MonoBehaviour
 
 			case "독가루":
 			case "독침":
+				// 독 타입은 독 불가
+				if (defender.pokeType1 == PokeType.Poison || defender.pokeType2 == PokeType.Poison)
+				{
+					Debug.Log($"배틀로그 : {defender.pokeName} 은/는 독 타입이라 독 면역! {ran}");
+					break;
+				}
+
 				if (defender.isSafeguard)
 				{
 					Debug.Log($"배틀로그 : {defender.pokeName} 은/는 신비의부적 기술로 인해 독 면역! {ran}");
@@ -751,6 +758,14 @@ public class Pokémon : MonoBehaviour
 			case "화염자동차":
 				// 동상은 확정해제
 				defender.RestoreStatus(StatusCondition.Freeze);
+
+				// 불꽃 타입은 화상 불가
+				if (defender.pokeType1 == PokeType.Fire || defender.pokeType2 == PokeType.Fire)
+				{
+					Debug.Log($"배틀로그 : {defender.pokeName} 은/는 불꽃 타입이라 화상 면역! {ran}");
+					break;
+				}
+
 				if (defender.isSafeguard)
 				{
 					Debug.Log($"배틀로그 : {defender.pokeName} 은/는 신비의부적 기술로 인해 화상 면역! {ran}");
@@ -860,7 +875,7 @@ public class Pokémon : MonoBehaviour
 
 			case "검은눈빛":
 			case "거미집":
-				defender.isMeanLook = true;
+				defender.isCantRun = true;
 				Debug.Log($"배틀로그 : {defender.pokeName} 은/는 {skill.name} 기술로 인해 도망갈 수 없게 됐다. {ran}");
 				break;
 
