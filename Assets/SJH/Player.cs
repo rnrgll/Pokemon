@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
 	[SerializeField] public Queue<Vector3> prevPosQueue = new Queue<Vector3>();
 
 	[SerializeField] public string curSceneName;
+	[SerializeField] public Action<string> OnSceneChangeEvent;
 
 	Animator anim;
 

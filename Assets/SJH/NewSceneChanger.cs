@@ -22,7 +22,9 @@ public class NewSceneChanger : MonoBehaviour
 			{
 				SceneManager.LoadScene(exitSceneName, LoadSceneMode.Additive);
 				// 이동할 씬 저장
+				Debug.Log("사운드 이벤트 실행");
 				player.curSceneName = SceneManager.GetActiveScene().name;
+				player.OnSceneChangeEvent?.Invoke(player.curSceneName);
 			}
 		}
 	}
@@ -40,8 +42,9 @@ public class NewSceneChanger : MonoBehaviour
 				{
 					SceneManager.UnloadSceneAsync(player.curSceneName);
 				}
-
+				Debug.Log("사운드 이벤트 실행");
 				player.curSceneName = SceneManager.GetActiveScene().name;
+				player.OnSceneChangeEvent?.Invoke(player.curSceneName);
 			}
 			else if (player != null && player.currentDirection != exitDirection)
 			{

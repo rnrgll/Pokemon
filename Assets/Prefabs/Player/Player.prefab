@@ -37,6 +37,7 @@ Transform:
   - {fileID: 8152633245062205997}
   - {fileID: 5255351291634571420}
   - {fileID: 8519788341010418889}
+  - {fileID: 6894101738754523955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4907010719929583177
@@ -111,6 +112,7 @@ MonoBehaviour:
   isSceneChange: 0
   shadow: {fileID: 8349953846405161034}
   grassEffect: {fileID: 7892954086202641863}
+  curSceneName: 
 --- !u!95 &3681096440557347856
 Animator:
   serializedVersion: 5
@@ -317,6 +319,209 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!1 &5836863590906511839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6894101738754523955}
+  - component: {fileID: 296183198392723575}
+  - component: {fileID: 8853037825465492987}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6894101738754523955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836863590906511839}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 859746422573783556}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &296183198392723575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836863590906511839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c849884d51242074fb77bbc3361da4d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  soundData:
+  - key: PlayerHouse2F
+    sound: {fileID: 8300000, guid: 8058f0eef66a70048b80e7afc3d2f08e, type: 3}
+  - key: PlayerHouse1F
+    sound: {fileID: 8300000, guid: 8058f0eef66a70048b80e7afc3d2f08e, type: 3}
+  - key: NewBarkTown
+    sound: {fileID: 8300000, guid: 8058f0eef66a70048b80e7afc3d2f08e, type: 3}
+  - key: NewBarkTownNPCHouse
+    sound: {fileID: 8300000, guid: 8058f0eef66a70048b80e7afc3d2f08e, type: 3}
+  - key: ProfessorHouse
+    sound: {fileID: 8300000, guid: 8058f0eef66a70048b80e7afc3d2f08e, type: 3}
+  - key: ProfessorLab
+    sound: {fileID: 8300000, guid: 198c79cd05f8ae84db514dd75c4873fe, type: 3}
+  - key: Route29
+    sound: {fileID: 8300000, guid: 577f1ae689a461d4a96b4c6a0544461e, type: 3}
+  - key: Route29Gate
+    sound: {fileID: 8300000, guid: 577f1ae689a461d4a96b4c6a0544461e, type: 3}
+  - key: Route46
+    sound: {fileID: 8300000, guid: ebc56e8f50b6bc44a946cd3ea53c7890, type: 3}
+  - key: CherrygroveCity
+    sound: {fileID: 8300000, guid: ef21f4fa215c3d042aeb184ec4b09019, type: 3}
+  - key: CherrygroveCityNPCHouse1
+    sound: {fileID: 8300000, guid: ef21f4fa215c3d042aeb184ec4b09019, type: 3}
+  - key: CherrygroveCityNPCHouse2
+    sound: {fileID: 8300000, guid: ef21f4fa215c3d042aeb184ec4b09019, type: 3}
+  - key: CherrygroveCityNPCHouse3
+    sound: {fileID: 8300000, guid: ef21f4fa215c3d042aeb184ec4b09019, type: 3}
+  - key: PokeShop1
+    sound: {fileID: 8300000, guid: ef21f4fa215c3d042aeb184ec4b09019, type: 3}
+  - key: PokeCenter1
+    sound: {fileID: 8300000, guid: 943ce5f9b508c034db47b5d76b2e50e1, type: 3}
+  - key: PokeCenter2
+    sound: {fileID: 8300000, guid: 943ce5f9b508c034db47b5d76b2e50e1, type: 3}
+  - key: Route30
+    sound: {fileID: 8300000, guid: 0c191c4dc249a2540ab476ff802068c7, type: 3}
+  - key: Route31
+    sound: {fileID: 8300000, guid: 0c191c4dc249a2540ab476ff802068c7, type: 3}
+  - key: Route31Gate
+    sound: {fileID: 8300000, guid: 0c191c4dc249a2540ab476ff802068c7, type: 3}
+  - key: Route30BerryHouse
+    sound: {fileID: 8300000, guid: ef21f4fa215c3d042aeb184ec4b09019, type: 3}
+  - key: PokemonHouse
+    sound: {fileID: 8300000, guid: ef21f4fa215c3d042aeb184ec4b09019, type: 3}
+  - key: VioletCity
+    sound: {fileID: 8300000, guid: 2f94680aef8a52d45a935d6d64ecad30, type: 3}
+  - key: PokemonAcademy
+    sound: {fileID: 8300000, guid: 2f94680aef8a52d45a935d6d64ecad30, type: 3}
+  - key: PokeShop2
+    sound: {fileID: 8300000, guid: 2f94680aef8a52d45a935d6d64ecad30, type: 3}
+  - key: VioletCityNPCHouse1
+    sound: {fileID: 8300000, guid: 2f94680aef8a52d45a935d6d64ecad30, type: 3}
+  - key: VioletCityNPCHouse2
+    sound: {fileID: 8300000, guid: 2f94680aef8a52d45a935d6d64ecad30, type: 3}
+  - key: SproutTower1F
+    sound: {fileID: 8300000, guid: 0d946d2e1f291b343aaa452fff758d00, type: 3}
+  - key: SproutTower2F
+    sound: {fileID: 8300000, guid: 0d946d2e1f291b343aaa452fff758d00, type: 3}
+  - key: SproutTower3F
+    sound: {fileID: 8300000, guid: 0d946d2e1f291b343aaa452fff758d00, type: 3}
+  - key: VioletCityGym
+    sound: {fileID: 8300000, guid: 597339c0f7645a442bd9f62dc8c46a1c, type: 3}
+--- !u!82 &8853037825465492987
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836863590906511839}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8058f0eef66a70048b80e7afc3d2f08e, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &3394635416007501761
 PrefabInstance:
   m_ObjectHideFlags: 0
