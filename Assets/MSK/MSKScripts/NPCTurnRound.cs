@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class NPCTrainer : MonoBehaviour
+public class NPCTurnRound : MonoBehaviour
 {
 	private int directionIndex = 0;
 	Animator anim;
