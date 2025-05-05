@@ -6,12 +6,12 @@ using UnityEngine;
 public class UI_BattleMenuController : MonoBehaviour
 {
 	[SerializeField] private Transform buttonRoot;
-
 	
     //인덱스 반영
     //0  1   
     //2  3
-    private List<List<UI_GenericSelectButton>> menuButtonGrid; //이름 바꾸고 싶음 2차원 배열인거나 그리드 배열인게 느껴지게ㅐ
+    private List<List<UI_GenericSelectButton>> menuButtonGrid;
+    public List<List<UI_GenericSelectButton>> MenuButtonGrid => menuButtonGrid;
     private int curX = 0;
     private int curY = 0;
 
@@ -43,6 +43,8 @@ public class UI_BattleMenuController : MonoBehaviour
 	    else if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveCursor(-1, 0);
 	    else if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(0, -1);
 	    else if (Input.GetKeyDown(KeyCode.DownArrow)) MoveCursor(0, 1);
+	    else if(Input.GetKeyDown(KeyCode.Z)) OnSelect();
+
     }
 
     private void MoveCursor(int dx, int dy)
@@ -55,7 +57,11 @@ public class UI_BattleMenuController : MonoBehaviour
 	    curY = y;
 	    menuButtonGrid[curY][curX].SetArrowActive(true);
     }
-    
+
+    public void OnSelect()
+    {
+	    menuButtonGrid[curY][curX].Trigger();
+    }
     
     
 

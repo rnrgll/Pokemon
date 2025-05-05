@@ -143,6 +143,8 @@ public class BattleManager : MonoBehaviour
 		//hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		//hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
+		Debug.Log(enemyPokemon);
+		
 		var lines = new List<string> { $"야생의 {enemyPokemon.pokeName}이(가) 나타났다!", "테스트" };
 
 		dialogue.CloseDialog += OnBattleDialogClosed;
