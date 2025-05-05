@@ -7,16 +7,40 @@ public class NpcMover : MonoBehaviour
 {
 	[SerializeField] List<Vector2> destinationPoints;
 	[SerializeField] float moveDuration = 0.3f;
-
-	bool npcMoving;
-	int moveIndex = 0;
-	Vector2 currentDirection;
+	public float rotateInterval = 2.0f;
 	float moveSpeed;
+	bool npcMoving;
+	public bool npcTurn;
+	private int directionIndex = 0;
+	int moveIndex = 0;
+	float timer;
+
 
 	Animator anim;
 
 
+	Vector2 currentDirection;
+	public Vector2 dir;
+
+
+
 	private Coroutine moveCoroutine;
+	private readonly Vector2[] directions = new Vector2[]
+	{
+		Vector2.right,
+		Vector2.down,
+		Vector2.left,
+		Vector2.up
+	};
+
+	private void AutoRotate()
+	{
+		dir = directions[directionIndex];
+		anim.SetFloat("x", dir.x);
+		anim.SetFloat("y", dir.y);
+
+		directionIndex = (directionIndex + 1) % directions.Length;
+	}
 
 	private void Awake()
 	{
@@ -26,10 +50,20 @@ public class NpcMover : MonoBehaviour
 
 	private void Update()
 	{
-		if (Manager.Dialog.npcState != NpcState.Talking && !npcMoving)
+		timer += Time.deltaTime;
+
+		if (timer > rotateInterval)
+		{
+			if (npcTurn)
+				AutoRotate();
+			timer = 0f;
+		}
+		if (Manager.Dialog.npcState != NpcState.Talking && !npcMoving && !npcTurn)
 		{
 			moveCoroutine = StartCoroutine(MoveOneStep());
 		}
+
+
 	}
 
 	//	사전 입력된 좌료 리스트로 이동
@@ -81,7 +115,7 @@ public class NpcMover : MonoBehaviour
 		Vector2 direction = targetPos - (Vector2)transform.position;
 		anim.SetFloat("y", direction.y);
 		anim.SetFloat("x", direction.x);
-		
+
 		transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 		// 이동 중 여부 판단
 
