@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Define;
 
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
@@ -144,15 +145,13 @@ public class BattleManager : MonoBehaviour
 				Debug.Log($"배틀로그 {currentTurn}턴 : 교체할 포켓몬을 선택해주세요.");
 
 				// TODO : 교체 UI 활성화
-
+				
 				// 행동 선택 대기
 				selectedAction = null;
 				//Debug.Log($"행동 선택대기중");
 				yield return new WaitUntil(() => selectedAction != null);
 				//Debug.Log($"행동 {selectedAction} 선택!");
 				ui.HideActionMenu();
-
-
 			}
 
 			// 적 포켓몬 교체 체크
@@ -218,8 +217,8 @@ public class BattleManager : MonoBehaviour
 
 					var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
                     {
-					    new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
-					    new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
+						new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
+						new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
 					};
 
 					// 속도에 따라 정렬
@@ -238,14 +237,14 @@ public class BattleManager : MonoBehaviour
 						int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 						int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
 
-					if (a.Attacker.condition == StatusCondition.Paralysis)
-						speedA = speedA / 4;
-					if (b.Attacker.condition == StatusCondition.Paralysis)
-						speedB = speedB / 4;
+						if (a.Attacker.condition == StatusCondition.Paralysis)
+							speedA = speedA / 4;
+						if (b.Attacker.condition == StatusCondition.Paralysis)
+							speedB = speedB / 4;
 
-					Debug.Log($"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
-					if (speedA != speedB)
-						return speedB.CompareTo(speedA);
+						Debug.Log($"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
+						if (speedA != speedB)
+							return speedB.CompareTo(speedA);
 
 						// 속도 같으면 랜덤
 						return Random.Range(0, 2) == 0 ? -1 : 1;
@@ -259,16 +258,15 @@ public class BattleManager : MonoBehaviour
 							continue;
 						}
 
-					Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
+						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
 
-					// 상태이상체크
-					if (act.Attacker.CanActionCheck())
-					{
-						ExecuteAction(act);
+						// 상태이상체크
+						if (act.Attacker.CanActionCheck())
+						{
+							ExecuteAction(act);
+						}
+						yield return battleDelay;
 					}
-					//Debug.Log($"{act.Attacker.pokeName} 이/가 {act.Skill} 사용완료!");
-					yield return battleDelay;
-				}
 
 					hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
 					hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
@@ -293,17 +291,20 @@ public class BattleManager : MonoBehaviour
 					break;
 
 				case "Run":
-					// 도망못가게함
-					if (playerPokemon.isCantRun || playerPokemon.isBind)
 					{
-						// 검은눈빛, 거미집, 김밥말이
-						Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 도망칠 수 없다!");
+						// 도망못가게함
+						if (playerPokemon.isCantRun || playerPokemon.isBind)
+						{
+							// 검은눈빛, 거미집, 김밥말이
+							Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 도망칠 수 없다!");
+						}
+						else
+						{
+							EndBattle("Run");
+							yield break;
+						}
 					}
-					else
-					{
-						EndBattle("Run");
-						yield break;
-					}
+					yield break;
 				default:
 					Debug.LogWarning($"지정하지 않은 액션 선택");
 					break;
