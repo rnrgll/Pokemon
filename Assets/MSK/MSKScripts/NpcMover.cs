@@ -76,15 +76,20 @@ public class NpcMover : MonoBehaviour
 	}
 
 	// NPC가 특정 방향으로 이동
-	public void MoveTowardsPosition(Vector2 targetPos)
+	public bool MoveTowardsPosition(Vector2 targetPos)
 	{
-		// 애니메이션 방향 설정
-		Vector2 direction = targetPos - (Vector2)transform.position;
+		Vector2 currentPos = transform.position;
+		Vector2 direction = targetPos - currentPos;
+
 		anim.SetFloat("y", direction.y);
 		anim.SetFloat("x", direction.x);
-		anim.SetBool("npcMoving", true);
 
-		transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+		transform.position = Vector2.MoveTowards(currentPos, targetPos, moveSpeed * Time.deltaTime);
+
+		bool hasReached = Vector2.Distance(transform.position, targetPos) < 0.01f;
+		anim.SetBool("npcMoving", !hasReached);
+
+		return hasReached;  // 도착 여부 반환
 	}
 
 	//	코루틴 정지

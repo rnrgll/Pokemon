@@ -34,10 +34,13 @@ public class NPCTrainer : MonoBehaviour
 			Debug.Log($"추격상태 : {isChasingPlayer}");
 			if (isChasingPlayer)
 			{
-
 				Debug.Log($"추격 호출");
 				NpcTurnRound.StopRotation();
-				npcMover.MoveTowardsPosition(playerPos - currentDirection);
+				npcMover.MoveTowardsPosition(playerPos - currentDirection*2);
+				// 도착 확인 후
+				// 다이얼로그 매니저 호출
+				//	배틀매니저 호출
+				//	배틀 후 isBattle = True
 			}
 		}
 
