@@ -94,6 +94,7 @@ public class NpcMover : MonoBehaviour
 	//	코루틴 정지
 	public void StopMoving()
 	{
+		Vector2 direction = currentDirection;
 		if (moveCoroutine != null)
 		{
 			StopCoroutine(moveCoroutine);
@@ -101,6 +102,8 @@ public class NpcMover : MonoBehaviour
 		}
 		npcMoving = false;
 		anim.SetBool("npcMoving", false);
+		anim.SetFloat("y", direction.y);
+		anim.SetFloat("x", direction.x);
 
 		Manager.Dialog.npcState = NpcState.Idle;  // 멈출 때 Idle 상태로 변경
 	}
