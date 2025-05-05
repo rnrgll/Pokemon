@@ -15,15 +15,14 @@ public class NpcMover : MonoBehaviour
 	int moveIndex = 0;
 	float timer;
 
-
-	Animator anim;
-
-
+	
 	Vector2 currentDirection;
+	private Vector2 npcPos;
 	public Vector2 dir;
-
-
-
+	
+	
+	Animator anim;
+	NPCController npcController;
 	private Coroutine moveCoroutine;
 	private readonly Vector2[] directions = new Vector2[]
 	{
@@ -44,8 +43,10 @@ public class NpcMover : MonoBehaviour
 
 	private void Awake()
 	{
+		npcPos = this.transform.position;
 		moveSpeed = 1f / moveDuration;
-		anim = GetComponent<Animator>();
+		npcController = GetComponent<NPCController>();
+		anim = npcController.anim;
 	}
 
 	private void Update()
@@ -124,7 +125,31 @@ public class NpcMover : MonoBehaviour
 		anim.SetBool("npcMoving", !hasReached);
 
 	}
+	//	NPC와 상호작용하는 방향 체크
+	public void AnimChange(Vector2 position)
+	{
 
+		if (position.y == npcPos.y)
+		{   //	좌우
+			if (npcPos.x - position.x == -2)
+				dir = Vector2.right;
+			else
+				dir = Vector2.left;
+			anim.SetFloat("x", dir.x);
+			anim.SetFloat("y", 0);
+
+		}
+		else
+		{   // 상하
+			if (npcPos.y - position.y == -2)
+				dir = Vector2.up;
+			else
+				dir = Vector2.down;
+			anim.SetFloat("x", 0);
+			anim.SetFloat("y", dir.y);
+
+		}
+	}
 	//	코루틴 정지
 	public void StopMoving()
 	{
@@ -136,8 +161,8 @@ public class NpcMover : MonoBehaviour
 		}
 		npcMoving = false;
 		anim.SetBool("npcMoving", false);
-		anim.SetFloat("y", direction.y);
-		anim.SetFloat("x", direction.x);
+		anim.SetFloat("y", dir.y);
+		anim.SetFloat("x", dir.x);
 
 		Manager.Dialog.npcState = NpcState.Idle;  // 멈출 때 Idle 상태로 변경
 	}
