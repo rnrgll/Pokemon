@@ -254,7 +254,6 @@ public class Pokémon : MonoBehaviour
 	public void AddExp(int baseExp)
 	{
 		// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
-		// TODO : 경험치를 주는쪽에서 계산할지 받는쪽에서 계산할지
 		Debug.Log($"{pokeName} : {baseExp} 경험치를 얻었습니다!");
 		curExp += baseExp;
 
@@ -499,7 +498,6 @@ public class Pokémon : MonoBehaviour
 
 	public void TakeDamage(int damage)
 	{
-		// TODO : 대미지 입음
 		hp -= damage;
 		if (hp < 0)
 		{
@@ -1125,7 +1123,7 @@ public class Pokémon : MonoBehaviour
 		int level = attacker.level;
 		int power = (int)skill.damage;
 
-		bool isCritical = IsCritical(attacker.pokemonBattleStack.critical + (skill.name == "베어가르기" ? 1 : 0));
+		bool isCritical = IsCritical(attacker.pokemonBattleStack.critical + (skill.name == "베어가르기" || skill.name == "잎날가르기" ? 1 : 0));
 
 		// 물리 / 특수 체크
 		bool isSpecial = skill.skillType == SkillType.Special;
@@ -1237,7 +1235,6 @@ public class Pokémon : MonoBehaviour
 
 	public void TurnEnd()
 	{
-		// TODO : 턴종료들 여기에 상태이상같은거
 		// 김밥말이
 		int ran = UnityEngine.Random.Range(0, 100);
 		if (isBind)

@@ -19,7 +19,6 @@ public class LightScreen : SkillS
 	// 5턴동안 상대로부터 받는 특수공격의 데미지를 반감시킨다.
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		// TODO : 빛의장막 카운터 감소하기
 		attacker.TakeEffect(attacker, defender, skill);
 	}
 }

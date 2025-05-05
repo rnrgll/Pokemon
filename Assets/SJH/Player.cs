@@ -57,6 +57,14 @@ public class Player : MonoBehaviour
 	}
 	[SerializeField] public event Action<string> OnSceneChangeEvent;
 
+	[SerializeField] private string prevSceneName;
+	public string PrevSceneName
+	{
+		get => prevSceneName;
+		set => prevSceneName = value;
+	}
+
+
 	Animator anim;
 
 	void Awake()

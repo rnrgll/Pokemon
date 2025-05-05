@@ -193,6 +193,9 @@ public class BattleManager : MonoBehaviour
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
+
+						hud.SetEnemyHUD(enemyPokemon);
+
 						yield return battleDelay;
 						continue;
 					}
@@ -223,8 +226,7 @@ public class BattleManager : MonoBehaviour
 			//Debug.Log($"행동 {selectedAction} 선택!");
 			ui.HideActionMenu();
 
-			// 적 포켓몬 행동 선택
-			// TODO : 적 포켓몬 기술 선택 AI
+			// 적 포켓몬 행동 선택 AI
 			int idx = Random.Range(0, enemyPokemon.skills.Count);
 			enemySelectedSkill = enemyPokemon.skills[idx];
 
@@ -336,8 +338,6 @@ public class BattleManager : MonoBehaviour
 					break;
 			}
 
-			// TODO : 턴종료 조건 추가하기
-			// 도망을 실패해도 턴이 증가함
 			if (isAction)
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
@@ -422,12 +422,14 @@ public class BattleManager : MonoBehaviour
 			StopCoroutine(battleCoroutine);
 			battleCoroutine = null;
 		}
-		// 상대 포켓몬 파괴
-		Destroy(Manager.Poke.enemyPokemon.gameObject);
+		// 상대 포켓몬 초기화
+		// 상대 포켓몬을 초기화 해야하나?
+		Destroy(enemyPokemon.gameObject);
+
 		// 내 포켓몬 상태 초기화
 		Manager.Poke.ClearPartyState();
 
-		var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
+		var setting = SceneManager.LoadSceneAsync(Manager.Game.Player.PrevSceneName); // 이전 씬으로 이동
 		setting.allowSceneActivation = false;
 
 		switch (reason)

@@ -92,16 +92,10 @@ public class EncounterData
 
 	public List<WildEncounterData> GetDataByScene(string sceneName)
 	{
-		// TODO : 그냥 낮 + 밤 테이블 반환
+		// 그냥 낮 + 밤 테이블 반환
 		var result = new List<WildEncounterData>();
 		result.AddRange(dataBySceneName[sceneName][true]);
 		result.AddRange(dataBySceneName[sceneName][false]);
 		return result;
-
-		//var data = dataBySceneName[sceneName][true];
-		//if (data != null)
-		//	return dataBySceneName[sceneName][true];
-		//else
-		//	return null;
 	}
 }
