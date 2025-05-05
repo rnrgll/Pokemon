@@ -5,33 +5,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
-public class TrainerParty
+public class TrainerPokemon
 {
 	public string PokeName;
 	public int PokeLevel;
 }
 
+[System.Serializable]
+public class TrainerData
+{
+	public string Name;
+	public bool IsFight;
+	public int Money;
+	public List<TrainerPokemon> TrainerPartyData;
+	public GameObject TrainerObject;
+}
+
 public class Trainer : MonoBehaviour, IInteractable
 {
-	// 배틀했었는지 체크, 지더라도 true 안됨
+	[SerializeField] public string trainerName;
 	[SerializeField] public bool isFight;
-	[SerializeField] public List<TrainerParty> trainerPartyData;
-	// 트레이너 파티
-	[SerializeField] public List<Pokémon> trainerParty = new();
-
-	void Start()
-	{
-		if (trainerPartyData.Count <= 0)
-			return;
-
-		foreach (var data in trainerPartyData)
-		{
-			if (string.IsNullOrEmpty(data.PokeName) || data.PokeLevel <= 0)
-				continue;
-			Pokémon poke = Manager.Poke.AddEnemyPokemon(data.PokeName, data.PokeLevel);
-			trainerParty.Add(poke);
-		}
-	}
+	[SerializeField] public int money;
+	[SerializeField] public List<TrainerPokemon> trainerPartyData;
 
 	public void Interact(Vector2 position)
 	{
@@ -39,11 +34,18 @@ public class Trainer : MonoBehaviour, IInteractable
 		if (isFight)
 			return;
 
-		if (trainerParty.Count <= 0)
+		if (trainerPartyData.Count <= 0)
 			return;
 
 		// 포켓몬 매니저 enemyParty에 파티 넣으면 배틀씬에서 트레이너 배틀로 인식
-		Manager.Poke.enemyParty = trainerParty;
+		Manager.Poke.enemyData = new TrainerData()
+		{
+			Name = trainerName,
+			IsFight = isFight,
+			Money = money,
+			TrainerPartyData = trainerPartyData,
+			TrainerObject = gameObject
+		};
 
 		// 플레이어 스탑
 		var player = Manager.Game.Player;

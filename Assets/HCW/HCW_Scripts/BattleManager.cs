@@ -45,6 +45,7 @@ public class BattleManager : MonoBehaviour
 
 	[SerializeField] private bool isTrainer;                // 상대가 트레이너 인지
 	[SerializeField] private string enemyTrainerName;    // 트레이너면 이름
+	[SerializeField] int winMoney;	// 승리보상
 
 
 	Coroutine battleCoroutine;
@@ -65,13 +66,33 @@ public class BattleManager : MonoBehaviour
 		// 현재턴 지정
 		currentTurn = 1;
 		// 트레이너
-		if (Manager.Poke.enemyParty.Count >= 1)
+		if (Manager.Poke.enemyData != null)
 		{
 			Debug.Log("트레이너 배틀 시작");
 			//게임 데이터 설정
 			//게임 매니저에 정보 업데이트
 			Manager.Game.SetBattleState(true,false);
-			StartBattle(Manager.Poke.party, Manager.Poke.enemyParty);
+
+			TrainerData trainerData = Manager.Poke.enemyData;
+
+			// TODO : EnemyData로 파티 생성하기
+			List<Pokémon> enemyPartyData = new();
+
+			foreach (var data in trainerData.TrainerPartyData)
+			{
+				if (string.IsNullOrEmpty(data.PokeName) || data.PokeLevel <= 0)
+					continue;
+				Pokémon poke = Manager.Poke.AddEnemyPokemon(data.PokeName, data.PokeLevel);
+				enemyPartyData.Add(poke);
+			}
+			// 포켓몬 지정
+			enemyParty = enemyPartyData;
+			// 이름지정
+			enemyTrainerName = trainerData.Name;
+			// 상금지정
+			winMoney = trainerData.Money;
+
+			StartBattle(Manager.Poke.party, enemyParty);
 		}
 		else
 		{
@@ -126,7 +147,7 @@ public class BattleManager : MonoBehaviour
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
-		var lines = new List<string> { $"체육관 관장 {enemyTrainerName}이(가) 나타났다!" };
+		var lines = new List<string> { $"{enemyTrainerName} 이(가) 승부를 걸어왔다!" };
 
 		dialogue.CloseDialog += OnBattleDialogClosed;
 		dialogue.StartDialogue(new Dialog(lines));
@@ -143,7 +164,7 @@ public class BattleManager : MonoBehaviour
 		//hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		//hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
-		var lines = new List<string> { $"야생의 {enemyPokemon.pokeName}이(가) 나타났다!", "테스트" };
+		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!", "테스트" };
 
 		dialogue.CloseDialog += OnBattleDialogClosed;
 		dialogue.StartDialogue(new Dialog(lines));
@@ -414,16 +435,22 @@ public class BattleManager : MonoBehaviour
 	{
 		// 공통적으로 실행
 		Debug.Log($"배틀로그 {currentTurn}턴 : 배틀 종료 - {reason}");
-		// 변수 초기화
-		isTrainer = false;
+
 		// 코루틴 초기화
 		if (battleCoroutine != null)
 		{
 			StopCoroutine(battleCoroutine);
 			battleCoroutine = null;
 		}
+
 		// 상대 포켓몬 초기화
-		// 상대 포켓몬을 초기화 해야하나?
+		if (isTrainer)
+		{
+			foreach (var poke in enemyParty)
+			{
+				Destroy(poke.gameObject);
+			}
+		}
 		Destroy(enemyPokemon.gameObject);
 
 		// 내 포켓몬 상태 초기화
@@ -438,8 +465,12 @@ public class BattleManager : MonoBehaviour
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 승리");
 
-					// TODO : 트레이너 상대로 돈 획득
-					
+					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
+
+					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
+					Manager.Data.PlayerData.AddMoney(winMoney);
+					Manager.Poke.enemyData.IsFight = true;
+
 					// 씬활성화
 					setting.allowSceneActivation = true;
 				}
@@ -460,6 +491,10 @@ public class BattleManager : MonoBehaviour
 				}
 				break;
 		}
+
+		// 변수 초기화
+		isTrainer = false;
+
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 	}

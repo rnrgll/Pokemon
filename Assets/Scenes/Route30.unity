@@ -3025,12 +3025,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed59e50fca4f38e44a5f1ebdc10ede59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainerName: "\uD6C8\uC7AC"
+  isFight: 0
+  money: 100
   trainerPartyData:
   - PokeName: "\uAF2C\uB81B"
     PokeLevel: 4
   - PokeName: "\uD398\uC774\uAC80"
     PokeLevel: 4
-  trainerParty: []
 --- !u!1001 &408467289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45684,10 +45686,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed59e50fca4f38e44a5f1ebdc10ede59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainerName: "\uC7AC\uD6C8"
+  isFight: 0
+  money: 50
   trainerPartyData:
   - PokeName: "\uAF2C\uB81B"
     PokeLevel: 4
-  trainerParty: []
 --- !u!61 &7524096636199135823
 BoxCollider2D:
   m_ObjectHideFlags: 0

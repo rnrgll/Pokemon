@@ -18,8 +18,12 @@ public class PokemonManager : Singleton<PokemonManager>
 	public Pokémon enemyPokemon;
 	// 배틀할 상대 포켓몬들
 	public List<Pokémon> enemyParty;
-
+	
+	// 필드에 따라다니는 포켓몬
 	public GameObject fieldPokemon;
+
+	// 배틀을 할 트레이너 데이터
+	public TrainerData enemyData;
 
 	void Start()
 	{
