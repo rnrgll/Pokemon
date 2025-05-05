@@ -14,7 +14,7 @@ public class TrainerParty
 public class Trainer : MonoBehaviour, IInteractable
 {
 	// 배틀했었는지 체크, 지더라도 true 안됨
-	[SerializeField] public static bool isFight;
+	[SerializeField] public bool isFight;
 	[SerializeField] public List<TrainerParty> trainerPartyData;
 	// 트레이너 파티
 	[SerializeField] public List<Pokémon> trainerParty = new();
@@ -35,7 +35,6 @@ public class Trainer : MonoBehaviour, IInteractable
 
 	public void Interact(Vector2 position)
 	{
-		// Test : 배틀
 		Debug.Log("트레이너 배틀 체크");
 		if (isFight)
 			return;
