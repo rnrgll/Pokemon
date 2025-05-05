@@ -346,6 +346,10 @@ public class BattleManager : MonoBehaviour
 							// 검은눈빛, 거미집, 김밥말이
 							Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 도망칠 수 없다!");
 						}
+						else if (isTrainer)
+						{
+							Debug.Log("안돼! 승부도중에 상대에게 등을 보일 수 없어!");
+						}
 						else
 						{
 							EndBattle("Run");
@@ -470,9 +474,6 @@ public class BattleManager : MonoBehaviour
 					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
 					Manager.Data.PlayerData.AddMoney(winMoney);
 					Manager.Poke.enemyData.IsFight = true;
-
-					// 씬활성화
-					setting.allowSceneActivation = true;
 				}
 				break;
 			case "Lose":
@@ -480,21 +481,18 @@ public class BattleManager : MonoBehaviour
 					Debug.Log($"배틀로그 {currentTurn}턴 : 패배");
 
 					// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
-
-					setting.allowSceneActivation = true;
 				}
 				break;
 			case "Run":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 성공적으로 도망쳤다!");
-					setting.allowSceneActivation = true;
 				}
 				break;
 		}
 
 		// 변수 초기화
 		isTrainer = false;
-
+		setting.allowSceneActivation = true;
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 	}
