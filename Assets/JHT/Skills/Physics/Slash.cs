@@ -22,16 +22,7 @@ public class Slash : SkillS
 	{
 		if (defender.TryHit(attacker, defender, skill))
 		{
-			//defender.TakeDamage(attacker, defender, skill);
-			float effectRan = Random.Range(0f, 1f);
-			if (effectRan < 0.125f) //attacker.pokemonBattleStack.critical + 1)
-			{
-				// 급소
-				int totalDamage = defender.GetTotalDamage(attacker, defender, skill);
-				defender.TakeDamage(totalDamage * 2);
-			}
-			else
-				defender.TakeDamage(attacker, defender, skill);
+			defender.TakeDamage(attacker, defender, skill);
 		}
 	}
 }

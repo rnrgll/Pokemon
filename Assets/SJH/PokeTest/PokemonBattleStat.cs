@@ -25,6 +25,6 @@ public struct PokemonBattleStat
 		speed = value;
 		accuracy = value;
 		evasion = value;
-		critical = value + 1;
+		critical = value;
 	}
 }

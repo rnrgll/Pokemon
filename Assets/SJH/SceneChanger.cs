@@ -77,6 +77,8 @@ public class SceneChanger : MonoBehaviour
 		pc.currentDirection = keyDirection;
 		pc.AnimChange();
 
+		pc.CurSceneName = exitSceneName;
+
 		while (!asyncLoad.isDone)
 		{
 			if (asyncLoad.progress >= 0.9f)
