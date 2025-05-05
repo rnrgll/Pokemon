@@ -366,8 +366,6 @@ public class BattleManager : MonoBehaviour
 			case "Win":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 승리: 모든 적 포켓몬 격파");
-					// 트레이너 배틀일 경우 돈 + 경험치
-					// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
 					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
 					setting.allowSceneActivation = false;
 
@@ -376,11 +374,6 @@ public class BattleManager : MonoBehaviour
 					// 코루틴 초기화
 					StopCoroutine(battleCoroutine);
 					battleCoroutine = null;
-
-					//// 경험치 계산
-					//int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
-					//playerPokemon.AddExp(totalExp);
-					//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 
 					// 상대 포켓몬 파괴
 					Destroy(Manager.Poke.enemyPokemon);
