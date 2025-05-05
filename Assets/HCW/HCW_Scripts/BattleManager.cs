@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Define;
 
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
@@ -17,7 +14,8 @@ public class BattleManager : MonoBehaviour
 	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
 	[SerializeField] private BattleUIController ui;  // UI 요소
 	[SerializeField] private BattleHUD hud;          // hp 게이지·텍스트 제어
-	
+	[SerializeField] private PokemonSelect pokemonSelect;
+
 	private DialogManager dialogue => DialogManager.Instance;
 
 	[Header("전투 관련")]
@@ -205,79 +203,87 @@ public class BattleManager : MonoBehaviour
 			ui.HideActionMenu();
 
 			// 전투 수행
-			if (selectedAction == "Fight")
+			switch (selectedAction)
 			{
-				playerSelectedSkill = null;
-				ui.ShowSkillSelection(playerPokemon);
-				//Debug.Log($"Fight! 기술 선택대기중");
-				yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
-				//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
-				ui.HideSkillSelection();
+				case "Fight":
+					playerSelectedSkill = null;
+					ui.ShowSkillSelection(playerPokemon);
+					//Debug.Log($"Fight! 기술 선택대기중");
+					yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
+																				   //Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
+					ui.HideSkillSelection();
 
-				// 적 포켓몬 행동 선택
-				// TODO : 적 포켓몬 기술 선택 AI
-				int idx = Random.Range(0, enemyPokemon.skills.Count);
-				enemySelectedSkill = enemyPokemon.skills[idx];
+					// 적 포켓몬 행동 선택
+					// TODO : 적 포켓몬 기술 선택 AI
+					int idx = Random.Range(0, enemyPokemon.skills.Count);
+					enemySelectedSkill = enemyPokemon.skills[idx];
 
-				var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
+					var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
                 {
 					new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
 					new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
 				};
 
-				// 속도에 따라 정렬
-				actions.Sort((a, b) =>
-				{
-					// 우선도가 없고 선공기는 전광석화 뿐이니 단순하게
-					bool aIsQuickAttack = a.Skill == "전광석화";
-					bool bIsQuickAttack = b.Skill == "전광석화";
-
-					if (aIsQuickAttack && !bIsQuickAttack)
-						return -1; // a가 먼저
-					if (!aIsQuickAttack && bIsQuickAttack)
-						return 1;  // b가 먼저
-
-					// 스피드에 랭크 계산
-					int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
-					int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
-
-					Debug.Log($"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
-					if (speedA != speedB)
-						return speedB.CompareTo(speedA);
-
-					// 속도 같으면 랜덤
-					return Random.Range(0, 2) == 0 ? -1 : 1;
-				});
-
-				foreach (var act in actions) ///
-				{
-					if (act.Attacker.hp <= 0)
+					// 속도에 따라 정렬
+					actions.Sort((a, b) =>
 					{
-						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
-						continue;
+						// 우선도가 없고 선공기는 전광석화 뿐이니 단순하게
+						bool aIsQuickAttack = a.Skill == "전광석화";
+						bool bIsQuickAttack = b.Skill == "전광석화";
+
+						if (aIsQuickAttack && !bIsQuickAttack)
+							return -1; // a가 먼저
+						if (!aIsQuickAttack && bIsQuickAttack)
+							return 1;  // b가 먼저
+
+						// 스피드에 랭크 계산
+						int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
+						int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
+
+						Debug.Log($"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
+						if (speedA != speedB)
+							return speedB.CompareTo(speedA);
+
+						// 속도 같으면 랜덤
+						return Random.Range(0, 2) == 0 ? -1 : 1;
+					});
+
+					foreach (var act in actions) ///
+					{
+						if (act.Attacker.hp <= 0)
+						{
+							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
+							continue;
+						}
+
+						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
+						ExecuteAction(act);
+						//Debug.Log($"{act.Attacker.pokeName} 이/가 {act.Skill} 사용완료!");
+						yield return battleDelay;
 					}
 
-					Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
-					ExecuteAction(act);
-					//Debug.Log($"{act.Attacker.pokeName} 이/가 {act.Skill} 사용완료!");
+					hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
+					hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
+
 					yield return battleDelay;
-				}
+					break;
 
-				hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
-				hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
+				case "Pokemon":
+					yield return StartCoroutine(PokemonSwitch());
+					break;
 
-				yield return battleDelay;
-			}
-			else if (selectedAction == "Run")
-			{
-				EndBattle("Run");
-				break;
-			}
-			// TODO : Fight가 아닌 선택지 추가 필요
-			else
-			{
-				Debug.Log($"플레이어 액션: {selectedAction}");
-				yield return battleDelay;
+				case "Bag":
+					// TODO : 가방 
+					break;
+
+				case "Run":
+					{
+						EndBattle("Run");
+						yield break;
+					}
+				default:
+					Debug.LogWarning($"지정하지 않은 액션 선택");
+					break;
 			}
 			Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
 			// 턴카운트 증가
@@ -315,6 +321,28 @@ public class BattleManager : MonoBehaviour
 	private void OnActionButton(string action) => selectedAction = action;
 	private void OnSkillButton(int idx) => playerSelectedSkill = playerPokemon.skills[idx];
 
+	private IEnumerator PokemonSwitch()
+	{
+		Pokémon chosen = null;
+		bool cancelled = false;
+
+		pokemonSelect.Show(playerParty, p => chosen = p, () => cancelled = true);
+
+		yield return new WaitUntil(() => chosen != null || cancelled);
+
+		if (cancelled) // 취소시 메뉴 다시 열기
+		{
+			selectedAction = null;
+			ui.ShowActionMenu();
+			yield break;
+		}
+
+		playerPokemon = chosen; // 선택 하면 교체
+		hud.SetPlayerHUD(playerPokemon);
+
+		selectedAction = null;
+	}
+
 	// 행동 선택 후 행동 처리
 	private void ExecuteAction(BattleAction action)
 	{
@@ -323,6 +351,7 @@ public class BattleManager : MonoBehaviour
 		var skill = Manager.Data.SkillSData.GetSkillDataByName(action.Skill);
 		skill.UseSkill(action.Attacker, action.Target, skill);
 	}
+
 
 	// 배틀 종료 처리
 	private void EndBattle(string Reason)
