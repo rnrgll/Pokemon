@@ -20,6 +20,11 @@ public class StatusRestoreEffect :  ScriptableObject, IItemEffect
 
 		if (target.RestoreStatus(targetCondition))
 		{
+			//갱신
+			if (inGameContext.PokemonSlot != null)
+			{
+
+			}
 			switch (targetCondition)
 			{
 				case Define.StatusCondition.Poison:

@@ -41,7 +41,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 0, y: 48}
+  m_SizeDelta: {x: 0, y: 49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4689167251035756695
 MonoBehaviour:
@@ -61,7 +61,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  m_Spacing: 5
+  m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -94,6 +94,8 @@ MonoBehaviour:
   itemName: {fileID: 370496878314200935}
   xSymbol: {fileID: 8594376951302991810}
   itemCnt: {fileID: 7198517543443619466}
+  emptyArrow: {fileID: 145079066, guid: bf1fb8bf3c919420bbae8fa9237f2dec, type: 3}
+  originalArrow: {fileID: -1374575660, guid: bf1fb8bf3c919420bbae8fa9237f2dec, type: 3}
 --- !u!1 &1770228762378887660
 GameObject:
   m_ObjectHideFlags: 0

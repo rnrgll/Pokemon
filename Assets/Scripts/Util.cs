@@ -51,5 +51,53 @@ public class Util
 		group.interactable = isVisible;
 		group.blocksRaycasts = isVisible;
 	}
+	
+	
+	//UI 위치 조정
+	/// <summary>
+	/// 대상 RectTransform을 **왼쪽 하단 기준(anchor/pivot)**으로 정렬하고,
+	/// 주어진 X, Y 오프셋만큼 위치를 조정한다.
+	/// </summary>
+	/// <param name="targetRect">위치를 조정할 RectTransform</param>
+	/// <param name="offsetX">왼쪽 기준의 X 오프셋</param>
+	/// <param name="offsetY">하단 기준의 Y 오프셋</param>
+	public static void SetPositionFromBottomLeft(RectTransform tartgetRect, float offsetX, float offsetY)
+	{
+		tartgetRect.anchorMin = new Vector2(0f, 0f);
+		tartgetRect.anchorMax = new Vector2(0f, 0f);
+		tartgetRect.pivot = new Vector2(0f, 0f);
+		tartgetRect.anchoredPosition = new Vector2(offsetX, offsetY);
+	}
+
+	/// <summary>
+	/// 대상 RectTransform을 **오른쪽 하단 기준(anchor/pivot)**으로 정렬하고,
+	/// 주어진 X, Y 오프셋만큼 위치를 조정한다.
+	/// </summary>
+	/// <param name="targetRect">위치를 조정할 RectTransform</param>
+	/// <param name="offsetX">오른쪽 기준의 X 오프셋 (양수로 입력 시 왼쪽으로 이동)</param>
+	/// <param name="offsetY">하단 기준의 Y 오프셋</param>
+	public static void SetPositionFromBottomRight(RectTransform targetRect, float offsetX, float offsetY)
+	{
+		targetRect.anchorMin = new Vector2(1f, 0f);
+		targetRect.anchorMax = new Vector2(1f, 0f);
+		targetRect.pivot = new Vector2(1f, 0f);
+		targetRect.anchoredPosition = new Vector2(-offsetX, offsetY);
+	}
+
+	/// <summary>
+	/// anchoredPosition의 Y값을 캔버스 높이에 비례한 비율만큼 이동시킨다.
+	/// (예: factor = 0.34 → 캔버스 하단 기준으로 34% 위치에 배치)
+	/// </summary>
+	/// <param name="targetRect">대상 RectTransform</param>
+	/// <param name="canvas">기준이 되는 캔버스</param>
+	/// <param name="factor">0.0~1.0 사이의 상대 위치 비율</param>
+	public static void SetRelativeVerticalOffset(RectTransform targetRect, Canvas canvas, float factor)
+	{
+		RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+		float canvasHeight = canvasRect.rect.height;
+		
+		Vector2 pos = targetRect.anchoredPosition;
+		targetRect.anchoredPosition = new Vector2(pos.x, canvasHeight * factor);
+	}
 
 }

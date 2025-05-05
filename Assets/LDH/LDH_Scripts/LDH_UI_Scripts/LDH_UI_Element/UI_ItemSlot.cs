@@ -10,7 +10,8 @@ public class UI_ItemSlot : PoolObject<UI_ItemSlot>
 	[SerializeField] private TMP_Text itemName;
 	[SerializeField] private Image xSymbol;
 	[SerializeField] private TMP_Text itemCnt;
-
+	[SerializeField] private Sprite emptyArrow;
+	[SerializeField] private Sprite originalArrow;
 	public void Deselect()
 	{
 		Util.SetVisible(redArrow, false);
@@ -19,11 +20,13 @@ public class UI_ItemSlot : PoolObject<UI_ItemSlot>
 	public void Select()
 	{
 		Util.SetVisible(redArrow, true);
+		
 	}
 
 	private void OnDisable()
 	{
 		Deselect();
+		ChangeArrow(true);
 	}
 
 	public void SetData(InventorySlot slotData)
@@ -63,8 +66,9 @@ public class UI_ItemSlot : PoolObject<UI_ItemSlot>
 		itemCnt.text = showCount ? slotData.Count.ToString() : "";
 	}
 
-	#region 유틸리티 메서드
+	public void ChangeArrow(bool toFullArrow)
+	{
+		redArrow.sprite = toFullArrow ? originalArrow : emptyArrow;
+	}
 
-
-	#endregion
 }

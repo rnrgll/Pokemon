@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class InGameContextFactory
@@ -22,19 +23,30 @@ public static class InGameContextFactory
 		};
 	}
 
-	public static InGameContext<T> Create<T>(
-		bool isBattle = false,
-		bool isWild = false,
-		bool isDungeon = false,
-		Action<string> message = null,
-		Action<T> callback = null)
+
+	//
+	// public static InGameContext<T> Create<T>(
+	// 	bool isBattle = false,
+	// 	bool isWild = false,
+	// 	bool isDungeon = false,
+	// 	Action<string> message = null,
+	// 	Action<T> callback = null)
+	// {
+	// 	return new InGameContext<T>(callback)
+	// 	{
+	// 		IsInBattle = isBattle,
+	// 		IsWildBattle = isWild,
+	// 		IsInDungeon = isDungeon,
+	// 		NotifyMessage = message
+	// 	};
+	// }
+	//
+	public static InGameContext CreateFromGameManager()
 	{
-		return new InGameContext<T>(callback)
-		{
-			IsInBattle = isBattle,
-			IsWildBattle = isWild,
-			IsInDungeon = isDungeon,
-			NotifyMessage = message
-		};
+		return CreateBasic(
+			Manager.Game.IsInBattle,
+			Manager.Game.IsWildBattle,
+			Manager.Game.IsInDungeon
+		);
 	}
 }

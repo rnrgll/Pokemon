@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface IUICancelable
 {
-	public void OnCancle();
+	public void OnCancel();
 }
