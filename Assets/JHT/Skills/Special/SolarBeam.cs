@@ -3,8 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Define;
 
-public class SolarBeam : SkillSpecial
+public class SolarBeam : SkillS
 {
-    public SolarBeam() : base("솔라빔", "잠시동안 햇빛을 모은 후, 태양광선을 발사한다",
-		120, false, SkillType.Special,PokeType.Grass,10,100) { }
+    public SolarBeam() : base(
+		"솔라빔",
+		"1턴째에 빛을 가득 모아 2턴째에 빛의 다발을 발사하여 공격한다.",
+		120,
+		SkillType.Special,
+		false,
+		PokeType.Grass,
+		10,
+		100
+		) { }
+
+
+	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
+	{
+		if (defender.TryHit(attacker, defender, skill))
+		{
+			defender.TakeDamage(attacker, defender, skill);
+		}
+	}
 }

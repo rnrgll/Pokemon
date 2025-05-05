@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements.Experimental;
 using static Define;
 
 public class Player : MonoBehaviour
@@ -19,9 +22,9 @@ public class Player : MonoBehaviour
 	public Coroutine zInput;
 
 	[Tooltip("이동 거리 (기본 2)")]
-	[SerializeField] int moveValue = 2;
+	[SerializeField] public int moveValue = 2;
 	[Tooltip("이동 시간 (기본 0.3)")]
-	[SerializeField] float moveDuration = 0.3f;
+	[SerializeField] public float moveDuration = 0.3f;
 	[Tooltip("플레이어 이동상태")]
 	[SerializeField] bool isMoving = false;
 	// 플레이어 방향키입력 뗐을 때 트리거
@@ -39,6 +42,21 @@ public class Player : MonoBehaviour
 
 	public static event Action OnGrassEntered;
 
+	[SerializeField] public Queue<Vector3> prevPosQueue = new Queue<Vector3>();
+
+	[SerializeField] string curSceneName;
+	public string CurSceneName
+	{
+		get => curSceneName;
+		set
+		{
+			Debug.Log("씬 이름 변경 / 사운드 이벤트 실행");
+			curSceneName = value;
+			OnSceneChangeEvent?.Invoke(curSceneName);
+		}
+	}
+	[SerializeField] public event Action<string> OnSceneChangeEvent;
+
 	Animator anim;
 
 	void Awake()
@@ -50,6 +68,8 @@ public class Player : MonoBehaviour
 		zInput = StartCoroutine(ZInput());
 		// 점프 시간
 		jumpTime = new WaitForSeconds(0.03f);
+
+		CurSceneName = SceneManager.GetActiveScene().name;
 	}
 
 	private void OnEnable()
@@ -247,7 +267,8 @@ public class Player : MonoBehaviour
 				OnGrassEntered?.Invoke();
 			}
 		}
-		
+		prevPosQueue.Enqueue(startPos);
+		//Debug.Log($"플레이어 위치 저장 : {startPos}");
 	}
 
 	public void StopMoving()

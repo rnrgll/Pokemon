@@ -23,6 +23,15 @@ public class PokemonManager : Singleton<PokemonManager>
 	{
 		// Test용 스타팅 포ㅓ켓몬 주기
 		AddPokemon(1, 5);
+		
+		//메뉴 구현 중 테스트를 위한 임시 데이터 추가
+		AddPokemon(5, 10);
+		// AddPokemon(7, 10);
+		//
+		// AddPokemon(8, 10);
+		AddPokemon(9, 20);
+		// AddPokemon(33, 10);
+
 	}
 
 	public void AddPokemon(string pokeName, int level)
@@ -71,4 +80,22 @@ public class PokemonManager : Singleton<PokemonManager>
 		return false;
 	}
 
+	public Pokémon GetFirtstPokemon()
+	{
+		foreach (var poke in party)
+		{
+			if (!poke.isDead)
+				return poke;
+		}
+		return null;
+	}
+
+	// 플레이어 파티 랭크 초기화
+	public void PartyBattleStatInit()
+	{
+		foreach (var poke in party)
+		{
+			poke.pokemonBattleStack = new PokemonBattleStat(0);
+		}
+	}
 }

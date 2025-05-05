@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Berry_005_SleepCureBerry
   m_EditorClassIdentifier: 
   itemName: "\uBC15\uD558\uC5F4\uB9E4"
-  description: "\uC9C0\uB2C8\uAC8C \uD558\uBA74 \uC790\uC2E0\uC758\\n\uC7A0\uB4E6\uC0C1\uD0DC\uB97C
+  description: "\uC9C0\uB2C8\uAC8C \uD558\uBA74 \uC790\uC2E0\uC758\n\uC7A0\uB4E6\uC0C1\uD0DC\uB97C
     \uD68C\uBCF5\uD55C\uB2E4"
   category: 0
   useTarget: 2

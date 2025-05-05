@@ -59,12 +59,13 @@ public class UIManager : Singleton<UIManager>
     private void Update()
     {
 	    if(!IsAnyUIOpen) return;
-	    if (Input.GetKeyDown(KeyCode.Z))
-	    {
-		    HandleUIInput(UIInputType.Select);
-	    }
-	    else if (Input.GetKeyDown(KeyCode.X))
-		    HandleUIInput(UIInputType.Cancel);
+	    if (Input.GetKeyDown(KeyCode.Z)) HandleUIInput(UIInputType.Select);
+	    else if (Input.GetKeyDown(KeyCode.X)) HandleUIInput(UIInputType.Cancel);
+	    else if (Input.GetKeyDown(KeyCode.UpArrow)) HandleUIInput(UIInputType.Up);
+	    else if (Input.GetKeyDown(KeyCode.DownArrow)) HandleUIInput(UIInputType.Down);
+	    else if(Input.GetKeyDown(KeyCode.RightArrow)) HandleUIInput(UIInputType.Right);
+	    else if(Input.GetKeyDown(KeyCode.LeftArrow)) HandleUIInput(UIInputType.Left);
+
     }
 
     #endregion
@@ -92,41 +93,20 @@ public class UIManager : Singleton<UIManager>
     //z키 선택 알림
     public void HandleUIInput(UIInputType inputType)
     {
-	    // 팝업 확인을 먼저한다.
 	    if (_popUpStack.Count > 0)
 	    {
-		    UI_PopUp topPopUp = _popUpStack.Peek();
-		    switch (inputType)
-		    {
-			    case UIInputType.Select:
-				    (topPopUp as IUISelectable)?.OnSelect();
-				    break;
-			    case UIInputType.Cancel:
-				    (topPopUp as ICancelable)?.OnCancle();
-				    break;
-		    }
+		    var top = _popUpStack.Peek() as IUIInputHandler;
+		    top?.HandleInput(inputType);
 		    return;
 	    }
 
-	    // 팝업 없으면 연결 UI
 	    if (_linkList.Count > 0)
 	    {
-		    UI_Linked topLinked = _linkList[_linkList.Count - 1];
-		    switch (inputType)
-		    {
-			    case UIInputType.Select:
-				    (topLinked as IUISelectable)?.OnSelect();
-				    break;
-			    case UIInputType.Cancel:
-				    (topLinked as ICancelable)?.OnCancle();
-				    break;
-		    }
-		    return;
+		    var top = _linkList[^1] as IUIInputHandler;
+		    top?.HandleInput(inputType);
 	    }
 	    // 둘 다 없으면 무시
     }
-    
-    
     
 
     #region 팝업 UI
@@ -187,7 +167,7 @@ public class UIManager : Singleton<UIManager>
     /// <param name="prefabPath"></param>
     /// <typeparam name="T">Resources/UI_Prefabs/Linked 기준 상대경로</typeparam>
     /// <returns></returns>
-    public T ShowLinkedUI<T>(string prefabPath) where T : UI_Linked
+    public T ShowLinkedUI<T>(string prefabPath, bool autoOpen = true) where T : UI_Linked
     {
         if (string.IsNullOrEmpty(prefabPath))
         {
@@ -209,8 +189,12 @@ public class UIManager : Singleton<UIManager>
         linked.transform.SetAsLastSibling();
         _linkList.Add(linked); // 리스트에 추가
         
-        linked.Open();
-
+        if (autoOpen)
+	        linked.Open(); // 기존처럼 바로 Open
+        else
+        {
+	        linked.Close();
+        }
         
         return linked;
     }

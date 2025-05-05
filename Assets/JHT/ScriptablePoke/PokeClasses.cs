@@ -6,7 +6,7 @@ using UnityEngine;
 public class PokeClasses : ScriptableObject
 {
 	public int id;
-	public string name;
+	public string pokeName;
 	public PokeClassType type;
 	public Sprite icon;
 	public float power;

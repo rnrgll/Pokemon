@@ -10,9 +10,6 @@ public class ItemDatabase
 	//딕셔너리로 모든 아이템 보관
 	//외부 접근, 수정 불가능하게 처리
 	[SerializeField] private Dictionary<string, ItemBase> _itemDict;
-	[SerializeField] private List<string> testList;
-	
-	
 	//외부 접근용 딕셔너리 생성(readonly)
 	public IReadOnlyDictionary<string, ItemBase> ItemDict => _itemDict;
 	
@@ -34,7 +31,6 @@ public class ItemDatabase
 			if (!_itemDict.ContainsKey(key))
 			{
 				_itemDict.Add(key, item);
-				testList.Add(key);
 			}
 			else
 			{
@@ -68,6 +64,19 @@ public class ItemDatabase
 			.Where(item => item.Category == category)
 			.ToList();
 	}
+	
+	//3. 아이템이 해당 카테고리인지 여부 반환
+	/// <summary>
+	/// 아이템이 해당 카테고리인지 여부 반환
+	/// </summary>
+	/// <param name="itemName"></param>
+	/// <param name="category"></param>
+	/// <returns></returns>
+	public bool CheckItemCategory(string itemName, Define.ItemCategory category)
+	{
+		return GetItemData(itemName)?.Category == category;
+	}
+	
 	//
 	// //3. 판매 가능한 아이템 추출
 	// public List<ItemBase> GetSellableItems()
