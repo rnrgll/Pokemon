@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class NpcMover : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class NpcMover : MonoBehaviour
 
 	Animator anim;
 
+
+	private Coroutine moveCoroutine;
+
+	public Define.NpcState npcState = Define.NpcState.Idle;
+
 	private void Awake()
 	{
 		moveSpeed = 1f / moveDuration;
@@ -22,9 +28,9 @@ public class NpcMover : MonoBehaviour
 
 	private void Update()
 	{
-		if (!Manager.Dialog.isTyping && !npcMoving)
+		if (npcState != NpcState.Talking && !npcMoving)
 		{
-			StartCoroutine(MoveOneStep());
+			moveCoroutine = StartCoroutine(MoveOneStep());
 		}
 	}
 
@@ -66,6 +72,21 @@ public class NpcMover : MonoBehaviour
 
 		yield return new WaitForSeconds(1f);
 		npcMoving = false;
+
+	}
+
+	//	코루틴 정지
+	public void StopMoving()
+	{
+		if (moveCoroutine != null)
+		{
+			StopCoroutine(moveCoroutine);
+			moveCoroutine = null;
+		}
+		npcMoving = false;
+		anim.SetBool("npcMoving", false);
+
+		npcState = NpcState.Idle;  // 멈출 때 Idle 상태로 변경
 	}
 
 	private bool IsWalkAble(Vector2 currentDirection)

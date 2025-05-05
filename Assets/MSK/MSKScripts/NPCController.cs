@@ -4,27 +4,39 @@ using UnityEngine.UIElements;
 
 public class NPCController : MonoBehaviour, IInteractable
 {
-	[SerializeField] Dialog dialog;
+	[SerializeField] Dialog dialog; 
+	
+	private NpcMover npcMover;
 	public Vector2 currentDirection = Vector2.down;
 	private Vector2 npcPos;
-	Define.NpcState state;
 	Animator anim;
 
 	private void Awake()
 	{
 		anim = GetComponent<Animator>();
+		npcMover = GetComponent<NpcMover>();
 	}
 	public void Interact(Vector2 position)
 	{
 		// Npc위치 현재 위치로 갱신
+
 		npcPos = transform.position;
 		AnimChange(position);
+
+		if (npcMover != null)
+		{
+			npcMover.StopMoving();
+		}
+
 		anim.SetBool("npcMoving", false);
 		if (Manager.Dialog.isTyping == false)
 		{
+			npcMover.npcState = Define.NpcState.Talking;
 			Manager.Dialog.StartDialogue(dialog);
 		}
 	}
+
+
 	//	NPC와 상호작용하는 방향 체크
 	public void AnimChange(Vector2 position)
 	{
