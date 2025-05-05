@@ -410,51 +410,43 @@ public class BattleManager : MonoBehaviour
 
 
 	// 배틀 종료 처리
-	private void EndBattle(string Reason)
+	private void EndBattle(string reason)
 	{
-		switch (Reason)
+		// 공통적으로 실행
+		Debug.Log($"배틀로그 {currentTurn}턴 : 배틀 종료 - {reason}");
+		// 변수 초기화
+		isTrainer = false;
+		// 코루틴 초기화
+		if (battleCoroutine != null)
+		{
+			StopCoroutine(battleCoroutine);
+			battleCoroutine = null;
+		}
+		// 상대 포켓몬 파괴
+		Destroy(Manager.Poke.enemyPokemon.gameObject);
+		// 내 포켓몬 상태 초기화
+		Manager.Poke.ClearPartyState();
+
+		var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
+		setting.allowSceneActivation = false;
+
+		switch (reason)
 		{
 			case "Win":
 				{
-					Debug.Log($"배틀로그 {currentTurn}턴 : 승리: 모든 적 포켓몬 격파");
-					// 트레이너 배틀일 경우 돈 + 경험치
-					// 경험치 및 보상, 이전 씬으로 다시 이동 구현 필요
-					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
-					setting.allowSceneActivation = false;
+					Debug.Log($"배틀로그 {currentTurn}턴 : 승리");
 
-					// 변수 초기화
-					isTrainer = false;
-					// 코루틴 초기화
-					StopCoroutine(battleCoroutine);
-					battleCoroutine = null;
-
-					//// 경험치 계산
-					//int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
-					//playerPokemon.AddExp(totalExp);
-					//Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
-
-					// 상대 포켓몬 파괴
-					Destroy(Manager.Poke.enemyPokemon.gameObject);
-
+					// TODO : 트레이너 상대로 돈 획득
+					
 					// 씬활성화
 					setting.allowSceneActivation = true;
 				}
 				break;
 			case "Lose":
 				{
-					Debug.Log($"배틀로그 {currentTurn}턴 : 게임 오버: 플레이어 전멸");
-					Destroy(Manager.Poke.enemyPokemon.gameObject);
+					Debug.Log($"배틀로그 {currentTurn}턴 : 패배");
 
 					// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
-					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
-					setting.allowSceneActivation = false;
-
-					// 변수 초기화
-					isTrainer = false;
-					// 코루틴 초기화
-					StopCoroutine(battleCoroutine);
-					battleCoroutine = null;
-					Destroy(Manager.Poke.enemyPokemon.gameObject);
 
 					setting.allowSceneActivation = true;
 				}
@@ -462,17 +454,6 @@ public class BattleManager : MonoBehaviour
 			case "Run":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 성공적으로 도망쳤다!");
-
-					var setting = SceneManager.LoadSceneAsync(Manager.Encounter.prevSceneName); // 이전 씬으로 이동
-					setting.allowSceneActivation = false;
-
-					// 변수 초기화
-					isTrainer = false;
-					// 코루틴 초기화
-					StopCoroutine(battleCoroutine);
-					battleCoroutine = null;
-					Destroy(Manager.Poke.enemyPokemon.gameObject);
-
 					setting.allowSceneActivation = true;
 				}
 				break;

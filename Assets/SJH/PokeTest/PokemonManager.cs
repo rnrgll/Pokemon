@@ -141,4 +141,12 @@ public class PokemonManager : Singleton<PokemonManager>
 			Destroy(fieldPokemon);
 		}
 	}
+
+	public void ClearPartyState()
+	{
+		foreach (var poke in party)
+		{
+			poke.StackReset();
+		}
+	}
 }

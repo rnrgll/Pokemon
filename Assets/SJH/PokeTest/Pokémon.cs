@@ -1447,4 +1447,38 @@ public class Pokémon : MonoBehaviour
 		// 최소 대미지 1
 		return Mathf.Max(1, (int)damage);
 	}
+
+	public void StackReset()
+	{
+		// 분노
+		isAnger = false;
+		angerStack = 0;
+		// 구르기
+		isRollout = false;
+		rolloutStack = 0;
+		// 김밥말이
+		isBind = false;
+		bindStack = 0;
+		// 솔라빔
+		isCharge = false;
+		// 길동무
+		isDestinyBond = false;
+		// 리플렉터
+		isReflect = false;
+		reflectCount = 0;
+		// 리플렉터
+		isLightScreen = false;
+		lightScreenCount = 0;
+		// 저주
+		isCurse = false;
+		// 검은눈빛, 거미집
+		isCantRun = false;
+		// 신비의부적
+		isSafeguard = false;
+		safeguardCount = 0;
+		// 꿰뚫어보기
+		isForesight = false;
+		// 원한, 따라하기
+		prevSkillName = null;
+}
 }
