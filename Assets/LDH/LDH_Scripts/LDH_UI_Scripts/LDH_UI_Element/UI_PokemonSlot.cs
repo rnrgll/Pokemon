@@ -8,16 +8,21 @@ using UnityEngine.UI;
 
 public class UI_PokemonSlot : MonoBehaviour
 {
+	
 	//인스펙터에서 할당
 	[SerializeField] private Image arrow;
 	[SerializeField] private Image icon;
 	[SerializeField] private TMP_Text pokemonName;
 	[SerializeField] private TMP_Text level;
+	[SerializeField] private TMP_Text condition;
 	[SerializeField] private TMP_Text curHp;
 	[SerializeField] private TMP_Text maxHp;
 	[SerializeField] private Slider hpSlider;
 	[SerializeField] private Sprite emptyArrow;
 	[SerializeField] private Sprite originalArrow;
+	[SerializeField] private TMP_Text canLearn;
+	[SerializeField] private Transform hpUIRoot;
+	
 	
 	
 	//애니메이션 용
@@ -49,13 +54,37 @@ public class UI_PokemonSlot : MonoBehaviour
 		ChangeArrow(true);
 	}
 
-	public void SetData(Pokémon pokemon)
+	public void SetData(Pokémon pokemon, Item_SkillMachine skillMachine = null)
 	{
 		//아이콘..
 		pokemonName.text = pokemon.pokeName;
 		level.text = $":L{pokemon.level}";
 		curHp.text = $"{pokemon.hp}/";
 		maxHp.text = pokemon.maxHp.ToString();
+
+		if (pokemon.condition == Define.StatusCondition.Normal)
+		{
+			condition.gameObject.SetActive(false);
+		}
+		else
+		{
+			condition.text = pokemon.condition.ToString();
+			condition.gameObject.SetActive(true);
+		}
+
+		if (Manager.Game.SlotType == UI_PokemonParty.PartySlotType.Skill && skillMachine != null)
+		{
+			hpUIRoot.gameObject.SetActive(false);
+			canLearn.text = skillMachine.CanLearn(pokemon) ? "배울 수 있다" : "배울 수 없다";
+			canLearn.gameObject.SetActive(true);
+		}
+		else
+		{
+			canLearn.gameObject.SetActive(false);
+			SetHpSlider(pokemon.hp,pokemon.maxHp);
+			hpUIRoot.gameObject.SetActive(true);
+		}
+		
 		
 
 	}
@@ -112,5 +141,30 @@ public class UI_PokemonSlot : MonoBehaviour
         
 		yield return seq.WaitForCompletion();
 	}
+
 	
+	//hp slider 차오르는 효과
+	private IEnumerator AnimationHpChange(int fromHp, int toHp, int maxHp)
+	{
+		float duration = 0.7f; // 전체 애니메이션 시간
+		float elapsed = 0f;
+		int currentHp = fromHp;
+
+		while (elapsed<duration)
+		{
+			elapsed += Time.deltaTime;
+			float t = Mathf.Clamp(elapsed / duration, 0f, 1f);
+			currentHp = Mathf.RoundToInt(Mathf.Lerp(fromHp, toHp, t));
+			
+			//슬라이더 텍스트 모두 업데이트
+			curHp.text = $"{currentHp}/"; 
+			SetHpSlider(currentHp,maxHp);	
+			yield return null;
+		}
+	}
+
+	public void StartSliderAnimation(int fromHp, int toHp, int maxHp)
+	{
+		StartCoroutine(AnimationHpChange(fromHp, toHp, maxHp));
+	}
 }

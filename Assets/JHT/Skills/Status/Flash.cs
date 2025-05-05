@@ -13,7 +13,8 @@ public class Flash : SkillS
 		false,
 		PokeType.Normal,
 		20,
-		70
+		70,
+		true
 		)
 	{ }
 

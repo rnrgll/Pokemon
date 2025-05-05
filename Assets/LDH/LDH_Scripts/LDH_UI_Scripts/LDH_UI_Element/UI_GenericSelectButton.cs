@@ -17,6 +17,18 @@ public class UI_GenericSelectButton : MonoBehaviour
 		_label??=transform.GetChild(1).GetComponent<TMP_Text>();
 	}
 	
+	
+	/// <summary>
+	/// 버튼 텍스트와 콜백 함수 초기화가 필요한 경우에 호출
+	/// </summary>
+	/// <param name="label"></param>
+	/// <param name="action"></param>
+	public void Init(string label, ISelectableAction action)
+	{
+		_label.text = label;
+		_selectableAction = action;
+	}
+	
 	public void SetAction(ISelectableAction action)
 	{
 		_selectableAction = action;

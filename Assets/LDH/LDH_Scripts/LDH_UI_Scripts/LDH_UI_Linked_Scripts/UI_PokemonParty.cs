@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
@@ -6,6 +7,12 @@ using UnityEngine;
 
 public class UI_PokemonParty : UI_Linked
 {
+	public enum PartySlotType
+	{
+		Menu,
+		Item,
+		Skill
+	}
 	
 	//인덱스
 	private static int curCursorIdx = 0;
@@ -30,7 +37,19 @@ public class UI_PokemonParty : UI_Linked
 	private int changeFromIdx = -1;
 	private int changeToIdx = -1;
 	private bool isChangingOrder = false;
+
+	private PartySlotType _slotType => Manager.Game.SlotType;
 	
+	//콜백용
+	public Action<Pokémon, UI_PokemonSlot> onPokemonSelected;
+	//스킬 가르치기 시 필요한 데이터 밖에서 주입
+	private Item_SkillMachine skillMachineItem = null;
+
+	public void SetSkillMachine(Item_SkillMachine item)
+	{
+		skillMachineItem = item;
+	}
+
 	
 	private void Awake()
 	{
@@ -71,7 +90,7 @@ public class UI_PokemonParty : UI_Linked
 					OnSelect();
 					break;
 				case Define.UIInputType.Cancel:
-					OnCancle();
+					OnCancel();
 					break;
 			}
 		}
@@ -115,7 +134,7 @@ public class UI_PokemonParty : UI_Linked
 		stopSlotInstance.transform.SetAsLastSibling();
 	}
 	
-	private void Refresh()
+	public void Refresh()
 	{
 		RefreshPartyData();
 		RefreshUI();
@@ -136,7 +155,7 @@ public class UI_PokemonParty : UI_Linked
 			if (i < party.Count)
 			{
 				slotList[i].gameObject.SetActive(true);
-				slotList[i].SetData(party[i]);
+				slotList[i].SetData(party[i], skillMachineItem);
 			}
 			else
 			{
@@ -148,7 +167,19 @@ public class UI_PokemonParty : UI_Linked
 		stopSlotInstance.transform.SetAsLastSibling();
 
 		UpdateCursor();
-		msgText.text = "포켓몬을 골라 주십시오";
+		switch (_slotType)
+		{
+			case (PartySlotType)0:
+				msgText.text = "포켓몬을 골라 주십시오";
+				break;
+			case (PartySlotType)1:
+				msgText.text = "어느 포켓몬에 사용하시겠습니까?";
+				break;
+			case (PartySlotType)2:
+				msgText.text = "어느 포켓몬에게 가르치겠습니까?";
+				break;
+		}
+		
 	}
 
 	
@@ -189,8 +220,6 @@ public class UI_PokemonParty : UI_Linked
 
 	public override void OnSelect()
 	{
-		Debug.Log(curCursorIdx);
-		Debug.Log(party.Count);
 		if (curCursorIdx == party.Count)
 		{
 			CloseSelf();
@@ -201,22 +230,27 @@ public class UI_PokemonParty : UI_Linked
 		slotList[curCursorIdx].ChangeArrow(true);
 
 	
+		if (onPokemonSelected != null)
+		{
+			onPokemonSelected.Invoke(party[curCursorIdx], slotList[curCursorIdx]); // 등록된 동작 호출
+			return;
+		}
 	
 		var popupUI = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_PokemonPopUp_1");
-		popupUI.SetupOptions(popupUI.buttonParent,
+		popupUI.SetupOptions(popupUI.ButtonParent,
 			new List<(string, ISelectableAction)>
 			{
-				("강한 정도", new CustomAction(ShowPokemonInfo)),
+				("강한정도를 보다", new CustomAction(ShowPokemonInfo)),
 				("순서바꾸기", new CustomAction(ChangeOrder)),
 				("사용할 수 있는 기술",  new CustomAction(ShowSkillInfo) ),
-				("닫다", new CustomAction(popupUI.OnCancle)),
+				("돌아가다", new CustomAction(popupUI.OnCancel)),
 			});
 	}
 
 
-	public override void OnCancle()
+	public override void OnCancel()
 	{
-		base.OnCancle();
+		base.OnCancel();
 		Debug.Log("UI_Pokemon: 닫힘 처리됨");
 	}
 

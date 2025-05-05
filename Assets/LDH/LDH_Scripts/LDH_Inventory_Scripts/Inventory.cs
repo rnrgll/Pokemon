@@ -61,6 +61,12 @@ public class Inventory
 		}
 	}
 	
+	/// <summary>
+	/// 아이템 이름을 기준으로 인벤토리에서 지정한 수량만큼 제거
+	/// 수량이 0 이하가 되면 슬롯 자체를 삭제
+	/// </summary>
+	/// <param name="itemName">제거할 아이템의 이름</param>
+	/// <param name="amount">제거할 수량 (기본값: 1)</param>
 	public void RemoveItem(string itemName, int amount = 1)
 	{
 		if (!_slotLookUp.TryGetValue(itemName, out var slot)) return;
@@ -73,6 +79,24 @@ public class Inventory
 		}
 	}
 	
+	/// <summary>
+	/// 인벤토리 슬롯을 직접 지정하여 아이템을 제거
+	/// 수량이 0 이하가 되면 슬롯 자체를 삭제
+	/// </summary>
+	/// <param name="slot">제거 대상이 되는 인벤토리 슬롯</param>
+	/// <param name="amount">제거할 수량 (기본값: 1)</param>
+	public void RemoveItem(InventorySlot slot, int amount = 1)
+	{
+		if (slot == null || !_slots.Contains(slot)) return;
+
+		slot.Count -= amount;
+		if (slot.Count <= 0)
+		{
+			_slots.Remove(slot);
+			_slotLookUp.Remove(slot.ItemName);
+		}
+	}
+
 
 	public bool CanUse(string itemName)
 	{

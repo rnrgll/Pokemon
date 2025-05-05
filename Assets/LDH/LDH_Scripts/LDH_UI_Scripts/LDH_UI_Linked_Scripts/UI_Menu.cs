@@ -48,6 +48,7 @@ public class UI_Menu : UI_Linked
     protected override void Init()
     {
 	    base.Init();
+	    Manager.Game.SetSlotType(UI_PokemonParty.PartySlotType.Menu);
 	    SetInActiveAllArrow();
 		UpdateUI();
     }
@@ -68,7 +69,7 @@ public class UI_Menu : UI_Linked
 			    OnSelect();
 			    break;
 		    case Define.UIInputType.Cancel:
-			    OnCancle();
+			    OnCancel();
 			    break;
 	    }
     }

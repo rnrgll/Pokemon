@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(menuName = "Item/EscapeRope")]
 public class Item_EscapeRope : ItemBase
 {
- 
-	public override bool Use<T>(Pokémon target, InGameContext<T> inGameContext)
+    public override bool Use(Pokémon target, InGameContext inGameContext)
     {
 	    if (!inGameContext.IsInDungeon)
 	    {
@@ -15,29 +14,29 @@ public class Item_EscapeRope : ItemBase
 		    return false;
 	    }
 	    
-		if (Manager.Data.DungeonMapData.TryGetLink(SceneManager.GetActiveScene().name,
-				out var dungeonLink))
-		{
-			// string nextSceneName = dungeonLink.entranceSceneName;
-			// Vector2 position = dungeonLink.entrancePosition;
-			if (inGameContext is InGameContext<DungeonMapData.DungeonLink> dungeonContext)
-			{
-				dungeonContext.Callback?.Invoke(dungeonLink);
-				return true;
-			}
+	    if(Manager.Data.DungeonMapData.TryGetLink(SceneManager.GetActiveScene().name,
+		    out var dungeonLink))
+	    {
+		    Manager.UI.CloseAllUI();
+		    Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+			    .ShowMessage(new List<string> { $"{Manager.Data.PlayerData.PlayerName}는(은) {itemName}을 사용했다!" }, 
+				    () =>
+			    {
+				    EscapeDungeon(dungeonLink);
+			    },
+			    false
+				    );
+		    inGameContext.Callback?.Invoke();
+		    return true;
+	    }
 
-			Debug.LogWarning($"{nameof(Item_EscapeRope)}: InGameContext 타입이 DungeonLink와 일치하지 않습니다.");
-			return false;
-
-
-		}
-
-		return false;
+	    return false;
     }
 
-    public override bool Use(Pokémon target, InGameContext inGameContext)
+    private void EscapeDungeon(DungeonMapData.DungeonLink dungeonLink)
     {
-	    //구현 안하는 부분 예외처리
-	    return false;
+	    //테스트코드
+	    SceneChanger sc = new GameObject().AddComponent<SceneChanger>();
+	    sc.Change(dungeonLink.entranceSceneName, dungeonLink.entrancePosition);
     }
 }

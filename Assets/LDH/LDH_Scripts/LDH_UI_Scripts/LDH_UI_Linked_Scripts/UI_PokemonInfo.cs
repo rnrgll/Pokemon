@@ -80,7 +80,7 @@ public class UI_PokemonInfo : UI_Linked
 					OnSelect();
 					break;
 				case Define.UIInputType.Cancel:
-					OnCancle();
+					OnCancel();
 					break;
 			}
 

@@ -21,9 +21,9 @@ public abstract class ItemBase : ScriptableObject
 	[SerializeField] protected bool isConsumable;
 	
 	public string ItemName => itemName;
-	public string Description => description;
+	public virtual string Description => description;
 	public ItemCategory Category => category; //카테고리
-	public ItemTarget UseTartget => useTarget; //사용 대상
+	public ItemTarget TargetType => useTarget; //사용 대상
 	public ItemUseContext UseContext => useContext; //사용 환경
 
 	
@@ -64,8 +64,5 @@ public abstract class ItemBase : ScriptableObject
 		}
 	}
 	public abstract bool Use(Pokémon target, InGameContext inGameContext);
-	public virtual bool Use<T>(Pokémon target, InGameContext<T> inGameContext)
-	{
-		return Use(target, (InGameContext)inGameContext); // 캐스팅 or 기본 처리
-	}
+
 }

@@ -115,6 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4eef4c7f1042be9ec5ca3d99db0d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonPrefab: {fileID: 0}
+  buttonParent: {fileID: 6327651755719069982}
   buttonParent: {fileID: 6327651755719069982}
 --- !u!1001 &8654877370813069146
 PrefabInstance:
