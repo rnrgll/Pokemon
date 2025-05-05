@@ -8,6 +8,87 @@ public class SJH_PokemonData
 	private Dictionary<int, SJH_PokemonData> dataById;
 	private Dictionary<string, SJH_PokemonData> dataByName;
 
+	public Dictionary<string, string> pokemonKorName = new Dictionary<string, string>()
+	{
+		["Chikorita"] = "치코리타",
+		["Bayleef"] = "베이리프",
+		["Meganium"] = "메가니움",
+		["Cyndaquil"] = "브케인",
+		["Quilava"] = "마그케인",
+		["Typhlosion"] = "블레이범",
+		["Totodile"] = "리아코",
+		["Croconaw"] = "엘리게이",
+		["Feraligatr"] = "장크로다일",
+		["Pidgey"] = "구구",
+		["Pidgeotto"] = "피죤",
+		["Pidgeot"] = "피죤투",
+		["Spearow"] = "깨비참",
+		["Fearow"] = "깨비드릴조",
+		["Hoothoot"] = "부우부",
+		["Noctowl"] = "야부엉",
+		["Rattata"] = "꼬렛",
+		["Raticate"] = "레트라",
+		["Sentret"] = "꼬리선",
+		["Furret"] = "다꼬리",
+		["Caterpie"] = "캐터피",
+		["Metapod"] = "단데기",
+		["Butterfree"] = "버터플",
+		["Weedle"] = "뿔충이",
+		["Kakuna"] = "딱충이",
+		["Beedrill"] = "독침붕",
+		["Spinarak"] = "페이검",
+		["Ariados"] = "아리아도스",
+		["Geodude"] = "꼬마돌",
+		["Graveler"] = "데구리",
+		["Gastly"] = "고오스",
+		["Haunter"] = "고우스트",
+		["Bellsprout"] = "모다피",
+		["Weepinbell"] = "우츠동",
+	};
+
+	public Dictionary<string, string> pokemonEngName = new Dictionary<string, string>()
+	{
+		["치코리타"] = "Chikorita",
+		["베이리프"] = "Bayleef",
+		["메가니움"] = "Meganium",
+		["브케인"] = "Cyndaquil",
+		["마그케인"] = "Quilava",
+		["블레이범"] = "Typhlosion",
+		["리아코"] = "Totodile",
+		["엘리게이"] = "Croconaw",
+		["장크로다일"] = "Feraligatr",
+		["구구"] = "Pidgey",
+		["피죤"] = "Pidgeotto",
+		["피죤투"] = "Pidgeot",
+		["깨비참"] = "Spearow",
+		["깨비드릴조"] = "Fearow",
+		["부우부"] = "Hoothoot",
+		["야부엉"] = "Noctowl",
+		["꼬렛"] = "Rattata",
+		["레트라"] = "Raticate",
+		["꼬리선"] = "Sentret",
+		["다꼬리"] = "Furret",
+		["캐터피"] = "Caterpie",
+		["단데기"] = "Metapod",
+		["버터플"] = "Butterfree",
+		["뿔충이"] = "Weedle",
+		["딱충이"] = "Kakuna",
+		["독침붕"] = "Beedrill",
+		["페이검"] = "Spinarak",
+		["아리아도스"] = "Ariados",
+		["꼬마돌"] = "Geodude",
+		["데구리"] = "Graveler",
+		["고오스"] = "Gastly",
+		["고우스트"] = "Haunter",
+		["모다피"] = "Bellsprout",
+		["우츠동"] = "Weepinbell",
+	};
+
+	// 앞면
+	private Dictionary<string, Sprite> frontSprites = new();
+	// 뒷면
+	private Dictionary<string, Sprite> backSprites = new();
+
 	// 도감번호
 	public int Id;
 	// 이름
@@ -910,6 +991,35 @@ public class SJH_PokemonData
 		{
 			dataByName[data.Name] = data;
 		};
+		
+		// 앞뒷면 스프라이트 
+		GameObject[] prefabs1 = Resources.LoadAll<GameObject>("PokemonFront_Sprites");
+		foreach (GameObject prefab in prefabs1)
+		{
+			// 이름은 프리팹 이름 기준
+			string name = pokemonKorName[prefab.name];
+
+			// SpriteRenderer에서 Sprite를 가져옴
+			Sprite sprite = prefab.GetComponent<SpriteRenderer>()?.sprite;
+			if (sprite != null && !frontSprites.ContainsKey(name))
+			{
+				frontSprites.Add(name, sprite);
+			}
+		}
+		// 앞뒷면 스프라이트 
+		GameObject[] prefabs2 = Resources.LoadAll<GameObject>("PokemonBack_Sprites");
+		foreach (GameObject prefab in prefabs2)
+		{
+			// 이름은 프리팹 이름 기준
+			string name = pokemonKorName[prefab.name];
+
+			// SpriteRenderer에서 Sprite를 가져옴
+			Sprite sprite = prefab.GetComponent<SpriteRenderer>()?.sprite;
+			if (sprite != null && !backSprites.ContainsKey(name))
+			{
+				backSprites.Add(name, sprite);
+			}
+		}
 	}
 
 	public SJH_PokemonData GetPokemonData(int index)
@@ -924,6 +1034,24 @@ public class SJH_PokemonData
 	public SJH_PokemonData GetPokemonData(string name)
 	{
 		var check = dataByName[name];
+		if (check == null)
+			return null;
+		else
+			return check;
+	}
+
+	public Sprite GetBattleFrontSprite(string pokeName)
+	{
+		var check = frontSprites[pokeName];
+		if (check == null)
+			return null;
+		else
+			return check;
+	}
+
+	public Sprite GetBattleBackSprite(string pokeName)
+	{
+		var check = backSprites[pokeName];
 		if (check == null)
 			return null;
 		else

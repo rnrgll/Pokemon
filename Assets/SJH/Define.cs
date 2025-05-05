@@ -11,6 +11,8 @@ public class Define
 		["연두마을"] = "NewBarkTown",
 		["연구소"] = "ProfessorLab",
 		["29번도로"] = "Route29",
+		["30번도로"] = "Route30",
+		["29번게이트"] = "Route29Gate",
 		["도라지시티"] = "VioletCity",
 
 	};
@@ -139,4 +141,5 @@ public class Define
 		Waiting,	//	플레이어 대기
 	}
 	#endregion
+
 }
