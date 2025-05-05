@@ -202,27 +202,25 @@ public class BattleManager : MonoBehaviour
 			//Debug.Log($"행동 {selectedAction} 선택!");
 			ui.HideActionMenu();
 
+			// 적 포켓몬 행동 선택
+			// TODO : 적 포켓몬 기술 선택 AI
+			int idx = Random.Range(0, enemyPokemon.skills.Count);
+			enemySelectedSkill = enemyPokemon.skills[idx];
+
 			// 전투 수행
 			switch (selectedAction)
 			{
 				case "Fight":
 					playerSelectedSkill = null;
 					ui.ShowSkillSelection(playerPokemon);
-					//Debug.Log($"Fight! 기술 선택대기중");
 					yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
-																				   //Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} ! {playerSelectedSkill} !");
 					ui.HideSkillSelection();
 
-					// 적 포켓몬 행동 선택
-					// TODO : 적 포켓몬 기술 선택 AI
-					int idx = Random.Range(0, enemyPokemon.skills.Count);
-					enemySelectedSkill = enemyPokemon.skills[idx];
-
 					var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
-                {
-					new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
-					new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
-				};
+                    {
+					    new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
+					    new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
+					};
 
 					// 속도에 따라 정렬
 					actions.Sort((a, b) =>
@@ -248,7 +246,7 @@ public class BattleManager : MonoBehaviour
 						return Random.Range(0, 2) == 0 ? -1 : 1;
 					});
 
-					foreach (var act in actions) ///
+					foreach (var act in actions)
 					{
 						if (act.Attacker.hp <= 0)
 						{
@@ -258,7 +256,6 @@ public class BattleManager : MonoBehaviour
 
 						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
 						ExecuteAction(act);
-						//Debug.Log($"{act.Attacker.pokeName} 이/가 {act.Skill} 사용완료!");
 						yield return battleDelay;
 					}
 
@@ -270,6 +267,14 @@ public class BattleManager : MonoBehaviour
 
 				case "Pokemon":
 					yield return StartCoroutine(PokemonSwitch());
+					{
+						ExecuteAction(new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill));
+
+						hud.SetPlayerHUD(playerPokemon);
+						hud.SetEnemyHUD(enemyPokemon);
+
+						yield return new WaitForSeconds(1f);
+					}
 					break;
 
 				case "Bag":
