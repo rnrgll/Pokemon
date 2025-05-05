@@ -12,13 +12,14 @@ public class NPCController : MonoBehaviour, IInteractable
 
 	private void Awake()
 	{
-		npcPos = this.transform.position;
 		anim = GetComponent<Animator>();
 	}
 	public void Interact(Vector2 position)
 	{
-
+		// Npc위치 현재 위치로 갱신
+		npcPos = transform.position;
 		AnimChange(position);
+		anim.SetBool("npcMoving", false);
 		if (Manager.Dialog.isTyping == false)
 		{
 			Manager.Dialog.StartDialogue(dialog);
@@ -48,4 +49,5 @@ public class NPCController : MonoBehaviour, IInteractable
 
 		}
 	}
+
 }
