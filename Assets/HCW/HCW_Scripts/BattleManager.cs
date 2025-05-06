@@ -308,6 +308,7 @@ public class BattleManager : MonoBehaviour
 						// 상태이상체크
 						if (act.Attacker.CanActionCheck())
 						{
+							// TODO : PP 체크
 							ExecuteAction(act);
 						}
 						isAction = true;
@@ -323,6 +324,7 @@ public class BattleManager : MonoBehaviour
 				case "Pokemon":
 					yield return StartCoroutine(PokemonSwitch());
 					{
+						// TODO : 상대 포켓몬의 PP 체크
 						ExecuteAction(new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill));
 
 						hud.SetPlayerHUD(playerPokemon);
@@ -427,8 +429,6 @@ public class BattleManager : MonoBehaviour
 	// 행동 선택 후 행동 처리
 	private void ExecuteAction(BattleAction action)
 	{
-		//Debug.Log($"{action.Attacker.pokeName} 사용 {action.Skill}");
-		//Attack(action.Attacker, action.Target, action.Skill);
 		var skill = Manager.Data.SkillSData.GetSkillDataByName(action.Skill);
 		skill.UseSkill(action.Attacker, action.Target, skill);
 	}
