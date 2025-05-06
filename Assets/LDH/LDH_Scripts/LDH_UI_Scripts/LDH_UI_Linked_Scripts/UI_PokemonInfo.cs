@@ -115,8 +115,8 @@ public class UI_PokemonInfo : UI_Linked
 					//type1Text.text = pokemon.pokeType1.ToString();
 					//type2Text.text = pokemon.pokeType2.ToString();
 					statusText.text = Define.GetKoreanState[pokemon.condition]; // 한글로 변환
-					type1Text.text = Define.GetKoreanType[pokemon.pokeType1];
-					type2Text.text = Define.GetKoreanType[pokemon.pokeType2];
+					type1Text.text = Define.GetKoreanPokeType[pokemon.pokeType1];
+					type2Text.text = Define.GetKoreanPokeType[pokemon.pokeType2];
 					if(pokemon.pokeType2==Define.PokeType.None)
 						type2Text.gameObject.SetActive(false);
 					

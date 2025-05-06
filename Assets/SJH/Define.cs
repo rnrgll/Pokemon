@@ -95,7 +95,7 @@ public class Define
 		[StatusCondition.Faint] = "기절",
 		[StatusCondition.Flinch] = "풀죽음",
 	};
-	public static Dictionary<PokeType, string> GetKoreanType = new()
+	public static Dictionary<PokeType, string> GetKoreanPokeType = new()
 	{
 		[PokeType.None] = "없음",
 		[PokeType.Normal] = "노말",
@@ -115,6 +115,12 @@ public class Define
 		[PokeType.Dragon] = "드래곤",
 		[PokeType.Dark] = "악",
 		[PokeType.Steel] = "강철",
+	};
+	public static Dictionary<SkillType, string> GetKoreanSkillType = new()
+	{
+		[SkillType.Physical] = "물리",
+		[SkillType.Special] = "특수",
+		[SkillType.Status] = "변화",
 	};
 
 
