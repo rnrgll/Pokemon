@@ -43,6 +43,7 @@ public class PokemonManager : Singleton<PokemonManager>
 		enemyPokemon = Manager.Poke.AddEnemyPokemon("치코리타", 5);
 		//===========================================//
 		AddPokemon("블레이범", 50);
+		AddPokemon("피죤투",30);
 
 	}
 

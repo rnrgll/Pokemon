@@ -6,6 +6,25 @@ public class PokeGearEvent : PokeEvent
 {
 	[Tooltip("실행 됐는지 체크")]
 	[SerializeField] bool isExecuted;
+
+	[SerializeField] GameObject npc;
+	[SerializeField] static bool isMove;
+
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.CompareTag("Player"))
+		{
+			Debug.Log("플레이어 닿음");
+			if (isMove == false)
+			{
+				isMove = true;
+				NpcMover npcMover = npc.GetComponent<NpcMover>();
+				npcMover.isNPCMoveCheck = true;
+			}
+		}
+	}
+
 	public override void OnPokeEvent(GameObject player)
 	{
 		// 한번만 실행
