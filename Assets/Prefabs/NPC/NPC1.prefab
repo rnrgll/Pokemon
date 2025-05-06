@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8857025724216877717}
   - component: {fileID: 5883567436756814249}
   - component: {fileID: 7998002709715025750}
-  - component: {fileID: 8885878773225274498}
-  - component: {fileID: 2031732580595217058}
+  - component: {fileID: 8208854592926877276}
+  - component: {fileID: 6437891799011132873}
   m_Layer: 0
   m_Name: NPC1
   m_TagString: NPC
@@ -132,7 +132,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &8885878773225274498
+--- !u!95 &8208854592926877276
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935877952304988180}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a556a7cc5c7392e4197a7dad66ca791e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6437891799011132873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,38 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9198d2aa9d2ef04cb86cdd070345c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitPos: {x: 4, y: 2}
   destinationPoints:
-  - {x: 6, y: 2}
-  - {x: 8, y: 2}
-  - {x: 8, y: 4}
-  moveDuration: 0.4
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  moveDuration: 0.3
   rotateInterval: 2
-  moveSpeed: 0
-  npcMoving: 0
-  isNPCTurn: 0
-  currentDirection: {x: 0, y: 0}
+  npcTurn: 0
   dir: {x: 0, y: 0}
-  isNPCMoveCheck: 0
-  isNPCTurnCheck: 0
---- !u!95 &2031732580595217058
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935877952304988180}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c4c00a6c98bdca04685a327883083aa2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
