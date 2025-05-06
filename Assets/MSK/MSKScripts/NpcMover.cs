@@ -9,7 +9,7 @@ public class NpcMover : MonoBehaviour
 	// 도착할 위치 : 기본은 시작 위치
 	[SerializeField] public Vector2 exitPos;
 	// 이동할 위치 2 단위로
-	[SerializeField] List<Vector2> destinationPoints;
+	[SerializeField] public List<Vector2> destinationPoints;
 	// 이동 시간
 	[SerializeField] float moveDuration = 0.3f;
 	// 회전 시간
@@ -20,9 +20,7 @@ public class NpcMover : MonoBehaviour
 	[SerializeField] bool npcMoving;
 
 	// destinationPoints의 이동할 순서
-	private int moveIndex = 0;
-
-	public event Action moveFinished;
+	public int moveIndex = 0;
 
 	//	방향
 	[SerializeField] public Vector2 currentDirection;
@@ -46,7 +44,7 @@ public class NpcMover : MonoBehaviour
 	[SerializeField] public bool isNPCMoveCheck;
 	//	회전
 	[SerializeField] public bool isNPCTurnCheck;
-
+	
 	private void Awake()
 	{
 		moveSpeed = 1f / moveDuration;
@@ -229,6 +227,15 @@ public class NpcMover : MonoBehaviour
 			yield return null;
 		}
 	}
+
+	public void ListReverse()
+	{
+		if (destinationPoints != null && destinationPoints.Count > 0)
+		{
+			destinationPoints.Reverse();
+		}
+	}
+
 
 	IEnumerator NPCTurn()
 	{

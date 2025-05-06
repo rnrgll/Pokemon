@@ -4,55 +4,78 @@ using UnityEngine;
 
 public class PokeGearEvent : PokeEvent
 {
-	[Tooltip("실행 됐는지 체크")]
-	[SerializeField] bool isExecuted;
-
 	[Header("대화 관련 설정")]
-	[SerializeField] Dialog dialog;
-
-	[SerializeField] GameObject npc;
-	[SerializeField] bool isMove;
+	[SerializeField] private Dialog dialog;
+	[SerializeField] private GameObject npc;
+	[SerializeField] private bool isMove;
 
 	private Vector2 originalNpcPosition;
 
-	public List<Vector2> moves = new List<Vector2>();
-	void OnCollisionEnter2D(Collision2D collision)
+	private void ReturnNpcDialogue()
 	{
+		Manager.Dialog.CloseDialog -= ReturnNpcDialogue;
+		StartCoroutine(ReturnNpcPosition());
+	}
 
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			if (isExecuted)
+			if (Manager.Event.pokegearEvent)
 				return;
-			//	종료좌표 재설정
+
+			// 플레이어가 접촉했을 때 이벤트 처리
 			originalNpcPosition = npc.transform.position;
 			Debug.Log("플레이어 닿음");
+
 			if (!isMove)
 			{
 				isMove = true;
-				NpcMover npcMover = npc.GetComponent<NpcMover>();
-				npcMover.isNPCMoveCheck = true;
+				StartNpcMovement();
 				StartCoroutine(TriggerDialogue());
 			}
-			isExecuted = true;
+			Manager.Event.pokegearEvent = true;
 		}
 	}
 
 	public override void OnPokeEvent(GameObject player)
 	{
-		// 포켓기어 이벤트 처리
 		Debug.Log("포켓기어 이벤트 실행!");
+	}
+
+	private void StartNpcMovement()
+	{
+		NpcMover npcMover = npc.GetComponent<NpcMover>();
+		npcMover.isNPCMoveCheck = true;
 	}
 
 	private IEnumerator TriggerDialogue()
 	{
-		NpcMover npcMover = npc.GetComponent<NpcMover>();
-		// 대화 처리
 		Manager.Dialog.StartDialogue(dialog);
+		Manager.Dialog.CloseDialog += ReturnNpcDialogue;
 
 		while (Manager.Dialog.isTyping)
 		{
 			yield return null;
 		}
 		isMove = false;
+	}
+
+	private IEnumerator ReturnNpcPosition()
+	{
+		NpcMover npcMover = npc.GetComponent<NpcMover>();
+
+		npcMover.StopMoving();
+		if (npcMover.destinationPoints.Count == 0 || (Vector2)npc.transform.position != originalNpcPosition)
+		{
+			npcMover.destinationPoints = new List<Vector2> { new Vector2(8, 2), new Vector2(4, 2) };
+			npcMover.moveIndex = 0;
+			npcMover.isNPCMoveCheck = true;
+		}
+
+		while (npcMover.isNPCMoveCheck)
+		{
+			yield return null;
+		}
 	}
 }

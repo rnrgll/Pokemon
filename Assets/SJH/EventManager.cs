@@ -12,6 +12,11 @@ public class EventManager : Singleton<EventManager>
 
 	// 이벤트 트리거들
 	[SerializeField] public bool pokegearEvent;			// 2층에서 1층가면 포켓기어 설명 + 공박사한테 가라는 이벤트
+	
+	
+	
+	
+	
 	[SerializeField] public bool starterEvent;             // 공박사에게 스타팅 포켓몬 받는 이벤트
 	[SerializeField] public bool questEvent;				// 포켓몬 할아버지 집 가라는 이벤트
 	[SerializeField] public bool starterSubEvent;			// 스타팅 받고 나갈 때 조수가 상처약 주는 이벤트
