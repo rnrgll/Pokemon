@@ -459,9 +459,9 @@ public class BattleManager : MonoBehaviour
 
 		yield return new WaitForSeconds(0.5f);
 
-		Debug.Log($"[Motion] {action.Attacker.name} 사용 {action.Skill} 직전, 대상 HP: {action.Target.hp}");
 		ExecuteAction(action);
-		Debug.Log($"[Motion] {action.Target.name} HP 변경 후: {action.Target.hp}");
+		hud.SetPlayerHUD(playerPokemon);
+		hud.SetEnemyHUD(enemyPokemon);
 
 		//피격 모션
 		var tgtPos = action.Target == playerPokemon ? playerPokemonPos : enemyPokemonPos;
