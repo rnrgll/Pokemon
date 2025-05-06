@@ -39,9 +39,7 @@ public class BattleManager : MonoBehaviour
 			Manager.Game.UpdateEnemyPokemon(value); //자동반영
 		}
 	}
-
-	[SerializeField] private Transform playerPokemonPos;
-	[SerializeField] private Transform enemyPokemonPos;
+	
 	
 	
 	private int currentEnemyIndex;        // 현재 적 포켓몬 인덱스
@@ -56,7 +54,7 @@ public class BattleManager : MonoBehaviour
 	
 	
 	Coroutine battleCoroutine;
-	WaitForSeconds battleDelay = new WaitForSeconds(1f);
+	WaitForSeconds battleDelay = new WaitForSeconds(1.5f);
 	// 턴
 	int currentTurn;
 
@@ -212,8 +210,8 @@ public class BattleManager : MonoBehaviour
 
 				yield return StartCoroutine(PokemonSwitch());
 				{
-					hud.SetPlayerHUD(playerPokemon);
-					hud.SetEnemyHUD(enemyPokemon);
+					hud.SetPlayerHUD(playerPokemon, false);
+					hud.SetEnemyHUD(enemyPokemon, false);
 
 					yield return new WaitForSeconds(1f);
 					continue;
@@ -242,7 +240,7 @@ public class BattleManager : MonoBehaviour
 						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
 
-						hud.SetEnemyHUD(enemyPokemon);
+						hud.SetEnemyHUD(enemyPokemon, false);
 
 						yield return battleDelay;
 						continue;
@@ -369,8 +367,8 @@ public class BattleManager : MonoBehaviour
 						// TODO : 상대 포켓몬의 PP 체크
 						ExecuteAction(new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill));
 
-						hud.SetPlayerHUD(playerPokemon);
-						hud.SetEnemyHUD(enemyPokemon);
+						hud.SetPlayerHUD(playerPokemon,false);
+						hud.SetEnemyHUD(enemyPokemon,false);
 
 						isAction = true;
 
@@ -458,8 +456,8 @@ public class BattleManager : MonoBehaviour
 				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{enemyPokemon.pokeName}은 쓰러졌다!"));
 				
 				int totalExp = (int)((enemyPokemon.baseExp * enemyPokemon.level) / 7);
-				Debug.Log($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
-				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
+				Debug.Log($"{playerPokemon.pokeName}은/는 {totalExp} 경험치를 얻었다!");
+				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName}은/는 {totalExp} 경험치를 얻었다!"));
 				
 				//playerPokemon.AddExp(totalExp);
 				yield return StartCoroutine(AnimateGainExp(totalExp));
@@ -495,7 +493,7 @@ public class BattleManager : MonoBehaviour
 		}
 
 		playerPokemon = chosen; // 선택 하면 교체
-		hud.SetPlayerHUD(playerPokemon);
+		hud.SetPlayerHUD(playerPokemon, false);
 
 		selectedAction = null;
 	}
@@ -509,8 +507,8 @@ public class BattleManager : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 
 		ExecuteAction(action);
-		hud.SetPlayerHUD(playerPokemon);
-		hud.SetEnemyHUD(enemyPokemon);
+		// hud.SetPlayerHUD(playerPokemon);
+		// hud.SetEnemyHUD(enemyPokemon);
 
 		//피격 모션
 		var tgtPos = action.Target == playerPokemon ? playerPokemonPos : enemyPokemonPos;
@@ -688,7 +686,7 @@ public class BattleManager : MonoBehaviour
 			if (expThisRound==remainToLevelUp)
 			{
 				playerPokemon.AddExp(expThisRound); //증가할 exp를 넣어주면 알아서 레벨업이랑 계산해서 처리함
-				hud.SetPlayerHUD(playerPokemon);
+				hud.SetPlayerHUD(playerPokemon,false);
 				//yield return ShowLevelUpDialog(); // 레벨업 안내 문구
 
 				continue;
@@ -706,12 +704,7 @@ public class BattleManager : MonoBehaviour
 	
 	#region 포켓몬 스프라이트 / 애니메이션
 	
-	//포켓몬 스프라이트 생성
-	public void SpawnPokemon()
-	{
-		
-	}
-
+	//1. 배틀 시작시 스프라이트 생성 및 hp 바 애니메이션
 	public void SpawnPokemonAtStart(Pokémon p, Transform pokemonTransform, bool isPlayer, Action onComplete=null)
 	{
 		SetPokemonSprite(p.pokeName, pokemonTransform.GetComponent<SpriteRenderer>(), isPlayer);
@@ -739,7 +732,39 @@ public class BattleManager : MonoBehaviour
 		seq.OnComplete(() => onComplete?.Invoke());
 
 	}
+	
+	
+	//2. 포켓몬 교체시 애니메이션
+	//포켓몬 볼로 돌아오기 - 가운데를 중심으로 크기 줄어듬
+	public IEnumerator PlayReturnAnimation(Transform target)
+	{
+		Sequence seq = DOTween.Sequence();
+		seq.Append(target.DOScale(Vector3.zero, 0.5f));
 
+		yield return seq.WaitForCompletion();
+	}
+
+
+	//포켓몬 배틀로 나가기 - 가운데를 중심으로 크기 증가
+	public IEnumerator PlayEnterBattleAnimation(Transform pokemonTransform, float duration = 0.5f)
+	{
+		// 초기 상태: 작게 시작
+		pokemonTransform.localScale = Vector3.zero;
+		
+	
+		// 애니메이션 시퀀스
+		Sequence seq = DOTween.Sequence();
+		seq.Append(pokemonTransform.DOScale(Vector3.one, duration).SetEase(Ease.OutBack)); // 자연스럽게 커짐
+		
+		yield return seq.WaitForCompletion();
+	}
+
+	
+	public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
+	//애니메이션 대기 시간 필요
+	public void 
+
+	//2. 스프라이트 불러오기
 	public void SetPokemonSprite(string pokeName, SpriteRenderer spriteRenderer, bool isPlayerPokemon)
 	{
 		Debug.Log("스프라이트 불러오기");
@@ -747,6 +772,11 @@ public class BattleManager : MonoBehaviour
 		if (isPlayerPokemon) spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleBackSprite(pokeName);
 		else spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleFrontSprite(pokeName);
 	}
+	
+	
+	
+	
+	
 	
 	
 	#endregion

@@ -47,13 +47,14 @@ public class BattleHUD : MonoBehaviour
 		playerNameText.text = p.pokeName;            // 이름
 		playerLevelText.text = $"Lv {p.level}";  // 레벨
 		playerHpBar.SetHp(p.hp, p.maxHp);
+		playerCondition.text = Define.GetKoreanState[p.condition];
+		playerCondition.gameObject.SetActive(p.condition!=Define.StatusCondition.Normal);
+
 		
 		if(!playAnim) return;
 		
 		playerHpBar.AnimationHpChange(prevHp, p.hp, p.maxHp);
-
-		//Debug.Log($"{p.pokeName} : Lv. {p.level} [{p.hp} / {p.maxHp}]");
-
+		
 		// 추후 상태 표시창 추가가능
 	}
 
@@ -65,6 +66,8 @@ public class BattleHUD : MonoBehaviour
 		enemyNameText.text = e.pokeName;
 		enemyLevelText.text = $"Lv {e.level}";
 		enemyHpBar.SetHp(e.hp, e.maxHp);
+		
+		enemyCondition.text = Define.GetKoreanState[e.condition];
 		
 		if(!playAnim) return;
 		
