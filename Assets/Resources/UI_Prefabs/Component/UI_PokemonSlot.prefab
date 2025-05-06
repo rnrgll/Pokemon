@@ -930,7 +930,7 @@ MonoBehaviour:
   condition: {fileID: 5066380103866069263}
   curHp: {fileID: 9060653549275601701}
   maxHp: {fileID: 1874212671339156046}
-  hpSlider: {fileID: 7775260407753720314}
+  hpSlider: {fileID: 0}
   emptyArrow: {fileID: 343188502, guid: 2ee38c3db31dd4cef8c03d71cb2fc77c, type: 3}
   originalArrow: {fileID: -592559406, guid: 2ee38c3db31dd4cef8c03d71cb2fc77c, type: 3}
   canLearn: {fileID: 5670559534084059365}
@@ -955,6 +955,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6574857340805497208}
     m_Modifications:
+    - target: {fileID: 683869708237617308, guid: 199a97ce3ca5248329fd7a60cb568052, type: 3}
+      propertyPath: hpSlider
+      value: 
+      objectReference: {fileID: 7775260407753720314}
     - target: {fileID: 875887610313258276, guid: 199a97ce3ca5248329fd7a60cb568052, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -147,6 +147,9 @@ public class BattleManager : MonoBehaviour
 
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
+		
+		hud.InitPlayerExp(playerPokemon);//플레이어 포켓몬 exp 설정
+		
 
 		var lines = new List<string> { $"{enemyTrainerName} 이(가) 승부를 걸어왔다!" };
 
@@ -162,9 +165,9 @@ public class BattleManager : MonoBehaviour
 		playerPokemon = Manager.Poke.GetFirtstPokemon(); // 파티의 첫번째 포켓몬
 		enemyPokemon = enemy; // 적 포켓몬 설정
 
-		//hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
-		//hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
-
+		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
+		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
+		hud.InitPlayerExp(playerPokemon);//플레이어 포켓몬 exp 설정
 		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!", "테스트" };
 
 		dialogue.CloseDialog += OnBattleDialogClosed;
@@ -207,7 +210,29 @@ public class BattleManager : MonoBehaviour
 				// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
 				Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
-				playerPokemon.AddExp(totalExp);
+				yield return StartCoroutine(AnimateGainExp(totalExp));
+				
+				// //경험치 초과 연속 가능하므로 잘라서 넘기기
+				// int maxExp = playerPokemon.GetExpByLevel(playerPokemon.level); //플레이어 포켓몬의 현재 레벨에서 최대 누적 경험치
+				// int nextExp = playerPokemon.nextExp;
+				// int curExp = playerPokemon.curExp;
+				// while (totalExp > 0)
+				// {
+				// 	if (totalExp < nextExp)
+				// 	{
+				// 		playerPokemon.AddExp(totalExp);
+				// 		hud.UpdatePlayerEXP(curExp,curExp + totalExp, maxExp);
+				// 	}
+				// 	playerPokemon.AddExp(nextExp);
+				// 	hud.UpdatePlayerEXP(curExp,maxExp, maxExp);
+				// 	
+				// 	totalExp -= nextExp;
+				// 	maxExp = playerPokemon.GetExpByLevel(playerPokemon.level);
+				// 	nextExp = playerPokemon.nextExp;
+				// 	curExp = playerPokemon.curExp;
+				//
+				// }
+				//
 
 				// 트레이너 다음 포켓몬 교체
 				if (isTrainer)
@@ -326,6 +351,7 @@ public class BattleManager : MonoBehaviour
 
 					hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
 					hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
+					
 
 					yield return battleDelay;
 					break;
@@ -372,7 +398,8 @@ public class BattleManager : MonoBehaviour
 						}
 						else if (isTrainer)
 						{
-							Debug.Log("안돼! 승부도중에 상대에게 등을 보일 수 없어!");
+							
+							ShowDialogue("안돼! 승부도중에 상대에게 등을 보일 수 없어!");
 						}
 						else
 						{
@@ -416,7 +443,8 @@ public class BattleManager : MonoBehaviour
 			{
 				int totalExp = (int)((enemyPokemon.baseExp * enemyPokemon.level) / 7);
 				Debug.Log($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
-				playerPokemon.AddExp(totalExp);
+				//playerPokemon.AddExp(totalExp);
+				yield return StartCoroutine(AnimateGainExp(totalExp));
 
 				Debug.Log($"배틀로그 {currentTurn}턴 : 야생 포켓몬 쓰러짐");
 				EndBattle("Win");
@@ -523,5 +551,62 @@ public class BattleManager : MonoBehaviour
 		setting.allowSceneActivation = true;
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
+	}
+
+
+	#region Dialogue
+
+	private void ShowDialogue(List<string> lines)
+	{
+		dialogue.CloseDialog += OnBattleDialogClosed;
+		dialogue.StartDialogue(new Dialog(lines));
+	}
+
+	private void ShowDialogue(string text)
+	{
+		List<string> lines = text.Split('\n').ToList();
+		dialogue.StartDialogue(new Dialog(lines));
+	}
+	
+	
+	#endregion
+	
+	
+	//경험치 증가 코루틴
+	public IEnumerator AnimateGainExp(int totalExp)
+	{
+		while (totalExp > 0)
+		{
+			int curExp = playerPokemon.curExp;
+			int nextLevelExp = playerPokemon.GetExpByLevel(playerPokemon.level + 1);
+			int curLevelExp = playerPokemon.GetExpByLevel(playerPokemon.level);
+			int requiredToLevelUp = nextLevelExp - curLevelExp; //레벨업까지 현재 레벨에서 올려야하는 경험치 총량
+
+			int remainToLevelUp = playerPokemon.nextExp;
+
+			int expThisRound = Mathf.Min(totalExp, remainToLevelUp);
+			totalExp -= expThisRound;
+
+			// 경험치 증가 및 슬라이더 반영
+			int fromExp = curExp;
+			int toExp = fromExp + expThisRound;
+
+			yield return StartCoroutine(hud.PlayerExpBar.AnimateExpBar(fromExp - curLevelExp, toExp - curLevelExp, requiredToLevelUp));
+
+
+			// 레벨업 처리
+			if (expThisRound==remainToLevelUp)
+			{
+				playerPokemon.AddExp(expThisRound); //증가할 exp를 넣어주면 알아서 레벨업이랑 계산해서 처리함
+				hud.SetPlayerHUD(playerPokemon);
+				//yield return ShowLevelUpDialog(); // 레벨업 안내 문구
+
+				continue;
+			}
+			
+			playerPokemon.AddExp(expThisRound);
+			// 레벨업이 아니면 종료
+			break;
+		}
 	}
 }

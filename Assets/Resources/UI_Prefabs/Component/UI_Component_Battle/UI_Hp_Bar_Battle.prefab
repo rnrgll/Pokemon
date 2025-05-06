@@ -175,6 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5078969389659932070}
   - component: {fileID: 5382232607985256454}
+  - component: {fileID: 8910465821650982259}
   m_Layer: 5
   m_Name: UI_Hp_Bar_Battle
   m_TagString: Untagged
@@ -210,6 +211,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3147664519913922541}
   m_CullTransparentMesh: 1
+--- !u!114 &8910465821650982259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147664519913922541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce5cf842f469454aa5c1352f388b82e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpSlider: {fileID: 0}
+  curHpText: {fileID: 0}
+  maxHpText: {fileID: 0}
 --- !u!1 &4896728150206827333
 GameObject:
   m_ObjectHideFlags: 0
