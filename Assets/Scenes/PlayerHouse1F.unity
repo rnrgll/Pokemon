@@ -4879,6 +4879,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC1
       objectReference: {fileID: 0}
+    - target: {fileID: 6437891799011132873, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: exitPos.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437891799011132873, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: exitPos.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437891799011132873, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.data[0].x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437891799011132873, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.data[0].y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437891799011132873, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.data[1].x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437891799011132873, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.data[1].y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8857025724216877717, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -4938,13 +4962,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 935877952304988180, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3128514700256671553}
   m_SourcePrefab: {fileID: 100100000, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
 --- !u!1 &3128514700256671552 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 935877952304988180, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
   m_PrefabInstance: {fileID: 3128514700256671551}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3128514700256671553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3128514700256671552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC548\uB155!"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!114 &3547370533795615008
 MonoBehaviour:
   m_ObjectHideFlags: 0

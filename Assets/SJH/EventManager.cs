@@ -14,9 +14,6 @@ public class EventManager : Singleton<EventManager>
 	// 이벤트 트리거들
 	[SerializeField] public bool pokegearEvent;         // 2층에서 1층가면 포켓기어 설명 + 공박사한테 가라는 이벤트
 	[SerializeField] public bool berryHouseEvent;          // 30번도로 나무열매집 엔피시 말걸면 나무열매 주는 이벤트
-
-
-
 	[SerializeField] public bool townExitEvent;             // 연두마을 나갈 때 포켓몬 없으면 못나가게하는 이벤트
 
 

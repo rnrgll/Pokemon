@@ -23,6 +23,7 @@ public class PokeGearEvent : PokeEvent
 		{
 			if (Manager.Event.pokegearEvent)
 				return;
+			NpcMover npcMover = npc.GetComponent<NpcMover>();
 			originalNpcPosition = npc.transform.position;
 			Debug.Log("플레이어 닿음");
 
