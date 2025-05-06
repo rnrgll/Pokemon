@@ -478,6 +478,10 @@ MonoBehaviour:
     - "\uD6CC\uB96D\uD55C \uD2B8\uB808\uC774\uB108\uAC00 \uB418\uB824\uBA74"
     - "\uAC00\uC9C0\uACE0 \uC788\uC9C0 \uC54A\uC73C\uBA74 \uC54A\uB420\uAEC4?"
   npc: {fileID: 3128514700256671552}
+  isMove: 0
+  moves:
+  - {x: 8, y: 2}
+  - {x: 4, y: 2}
 --- !u!61 &423851342
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class NpcMover : MonoBehaviour
 
 	// destinationPoints의 이동할 순서
 	private int moveIndex = 0;
+
+	public event Action moveFinished;
 
 	//	방향
 	[SerializeField] public Vector2 currentDirection;

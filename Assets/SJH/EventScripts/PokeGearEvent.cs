@@ -11,12 +11,11 @@ public class PokeGearEvent : PokeEvent
 	[SerializeField] Dialog dialog;
 
 	[SerializeField] GameObject npc;
-	[SerializeField] static bool isMove;
+	[SerializeField] bool isMove;
 
 	private Vector2 originalNpcPosition;
 
 	public List<Vector2> moves = new List<Vector2>();
-	Vector2 a = new Vector2(8,4);
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 
@@ -24,6 +23,7 @@ public class PokeGearEvent : PokeEvent
 		{
 			if (isExecuted)
 				return;
+			//	종료좌표 재설정
 			originalNpcPosition = npc.transform.position;
 			Debug.Log("플레이어 닿음");
 			if (!isMove)
@@ -31,9 +31,7 @@ public class PokeGearEvent : PokeEvent
 				isMove = true;
 				NpcMover npcMover = npc.GetComponent<NpcMover>();
 				npcMover.isNPCMoveCheck = true;
-				if((Vector2)npc.transform.position == npcMover.exitPos) { 
 				StartCoroutine(TriggerDialogue());
-				}
 			}
 			isExecuted = true;
 		}
@@ -47,6 +45,7 @@ public class PokeGearEvent : PokeEvent
 
 	private IEnumerator TriggerDialogue()
 	{
+		NpcMover npcMover = npc.GetComponent<NpcMover>();
 		// 대화 처리
 		Manager.Dialog.StartDialogue(dialog);
 
