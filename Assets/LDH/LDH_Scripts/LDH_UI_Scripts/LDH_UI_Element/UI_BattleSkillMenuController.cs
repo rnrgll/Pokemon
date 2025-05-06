@@ -72,15 +72,18 @@ public class UI_BattleSkillMenuController : MonoBehaviour
 
     private void UpdateSkillInfo()
     {
-	    //todo : 포켓몬 pp값 보유하게 한 후 수정 필요. 임시로 스킬 클래스 pp 반영
-	    string skillName = pokemon.skills[curX];
+		//todo : 포켓몬 pp값 보유하게 한 후 수정 필요. 임시로 스킬 클래스 pp 반영
+		SkillData skillData = pokemon.skillDatas[curX];
+		string skillName = skillData.Name;
 	    SkillS skill = Manager.Data.SkillSData.GetSkillDataByName(skillName);
 
-	    int curPP = skill.curPP;
-	    int maxPP = skill.maxPP;
+		int curPP = skillData.CurPP;
+		int maxPP = skillData.MaxPP;
 
 	    skillPP.text = $"{curPP}/{maxPP}";
 	    skillType.text = skill.type.ToString();
+		//skillType.text = skill.skillType.ToString();
+		skillType.text = Define.GetKoreanSkillType[skill.skillType];
     }
     
     

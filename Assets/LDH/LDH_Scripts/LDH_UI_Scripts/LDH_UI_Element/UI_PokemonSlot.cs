@@ -71,7 +71,8 @@ public class UI_PokemonSlot : MonoBehaviour
 		}
 		else
 		{
-			condition.text = pokemon.condition.ToString();
+			//condition.text = pokemon.condition.ToString();
+			condition.text = Define.GetKoreanState[pokemon.condition];
 			condition.gameObject.SetActive(true);
 		}
 

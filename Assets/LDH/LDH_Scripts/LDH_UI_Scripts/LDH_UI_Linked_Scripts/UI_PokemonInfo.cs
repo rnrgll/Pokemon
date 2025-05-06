@@ -111,9 +111,12 @@ public class UI_PokemonInfo : UI_Linked
 					curExpText.text = exp.ToString();
 					offsetExpText.text = nextExp.ToString();
 
-					statusText.text = pokemon.condition.ToString();
-					type1Text.text = pokemon.pokeType1.ToString();
-					type2Text.text = pokemon.pokeType2.ToString();
+					//statusText.text = pokemon.condition.ToString();
+					//type1Text.text = pokemon.pokeType1.ToString();
+					//type2Text.text = pokemon.pokeType2.ToString();
+					statusText.text = Define.GetKoreanState[pokemon.condition]; // 한글로 변환
+					type1Text.text = Define.GetKoreanPokeType[pokemon.pokeType1];
+					type2Text.text = Define.GetKoreanPokeType[pokemon.pokeType2];
 					if(pokemon.pokeType2==Define.PokeType.None)
 						type2Text.gameObject.SetActive(false);
 					
@@ -124,15 +127,19 @@ public class UI_PokemonInfo : UI_Linked
 						if (i < pokemon.skills.Count)
 						{
 							//ui 반영
-							string skillName = pokemon.skills[i];
+							SkillData skillData = pokemon.skillDatas[i];
+							string skillName = skillData.Name;
+							int skillCurPP = skillData.CurPP;
+							int skillMaxPP = skillData.MaxPP;
 							Transform skillSlot = skillListRoot.GetChild(i);
 							skillSlot.GetChild(0).GetComponent<TMP_Text>().text = skillName;
 							SkillS skillSData = Manager.Data.SkillSData.GetSkillDataByName(skillName);
 							//todo : current pp 값 가져올 수 있으면 수정하기 일단 max/max로 함
+							
 							TMP_Text ppText = skillSlot.GetChild(1).GetChild(1).GetComponent<TMP_Text>();
 							if (skillSData != null)
 								ppText.text =
-									$"{skillSData.curPP} / {skillSData.maxPP}";
+									$"{skillCurPP} / {skillMaxPP}";
 							else
 							{
 								ppText.text = "스킬데이터없음";

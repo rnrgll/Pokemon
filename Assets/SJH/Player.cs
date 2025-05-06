@@ -193,6 +193,11 @@ public class Player : MonoBehaviour
 		{
 			string tag = hit.transform.gameObject.tag;
 			// Debug.Log($"앞에 : [{hit.transform.gameObject.name}]");
+
+			// NPC의 시야 콜라이더는 지나갈 수 있게
+			if (tag == "NPC" && hit.collider.isTrigger)
+				continue;
+
 			switch (tag)
 			{
 				case "Wall":

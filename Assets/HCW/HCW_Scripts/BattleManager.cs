@@ -15,8 +15,8 @@ public class BattleManager : MonoBehaviour
 	private string previousScene;        // 이전 씬 이름
 
 	[Header("UI 관련")]
-	// [SerializeField] private PlayerPokemonPos;       // 플레이어 포켓몬 위치
-	// [SerializeField] private EnemyPokemonPos;        // 적 포켓몬 위치
+	[SerializeField] private Transform playerPokemonPos;       // 플레이어 포켓몬 위치
+	[SerializeField] private Transform enemyPokemonPos;        // 적 포켓몬 위치
 	[SerializeField] private BattleUIController ui;  // UI 요소
 	[SerializeField] private BattleHUD hud;          // hp 게이지·텍스트 제어
 	[SerializeField] private PokemonSelect pokemonSelect;
@@ -346,7 +346,7 @@ public class BattleManager : MonoBehaviour
 						if (act.Attacker.CanActionCheck())
 						{
 							// TODO : PP 체크
-							ExecuteAction(act);
+							yield return StartCoroutine(Motion(act)); // 데미지랑 딜레이 실행 모션 코루틴으로 이동
 						}
 						
 						//매 액션마다 피격자의 hp 갱신해주기
@@ -357,7 +357,7 @@ public class BattleManager : MonoBehaviour
 
 					
 						isAction = true;
-						yield return battleDelay;
+						
 					}
 					
 					yield return battleDelay;
@@ -498,6 +498,25 @@ public class BattleManager : MonoBehaviour
 		hud.SetPlayerHUD(playerPokemon);
 
 		selectedAction = null;
+	}
+	private IEnumerator Motion(BattleAction action)
+	{
+		// 공격 모션
+		var atkPos = action.Attacker == playerPokemon ? playerPokemonPos : enemyPokemonPos;
+		var atkAnim = atkPos.GetComponent<Animator>();
+		atkAnim.SetTrigger("DoAttack");
+
+		yield return new WaitForSeconds(0.5f);
+
+		ExecuteAction(action);
+		hud.SetPlayerHUD(playerPokemon);
+		hud.SetEnemyHUD(enemyPokemon);
+
+		//피격 모션
+		var tgtPos = action.Target == playerPokemon ? playerPokemonPos : enemyPokemonPos;
+		var tgtAnim = tgtPos.GetComponent<Animator>();
+		tgtAnim.SetTrigger("DoBlink");
+		yield return new WaitForSeconds(0.5f);
 	}
 
 	// 행동 선택 후 행동 처리
