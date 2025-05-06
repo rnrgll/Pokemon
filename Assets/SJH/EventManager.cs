@@ -16,9 +16,26 @@ public class EventManager : Singleton<EventManager>
 	[SerializeField] public bool berryHouseEvent;          // 30번도로 나무열매집 엔피시 말걸면 나무열매 주는 이벤트
 	[SerializeField] public bool townExitEvent;             // 연두마을 나갈 때 포켓몬 없으면 못나가게하는 이벤트
 
-
-
-	[SerializeField] public bool starterEvent;             // 공박사에게 스타팅 포켓몬 받는 이벤트
+	// 공박사에게 스타팅 포켓몬 받는 이벤트
+	bool starterEvent;
+	[SerializeField] public bool StarterEvent
+	{
+		get => starterEvent;
+		set
+		{
+			// true일 때만 실행
+			if (!starterEvent && value)
+			{
+				starterEvent = value;
+				// 필드에 포켓몬 생성
+				Manager.Poke.FieldPokemonInstantiate();
+			}
+			else
+			{
+				starterEvent = value;
+			}
+		}
+	}
 	[SerializeField] public bool questEvent;				// 포켓몬 할아버지 집 가라는 이벤트
 	[SerializeField] public bool starterSubEvent;			// 스타팅 받고 나갈 때 조수가 상처약 주는 이벤트
 	[SerializeField] public bool rivalEvent1;				// 연두마을 연구소 옆에서 라이벌한테 말걸면 차이는 이벤트
