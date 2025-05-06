@@ -37,6 +37,8 @@ public class PokemonManager : Singleton<PokemonManager>
 		party[1].condition = StatusCondition.Poison;
 		// AddPokemon(33, 10);
 
+		AddPokemon("블레이범", 50);
+
 	}
 
 	public void AddPokemon(string pokeName, int level)

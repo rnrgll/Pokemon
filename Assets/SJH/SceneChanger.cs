@@ -72,7 +72,7 @@ public class SceneChanger : MonoBehaviour
 		Player pc = player.GetComponent<Player>();
 		isChange = true;
 		pc.state = Define.PlayerState.SceneChange;
-		player.transform.position = new Vector3(exitPos.x, exitPos.y);
+		//player.transform.position = new Vector3(exitPos.x, exitPos.y);
 		pc.StopMoving();
 		pc.currentDirection = keyDirection;
 		pc.AnimChange();
@@ -83,20 +83,23 @@ public class SceneChanger : MonoBehaviour
 		{
 			if (asyncLoad.progress >= 0.9f)
 			{
-				//Debug.Log(gameObject.name);
-				player.transform.position = exitPos;
-				yield return new WaitForSeconds(0.1f);
-				asyncLoad.allowSceneActivation = true;
-
 				// 상태 초기화
+				yield return null;
+				player.transform.position = exitPos;
+				Debug.Log($"플레이어 이동 : {exitPos}");
 				isChange = false;
 				pc.state = Define.PlayerState.Field;
-				sceneCoroutine = null;
-				//Debug.Log("state init");
+				//yield return new WaitForSeconds(0.1f);
+				asyncLoad.allowSceneActivation = true;
 
 				break;  // 루프 탈출
 			}
 			yield return null;
+		}
+		if (sceneCoroutine != null)
+		{
+			StopCoroutine(sceneCoroutine);
+			sceneCoroutine = null;
 		}
 	}
 

@@ -12979,7 +12979,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2102706370458984131, guid: 44366e7209f2a66489443e2f0d53899b, type: 3}
       propertyPath: m_Name
-      value: Trainer5
+      value: Trainer6
       objectReference: {fileID: 0}
     - target: {fileID: 5596190004431903596, guid: 44366e7209f2a66489443e2f0d53899b, type: 3}
       propertyPath: m_LocalPosition.x
