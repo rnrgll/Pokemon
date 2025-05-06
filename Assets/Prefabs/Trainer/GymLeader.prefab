@@ -129,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.8, y: 1.8}
   m_EdgeRadius: 0
 --- !u!114 &2789888237553223355
 MonoBehaviour:
@@ -145,3 +145,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trainerId: 14
   isFight: 0
+  exitPos: {x: 0, y: 0}
+  anim: {fileID: 0}
+  isTrainerMove: 0
+  currentDirection: {x: 0, y: 0}
+  moveDuration: 0
+  isTrainerTurn: 0
+  dialog:
+    lines: []
+  grassEffect: {fileID: 0}

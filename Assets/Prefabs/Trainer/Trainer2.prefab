@@ -64,7 +64,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -1}
+  m_Offset: {x: 0, y: -2.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -75,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 3}
+  m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
 --- !u!1 &4993635429477546335
 GameObject:
@@ -111,6 +111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1404512037597005842}
   - {fileID: 7986683691476833211}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -209,7 +210,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.8, y: 1.8}
   m_EdgeRadius: 0
 --- !u!114 &4416119407407258479
 MonoBehaviour:
@@ -230,10 +231,12 @@ MonoBehaviour:
   isTrainerMove: 0
   currentDirection: {x: 0, y: -1}
   moveDuration: 0.3
+  isTrainerTurn: 0
   dialog:
     lines:
     - "\uB108 \uD3EC\uCF13\uBAAC \uD2B8\uB808\uC774\uB108\uC9C0?"
     - "\uADF8\uB807\uB2E4\uBA74 \uD3EC\uCF13\uBAAC \uC2B9\uBD80\uB97C \uD558\uC790!"
+  grassEffect: {fileID: 0}
 --- !u!50 &6364353664576915188
 Rigidbody2D:
   serializedVersion: 4
@@ -282,3 +285,69 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &3606519351293916261
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6563367934352615152}
+    m_Modifications:
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234513721410174329, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_Name
+      value: GrassEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4234513721410174329, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+--- !u!4 &1404512037597005842 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2409771581259185271, guid: 09ccc7f4985bb0e4d8246f396401577f, type: 3}
+  m_PrefabInstance: {fileID: 3606519351293916261}
+  m_PrefabAsset: {fileID: 0}

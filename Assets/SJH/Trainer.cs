@@ -53,7 +53,7 @@ public class Trainer : MonoBehaviour, IInteractable
 		anim = GetComponent<Animator>();
 
 		// 풀 이펙트 설정
-		grassEffect = transform.GetChild(1).gameObject;
+		grassEffect = transform.GetChild(0).gameObject;
 		grassEffect.SetActive(false);
 
 		// 첫 방향 설정
