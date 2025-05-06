@@ -130,7 +130,8 @@ public class UI_PokemonSkillInfo : UI_Linked
 
 		if (skill != null)
 		{
-			typeText.text = skill.type.ToString();
+			//typeText.text = skill.type.ToString();
+			typeText.text = Define.GetKoreanPokeType[skill.type];
 			damageText.text = skill.damage.ToString();
 			description.text = skill.description;
 		}
@@ -165,10 +166,16 @@ public class UI_PokemonSkillInfo : UI_Linked
 
 		if (hasSkill && data != null)
 		{
-			nameText = data.name;
+			SkillData skillData = party[partyIdx].skillDatas[index];
+			nameText = skillData.Name;
 			ppText = "PP";
-			curPP = $"{data.curPP}/";
-			maxPP = data.maxPP.ToString();
+			curPP = $"{skillData.CurPP}/";
+			maxPP = skillData.MaxPP.ToString();
+
+			//nameText = data.name;
+			//ppText = "PP";
+			//curPP = $"{data.curPP}/";
+			//maxPP = data.maxPP.ToString();
 		}
 		else if (hasSkill && data == null)
 		{
