@@ -34,7 +34,7 @@ public class UI_BattleMenuController : MonoBehaviour
     {
 	    curX = 0;
 	    curY = 0;
-	    Debug.Log($"<color=yellow>{curY}, {curX}</color>");
+	    //Debug.Log($"<color=yellow>{curY}, {curX}</color>");
 	    menuButtonGrid[curY][curX].SetArrowActive(true);
     }
 

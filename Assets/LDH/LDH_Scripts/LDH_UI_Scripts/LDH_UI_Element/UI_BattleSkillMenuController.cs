@@ -38,7 +38,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
     private void OnEnable()
     {
         curX = 0;
-        Debug.Log($"<color=blue>{curX} </color>");
+        //Debug.Log($"<color=blue>{curX} </color>");
         skillButtonList[curX].SetArrowActive(true);
     }
 
@@ -59,7 +59,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
 	    int x = curX + dx;
 	    if (x < 0) x = skillCount - 1; //스킬 2개면 -> 인덱스 1되야함
 	    else if (x >= skillCount) x = 0;
-	    Debug.Log($"현재 스킬 개수 : {skillCount} / 다음 인덱스 : {dx+curX} / 조정 후 : {x}");
+	    //Debug.Log($"현재 스킬 개수 : {skillCount} / 다음 인덱스 : {dx+curX} / 조정 후 : {x}");
 
 	    
         skillButtonList[curX].SetArrowActive(false);

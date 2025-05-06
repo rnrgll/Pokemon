@@ -1200,7 +1200,7 @@ public class Pokémon : MonoBehaviour
 		if (!isHit)
 		{
 			Debug.Log($"배틀로그 :{attacker.pokeName} 의 {skill.name} 공격은 빗나갔다! [{ran}% >= {finalAccuracy}%]");
-			StartCoroutine(Manager.Dialog.ShowMessageOnce($"{attacker.pokeName} 의 {skill.name} 공격은 빗나갔다!"));
+			StartCoroutine(Manager.Dialog.ShowBattleMessage($"{attacker.pokeName} 의 {skill.name} 공격은 빗나갔다!"));
 		}
 		return isHit;
 	}

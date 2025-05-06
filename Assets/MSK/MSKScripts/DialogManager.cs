@@ -106,7 +106,7 @@ public class DialogManager : Singleton<DialogManager>
 	
 	
 	
-	public IEnumerator ShowMessageOnce(string message)
+	public IEnumerator ShowBattleMessage(string message)
 	{
 		Manager.Game.Player.state = Define.PlayerState.Dialog;
 		CreateDialogueUI();
@@ -118,7 +118,7 @@ public class DialogManager : Singleton<DialogManager>
 		foreach (var letter in message.ToCharArray())
 		{
 			dialogText.text += letter;
-			yield return new WaitForSeconds(0.5f / letterPerSec);
+			yield return new WaitForSeconds(0.6f / letterPerSec);
 		}
 
 		yield return new WaitForSeconds(1f); // 읽는 시간 확보

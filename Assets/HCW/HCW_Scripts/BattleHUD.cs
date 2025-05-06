@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +8,11 @@ using TMPro;
 
 public class BattleHUD : MonoBehaviour
 {
+	[SerializeField] private RectTransform playerPanel;
+	[SerializeField] private RectTransform enemyPanel;
+	private Vector2 pPanelOrigin;
+	private Vector2 ePanelOrigin;
+	
 	[SerializeField] private TMP_Text playerNameText;
 	[SerializeField] private TMP_Text playerLevelText;
 	[SerializeField] private UI_HpBarController playerHpBar;
@@ -62,5 +69,36 @@ public class BattleHUD : MonoBehaviour
 		//Debug.Log($"{e.pokeName} : Lv. {e.level} [{e.hp} / {e.maxHp}]");
 		// 추후 상태 표시창 추가가능
 	}
+
+
+	private void Start()
+	{
+		pPanelOrigin = playerPanel.anchoredPosition;
+		ePanelOrigin = enemyPanel.anchoredPosition;
+		
+		Vector2 offset = new Vector2(400f, 0);
+		Vector2 pStartPos = pPanelOrigin + offset;
+		Vector2 eStartPos = ePanelOrigin - offset;
+		
+		//옮기기
+		playerPanel.anchoredPosition = pStartPos;
+		enemyPanel.anchoredPosition = eStartPos;
+	}
+
+
+	#region Animation
+
+	//등장 애니메이션
+	public void SpawnStatePanel()
+	{
+		float playTime = 0.4f;
+		Sequence seq = DOTween.Sequence();
+		seq.Append(playerPanel.DOAnchorPos(pPanelOrigin, playTime).SetEase(Ease.OutQuad));
+		seq.Join(enemyPanel.DOAnchorPos(ePanelOrigin, playTime).SetEase(Ease.OutQuad));
+	}
+
+	#endregion
 	
 }
+
+	

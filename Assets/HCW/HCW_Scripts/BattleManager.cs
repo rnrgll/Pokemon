@@ -1,10 +1,12 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Define;
+using Random = UnityEngine.Random;
 
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
@@ -150,7 +152,7 @@ public class BattleManager : MonoBehaviour
 		
 		//포켓몬 프리팹 스폰
 		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
-		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false);
+		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,hud.SpawnStatePanel);
 		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
@@ -173,7 +175,7 @@ public class BattleManager : MonoBehaviour
 		enemyPokemon = enemy; // 적 포켓몬 설정
 
 		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
-		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false);
+		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,hud.SpawnStatePanel);
 		
 		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
@@ -182,7 +184,7 @@ public class BattleManager : MonoBehaviour
 		
 
 		
-		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!", "테스트" };
+		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!"};
 
 		Dialog.CloseDialog += OnBattleDialogClosed;
 		Dialog.StartDialogue(new Dialog(lines));
@@ -225,33 +227,11 @@ public class BattleManager : MonoBehaviour
 				// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
 				yield return StartCoroutine(
-					Manager.Dialog.ShowMessageOnce($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
+					Manager.Dialog.ShowBattleMessage($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
 				
-				//Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
+				Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 				yield return StartCoroutine(AnimateGainExp(totalExp));
 				
-				// //경험치 초과 연속 가능하므로 잘라서 넘기기
-				// int maxExp = playerPokemon.GetExpByLevel(playerPokemon.level); //플레이어 포켓몬의 현재 레벨에서 최대 누적 경험치
-				// int nextExp = playerPokemon.nextExp;
-				// int curExp = playerPokemon.curExp;
-				// while (totalExp > 0)
-				// {
-				// 	if (totalExp < nextExp)
-				// 	{
-				// 		playerPokemon.AddExp(totalExp);
-				// 		hud.UpdatePlayerEXP(curExp,curExp + totalExp, maxExp);
-				// 	}
-				// 	playerPokemon.AddExp(nextExp);
-				// 	hud.UpdatePlayerEXP(curExp,maxExp, maxExp);
-				// 	
-				// 	totalExp -= nextExp;
-				// 	maxExp = playerPokemon.GetExpByLevel(playerPokemon.level);
-				// 	nextExp = playerPokemon.nextExp;
-				// 	curExp = playerPokemon.curExp;
-				//
-				// }
-				//
-
 				// 트레이너 다음 포켓몬 교체
 				if (isTrainer)
 				{
@@ -259,8 +239,8 @@ public class BattleManager : MonoBehaviour
 					if (currentEnemyIndex < enemyParty.Count)
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
-						yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
-						//Debug.Log();
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
+						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
 
 						hud.SetEnemyHUD(enemyPokemon);
 
@@ -355,28 +335,31 @@ public class BattleManager : MonoBehaviour
 						if (act.Attacker.hp <= 0)
 						{
 							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
-							yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{act.Attacker.pokeName}은/는 쓰러졌다!"));
+							//yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{act.Attacker.pokeName}은/는 쓰러졌다!"));
 							continue;
 						}
 
 						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
-						yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{act.Attacker.pokeName} ! {act.Skill} !"));
-
-
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
+						
 						// 상태이상체크
 						if (act.Attacker.CanActionCheck())
 						{
 							// TODO : PP 체크
 							ExecuteAction(act);
 						}
+						
+						//매 액션마다 피격자의 hp 갱신해주기
+						if (act.Attacker == playerPokemon)
+							hud.SetEnemyHUD(enemyPokemon); // 적 피격
+						else
+							hud.SetPlayerHUD(playerPokemon); // 플레이어 피격
+
+					
 						isAction = true;
 						yield return battleDelay;
 					}
-
-					hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 체력바 업데이트
-					hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 체력바 업데이트
 					
-
 					yield return battleDelay;
 					break;
 
@@ -419,13 +402,13 @@ public class BattleManager : MonoBehaviour
 						{
 							// 검은눈빛, 거미집, 김밥말이
 							Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 도망칠 수 없다!");
-							yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{playerPokemon.pokeName} 은/는 도망칠 수 없다!"));
+							yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName} 은/는 도망칠 수 없다!"));
 						}
 						else if (isTrainer)
 						{
 							
 							// ShowDialogue("안돼! 승부도중에 상대에게 등을 보일 수 없어!");
-							yield return StartCoroutine(Manager.Dialog.ShowMessageOnce("안돼! 승부도중에 상대에게 등을 보일 수 없어!"));
+							yield return StartCoroutine(Manager.Dialog.ShowBattleMessage("안돼! 승부도중에 상대에게 등을 보일 수 없어!"));
 						}
 						else
 						{
@@ -461,7 +444,7 @@ public class BattleManager : MonoBehaviour
 			if (!Manager.Poke.AlivePokemonCheck())
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : 플레이어 전멸");
-				yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"더 이상 싸울 수 있는 포켓몬이 없다!"));
+				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"더 이상 싸울 수 있는 포켓몬이 없다!"));
 				
 				//EndBattle("Lose");
 				StartCoroutine(EndBattleCoroutine("Lose"));
@@ -472,11 +455,11 @@ public class BattleManager : MonoBehaviour
 			if (!isTrainer && enemyPokemon.hp <= 0)
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : 야생 포켓몬 쓰러짐");
-				yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{enemyPokemon.pokeName}은 쓰러졌다!"));
+				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{enemyPokemon.pokeName}은 쓰러졌다!"));
 				
 				int totalExp = (int)((enemyPokemon.baseExp * enemyPokemon.level) / 7);
 				Debug.Log($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
-				yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
+				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
 				
 				//playerPokemon.AddExp(totalExp);
 				yield return StartCoroutine(AnimateGainExp(totalExp));
@@ -627,7 +610,7 @@ public class BattleManager : MonoBehaviour
 					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
 					Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
 					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
-					yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
+					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
 					Manager.Data.PlayerData.AddMoney(winMoney);
 					Manager.Poke.enemyData.IsFight = true;
 				}
@@ -635,7 +618,7 @@ public class BattleManager : MonoBehaviour
 			case "Lose":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 패배");
-					yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{Manager.Data.PlayerData.PlayerName}는(은) 눈 앞이 캄캄해졌다"));
+					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{Manager.Data.PlayerData.PlayerName}는(은) 눈 앞이 캄캄해졌다"));
 
 					// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
 				}
@@ -643,7 +626,7 @@ public class BattleManager : MonoBehaviour
 			case "Run":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 성공적으로 도망쳤다!");
-					yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{Manager.Data.PlayerData.PlayerName}는(은) 성공적으로 도망쳤다!"));
+					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{Manager.Data.PlayerData.PlayerName}는(은) 성공적으로 도망쳤다!"));
 				}
 				break;
 		}
@@ -710,7 +693,7 @@ public class BattleManager : MonoBehaviour
 		
 	}
 
-	public void SpawnPokemonAtStart(Pokémon p, Transform pokemonTransform, bool isPlayer)
+	public void SpawnPokemonAtStart(Pokémon p, Transform pokemonTransform, bool isPlayer, Action onComplete=null)
 	{
 		SetPokemonSprite(p.pokeName, pokemonTransform.GetComponent<SpriteRenderer>(), isPlayer);
 
@@ -723,15 +706,18 @@ public class BattleManager : MonoBehaviour
 		Vector2 startPosition = targetPos + entryOffset;
 		
 		
-		float playTime = 1.0f;
+		float playTime = 1f;
 
 		pokemonTransform.position = startPosition;
 		
 		Sequence seq = DOTween.Sequence();
-		seq.Append(pokemonTransform.DOMove(targetPos, playTime).SetEase(Ease.OutCubic));
+		seq.Append(pokemonTransform.DOMove(targetPos, playTime).SetEase(Ease.OutQuad));
 		seq.Join(sr.DOFade(1f,playTime)); //동시 처리
 		 
 		//상대 포켓몬이면 오 -> 타겟 위치로 등장
+		
+		//끝나고 패널 등장
+		seq.OnComplete(() => onComplete?.Invoke());
 
 	}
 

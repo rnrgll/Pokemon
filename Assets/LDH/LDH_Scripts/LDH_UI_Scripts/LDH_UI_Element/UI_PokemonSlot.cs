@@ -23,6 +23,7 @@ public class UI_PokemonSlot : MonoBehaviour
 	[SerializeField] private Sprite originalArrow;
 	[SerializeField] private TMP_Text canLearn;
 	[SerializeField] private Transform hpUIRoot;
+	[SerializeField] private Image pokemonImg;
 	
 	
 	
@@ -59,7 +60,9 @@ public class UI_PokemonSlot : MonoBehaviour
 	{
 		this.Pokemon = pokemon;
 		
-		//아이콘..
+		//todo: 애니메이션 가져오는거로 수정하기
+		//pokemonImg.sprite = Manager.Data.SJH_PokemonData.GetBattleFrontSprite(pokemon.pokeName);
+		
 		pokemonName.text = pokemon.pokeName;
 		level.text = $":L{pokemon.level}";
 		if (pokemon.condition == Define.StatusCondition.Normal)
