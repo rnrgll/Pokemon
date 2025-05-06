@@ -11,7 +11,6 @@ public class NPCTrainer : MonoBehaviour
 	private NpcMover npcMover;
 	Vector2 currentDirection;
 	Vector2 playerPos;
-	NpcTurnRound NpcTurnRound;
 	Animator anim;
 
 	Coroutine detectCoroutine;
@@ -22,7 +21,6 @@ public class NPCTrainer : MonoBehaviour
 		isBattled = false;  //	기본 전투 미진행
 		npcMover = GetComponent<NpcMover>();
 		anim = GetComponent<Animator>();
-		NpcTurnRound = GetComponent<NpcTurnRound>();
 	}
 
 	private void Update()
@@ -30,14 +28,13 @@ public class NPCTrainer : MonoBehaviour
 		// 전투하지 않았을 경우
 		if (!isBattled)
 		{
-			currentDirection = NpcTurnRound.dir;
+			currentDirection = npcMover.dir;
 			isChasingPlayer = PcDetect(currentDirection, out playerPos);
 			Debug.Log($"추격상태 : {isChasingPlayer}");
 			if (isChasingPlayer)
 			{
 				Manager.Game.Player.state = Define.PlayerState.Dialog;
 				Debug.Log($"추격 호출");
-				NpcTurnRound.StopRotation();
 				npcMover.MoveTowardsPosition(playerPos - currentDirection * 2);
 				//	도착 확인 후
 				// 다이얼로그 매니저 호출
