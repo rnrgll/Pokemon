@@ -663,16 +663,32 @@ public class Pokémon : MonoBehaviour
 		float typeEffectiveness = TypesCalculator(attackSkill.type, defender);
 
 		int effectiveness = (int)(typeEffectiveness * 100);
+		string logMsg = "";
 		switch (effectiveness)
 		{
-			case 0: Debug.Log($"배틀로그 : 그러나 {defender.pokeName} 에게는 효과가 없었다..."); break;
-			case 25: Debug.Log("배틀로그 : 그러나 효과는 미미했다"); break;
-			case 50: Debug.Log("배틀로그 : 효과는 조금 부족한 듯 하다"); break;
+			case 0: 
+				Debug.Log($"배틀로그 : 그러나 {defender.pokeName} 에게는 효과가 없었다...");
+				logMsg = $"그러나 {defender.pokeName} 에게는 효과가 없었다...";
+				break;
+			case 25: 
+				Debug.Log("배틀로그 : 그러나 효과는 미미했다");
+				logMsg = "그러나 효과는 미미했다";
+				break;
+			case 50: 
+				Debug.Log("배틀로그 : 효과는 조금 부족한 듯 하다");
+				logMsg = "효과는 조금 부족한 듯 하다";
+				break;
 			case 100: /*효과는 보통일 경우 메시지 없음*/ break;
-			case 200: Debug.Log("배틀로그 : 효과는 뛰어났다!"); break;
-			case 400: Debug.Log("배틀로그 : 효과는 굉장했다!!"); break;
+			case 200: Debug.Log("배틀로그 : 효과는 뛰어났다!");
+				logMsg = "효과는 뛰어났다!";
+				break;
+			case 400: Debug.Log("배틀로그 : 효과는 굉장했다!!");
+				logMsg = "효과는 굉장했다!!";
+				break;
 			default: Debug.Log($"배틀로그 : 버그 [{typeEffectiveness}]"); break;
 		}
+		if(!string.IsNullOrEmpty(logMsg))
+			StartCoroutine(Manager.Dialog.ShowBattleMessage(logMsg));
 
 		if (damage > 0)
 			Debug.Log($"배틀로그 : {pokeName} 이/가 {damage} 대미지를 입었습니다. 현재체력 : [{hp}] {ran}");
@@ -726,6 +742,7 @@ public class Pokémon : MonoBehaviour
 			case "단단해지기":
 				attacker.pokemonBattleStack.defense = Mathf.Min(6, attacker.pokemonBattleStack.defense + 1);
 				Debug.Log($"배틀로그 : {attacker.pokeName} 은/는 {skill.name} 기술로 방어 1랭크 상승 {ran}");
+				
 				break;
 
 			case "성장":
@@ -1199,7 +1216,8 @@ public class Pokémon : MonoBehaviour
 		bool isHit = ran < finalAccuracy;
 		if (!isHit)
 		{
-			Debug.Log($"배틀로그 : {attacker.pokeName} 의 {skill.name} 공격은 빗나갔다! [{ran}% >= {finalAccuracy}%]");
+			Debug.Log($"배틀로그 :{attacker.pokeName} 의 {skill.name} 공격은 빗나갔다! [{ran}% >= {finalAccuracy}%]");
+			StartCoroutine(Manager.Dialog.ShowBattleMessage($"{attacker.pokeName} 의 {skill.name} 공격은 빗나갔다!"));
 		}
 		return isHit;
 	}

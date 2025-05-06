@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class UI_PokemonSlot : MonoBehaviour
 {
+	public Pokémon Pokemon { get; private set; }
 	
 	//인스펙터에서 할당
 	[SerializeField] private Image arrow;
@@ -17,11 +18,12 @@ public class UI_PokemonSlot : MonoBehaviour
 	[SerializeField] private TMP_Text condition;
 	[SerializeField] private TMP_Text curHp;
 	[SerializeField] private TMP_Text maxHp;
-	[SerializeField] private Slider hpSlider;
+	[SerializeField] private UI_HpBarController hpSlider;
 	[SerializeField] private Sprite emptyArrow;
 	[SerializeField] private Sprite originalArrow;
 	[SerializeField] private TMP_Text canLearn;
 	[SerializeField] private Transform hpUIRoot;
+	[SerializeField] private Image pokemonImg;
 	
 	
 	
@@ -56,12 +58,13 @@ public class UI_PokemonSlot : MonoBehaviour
 
 	public void SetData(Pokémon pokemon, Item_SkillMachine skillMachine = null)
 	{
-		//아이콘..
+		this.Pokemon = pokemon;
+		
+		//todo: 애니메이션 가져오는거로 수정하기
+		//pokemonImg.sprite = Manager.Data.SJH_PokemonData.GetBattleFrontSprite(pokemon.pokeName);
+		
 		pokemonName.text = pokemon.pokeName;
 		level.text = $":L{pokemon.level}";
-		curHp.text = $"{pokemon.hp}/";
-		maxHp.text = pokemon.maxHp.ToString();
-
 		if (pokemon.condition == Define.StatusCondition.Normal)
 		{
 			condition.gameObject.SetActive(false);
@@ -82,38 +85,22 @@ public class UI_PokemonSlot : MonoBehaviour
 		else
 		{
 			canLearn.gameObject.SetActive(false);
-			SetHpSlider(pokemon.hp,pokemon.maxHp);
 			hpUIRoot.gameObject.SetActive(true);
+			hpSlider.SetHp(pokemon.hp, pokemon.maxHp);
 		}
 		
 		
 
 	}
-
-	private void SetHpSlider(int hp, int maxHp)
-	{
-		hpSlider.maxValue = maxHp;
-		hpSlider.value = hp;
-		
-		float ratio = hp / (float)maxHp;
-
-		Color color;
-		if (ratio > 0.5f)
-			ColorUtility.TryParseHtmlString(Define.ColorCode["hp_green"], out color); // 초록
-		else if (ratio > 0.2f)
-			ColorUtility.TryParseHtmlString(Define.ColorCode["hp_yellow"], out color); // 노랑
-		else
-			ColorUtility.TryParseHtmlString(Define.ColorCode["hp_red"], out color); // 빨강
-
-		hpSlider.fillRect.GetComponent<Image>().color = color;
-	}
-
+	
+	
 	public void ChangeArrow(bool toFullArrow)
 	{
 		arrow.sprite = toFullArrow ? originalArrow : emptyArrow;
 	}
 	
 	
+		
 	//애니메이션
 	
 	public IEnumerator PlayExitLeftAnimation()
@@ -143,29 +130,9 @@ public class UI_PokemonSlot : MonoBehaviour
 		yield return seq.WaitForCompletion();
 	}
 
-	
-	//hp slider 차오르는 효과
-	private IEnumerator AnimationHpChange(int fromHp, int toHp, int maxHp)
-	{
-		float duration = 0.7f; // 전체 애니메이션 시간
-		float elapsed = 0f;
-		int currentHp = fromHp;
-
-		while (elapsed<duration)
-		{
-			elapsed += Time.deltaTime;
-			float t = Mathf.Clamp(elapsed / duration, 0f, 1f);
-			currentHp = Mathf.RoundToInt(Mathf.Lerp(fromHp, toHp, t));
-			
-			//슬라이더 텍스트 모두 업데이트
-			curHp.text = $"{currentHp}/"; 
-			SetHpSlider(currentHp,maxHp);	
-			yield return null;
-		}
-	}
-
 	public void StartSliderAnimation(int fromHp, int toHp, int maxHp)
 	{
-		StartCoroutine(AnimationHpChange(fromHp, toHp, maxHp));
+		hpSlider.AnimationHpChange(fromHp,toHp, maxHp);
 	}
+
 }

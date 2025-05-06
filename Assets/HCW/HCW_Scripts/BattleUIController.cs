@@ -77,8 +77,9 @@ public class BattleUIController : MonoBehaviour
 				OnActionSelected.Invoke("Fight");
 				HideSkillSelection();
 			}));
-			skillPanel.SetActive(false);
+			UI_SkillMenu.SkillButtonList[skillIndex].SetArrowActive(false);
 		}
+		skillPanel.SetActive(false);
 	}
 	public void ShowActionMenu(Pokémon curPokemon)
 	{

@@ -24,6 +24,8 @@ public class DialogManager : Singleton<DialogManager>
 	int currentLine = 0;
 	//	대사 출력의 여부
 	public bool isTyping;
+	
+	private bool haveToPreventInput = false;
 
 	public static DialogManager Instance { get; private set; }
 
@@ -38,7 +40,8 @@ public class DialogManager : Singleton<DialogManager>
 
 	public void HandleUpdate()
 	{   // 대화 진행중
-
+		if (haveToPreventInput) return;
+		
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
 
@@ -100,4 +103,29 @@ public class DialogManager : Singleton<DialogManager>
 			dialogText = dialogBox.GetComponentInChildren<TMP_Text>();
 		}
 	}
+	
+	
+	
+	public IEnumerator ShowBattleMessage(string message)
+	{
+		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		CreateDialogueUI();
+
+		haveToPreventInput = true;
+		dialogBox.SetActive(true);
+		dialogText.text = "";
+
+		foreach (var letter in message.ToCharArray())
+		{
+			dialogText.text += letter;
+			yield return new WaitForSeconds(0.6f / letterPerSec);
+		}
+
+		yield return new WaitForSeconds(1f); // 읽는 시간 확보
+		dialogBox.SetActive(false);
+
+		haveToPreventInput = false;
+		Manager.Game.Player.state = Define.PlayerState.Field;
+	}
+
 }
