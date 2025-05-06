@@ -709,6 +709,9 @@ public class Pokémon : MonoBehaviour
 				break;
 		}
 	AfterAtack:
+		// TODO : 임시 스킬 감소
+		attacker.SkillPPCheck(attackSkill.name);
+
 		// 마지막에 사용한 스킬 저장
 		attacker.prevSkillName = attackSkill.name;
 	}
@@ -1019,6 +1022,9 @@ public class Pokémon : MonoBehaviour
 			attacker.isRollout = false;
 			attacker.rolloutStack = 1;
 		}
+
+		// TODO : 임시 스킬 감소
+		attacker.SkillPPCheck(skill.name);
 	}
 
 	float TypesCalculator(PokeType attack, Pokémon defender)

@@ -66,7 +66,7 @@ public class BattleManager : MonoBehaviour
 		// 현재턴 지정
 		currentTurn = 1;
 		// 트레이너
-		if (Manager.Poke.enemyData != null)
+		if (Manager.Poke.enemyData.TrainerPartyData.Count > 0)
 		{
 			Debug.Log("트레이너 배틀 시작");
 			//게임 데이터 설정
@@ -161,8 +161,8 @@ public class BattleManager : MonoBehaviour
 		playerPokemon = Manager.Poke.GetFirtstPokemon(); // 파티의 첫번째 포켓몬
 		enemyPokemon = enemy; // 적 포켓몬 설정
 
-		//hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
-		//hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
+		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
+		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 
 		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!", "테스트" };
 
@@ -492,6 +492,9 @@ public class BattleManager : MonoBehaviour
 
 		// 변수 초기화
 		isTrainer = false;
+		Manager.Poke.enemyPokemon = null;
+		Manager.Poke.enemyParty = null;
+
 		setting.allowSceneActivation = true;
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
