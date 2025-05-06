@@ -981,7 +981,7 @@ Transform:
   m_GameObject: {fileID: 1423188588}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: -4, z: 0}
+  m_LocalPosition: {x: 2, y: -10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12454,6 +12454,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3753142079596768854, guid: e58d3193f5d9bd846b472a3f7429b91b, type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -3753142079596768854, guid: e58d3193f5d9bd846b472a3f7429b91b, type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: "\uD3EC\uCF13\uBAAC\uC758 \uAE38\uC5D0 \uB3C4\uB2EC\uD558\uB3C4\uB85D"
+      objectReference: {fileID: 0}
+    - target: {fileID: -3753142079596768854, guid: e58d3193f5d9bd846b472a3f7429b91b, type: 3}
+      propertyPath: dialog.lines.Array.data[1]
+      value: "\uC218\uD589\uC744 \uD558\uACE0\uC788\uC18C!"
+      objectReference: {fileID: 0}
     - target: {fileID: 4359646485064869161, guid: e58d3193f5d9bd846b472a3f7429b91b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -12511,6 +12523,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5706954716567388785, guid: 0e1163b04f01f5247a6038d5c358cdb5, type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -5706954716567388785, guid: 0e1163b04f01f5247a6038d5c358cdb5, type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: "\uC8FC\uC9C0\uC2A4\uB2D8\uAED8\uC11C \uC8FC\uC2DC\uB294"
+      objectReference: {fileID: 0}
+    - target: {fileID: -5706954716567388785, guid: 0e1163b04f01f5247a6038d5c358cdb5, type: 3}
+      propertyPath: dialog.lines.Array.data[1]
+      value: "\uBE44\uC804\uBA38\uC2E0\uC740"
+      objectReference: {fileID: 0}
+    - target: {fileID: -5706954716567388785, guid: 0e1163b04f01f5247a6038d5c358cdb5, type: 3}
+      propertyPath: dialog.lines.Array.data[2]
+      value: "\uC5B4\uB5A4 \uC5B4\uB460\uB3C4 \uBC1D\uAC8C \uBE44\uCD94\uC9C0\uC694"
+      objectReference: {fileID: 0}
     - target: {fileID: 859845575210519335, guid: 0e1163b04f01f5247a6038d5c358cdb5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -12625,6 +12653,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 65254815603143474, guid: 06c7e6d4f2bc41942977a8a2035feac2, type: 3}
+      propertyPath: findDistance
+      value: 4.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 65254815603143474, guid: 06c7e6d4f2bc41942977a8a2035feac2, type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 65254815603143474, guid: 06c7e6d4f2bc41942977a8a2035feac2, type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: "\uADF8\uB300\uAC00 \uD3EC\uCF13\uBAAC\uC744"
+      objectReference: {fileID: 0}
+    - target: {fileID: 65254815603143474, guid: 06c7e6d4f2bc41942977a8a2035feac2, type: 3}
+      propertyPath: dialog.lines.Array.data[1]
+      value: "\uC5BC\uB9C8\uB9CC\uD07C \uC2E0\uB8B0\uD558\uACE0 \uC788\uB294\uAC00"
+      objectReference: {fileID: 0}
+    - target: {fileID: 65254815603143474, guid: 06c7e6d4f2bc41942977a8a2035feac2, type: 3}
+      propertyPath: dialog.lines.Array.data[2]
+      value: "\uB0B4\uAC00 \uD655\uC778\uD574\uBCF4\uACA0\uC18C!"
+      objectReference: {fileID: 0}
     - target: {fileID: 175516605476323804, guid: 06c7e6d4f2bc41942977a8a2035feac2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -12682,6 +12730,54 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: findDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: currentDirection.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[0]
+      value: "\uC5EC\uAE30\uAE4C\uC9C0 \uC798 \uC624\uC168\uC18C!"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[1]
+      value: "\uC774 \uBAA8\uB2E4\uD53C\uC758 \uD0D1\uC740"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[2]
+      value: "\uD3EC\uCF13\uBAAC\uACFC \uC0AC\uB78C\uC774"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[3]
+      value: "\uBC1D\uC740 \uBBF8\uB798\uB97C \uB9CC\uB4E4 \uC218 \uC788\uC744\uAE4C"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[4]
+      value: "\uC218\uD589\uC73C\uB85C \uD655\uC778\uD558\uB294 \uC7A5\uC18C"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[5]
+      value: "\uADF8\uB9AC\uACE0 \uB9C8\uC9C0\uB9C9 \uC2DC\uB828\uC740"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[6]
+      value: "\uBC14\uB85C \uB098\uC77C\uC138"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[7]
+      value: "\uADF8\uB300\uC640 \uD3EC\uCF13\uBAAC\uC758 \uC778\uC5F0\uC744"
+      objectReference: {fileID: 0}
+    - target: {fileID: -7952704492104462902, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      propertyPath: dialog.lines.Array.data[8]
+      value: "\uD655\uC778\uD574\uBCF4\uACA0\uC18C\uC774\uB2E4!"
+      objectReference: {fileID: 0}
     - target: {fileID: 2759956378129593992, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12729,8 +12825,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9010436730583564106, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6060998875125318061}
   m_SourcePrefab: {fileID: 100100000, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+--- !u!1 &6060998875125318060 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9010436730583564106, guid: 5422d17f7dc66f0458682cd12af4335e, type: 3}
+  m_PrefabInstance: {fileID: 6060998875125318059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6060998875125318061
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6060998875125318060}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 613cad39025bbe54893407b51c55d56f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
