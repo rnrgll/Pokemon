@@ -8478,11 +8478,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -194
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 60
+      value: 92
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -44285,6 +44285,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1309237808551010557, guid: a45111eb950180641ab1f109a1aea277, type: 3}
+      propertyPath: findDistance
+      value: 6.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309237808551010557, guid: a45111eb950180641ab1f109a1aea277, type: 3}
+      propertyPath: isTrainerTurn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309237808551010557, guid: a45111eb950180641ab1f109a1aea277, type: 3}
+      propertyPath: currentDirection.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309237808551010557, guid: a45111eb950180641ab1f109a1aea277, type: 3}
+      propertyPath: currentDirection.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6184915768576942777, guid: a45111eb950180641ab1f109a1aea277, type: 3}
       propertyPath: m_Name
       value: Trainer3
@@ -44605,6 +44621,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4416119407407258479, guid: 86504c2df618e7143a130ede742b01fa, type: 3}
+      propertyPath: findDistance
+      value: 3.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4993635429477546335, guid: 86504c2df618e7143a130ede742b01fa, type: 3}
       propertyPath: m_Name
       value: Trainer2
@@ -45583,6 +45603,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8556502551642484696, guid: 94e56c6ebd4614048a4fa45ce1c16de2, type: 3}
+      propertyPath: findDistance
+      value: 8.8
+      objectReference: {fileID: 0}
     - target: {fileID: 855129069404770790, guid: 94e56c6ebd4614048a4fa45ce1c16de2, type: 3}
       propertyPath: m_Name
       value: Trainer1

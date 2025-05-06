@@ -30,6 +30,8 @@ public class Trainer : MonoBehaviour, IInteractable
 	[SerializeField] public Vector2 exitPos;
 
 	[SerializeField] Animator anim;
+	[SerializeField] BoxCollider2D coll;
+
 	[SerializeField] public bool isTrainerMove;
 	[SerializeField] public Vector2 currentDirection;
 	[SerializeField] public float moveDuration;
@@ -45,12 +47,15 @@ public class Trainer : MonoBehaviour, IInteractable
 	// 풀이펙트
 	[SerializeField] GameObject grassEffect;
 
+	// 레이용
+	[SerializeField] float findDistance = 4f;
 
 	void Start()
 	{
 		// 시작할 때 등록된 트레이너아이디면 isFight 설정
 		isFight = Manager.Event.TrainerIsFight(trainerId);
 		anim = GetComponent<Animator>();
+		coll = GetComponent<BoxCollider2D>();
 
 		// 풀 이펙트 설정
 		grassEffect = transform.GetChild(0).gameObject;
@@ -73,29 +78,34 @@ public class Trainer : MonoBehaviour, IInteractable
 		{
 			turnCoroutine = StartCoroutine(TrainerTurn());
 		}
-	}
 
-	void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.transform.CompareTag("Player"))
+		if (!isFight && findCoroutine == null)
 		{
-			Debug.Log("시야에 플레이어 들어옴!");
-
-			if (isFight)
-				return;
-
-			if (findCoroutine == null)
-			{
-				findCoroutine = StartCoroutine(FindPlayer());
-			}
+			findCoroutine = StartCoroutine(FindPlayer());
 		}
 	}
 
+	//void OnTriggerEnter2D(Collider2D collision)
+	//{
+	//	if (collision.transform.CompareTag("Player"))
+	//	{
+	//		Debug.Log("시야에 플레이어 들어옴!");
+
+	//		if (isFight)
+	//			return;
+
+	//		if (findCoroutine == null)
+	//		{
+	//			findCoroutine = StartCoroutine(FindPlayer());
+	//		}
+	//	}
+	//}
+
 	void OnTriggerStay2D(Collider2D collision)
 	{
-		if (collision.CompareTag("Grass"))
+		if (collision.CompareTag("Grass") && collision.IsTouching(coll))
 		{
-			if (grassEffect != null && !grassEffect.activeSelf)
+			if (grassEffect != null)
 				grassEffect.SetActive(true);
 		}
 	}
@@ -111,6 +121,30 @@ public class Trainer : MonoBehaviour, IInteractable
 
 	IEnumerator FindPlayer()
 	{
+		// TODO : 레이 쏘기
+		Vector2 rayStartPos = (Vector2)transform.position;
+
+		if (currentDirection.x != 0)
+			rayStartPos += Vector2.down * 0.3f;
+		RaycastHit2D[] hits = Physics2D.RaycastAll(rayStartPos, currentDirection, findDistance);
+
+		bool findPlayer = false;
+
+		foreach (RaycastHit2D hit in hits)
+		{
+			if (hit.transform.CompareTag("Player"))
+			{
+				findPlayer = true;
+				break;
+			}
+		}
+
+		if (!findPlayer)
+		{
+			findCoroutine = null;
+			yield break;
+		}
+
 		// 플레이어 이동 제한
 		var player = Manager.Game.Player;
 		player.state = Define.PlayerState.Dialog;
@@ -282,6 +316,11 @@ public class Trainer : MonoBehaviour, IInteractable
 		// 위에서 지정
 		//Manager.Game.Player.state = Define.PlayerState.Dialog;
 
+		// 플레이어 방향을 트레이너 방향으로 바꾸기
+		var player = Manager.Game.Player;
+		Vector2 dir = -currentDirection;
+		player.AnimChange(dir);
+
 		// 대사 출력
 		if (Manager.Dialog.isTyping == false)
 		{
@@ -290,6 +329,12 @@ public class Trainer : MonoBehaviour, IInteractable
 			Debug.Log("배틀 시작");
 			BattleStart();
 		}
+	}
+
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(transform.position, transform.position + (Vector3)(currentDirection * findDistance));
 	}
 }
 
