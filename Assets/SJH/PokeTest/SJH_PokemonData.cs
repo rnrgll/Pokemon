@@ -316,9 +316,7 @@ public class SJH_PokemonData
 				EvolveName = "장크로다일",
 				DefaultSkill = new List<string>()
 				{
-					//"할퀴기", "째려보기", "분노"
-					//임시테스트데이터
-					"플래시", "째려보기", "분노", "할퀴기"
+					"할퀴기", "째려보기", "분노"
 				},
 				SkillDic = new Dictionary<int, string>()
 				{

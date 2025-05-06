@@ -147,7 +147,7 @@ public class BagSlotRenderer
 	    bool isBelow = slotBottom < viewBottom;
 
 	    
-	    Debug.Log(slotRT.transform.GetChild(2).GetComponent<TMP_Text>().text + " : " + isAbove.ToString() + " , " + isBelow);
+	    //Debug.Log(slotRT.transform.GetChild(2).GetComponent<TMP_Text>().text + " : " + isAbove.ToString() + " , " + isBelow);
 	    if (isAbove || isBelow)
 	    {
 		    Vector2 pos = contentRT.anchoredPosition;

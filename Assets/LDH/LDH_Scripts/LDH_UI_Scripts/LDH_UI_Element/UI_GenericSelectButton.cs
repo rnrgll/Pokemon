@@ -51,23 +51,4 @@ public class UI_GenericSelectButton : MonoBehaviour
 	}
 	
 	
-	
-	// public void Trigger()
-	// {
-	// 	_menuAction?.Execute();
-	// }
-	//
-	//
-	// public void SetArrowActive(bool active)
-	// {
-	// 	if (_arrow != null)
-	// 		Util.SetVisible(_arrow, active);
-	// }
-	//
-	// // public void SetAction(Action action)
-	// // {
-	// // 	_onSelectAction = action;
-	// // }
-	// //
-
 }

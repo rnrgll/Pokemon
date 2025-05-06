@@ -66,7 +66,7 @@ public class BattleManager : MonoBehaviour
 		// 현재턴 지정
 		currentTurn = 1;
 		// 트레이너
-		if (Manager.Poke.enemyData != null)
+		if (Manager.Poke.enemyParty.Count >= 1)
 		{
 			Debug.Log("트레이너 배틀 시작");
 			//게임 데이터 설정
@@ -103,7 +103,7 @@ public class BattleManager : MonoBehaviour
 	}
 	private void Update()
 	{
-		dialogue.HandleUpdate();
+
 	}
 	private void OnDestroy()
 	{
@@ -118,7 +118,8 @@ public class BattleManager : MonoBehaviour
 		hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 HUD 설정
 
-		ui.ShowActionMenu();
+		ui.ShowActionMenu(playerPokemon);
+		Debug.Log("배틀 다이얼로그 종료");
 		battleCoroutine = StartCoroutine(BattleLoop()); // 배틀은 대화창이 닫힌 후 시작하게
 	}
 
@@ -172,14 +173,16 @@ public class BattleManager : MonoBehaviour
 
 	private IEnumerator BattleLoop()
 	{
-		ui.ShowActionMenu(); // 행동 선택 UI 표시
-		selectedAction = null;
-		yield return new WaitUntil(() => selectedAction != null); // 행동 선택 대기
+		// ui.ShowActionMenu(); // 행동 선택 UI 표시
+		// selectedAction = null;
+		// yield return new WaitUntil(() => selectedAction != null); // 행동 선택 대기
 
 		//while ((playerPokemon.hp > 0) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		while ((Manager.Poke.AlivePokemonCheck()) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
 			bool isAction = false;
+			Manager.Game.SetIsItemUsed(false); //아이템 사용 여부 플래그 초기화
+			
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
 			
 			// 내 포켓몬 교체 체크
@@ -234,32 +237,38 @@ public class BattleManager : MonoBehaviour
 					yield break;
 				}
 			}
-			else
-			{
-				// 상대 포켓몬이 살아있으면 다시 ui 활성화
-				ui.ShowActionMenu(); // 행동 선택 UI 표시
-			}
+			// else
+			// {
+			// 	// 상대 포켓몬이 살아있으면 다시 ui 활성화
+			// 	ui.ShowActionMenu(); // 행동 선택 UI 표시
+			// }
 
 			// 행동 선택 대기
+			ui.ShowActionMenu(playerPokemon);
 			selectedAction = null;
 			//Debug.Log($"행동 선택대기중");
 			yield return new WaitUntil(() => selectedAction != null);
 			//Debug.Log($"행동 {selectedAction} 선택!");
-			ui.HideActionMenu();
+			// ui.HideActionMenu();
 
 			// 적 포켓몬 행동 선택 AI
 			int idx = Random.Range(0, enemyPokemon.skills.Count);
 			enemySelectedSkill = enemyPokemon.skills[idx];
+			Debug.Log("enemy 스킬 선택");
 
 			// 전투 수행
 			switch (selectedAction)
 			{
 				case "Fight":
-					playerSelectedSkill = null;
-					ui.ShowSkillSelection(playerPokemon);
-					yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
-					ui.HideSkillSelection();
-
+					// playerSelectedSkill = null;
+					// ui.ShowSkillSelection(playerPokemon);
+					// yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
+					//ui.HideSkillSelection();
+					
+					//기술 선택을 취소할 수도 있음
+					//기술 선택창을 열었다고 액션 체크를 하면 안됨
+					//기술 선택창과 액션 체크를 분리시켜야 함
+					
 					var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
                     {
 						new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
@@ -337,7 +346,20 @@ public class BattleManager : MonoBehaviour
 					break;
 
 				case "Bag":
-					// TODO : 가방 
+					//1. 인벤토리 창을 띄운다.
+					Manager.UI.ShowLinkedUI<UI_Bag>("UI_Bag");
+					
+					//2. 대기
+					//대기를 끝내는 조건 : 가방 UI가 닫혀서 UI 매니저가 관리하는 UI가 없는 경우 = 아무 ui도 열려있지 않은 경우
+					yield return new WaitUntil(() => !Manager.UI.IsAnyUIOpen);
+					
+					//3. 턴 인지 확인하는 체크
+					//플레이어가 도구를 사용한 경우 턴 종료 
+					//todo : 플레이어 도구 사용 여부를 체크할 변수가 필요 && 전투 중인경우 도구를 사용하면 아예 ui를 다 닫아야함
+					if (Manager.Game.IsInBattle && Manager.Game.IsItemUsed)
+					{
+						isAction = true;
+					}
 					break;
 
 				case "Run":
@@ -365,6 +387,9 @@ public class BattleManager : MonoBehaviour
 					break;
 			}
 
+			// TODO : 턴종료 조건 추가하기
+			// 도망을 실패해도 턴이 증가함
+			//2. 가방
 			if (isAction)
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
@@ -416,7 +441,7 @@ public class BattleManager : MonoBehaviour
 		if (cancelled) // 취소시 메뉴 다시 열기
 		{
 			selectedAction = null;
-			ui.ShowActionMenu();
+			ui.ShowActionMenu(playerPokemon);
 			yield break;
 		}
 

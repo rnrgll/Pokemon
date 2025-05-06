@@ -79,8 +79,8 @@ public class EncounterManager : Singleton<EncounterManager>
 					player.PrevSceneName = SceneManager.GetActiveScene().name;
 
 					// 씬전환
-					player.CurSceneName = "BattleScene";
-					SceneManager.LoadScene("BattleScene");
+					player.CurSceneName = "BattleScene_UIFix";
+					SceneManager.LoadScene("BattleScene_UIFix");
 					break;
 				}
 			}

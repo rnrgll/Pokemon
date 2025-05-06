@@ -30,6 +30,8 @@ public class PokemonManager : Singleton<PokemonManager>
 		// Test용 스타팅 포ㅓ켓몬 주기
 		AddPokemon(1, 5);
 		
+		
+		//====================테스트 코드===============//
 		//메뉴 구현 중 테스트를 위한 임시 데이터 추가
 		AddPokemon(5, 10);
 		AddPokemon(8, 20);
@@ -37,6 +39,9 @@ public class PokemonManager : Singleton<PokemonManager>
 		party[1].condition = StatusCondition.Poison;
 		// AddPokemon(33, 10);
 
+		enemyParty = new List<Pokémon>();
+		enemyPokemon = Manager.Poke.AddEnemyPokemon("치코리타", 5);
+		//===========================================//
 		AddPokemon("블레이범", 50);
 
 	}
