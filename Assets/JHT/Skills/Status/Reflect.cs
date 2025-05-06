@@ -18,7 +18,6 @@ public class Reflect : SkillS
 
 	public override void UseSkill(Pokémon attacker, Pokémon defender, SkillS skill)
 	{
-		// TODO : 리플렉터 카운터 감소하기
 		attacker.TakeEffect(attacker, defender, skill);
 	}
 }

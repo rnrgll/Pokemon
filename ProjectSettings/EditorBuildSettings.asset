@@ -85,6 +85,9 @@ EditorBuildSettings:
     guid: 06664fd7896be2b489951f912bfe67f8
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
+    guid: 7090f9a8b53e94ee5ad4564fab665b13
+  - enabled: 1
+    path: Assets/Scenes/BattleScene_UIFix.unity
     guid: ac914ccfd92a6d149bd4db2017520409
   - enabled: 1
     path: Assets/Scenes/SproutTower1F.unity

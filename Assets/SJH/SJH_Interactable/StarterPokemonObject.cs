@@ -17,5 +17,9 @@ public class StarterPokemonObject : MonoBehaviour, IInteractable
 
 		isGet = true;
 		Manager.Poke.AddPokemon(pokeName, 5);
+
+		// 필드에 포켓몬 생성
+		//Manager.Poke.FieldPokemonInstantiate(pokeName);
+		Manager.Poke.FieldPokemonInstantiate();
 	}
 }

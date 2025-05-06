@@ -34,15 +34,7 @@ public class SoundManager : MonoBehaviour
 	void Start()
 	{
 		player = GetComponentInParent<Player>();
-
-		//SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 		player.OnSceneChangeEvent += Play;
-	}
-
-	private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
-	{
-		Debug.Log("씬로드 이벤트");
-		Play(scene.name);
 	}
 
 	public void Play(string key)

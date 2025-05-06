@@ -16,5 +16,8 @@ public class CreatePlayer : MonoBehaviour
 		player.transform.position = gameObject.transform.position;
 		isCreate = true;
 		this.enabled = false;
+		
+		//테스트 코드
+		
 	}
 }

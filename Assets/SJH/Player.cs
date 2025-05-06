@@ -57,6 +57,14 @@ public class Player : MonoBehaviour
 	}
 	[SerializeField] public event Action<string> OnSceneChangeEvent;
 
+	[SerializeField] private string prevSceneName;
+	public string PrevSceneName
+	{
+		get => prevSceneName;
+		set => prevSceneName = value;
+	}
+
+
 	Animator anim;
 
 	void Awake()
@@ -299,8 +307,8 @@ public class Player : MonoBehaviour
 					case PlayerState.Field:
 						// 필드 상호작용
 						Debug.DrawRay((Vector2)transform.position + currentDirection * 1.1f, currentDirection, Color.red);
-						RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
-						if (hit)
+						RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
+						foreach (var hit in hits)
 						{
 							var check = hit.transform.GetComponent<IInteractable>();
 							check?.Interact(transform.position);
@@ -503,6 +511,15 @@ public class Player : MonoBehaviour
 		//만약 이전 상태가 필드가 아니라 배틀 상태였다면..?? -> 추후 로직에 따라 수정 필요
 		if(state==Define.PlayerState.Menu)
 			state = Define.PlayerState.Field;
+		else if (Manager.Game.IsInBattle)
+		{
+			state = Define.PlayerState.Battle;
+		}
+		else
+		{
+			//todo: 수정필요(대사 중 팝업 띄울떼 고랴)
+			state = Define.PlayerState.Field; //다이얼로그..일때.. 고려해함(수정 필요)
+		}
 	}
 	#endregion	
 }

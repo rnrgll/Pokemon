@@ -252,13 +252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 1920030746}
-  startHp: 10
-  maxHp: 20
-  isInBattle: 1
-  condition: 6
-  healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
-  keyItem: {fileID: 0}
 --- !u!114 &107288995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,13 +533,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 2030702401}
-  startHp: 20
-  maxHp: 20
-  isInBattle: 1
-  condition: 4
-  healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
-  keyItem: {fileID: 0}
 --- !u!114 &215985381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,91 +761,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248540100}
   m_CullTransparentMesh: 1
---- !u!1 &264506910
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 264506912}
-  - component: {fileID: 264506911}
-  - component: {fileID: 264506913}
-  m_Layer: 0
-  m_Name: TestInventoryData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &264506911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264506910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49afdd4d6a4441b4867297851ace4415, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tempInventoryData:
-  - ItemName: "\uD50C\uB798\uC2DC"
-    Count: 1
-  - ItemName: "\uB3D9\uAD74\uD0C8\uCD9C \uB85C\uD504"
-    Count: 2
-  - ItemName: "\uC0C1\uCC98\uC57D"
-    Count: 2
-  - ItemName: "\uB098\uBB34\uC5F4\uB9E4"
-    Count: 2
-  - ItemName: "\uB514\uD39C\uB4DC \uC5C5"
-    Count: 2
-  - ItemName: "\uD50C\uB7EC\uC2A4 \uD30C\uC6CC"
-    Count: 2
-  - ItemName: "\uC2A4\uD53C\uB4DC \uC5C5"
-    Count: 2
-  - ItemName: "\uB9C8\uBE44 \uCE58\uB8CC\uC81C"
-    Count: 2
-  - ItemName: "\uD574\uB3C5\uC81C"
-    Count: 2
-  - ItemName: "\uBC15\uD558\uC5F4\uB9E4"
-    Count: 2
-  - ItemName: "\uBAAC\uC2A4\uD130\uBCFC"
-    Count: 2
-  - ItemName: "\uC774\uC0C1\uD55C \uC54C"
-    Count: 1
-  - ItemName: "\uC9C4\uD759\uBFCC\uB9AC\uAE30"
-    Count: 4
---- !u!4 &264506912
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264506910}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 302.88278, y: 508.7227, z: -4.049187}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &264506913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264506910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d36b83e3a0da405897b732c6a2a362e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iswild: 0
 --- !u!1 &274025319
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,13 +814,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 1056029543}
-  startHp: 20
-  maxHp: 20
-  isInBattle: 1
-  condition: 3
-  healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
-  keyItem: {fileID: 0}
 --- !u!114 &274025322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,12 +1011,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!1 &333021461
 GameObject:
   m_ObjectHideFlags: 0
@@ -4432,13 +4328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 1305516628}
-  startHp: 20
-  maxHp: 20
-  isInBattle: 1
-  condition: 2
-  healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
-  keyItem: {fileID: 0}
 --- !u!114 &1033003248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4636,12 +4525,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!1 &1128957410
 GameObject:
   m_ObjectHideFlags: 0
@@ -6049,13 +5940,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 278240343}
-  startHp: 20
-  maxHp: 20
-  isInBattle: 1
-  condition: 5
-  healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
-  keyItem: {fileID: 0}
 --- !u!114 &1201901482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6341,12 +6225,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!4 &1242273422
 Transform:
   m_ObjectHideFlags: 0
@@ -6806,12 +6692,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!1001 &1323358962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7237,13 +7125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 1906032779}
-  startHp: 20
-  maxHp: 20
-  isInBattle: 1
-  condition: 1
-  healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
-  keyItem: {fileID: 0}
 --- !u!114 &1417198488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7391,13 +7272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 1625938840}
-  startHp: 20
-  maxHp: 20
-  isInBattle: 1
-  condition: 6
-  healItem: {fileID: 11400000, guid: 6873e8de0b43e4162988c5ef90690c0e, type: 2}
-  keyItem: {fileID: 0}
 --- !u!114 &1465106663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8103,12 +7977,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!1 &1627339473
 GameObject:
   m_ObjectHideFlags: 0
@@ -8379,13 +8255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62158387e9094397999c18c4162b17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemon: {fileID: 0}
-  startHp: 0
-  maxHp: 0
-  isInBattle: 0
-  condition: 0
-  healItem: {fileID: 0}
-  keyItem: {fileID: 0}
 --- !u!114 &1857859003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8595,12 +8464,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!1 &1920030745
 GameObject:
   m_ObjectHideFlags: 0
@@ -8689,12 +8560,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!4 &1920030747
 Transform:
   m_ObjectHideFlags: 0
@@ -9342,12 +9215,14 @@ MonoBehaviour:
   isLightScreen: 0
   lightScreenCount: 0
   isCurse: 0
-  isMeanLook: 0
+  isCantRun: 0
   isSafeguard: 0
   safeguardCount: 0
   isForesight: 0
   prevSkillName: 
+  restCount: 0
   sleepCount: 0
+  confusionCount: 0
 --- !u!222 &181561750871827914
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10567,6 +10442,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &7551474623156942883
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1491600898796025766, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_Name
+      value: TestInventoryData
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 302.88278
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 508.7227
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.049187
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6843098764798037388, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e2226fee5f6c24d3a884bc88a4afbf06, type: 3}
 --- !u!222 &7750767342386972689
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10788,4 +10720,4 @@ SceneRoots:
   - {fileID: 424378259}
   - {fileID: 1212934445}
   - {fileID: 365162824}
-  - {fileID: 264506912}
+  - {fileID: 7551474623156942883}

@@ -11,10 +11,6 @@ public class EncounterManager : Singleton<EncounterManager>
 	private string currentSceneName;
 	private List<WildEncounterData> pool;
 
-	// TODO : 플레이어정보 임시 저장 나중에 바꾸기
-	public string prevSceneName;
-	public Vector3 prevPosition;
-
 	void Start()
 	{
 		// 랜덤인카운터 이벤트 추가
@@ -71,16 +67,20 @@ public class EncounterManager : Singleton<EncounterManager>
 					int level = ranPokeData.GetRandomLevel();
 					var pokeObject = Manager.Poke.AddEnemyPokemon(ranPokeData.Name, level);
 					Debug.Log($"포켓몬 랜덤인카운터 : {ranPokeData.Name} Lv. {level} 이/가 나타났다!");
-					// TODO : 배틀씬으로
+
+					// 포켓몬 매니저 enemyPokemon 에 값을 넣으면 야생 / enemyParty 에 값을 넣으면 트레이너
 					Manager.Poke.enemyPokemon = pokeObject;
-					// 씬전환 전 정보 저장
-					prevSceneName = SceneManager.GetActiveScene().name; // SceneManager.GetActiveScene().name == "BattleScene"
+
 					// 애니메이션 종료
 					var player = Manager.Game.Player;
 					player.GetComponent<Player>().StopMoving();
+					
+					// 씬전환 전 정보 저장
+					player.PrevSceneName = SceneManager.GetActiveScene().name;
+
 					// 씬전환
-					player.CurSceneName = "BattleScene";
-					SceneManager.LoadScene("BattleScene");
+					player.CurSceneName = "BattleScene_UIFix";
+					SceneManager.LoadScene("BattleScene_UIFix");
 					break;
 				}
 			}
