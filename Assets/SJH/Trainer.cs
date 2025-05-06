@@ -49,6 +49,7 @@ public class Trainer : MonoBehaviour, IInteractable
 
 	// 레이용
 	[SerializeField] float findDistance = 4f;
+	[SerializeField] bool isFind;
 
 	void Start()
 	{
@@ -79,7 +80,7 @@ public class Trainer : MonoBehaviour, IInteractable
 			turnCoroutine = StartCoroutine(TrainerTurn());
 		}
 
-		if (!isFight && findCoroutine == null)
+		if (!isFind && !isFight && !isTrainerMove && findCoroutine == null)
 		{
 			findCoroutine = StartCoroutine(FindPlayer());
 		}
@@ -121,6 +122,11 @@ public class Trainer : MonoBehaviour, IInteractable
 
 	IEnumerator FindPlayer()
 	{
+		if (isTrainerMove)
+		{
+			findCoroutine = null;
+			yield break;
+		}
 		// TODO : 레이 쏘기
 		Vector2 rayStartPos = (Vector2)transform.position;
 
@@ -128,18 +134,20 @@ public class Trainer : MonoBehaviour, IInteractable
 			rayStartPos += Vector2.down * 0.3f;
 		RaycastHit2D[] hits = Physics2D.RaycastAll(rayStartPos, currentDirection, findDistance);
 
-		bool findPlayer = false;
+		isFind = false;
 
 		foreach (RaycastHit2D hit in hits)
 		{
+			// 플레이어를 찾았을 때
 			if (hit.transform.CompareTag("Player"))
 			{
-				findPlayer = true;
+				isTrainerTurn = false;
+				isFind = true;
 				break;
 			}
 		}
 
-		if (!findPlayer)
+		if (!isFind)
 		{
 			findCoroutine = null;
 			yield break;
@@ -230,7 +238,6 @@ public class Trainer : MonoBehaviour, IInteractable
 		Vector3 startPos = transform.position;
 		Vector3 targetPos = startPos + (Vector3)(currentDirection * 2);
 		currentDirection = (targetPos - startPos).normalized;
-
 		//Debug.Log($"시작위치 : {startPos} 도착위치 : {exitPos} 방향 : {currentDirection}");
 
 		bool isEnd = false;
@@ -248,8 +255,9 @@ public class Trainer : MonoBehaviour, IInteractable
 		if (isEnd)
 		{
 			// 플레이어를 체크하려면 레이를 좀 낮게
-			Vector2 rayStartPos = (Vector2)startPos + Vector2.down * 0.3f;
-
+			Vector2 rayStartPos = (Vector2)transform.position;
+			if (currentDirection.x != 0)
+				rayStartPos += Vector2.down * 0.3f;
 			// 이동 전에 Raycast 검사
 			RaycastHit2D[] hits = Physics2D.RaycastAll(rayStartPos + currentDirection * 1.1f, currentDirection, 1f);
 			foreach (RaycastHit2D hit in hits)
@@ -334,7 +342,11 @@ public class Trainer : MonoBehaviour, IInteractable
 	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
-		Gizmos.DrawLine(transform.position, transform.position + (Vector3)(currentDirection * findDistance));
+
+		Vector3 rayStart = transform.position;
+		if (currentDirection.x != 0)
+			rayStart += Vector3.down * 0.3f;
+		Gizmos.DrawLine(rayStart, rayStart + (Vector3)(currentDirection * findDistance));
 	}
 }
 

@@ -147,10 +147,13 @@ MonoBehaviour:
   isFight: 0
   exitPos: {x: 0, y: 0}
   anim: {fileID: 0}
+  coll: {fileID: 0}
   isTrainerMove: 0
   currentDirection: {x: 0, y: 0}
-  moveDuration: 0
+  moveDuration: 0.3
   isTrainerTurn: 0
   dialog:
     lines: []
   grassEffect: {fileID: 0}
+  findDistance: 4
+  isFind: 0
