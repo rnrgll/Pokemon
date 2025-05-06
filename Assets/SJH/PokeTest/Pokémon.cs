@@ -206,6 +206,7 @@ public class Pokémon : MonoBehaviour
 		{
 			foreach (int skillLevel in data.SkillDic.Keys)
 			{
+				// 포켓몬 레벨 이하면 추가
 				if (skillLevel <= level)
 				{
 					string skill = data.SkillDic[skillLevel];
@@ -250,6 +251,15 @@ public class Pokémon : MonoBehaviour
 		else
 		{
 			skills = allSkills;
+		}
+
+		// TODO : allSkills 의 List<string> 를 List<SkillData> 로 바꾸기
+		skillDatas = new();
+		foreach (string skillName in skills)
+		{
+			SkillS skills = Manager.Data.SkillSData.GetSkillDataByName(skillName);
+			SkillData skillData = new SkillData(skills.name, skills.maxPP, skills.maxPP);
+			skillDatas.Add(skillData);
 		}
 	}
 
@@ -699,8 +709,6 @@ public class Pokémon : MonoBehaviour
 				break;
 		}
 	AfterAtack:
-		// PP감소
-		attackSkill.curPP--;
 		// 마지막에 사용한 스킬 저장
 		attacker.prevSkillName = attackSkill.name;
 	}
@@ -1480,5 +1488,29 @@ public class Pokémon : MonoBehaviour
 		isForesight = false;
 		// 원한, 따라하기
 		prevSkillName = null;
-}
+	}
+
+	public bool SkillPPCheck(string skillName)
+	{
+		for (int i = 0; i < skillDatas.Count; i++)
+		{
+			if (skillDatas[i].Name == skillName)
+			{
+				var data = skillDatas[i];
+				
+				// PP 체크
+				if (data.CurPP <= 0)
+					return false;
+
+				// PP 감소
+				data.DecreasePP();
+				// 재할당
+				skillDatas[i] = data;
+
+				return true;
+			}
+		}
+		Debug.Log($"{skillName} 은/는 없는 스킬 입니다.");
+		return false;
+	}
 }
