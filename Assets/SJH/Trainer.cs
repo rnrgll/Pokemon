@@ -68,11 +68,6 @@ public class Trainer : MonoBehaviour, IInteractable
 			if (isFight)
 				return;
 
-			// 이동 할 위치
-			exitPos = (Vector2)Manager.Game.Player.transform.position - currentDirection * 2;
-			// 
-			isTrainerMove = true;
-
 			if (findCoroutine == null)
 			{
 				findCoroutine = StartCoroutine(FindPlayer());
@@ -93,11 +88,13 @@ public class Trainer : MonoBehaviour, IInteractable
 			return pos.x % 2 == 0 && pos.y % 2 == 0;
 		});
 
+		// 플레이어 이동 종료
+		player.StopMoving();
+
+		// 위치 저장
 		exitPos = Vector2Int.RoundToInt(player.transform.position) - Vector2Int.RoundToInt(currentDirection * 2);
 
-		Debug.Log($"exitPos = {exitPos}");
 		isTrainerMove = true;
-
 		findCoroutine = null;
 	}
 
@@ -140,7 +137,7 @@ public class Trainer : MonoBehaviour, IInteractable
 		Vector3 targetPos = startPos + (Vector3)(currentDirection * 2);
 		currentDirection = (targetPos - startPos).normalized;
 
-		Debug.Log($"시작위치 : {startPos} 도착위치 : {exitPos} 방향 : {currentDirection}");
+		//Debug.Log($"시작위치 : {startPos} 도착위치 : {exitPos} 방향 : {currentDirection}");
 
 		bool isEnd = false;
 		if (currentDirection.x == 0)    //상하
@@ -154,15 +151,13 @@ public class Trainer : MonoBehaviour, IInteractable
 				isEnd = true;
 		}
 
-		Debug.Log(isEnd);
 		if (isEnd)
 		{
 			// 플레이어를 체크하려면 레이를 좀 낮게
 			Vector2 rayStartPos = (Vector2)startPos + Vector2.down * 0.3f;
 
 			// 이동 전에 Raycast 검사
-
-			RaycastHit2D[] hits = Physics2D.RaycastAll(rayStartPos + currentDirection * 1.1f, currentDirection, 0.5f);
+			RaycastHit2D[] hits = Physics2D.RaycastAll(rayStartPos + currentDirection * 1.1f, currentDirection, 1f);
 			foreach (RaycastHit2D hit in hits)
 			{
 				if (hit.collider != null && hit.transform.gameObject.CompareTag("Player"))
@@ -200,7 +195,8 @@ public class Trainer : MonoBehaviour, IInteractable
 
 	void BattleCheck()
 	{
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		// 위에서 지정
+		//Manager.Game.Player.state = Define.PlayerState.Dialog;
 
 		// 대사 출력
 		if (Manager.Dialog.isTyping == false)

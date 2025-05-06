@@ -44552,11 +44552,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2782321618559041138, guid: 86504c2df618e7143a130ede742b01fa, type: 3}
       propertyPath: m_Size.y
-      value: 3.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2782321618559041138, guid: 86504c2df618e7143a130ede742b01fa, type: 3}
       propertyPath: m_Offset.y
-      value: -1.75
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4993635429477546335, guid: 86504c2df618e7143a130ede742b01fa, type: 3}
       propertyPath: m_Name
@@ -45616,6 +45616,14 @@ PrefabInstance:
     - target: {fileID: 855129069404770790, guid: 94e56c6ebd4614048a4fa45ce1c16de2, type: 3}
       propertyPath: m_Name
       value: Trainer1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301849415416276795, guid: 94e56c6ebd4614048a4fa45ce1c16de2, type: 3}
+      propertyPath: m_Size.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3301849415416276795, guid: 94e56c6ebd4614048a4fa45ce1c16de2, type: 3}
+      propertyPath: m_Offset.x
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 8436671094806815740, guid: 94e56c6ebd4614048a4fa45ce1c16de2, type: 3}
       propertyPath: m_LocalPosition.x
