@@ -72,7 +72,7 @@ public class NpcMover : MonoBehaviour
 		npcController = GetComponent<NPCController>();
 		//anim = npcController.anim;
 		anim = GetComponent<Animator>();
-		currentDirection = Vector2.down;
+		//currentDirection = Vector2.down;
 		dir = currentDirection;
 		anim.SetFloat("x", currentDirection.x);
 		anim.SetFloat("y", currentDirection.y);
