@@ -49,6 +49,9 @@ public class Pokémon : MonoBehaviour
 	[Tooltip("배틀중일 때 스택 0 ~ 6")]
 	public PokemonBattleStat pokemonBattleStack;
 
+	[Tooltip("스킬 PP 관리")]
+	public List<SkillData> skillDatas = new();
+
 	#region 포켓몬 효과 관리 변수
 
 	[Tooltip("분노 관리용")]
