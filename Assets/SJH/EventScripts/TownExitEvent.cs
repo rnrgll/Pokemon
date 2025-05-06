@@ -4,32 +4,50 @@ using UnityEngine;
 
 public class TownExitEvent : PokeEvent
 {
-	[Tooltip("실행 됐는지 체크")]
-	[SerializeField] bool isExecuted;
 
 	[Header("대화 관련 설정")]
 	[SerializeField] Dialog dialog;
-
 	[SerializeField] GameObject npc;
 	[SerializeField] bool isMove;
+	GameObject player;
+	private Vector2 originalNpcPosition;
+	NpcMover npcMover;
+
+	private void ReturnNpcDialogue()
+	{
+		Manager.Dialog.CloseDialog -= ReturnNpcDialogue;
+		StartCoroutine(ReturnNpcPosition());
+	}
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			if (isExecuted)
+			if (Manager.Event.townExitEvent)
 				return;
-			//	종료좌표 재설정
 			Debug.Log("플레이어 닿음");
-			if (!isMove)
+			if (Manager.Poke.party.Count < 0)
 			{
-				isMove = true;
-				NpcMover npcMover = npc.GetComponent<NpcMover>();
-				npcMover.isNPCMoveCheck = true;
-				StartCoroutine(TriggerDialogue());
+				Debug.Log("포켓몬을 가지고 있지 않습니다 삡");
+				if (player.transform.position.y == -12)
+				{
+					npcMover.destinationPoints = new List<Vector2> { new Vector2(-20, -12)};
+				}
+				else
+				{
+					npcMover.destinationPoints = new List<Vector2> { new Vector2(-22, -12) };
+				}
+				if (!isMove)
+				{
+					isMove = true;
+					npcMover.isNPCMoveCheck = true;
+					StartCoroutine(TriggerDialogue());
+				}
+				return;
 			}
-			isExecuted = true;
+			
+			Manager.Event.townExitEvent = true;
 		}
 	}
 	public override void OnPokeEvent(GameObject player)
@@ -54,36 +72,22 @@ public class TownExitEvent : PokeEvent
 
 		}
 		/*
-			(플레이어 y가 -12인기 -13인지 체크)
 
-			아! 골드군 (아무키입력대기)
-
-			if (y == -12)
-			(플레이어 → 방향 변경)
-			(엔피시 플레이어 앞으로 이동) -20, -12
-			(플레이어 엔피시 마주봄)
-
-			if (y == -13)
-			(플레이어 → 방향 변경
-			(엔피시 플레이어 위에 타일로 이동) -22, -12
-			(플레이어 엔피시 마주봄)
-
-			혼자서 어디 가니? (아무키입력대기)
-
-			(엔피시와 플레이어는 엔피시 원래 위치로 이동)
-
+			아! 골드군
+			혼자서 어디 가니?
 			이런! 포켓몬도 지니지 않고
 			도로에 나가다니 위험해!
-
 			근처의 마을까지는
 			야생의 포켓몬이 튀어 나오는
 			풀숲만 있으니까
+
+			(엔피시와 플레이어는 엔피시 원래 위치로 이동)
+
 		 */
 	}
 	private IEnumerator TriggerDialogue()
 	{
 		NpcMover npcMover = npc.GetComponent<NpcMover>();
-		// 대화 처리
 		Manager.Dialog.StartDialogue(dialog);
 
 		while (Manager.Dialog.isTyping)
@@ -91,5 +95,23 @@ public class TownExitEvent : PokeEvent
 			yield return null;
 		}
 		isMove = false;
+	}
+
+	private IEnumerator ReturnNpcPosition()
+	{
+		NpcMover npcMover = npc.GetComponent<NpcMover>();
+
+		npcMover.StopMoving();
+		if (npcMover.destinationPoints.Count == 0 || (Vector2)npc.transform.position != originalNpcPosition)
+		{
+			npcMover.destinationPoints = new List<Vector2> { new Vector2(-12, -12) };
+			npcMover.moveIndex = 0;
+			npcMover.isNPCMoveCheck = true;
+		}
+
+		while (npcMover.isNPCMoveCheck)
+		{
+			yield return null;
+		}
 	}
 }

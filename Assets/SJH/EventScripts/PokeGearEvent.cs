@@ -8,7 +8,7 @@ public class PokeGearEvent : PokeEvent
 	[SerializeField] private Dialog dialog;
 	[SerializeField] private GameObject npc;
 	[SerializeField] private bool isMove;
-
+	NpcMover npcMover;
 	private Vector2 originalNpcPosition;
 
 	private void ReturnNpcDialogue()
@@ -23,15 +23,13 @@ public class PokeGearEvent : PokeEvent
 		{
 			if (Manager.Event.pokegearEvent)
 				return;
-
-			// 플레이어가 접촉했을 때 이벤트 처리
 			originalNpcPosition = npc.transform.position;
 			Debug.Log("플레이어 닿음");
 
 			if (!isMove)
 			{
 				isMove = true;
-				StartNpcMovement();
+				npcMover.isNPCMoveCheck = true;
 				StartCoroutine(TriggerDialogue());
 			}
 			Manager.Event.pokegearEvent = true;
@@ -41,12 +39,6 @@ public class PokeGearEvent : PokeEvent
 	public override void OnPokeEvent(GameObject player)
 	{
 		Debug.Log("포켓기어 이벤트 실행!");
-	}
-
-	private void StartNpcMovement()
-	{
-		NpcMover npcMover = npc.GetComponent<NpcMover>();
-		npcMover.isNPCMoveCheck = true;
 	}
 
 	private IEnumerator TriggerDialogue()
