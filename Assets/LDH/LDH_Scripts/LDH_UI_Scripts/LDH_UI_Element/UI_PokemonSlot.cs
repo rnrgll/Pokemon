@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class UI_PokemonSlot : MonoBehaviour
 {
+	public Pokémon Pokemon { get; private set; }
 	
 	//인스펙터에서 할당
 	[SerializeField] private Image arrow;
@@ -56,6 +57,8 @@ public class UI_PokemonSlot : MonoBehaviour
 
 	public void SetData(Pokémon pokemon, Item_SkillMachine skillMachine = null)
 	{
+		this.Pokemon = pokemon;
+		
 		//아이콘..
 		pokemonName.text = pokemon.pokeName;
 		level.text = $":L{pokemon.level}";

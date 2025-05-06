@@ -434,13 +434,16 @@ public class BattleManager : MonoBehaviour
 		Pokémon chosen = null;
 		bool cancelled = false;
 
+		//포켓몬 선택 팝업창 열기
 		pokemonSelect.Show(playerParty, p => chosen = p, () => cancelled = true);
 
+		
 		yield return new WaitUntil(() => chosen != null || cancelled);
 
 		if (cancelled) // 취소시 메뉴 다시 열기
 		{
 			selectedAction = null;
+			Debug.LogWarning("포켓몬 선택 취소함 메뉴 다시 열리기");
 			ui.ShowActionMenu(playerPokemon);
 			yield break;
 		}
