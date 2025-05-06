@@ -7,6 +7,11 @@ public class NpcMover : MonoBehaviour
 {
 	[SerializeField] List<Vector2> destinationPoints;
 	[SerializeField] float moveDuration = 0.3f;
+	
+	
+	[SerializeField] public Vector2 targetPos;
+
+
 	public float rotateInterval = 2.0f;
 	float moveSpeed;
 	bool npcMoving;
@@ -52,6 +57,10 @@ public class NpcMover : MonoBehaviour
 	private void Update()
 	{
 		timer += Time.deltaTime;
+		if (targetPos != (Vector2)transform.position)
+		{
+			moveCoroutine = StartCoroutine(MoveOneStep());
+		}
 
 		if (timer > rotateInterval)
 		{
@@ -63,8 +72,6 @@ public class NpcMover : MonoBehaviour
 		{
 			moveCoroutine = StartCoroutine(MoveOneStep());
 		}
-
-
 	}
 
 	//	사전 입력된 좌료 리스트로 이동

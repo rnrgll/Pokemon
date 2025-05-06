@@ -6,11 +6,30 @@ public class PokeGearEvent : PokeEvent
 {
 	[Tooltip("실행 됐는지 체크")]
 	[SerializeField] bool isExecuted;
+
+	[SerializeField] GameObject npc;
+
+	[SerializeField] bool isMoved;
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		 if(collision.gameObject.CompareTag("Player"))
+		{
+			isMoved = true;
+			NpcMover npcMover = GetComponent<NpcMover>();
+			npcMover.targetPos = new Vector2(8, 4);
+		}
+	}
+
+
 	public override void OnPokeEvent(GameObject player)
 	{
 		// 한번만 실행
 		if (isExecuted)
 			return;
+
+		Manager.Game.Player.state = Define.PlayerState.Dialog;
+
 
 		// TODO : 포켓기어 이벤트 실행
 
@@ -20,7 +39,12 @@ public class PokeGearEvent : PokeEvent
 		/*
 			(플레이어 State 변경)
 			(플레이어 앞으로 엔피시가 와서 대사)
-		 	아 골드!
+			
+			NpcMover 이동
+
+			Dialog 호출
+		 	
+			아 골드!
 			옆집의 공박사님이
 			찾아왔었단다
 
@@ -31,7 +55,8 @@ public class PokeGearEvent : PokeEvent
 			수리를 보냈던
 			포켓몬기어가 돌아왔단다
 			여기!
-
+			
+			
 			골드는(은)
 			포켓몬 기어를(을)
 			얻었다!
@@ -45,6 +70,10 @@ public class PokeGearEvent : PokeEvent
 
 			(엔피시 원래 위치로 이동)
 			(플레이어 state = field)
+		
+			포켓기어의 사용법
+
+			isExecuted = true;
 		 */
 
 		isExecuted = true;
