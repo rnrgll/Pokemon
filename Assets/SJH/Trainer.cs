@@ -34,6 +34,11 @@ public class Trainer : MonoBehaviour, IInteractable
 	[SerializeField] public Vector2 currentDirection;
 	[SerializeField] public float moveDuration;
 	Coroutine moveCoroutine;
+	Coroutine findCoroutine;
+
+	// 대사
+	[SerializeField] Dialog dialog;
+	
 
 	void Start()
 	{
@@ -63,12 +68,37 @@ public class Trainer : MonoBehaviour, IInteractable
 			if (isFight)
 				return;
 
+			// 이동 할 위치
 			exitPos = (Vector2)Manager.Game.Player.transform.position - currentDirection * 2;
+			// 
 			isTrainerMove = true;
 
-			Debug.Log("배틀 시작");
-			//BattleStart();
+			if (findCoroutine == null)
+			{
+				findCoroutine = StartCoroutine(FindPlayer());
+			}
 		}
+	}
+
+	IEnumerator FindPlayer()
+	{
+		// 플레이어 이동 제한
+		var player = Manager.Game.Player;
+		player.state = Define.PlayerState.Dialog;
+
+		// 이동 할 위치 저장
+		yield return new WaitUntil(() =>
+		{
+			Vector2Int pos = Vector2Int.RoundToInt(player.transform.position);
+			return pos.x % 2 == 0 && pos.y % 2 == 0;
+		});
+
+		exitPos = Vector2Int.RoundToInt(player.transform.position) - Vector2Int.RoundToInt(currentDirection * 2);
+
+		Debug.Log($"exitPos = {exitPos}");
+		isTrainerMove = true;
+
+		findCoroutine = null;
 	}
 
 	public void Interact(Vector2 position)
@@ -110,13 +140,15 @@ public class Trainer : MonoBehaviour, IInteractable
 		Vector3 targetPos = startPos + (Vector3)(currentDirection * 2);
 		currentDirection = (targetPos - startPos).normalized;
 
+		Debug.Log($"시작위치 : {startPos} 도착위치 : {exitPos} 방향 : {currentDirection}");
+
 		bool isEnd = false;
-		if (currentDirection.x == 0)	//상하
+		if (currentDirection.x == 0)    //상하
 		{
 			if (Mathf.Approximately(startPos.y, exitPos.y))
 				isEnd = true;
 		}
-		else if (currentDirection.y == 0)	// 좌우
+		else if (currentDirection.y == 0)   // 좌우
 		{
 			if (Mathf.Approximately(startPos.x, exitPos.x))
 				isEnd = true;
@@ -137,7 +169,7 @@ public class Trainer : MonoBehaviour, IInteractable
 				{
 					isTrainerMove = false;
 					anim.SetBool("npcMoving", false);
-					FindPlayer();
+					BattleCheck();
 					moveCoroutine = null;
 					Debug.Log("플레이어 감지");
 					yield break;
@@ -166,14 +198,20 @@ public class Trainer : MonoBehaviour, IInteractable
 		}
 	}
 
-	void FindPlayer()
+	void BattleCheck()
 	{
 		Manager.Game.Player.state = Define.PlayerState.Dialog;
 
-		// TODO : 대사 출력
+		// 대사 출력
+		if (Manager.Dialog.isTyping == false)
+		{
+			Manager.Dialog.npcState = Define.NpcState.Talking;
+			Manager.Dialog.StartDialogue(dialog);
+		}
+
 		Debug.Log("트레이너 앞에 플레이어 발견 배틀시작");
+		// TODO : 배틀 시작
 		//BattleStart();
-		
 	}
 }
 
