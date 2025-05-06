@@ -64,7 +64,7 @@ public class DialogManager : Singleton<DialogManager>
 			}
 		}
 	}
-	private IEnumerator ShowText(Dialog dialog)
+	public IEnumerator ShowText(Dialog dialog)
 	{
 		yield return new WaitForEndOfFrame();
 		OnShowDialog?.Invoke();

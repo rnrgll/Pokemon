@@ -28,7 +28,7 @@ public class NPCTrainer : MonoBehaviour
 		// 전투하지 않았을 경우
 		if (!isBattled)
 		{
-			currentDirection = npcMover.dir;
+			currentDirection = npcMover.currentDirection;
 			isChasingPlayer = PcDetect(currentDirection, out playerPos);
 			Debug.Log($"추격상태 : {isChasingPlayer}");
 			if (isChasingPlayer)
