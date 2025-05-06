@@ -18,6 +18,11 @@ public class GameManager : Singleton<GameManager>
 	//슬롯 타입
 	public UI_PokemonParty.PartySlotType SlotType { get; private set; }
 	
+	
+	//배틀 중 아이템 사용 여부 확인용 플래그
+	public bool IsItemUsed { get; private set; }
+	
+	
 	public void SetPlayer(Player player)
 	{
 		this.player = player;
@@ -56,4 +61,6 @@ public class GameManager : Singleton<GameManager>
 	{
 		SlotType = type;
 	}
+
+	public void SetIsItemUsed(bool isItemUsed) => IsItemUsed = isItemUsed;
 }

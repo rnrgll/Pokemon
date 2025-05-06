@@ -98,6 +98,7 @@ public class BattleManager : MonoBehaviour
 		hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 HUD 설정
 
 		ui.ShowActionMenu();
+		Debug.Log("배틀 다이얼로그 종료");
 		battleCoroutine = StartCoroutine(BattleLoop()); // 배틀은 대화창이 닫힌 후 시작하게
 	}
 
@@ -167,6 +168,8 @@ public class BattleManager : MonoBehaviour
 		while ((Manager.Poke.AlivePokemonCheck()) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
 			bool isAction = false;
+			Manager.Game.SetIsItemUsed(false); //아이템 사용 여부 플래그 초기화
+			
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
 			// 내 포켓몬 교체 체크
 			if (playerPokemon.hp <= 0 || playerPokemon.isDead)
@@ -319,8 +322,20 @@ public class BattleManager : MonoBehaviour
 					break;
 
 				case "Bag":
-					//인벤토리 창을 띄운다.
+					//1. 인벤토리 창을 띄운다.
 					Manager.UI.ShowLinkedUI<UI_Bag>("UI_Bag");
+					
+					//2. 대기
+					//대기를 끝내는 조건 : 가방 UI가 닫혀서 UI 매니저가 관리하는 UI가 없는 경우 = 아무 ui도 열려있지 않은 경우
+					yield return new WaitUntil(() => !Manager.UI.IsAnyUIOpen);
+					
+					//3. 턴 종료 조건 체크
+					//플레이어가 도구를 사용한 경우 턴 종료 
+					//todo : 플레이어 도구 사용 여부를 체크할 변수가 필요 && 전투 중인경우 도구를 사용하면 아예 ui를 다 닫아야함
+					if (Manager.Game.IsInBattle && Manager.Game.IsItemUsed)
+					{
+						isAction = true;
+					}
 					break;
 
 				case "Run":
@@ -346,6 +361,7 @@ public class BattleManager : MonoBehaviour
 
 			// TODO : 턴종료 조건 추가하기
 			// 도망을 실패해도 턴이 증가함
+			//2. 가방
 			if (isAction)
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");

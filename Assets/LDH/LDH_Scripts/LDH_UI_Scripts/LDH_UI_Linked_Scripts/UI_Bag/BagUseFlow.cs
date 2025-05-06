@@ -115,8 +115,10 @@ public class BagUseFlow
 				.ShowMessage(msg,
 					() =>
 					{
-						Manager.UI.UndoLinkedUI();
+						Manager.UI.UndoLinkedUI(); //포켓몬 파티 창 닫기
 						_bag.Refresh();
+						if(Manager.Game.IsInBattle && Manager.Game.IsItemUsed) //배틀중에 아이템 사용한 경우 가방 창까지 닫아야함
+							Manager.UI.UndoLinkedUI(); //가방 창 닫기
 					},true,true);
 		});
 
@@ -162,11 +164,17 @@ public class BagUseFlow
 	{ 
 		if (success)
 		{
-			
 			// 소모 가능한 아이템인지 검사
 			if (_item.IsConsumable)
 			{
 				Manager.Data.PlayerData.Inventory.RemoveItem(_slot, 1);
+			}
+			
+			//배틀 중이라면 아이템 사용했음을 저장해두가
+			if (Manager.Game.IsInBattle)
+			{
+				Manager.Game.SetIsItemUsed(success); //아이템 사용함!
+				return;
 			}
 		}
 

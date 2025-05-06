@@ -88,7 +88,7 @@ public class UIManager : Singleton<UIManager>
             canvas.sortingOrder =_order;
             _order++;
         }
-        else if (_linkList.Count == 1 && _linkList[0]==uiGameObject.GetComponent<UI_Linked>())
+        else
         {
 	        canvas.sortingOrder = _linkedDefaultOrder;
         }
@@ -202,8 +202,8 @@ public class UIManager : Singleton<UIManager>
 	        linked.Close();
         }
         
-        Debug.Log(Manager.Game.Player.state.ToString());
-        Debug.Log(IsAnyUIOpen);
+        // Debug.Log(Manager.Game.Player.state.ToString());
+        // Debug.Log(IsAnyUIOpen);
         
         return linked;
     }
