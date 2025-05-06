@@ -15,7 +15,7 @@ public class MovingAction : CutSceneAction
 		foreach (var movVec in movPatterns)
 		{
 
-			yield return NpcMover.MoveOneStep();
+			yield return NpcMover.NPCMove();
 		}
 	}
 }

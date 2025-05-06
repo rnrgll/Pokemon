@@ -225,16 +225,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exitPos: {x: 0, y: 0}
   destinationPoints:
-  - {x: -4, y: 4}
   - {x: -4, y: 0}
   - {x: -4, y: 4}
+  - {x: -4, y: 2}
   moveDuration: 0.3
   rotateInterval: 2
   moveSpeed: 0
   npcMoving: 0
-  isNPCTurn: 0
   currentDirection: {x: 0, y: 0}
-  dir: {x: 0, y: 0}
+  isNpcIntervalCheak: 1
+  isPaused: 0
   isNPCMoveCheck: 0
   isNPCTurnCheck: 0
 --- !u!114 &550568115

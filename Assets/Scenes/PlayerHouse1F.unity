@@ -460,6 +460,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isExecuted: 0
+  dialog:
+    lines:
+    - "\uC544 \uACE8\uB4DC!"
+    - "\uC606\uC9D1\uC758 \uACF5\uBC15\uC0AC\uB2D8\uC774 \uCC3E\uC544\uC654\uC5C8\uB2E8\uB2E4"
+    - "\uBB54\uC9C0 \uB108\uC5D0\uAC8C \uBD80\uD0C1\uD560 \uAC83\uC774 \uC788\uB2E4\uACE0
+      \uD558\uC154\uC11C"
+    - "\uADF8\uB798! \uC78A\uC5B4\uBA39\uC744 \uBED4 \uD588\uB124"
+    - "\uC218\uB9AC\uB97C \uBCF4\uB0C8\uB358 \uD3EC\uCF13\uBAAC\uAE30\uC5B4\uAC00"
+    - "\uB3CC\uC544\uC654\uB2E8\uB2E4"
+    - "\uC5EC\uAE30!"
+    - "\uACE8\uB4DC\uB294(\uC740)"
+    - "\uD3EC\uCF13\uBAAC\uAE30\uC5B4\uB97C(\uC744)"
+    - "\uC5BB\uC5C8\uB2E4!"
+    - "\uD3EC\uCF13\uBAAC\uAE30\uC5B4"
+    - "\uC904\uC5EC\uC11C \uD3EC\uCF13\uAE30\uC5B4"
+    - "\uD6CC\uB96D\uD55C \uD2B8\uB808\uC774\uB108\uAC00 \uB418\uB824\uBA74"
+    - "\uAC00\uC9C0\uACE0 \uC788\uC9C0 \uC54A\uC73C\uBA74 \uC54A\uB420\uAEC4?"
   npc: {fileID: 3128514700256671552}
 --- !u!61 &423851342
 BoxCollider2D:
@@ -4962,6 +4979,22 @@ PrefabInstance:
     - target: {fileID: 8857025724216877717, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8885878773225274498, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8885878773225274498, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.data[0].x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8885878773225274498, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.data[1].x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8885878773225274498, guid: a70396f7e36ddfe4683a33b1b4665b75, type: 3}
+      propertyPath: destinationPoints.Array.data[1].y
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

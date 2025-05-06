@@ -156,7 +156,7 @@ public class NpcMover : MonoBehaviour
 		npcMoving = false;
 	}
 
-	IEnumerator NPCMove()
+	public IEnumerator NPCMove()
 	{
 		Debug.Log("엔피시 이동");
 
