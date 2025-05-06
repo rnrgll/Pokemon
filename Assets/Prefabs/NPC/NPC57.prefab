@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3974022131882726100}
   - component: {fileID: 319453975449012005}
   - component: {fileID: 4295367658623695925}
+  - component: {fileID: 4599648074563895269}
+  - component: {fileID: -4359326466646589956}
   m_Layer: 0
   m_Name: NPC57
   m_TagString: NPC
@@ -130,3 +132,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!95 &4599648074563895269
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125383472956823835}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 35e0df1c44b748549b24f6fd1b1db6cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-4359326466646589956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125383472956823835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9198d2aa9d2ef04cb86cdd070345c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destinationPoints: []
+  moveDuration: 0.3
+  rotateInterval: 2
+  npcTurn: 0
+  dir: {x: 0, y: 0}

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7042984066653447413}
   - component: {fileID: 3932282109246729998}
   - component: {fileID: 4495495659937858465}
+  - component: {fileID: 2714726580364913704}
+  - component: {fileID: -8100957460956486629}
   m_Layer: 0
   m_Name: NPC4
   m_TagString: NPC
@@ -130,3 +132,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!95 &2714726580364913704
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413551415809611818}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 18eaee200c33adc4a908d07f500394fb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-8100957460956486629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413551415809611818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9198d2aa9d2ef04cb86cdd070345c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destinationPoints: []
+  moveDuration: 0.3
+  rotateInterval: 2
+  npcTurn: 0
+  dir: {x: 0, y: 0}
