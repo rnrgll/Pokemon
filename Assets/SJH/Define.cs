@@ -81,6 +81,41 @@ public class Define
 		Faint,          //기절
 		Flinch,			//풀죽음
 	}
+	
+	// 한글로 변환
+	public static Dictionary<StatusCondition, string> GetKoreanState = new()
+	{
+		[StatusCondition.Normal] = "정상",
+		[StatusCondition.Poison] = "독",
+		[StatusCondition.Burn] = "화상",
+		[StatusCondition.Freeze] = "얼음",
+		[StatusCondition.Sleep] = "잠듦",
+		[StatusCondition.Paralysis] = "마비",
+		[StatusCondition.Confusion] = "혼란",
+		[StatusCondition.Faint] = "기절",
+		[StatusCondition.Flinch] = "풀죽음",
+	};
+	public static Dictionary<PokeType, string> GetKoreanType = new()
+	{
+		[PokeType.None] = "없음",
+		[PokeType.Normal] = "노말",
+		[PokeType.Fire] = "불꽃",
+		[PokeType.Water] = "물",
+		[PokeType.Grass] = "풀",
+		[PokeType.Electric] = "전기",
+		[PokeType.Ice] = "얼음",
+		[PokeType.Fighting] = "격투",
+		[PokeType.Poison] = "독",
+		[PokeType.Ground] = "땅",
+		[PokeType.Flying] = "비행",
+		[PokeType.Psychic] = "에스퍼",
+		[PokeType.Bug] = "벌레",
+		[PokeType.Rock] = "바위",
+		[PokeType.Ghost] = "고스트",
+		[PokeType.Dragon] = "드래곤",
+		[PokeType.Dark] = "악",
+		[PokeType.Steel] = "강철",
+	};
 
 
 	#region UI
