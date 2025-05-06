@@ -57,6 +57,14 @@ public class Player : MonoBehaviour
 	}
 	[SerializeField] public event Action<string> OnSceneChangeEvent;
 
+	[SerializeField] private string prevSceneName;
+	public string PrevSceneName
+	{
+		get => prevSceneName;
+		set => prevSceneName = value;
+	}
+
+
 	Animator anim;
 
 	void Awake()
@@ -299,8 +307,8 @@ public class Player : MonoBehaviour
 					case PlayerState.Field:
 						// 필드 상호작용
 						Debug.DrawRay((Vector2)transform.position + currentDirection * 1.1f, currentDirection, Color.red);
-						RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
-						if (hit)
+						RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)transform.position + currentDirection * 1.1f, currentDirection, 1f);
+						foreach (var hit in hits)
 						{
 							var check = hit.transform.GetComponent<IInteractable>();
 							check?.Interact(transform.position);

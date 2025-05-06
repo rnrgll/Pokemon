@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5874841706809598956}
   - component: {fileID: 2458323870094556752}
   - component: {fileID: 1709525994560299917}
+  - component: {fileID: -5680968356352194749}
   m_Layer: 0
   m_Name: Trainer2
   m_TagString: NPC
@@ -130,3 +131,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &-5680968356352194749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3381998677427486532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed59e50fca4f38e44a5f1ebdc10ede59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trainerId: 2
+  isFight: 0
