@@ -8,19 +8,22 @@ public class PokeGearEvent : PokeEvent
 	[SerializeField] bool isExecuted;
 
 	[SerializeField] GameObject npc;
+	[SerializeField] static bool isMove;
 
-	[SerializeField] bool isMoved;
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	void OnCollisionEnter2D(Collision2D collision)
 	{
-		 if(collision.gameObject.CompareTag("Player"))
+		if (collision.gameObject.CompareTag("Player"))
 		{
-			isMoved = true;
-			NpcMover npcMover = GetComponent<NpcMover>();
-			npcMover.targetPos = new Vector2(8, 4);
+			Debug.Log("플레이어 닿음");
+			if (isMove == false)
+			{
+				isMove = true;
+				NpcMover npcMover = npc.GetComponent<NpcMover>();
+				npcMover.isNPCMoveCheck = true;
+			}
 		}
 	}
-
 
 	public override void OnPokeEvent(GameObject player)
 	{
