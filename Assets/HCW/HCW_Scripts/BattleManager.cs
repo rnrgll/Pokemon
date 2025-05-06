@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +35,11 @@ public class BattleManager : MonoBehaviour
 			_enemyPokemon = value;
 			Manager.Game.UpdateEnemyPokemon(value); //자동반영
 		}
-	}       
+	}
 
+	[SerializeField] private Transform playerPokemonPos;
+	[SerializeField] private Transform enemyPokemonPos;
+	
 	
 	private int currentEnemyIndex;        // 현재 적 포켓몬 인덱스
 	private string selectedAction;        // 선택된 행동
@@ -143,8 +147,11 @@ public class BattleManager : MonoBehaviour
 		playerPokemon = Manager.Poke.GetFirtstPokemon(); // 파티의 첫번째 포켓몬
 		enemyPokemon = enemyParty[0];   // 적의 첫번째 포켓몬
 		
-
-
+		
+		//포켓몬 프리팹 스폰
+		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
+		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false);
+		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 		
@@ -165,9 +172,16 @@ public class BattleManager : MonoBehaviour
 		playerPokemon = Manager.Poke.GetFirtstPokemon(); // 파티의 첫번째 포켓몬
 		enemyPokemon = enemy; // 적 포켓몬 설정
 
+		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
+		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false);
+		
+		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 		hud.InitPlayerExp(playerPokemon);//플레이어 포켓몬 exp 설정
+		
+
+		
 		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!", "테스트" };
 
 		dialogue.CloseDialog += OnBattleDialogClosed;
@@ -609,4 +623,45 @@ public class BattleManager : MonoBehaviour
 			break;
 		}
 	}
+	
+	
+	//포켓몬 스프라이트 생성
+	public void SpawnPokemon()
+	{
+		
+	}
+
+	public void SpawnPokemonAtStart(Pokémon p, Transform pokemonTransform, bool isPlayer)
+	{
+		SetPokemonSprite(p.pokeName, pokemonTransform.GetComponent<SpriteRenderer>(), isPlayer);
+
+		SpriteRenderer sr = pokemonTransform.GetComponent<SpriteRenderer>();
+		sr.color = new Color(1, 1, 1, 0); //투명하게 설정
+		
+		//플레이어 포켓몬이면 왼-> 타겟 위치로 등장
+		Vector2 targetPos = pokemonTransform.position;
+		Vector2 entryOffset = isPlayer ? Vector2.left * 0.13f : Vector2.right * 0.13f;
+		Vector2 startPosition = targetPos + entryOffset;
+		
+		
+		float playTime = 1.0f;
+
+		pokemonTransform.position = startPosition;
+		
+		Sequence seq = DOTween.Sequence();
+		seq.Append(pokemonTransform.DOMove(targetPos, playTime).SetEase(Ease.OutCubic));
+		seq.Join(sr.DOFade(1f,playTime)); //동시 처리
+		 
+		//상대 포켓몬이면 오 -> 타겟 위치로 등장
+
+	}
+
+	public void SetPokemonSprite(string pokeName, SpriteRenderer spriteRenderer, bool isPlayerPokemon)
+	{
+		Debug.Log("스프라이트 불러오기");
+		
+		if (isPlayerPokemon) spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleBackSprite(pokeName);
+		else spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleFrontSprite(pokeName);
+	}
+	
 }
