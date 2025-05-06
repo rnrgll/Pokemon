@@ -17,7 +17,8 @@ public class UIManager : Singleton<UIManager>
 
     //PopUp 용 스택
     private Stack<UI_PopUp> _popUpStack = new Stack<UI_PopUp>();
-    private int _order = 10;
+    private int _order = 50;
+    private int _linkedDefaultOrder = 10;
 
     //Linked 용 스택
     [SerializeField] private List<UI_Linked> _linkList = new List<UI_Linked>();
@@ -74,6 +75,7 @@ public class UIManager : Singleton<UIManager>
     //캔버스 sorting order 셋팅
     public void SetCanvas(GameObject uiGameObject, bool isPopup = false)
     {
+	    
         Canvas canvas = uiGameObject.GetComponent<Canvas>();
         
         //렌더 - 오버레이
@@ -85,6 +87,10 @@ public class UIManager : Singleton<UIManager>
         {
             canvas.sortingOrder =_order;
             _order++;
+        }
+        else if (_linkList.Count == 1 && _linkList[0]==uiGameObject.GetComponent<UI_Linked>())
+        {
+	        canvas.sortingOrder = _linkedDefaultOrder;
         }
 
     }
@@ -196,6 +202,9 @@ public class UIManager : Singleton<UIManager>
 	        linked.Close();
         }
         
+        Debug.Log(Manager.Game.Player.state.ToString());
+        Debug.Log(IsAnyUIOpen);
+        
         return linked;
     }
 
@@ -290,6 +299,13 @@ public class UIManager : Singleton<UIManager>
 	    Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
 	    Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
 	    countUI.gameObject.SetActive(true);
+    }
+
+
+    public void ShowDialogPopUp(List<string> lines, Action onFinished = null, bool needNextButton = true,  bool useTypingEffect = false, bool dontClose = false)
+    {
+	    Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(lines,onFinished, needNextButton, useTypingEffect, dontClose);
+	    
     }
 
     #endregion

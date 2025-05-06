@@ -82,7 +82,7 @@ public class BattleManager : MonoBehaviour
 	}
 	private void Update()
 	{
-		dialogue.HandleUpdate();
+
 	}
 	private void OnDestroy()
 	{
@@ -147,6 +147,12 @@ public class BattleManager : MonoBehaviour
 		
 		var lines = new List<string> { $"야생의 {enemyPokemon.pokeName}이(가) 나타났다!", "테스트" };
 
+		
+		// Manager.UI.ShowDialogPopUp(
+		// 	lines,
+		// 	OnBattleDialogClosed,
+		// 	true,true,false);
+		//
 		dialogue.CloseDialog += OnBattleDialogClosed;
 		dialogue.StartDialogue(new Dialog(lines));
 	}
@@ -313,7 +319,8 @@ public class BattleManager : MonoBehaviour
 					break;
 
 				case "Bag":
-					// TODO : 가방 
+					//인벤토리 창을 띄운다.
+					Manager.UI.ShowLinkedUI<UI_Bag>("UI_Bag");
 					break;
 
 				case "Run":

@@ -39,6 +39,8 @@ public class UI_BattleMenuController : MonoBehaviour
 
     private void Update()
     {
+	    if(Manager.UI.IsAnyUIOpen) return;
+	    
 	    if (Input.GetKeyDown(KeyCode.RightArrow)) MoveCursor(1, 0);
 	    else if (Input.GetKeyDown(KeyCode.LeftArrow)) MoveCursor(-1, 0);
 	    else if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(0, -1);
@@ -61,6 +63,7 @@ public class UI_BattleMenuController : MonoBehaviour
     public void OnSelect()
     {
 	    menuButtonGrid[curY][curX].Trigger();
+	    
     }
     
     

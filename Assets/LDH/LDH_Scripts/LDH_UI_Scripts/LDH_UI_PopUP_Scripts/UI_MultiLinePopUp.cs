@@ -16,14 +16,13 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 	private Action _onFinished;
 
 	private bool _canReceiveInput = false;
-	
 	private Coroutine _displayCoroutine;
-
 	private bool _needNextButton;
-	
-	[SerializeField] private float typingSpeed = 0.5f; // 타이핑 속도 (글자당 지연 시간)
 	private bool _useTypingEffect = false;
 	private bool _dontClose;
+	
+	[SerializeField] private int lettersPerSec = 20; 
+
 	public void ShowMessage(List<string> lines, Action onFinished = null, bool needNextButton = true,  bool useTypingEffect = false, bool dontClose = false)
 	{
 		_lines = lines;
@@ -32,6 +31,7 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 		_onFinished = onFinished;
 		_useTypingEffect = useTypingEffect;
 		_dontClose = dontClose;
+		
 		if (_displayCoroutine != null)
 			StopCoroutine(_displayCoroutine);
 
@@ -41,10 +41,12 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 	public void ShowMessage(string line, Action onFinished = null, bool needNextButton = true,   bool useTypingEffect = false,  bool dontClose = false)
 	{
 		List<string> lines = line.Split("\n").ToList();
-		foreach (string splitline in lines)
-		{
-			Debug.LogFormat($"<color=yellow>{splitline}</color>");
-		}
+		
+		// foreach (string splitline in lines)
+		// {
+		// 	Debug.LogFormat($"<color=yellow>{splitline}</color>");
+		// }
+		
 		ShowMessage(lines, onFinished, needNextButton, useTypingEffect, dontClose);
 	}
 
@@ -66,7 +68,7 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 					foreach (char c in line)
 					{
 						messageText.text += c;
-						yield return new WaitForSeconds(typingSpeed);
+						yield return new WaitForSeconds(1f/lettersPerSec);
 					}
 
 					messageText.text += '\n';
@@ -75,14 +77,14 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 				else
 				{
 					//그냥 출력
-					messageText.text += _lines[lineIdx] + "\n";
+					messageText.text += line + "\n";
 				}
 				
 				
 				
 			}
 		}
-		yield return new WaitForSeconds( _useTypingEffect? 0.2f : 0.5f); // 지연
+		yield return new WaitForSeconds( 0.3f); // 지연
 
 		if (_needNextButton)
 		{

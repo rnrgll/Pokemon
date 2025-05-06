@@ -19,6 +19,10 @@ public class BagPopupManager
 		ItemBase item = Manager.Data.ItemDatabase.GetItemData(slot.ItemName);
 		bool? canUse = item?.CanUseNow(InGameContextFactory.CreateFromGameManager());
 
+		//배틀 여부 체크
+		bool isBattleScene = Manager.Game.IsInBattle;
+		
+		
 		// 팝업 생성 및 옵션 설정
 		var popup = Manager.UI.ShowPopupUI<UI_SelectPopUp>("UI_SelectablePopUp");
 	
@@ -39,16 +43,17 @@ public class BagPopupManager
 						});
 						break;
 				default:
-					popup.SetupOptions(new()
+					var options = new List<(string, ISelectableAction)>
 					{
-						("사용하다", new CustomAction(() => _bag.StartUseFlow(slot))),
-						("버리다", new CustomAction(() =>
-						{
-							_bag.StartDropFlow(slot);
-					
-						})),
-						("그만두다", new CustomAction(popup.OnCancel))
-					});
+						("사용하다", new CustomAction(() => _bag.StartUseFlow(slot)))
+					};
+					if (!isBattleScene)
+					{
+						options.Add(("버리다", new CustomAction(() => _bag.StartDropFlow(slot))));
+
+					}
+					options.Add(("그만두다", new CustomAction(popup.OnCancel)));
+					popup.SetupOptions(options);
 					break;
 			}
 	
@@ -62,8 +67,6 @@ public class BagPopupManager
 		}
 		popup.gameObject.SetActive(false);
 		RectTransform boxRT = popup.transform.GetChild(0).GetComponent<RectTransform>();
-		// float canvasHeight = ((RectTransform)popup.transform).rect.height;
-		// Util.SetPositionFromBottomLeft(boxRT, 0f, canvasHeight * 0.34f);
 		Canvas canvas = boxRT.GetComponentInParent<Canvas>(true);
 		Util.SetPositionFromBottomLeft(boxRT, 0f, 0f);
 		Util.SetRelativeVerticalOffset(boxRT,canvas,0.34f);
