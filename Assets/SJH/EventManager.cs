@@ -10,6 +10,25 @@ public class EventManager : Singleton<EventManager>
 	Dictionary<int, bool> trainerFightState;
 	Dictionary<int, TrainerData> trainerData;
 
+	// 이벤트 트리거들
+	[SerializeField] bool pokegearEvent;			// 2층에서 1층가면 포켓기어 설명 + 공박사한테 가라는 이벤트
+	[SerializeField] bool starterEvent;             // 공박사에게 스타팅 포켓몬 받는 이벤트
+	[SerializeField] bool questEvent;				// 포켓몬 할아버지 집 가라는 이벤트
+	[SerializeField] bool starterSubEvent;			// 스타팅 받고 나갈 때 조수가 상처약 주는 이벤트
+	[SerializeField] bool townExitEvent;			// 연두마을 나갈 때 포켓몬 없으면 못나가게하는 이벤트
+	[SerializeField] bool rivalEvent1;				// 연두마을 연구소 옆에서 라이벌한테 말걸면 차이는 이벤트
+	[SerializeField] bool cherrygroveCityInfoEvent; // 무궁시티 마을 입구 할아버지 말걸면 마을 소개해주는 이벤트
+	[SerializeField] bool berryHouseEvent;          // 30번도로 나무열매집 엔피시 말걸면 나무열매 주는 이벤트
+	[SerializeField] bool blockRoute30Event;        // 공박사 이벤트(questEvent) 가 true = 비활성화, false = 활성화로 길막하는 이벤트
+	[SerializeField] bool pokemonHouseEvent;        // 포켓몬 할아버지집 들어가면 강제 이벤트 (대충 설명)
+	[SerializeField] bool backNewBarkTownEvent;     // pokemonHouseEvent true일 떄 포켓몬 할아버지집 나가면 강제 이벤트 (대충 마을로오라는)
+	[SerializeField] bool rivalEvent2;              // 연두마을 가는길에 라이벌 배틀 이벤트
+	[SerializeField] bool adventureEvent;           // 연구소 들어가면 모험 떠나라는 이벤트
+	[SerializeField] bool teachEvent;               // 무궁시티 체육관 왼쪽에 말걸면 학교로 데려가서 설명해주는 이벤트
+	[SerializeField] bool sproutTowerEvent;         // 모다피탑 3층에서 라이벌과 스님이 얘기하는 이벤트
+	[SerializeField] bool gymEvent;                 // 체육관 이벤트 (승리시)
+	[SerializeField] bool eggEvent;					// 체육관 승리 후 체육관 나가면 강제 이벤트 (전화) 센터가면 포켓몬알줌 끝
+
 	void Start()
 	{
 		// 트레이너는 총 14명 필드11 체육관3
