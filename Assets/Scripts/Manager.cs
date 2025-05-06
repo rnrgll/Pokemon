@@ -29,5 +29,6 @@ public static class Manager
 		GameManager.CreateInstance();
 		EncounterManager.CreateInstance();
 		EventManager.CreateInstance();
+
 	}
 }

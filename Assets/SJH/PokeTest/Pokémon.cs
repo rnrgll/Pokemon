@@ -1199,7 +1199,8 @@ public class Pokémon : MonoBehaviour
 		bool isHit = ran < finalAccuracy;
 		if (!isHit)
 		{
-			Debug.Log($"배틀로그 : {attacker.pokeName} 의 {skill.name} 공격은 빗나갔다! [{ran}% >= {finalAccuracy}%]");
+			Debug.Log($"배틀로그 :{attacker.pokeName} 의 {skill.name} 공격은 빗나갔다! [{ran}% >= {finalAccuracy}%]");
+			StartCoroutine(Manager.Dialog.ShowMessageOnce($"{attacker.pokeName} 의 {skill.name} 공격은 빗나갔다!"));
 		}
 		return isHit;
 	}

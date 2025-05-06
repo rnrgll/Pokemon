@@ -13,7 +13,7 @@ using UnityEngine.UI;
 		private Coroutine animCoroutine;
 
 		public void SetHp(int hp, int maxHp)
-		{Debug.Log("da;lfsa;lf");
+		{
 			hpSlider.maxValue = maxHp;
 			hpSlider.value = hp;
 			if (curHpText != null) curHpText.text = $"{hp}/";

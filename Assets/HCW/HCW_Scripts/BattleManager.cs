@@ -9,6 +9,7 @@ using static Define;
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
 {
+	
 	private string previousScene;        // 이전 씬 이름
 
 	[Header("UI 관련")]
@@ -18,7 +19,7 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private BattleHUD hud;          // hp 게이지·텍스트 제어
 	[SerializeField] private PokemonSelect pokemonSelect;
 
-	private DialogManager dialogue => DialogManager.Instance;
+	private DialogManager Dialog => DialogManager.Instance;
 
 	[Header("전투 관련")]
 	private List<Pokémon> playerParty;    // 플레이어 포켓몬 리스트
@@ -50,11 +51,10 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private bool isTrainer;                // 상대가 트레이너 인지
 	[SerializeField] private string enemyTrainerName;    // 트레이너면 이름
 	[SerializeField] int winMoney;	// 승리보상
-
-
+	
+	
 	Coroutine battleCoroutine;
 	WaitForSeconds battleDelay = new WaitForSeconds(1f);
-
 	// 턴
 	int currentTurn;
 
@@ -117,7 +117,7 @@ public class BattleManager : MonoBehaviour
 	}
 	private void OnBattleDialogClosed()
 	{
-		dialogue.CloseDialog -= OnBattleDialogClosed; // 대사창이 닫힐때 이벤트 해제
+		Dialog.CloseDialog -= OnBattleDialogClosed; // 대사창이 닫힐때 이벤트 해제
 
 		hud.SetPlayerHUD(playerPokemon); // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);   // 적 포켓몬 HUD 설정
@@ -160,8 +160,8 @@ public class BattleManager : MonoBehaviour
 
 		var lines = new List<string> { $"{enemyTrainerName} 이(가) 승부를 걸어왔다!" };
 
-		dialogue.CloseDialog += OnBattleDialogClosed;
-		dialogue.StartDialogue(new Dialog(lines));
+		Dialog.CloseDialog += OnBattleDialogClosed;
+		Dialog.StartDialogue(new Dialog(lines));
 	}
 
 	public void StartBattle(List<Pokémon> party, Pokémon enemy)
@@ -184,8 +184,8 @@ public class BattleManager : MonoBehaviour
 		
 		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!", "테스트" };
 
-		dialogue.CloseDialog += OnBattleDialogClosed;
-		dialogue.StartDialogue(new Dialog(lines));
+		Dialog.CloseDialog += OnBattleDialogClosed;
+		Dialog.StartDialogue(new Dialog(lines));
 	}
 
 	private IEnumerator BattleLoop()
@@ -206,6 +206,7 @@ public class BattleManager : MonoBehaviour
 			if (playerPokemon.hp <= 0 || playerPokemon.isDead)
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : 교체할 포켓몬을 선택해주세요.");
+				
 
 				yield return StartCoroutine(PokemonSwitch());
 				{
@@ -223,7 +224,10 @@ public class BattleManager : MonoBehaviour
 				// 포켓몬 경험치 + 해줘야함
 				// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
-				Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
+				yield return StartCoroutine(
+					Manager.Dialog.ShowMessageOnce($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
+				
+				//Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 				yield return StartCoroutine(AnimateGainExp(totalExp));
 				
 				// //경험치 초과 연속 가능하므로 잘라서 넘기기
@@ -255,7 +259,8 @@ public class BattleManager : MonoBehaviour
 					if (currentEnemyIndex < enemyParty.Count)
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
-						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
+						yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
+						//Debug.Log();
 
 						hud.SetEnemyHUD(enemyPokemon);
 
@@ -265,14 +270,16 @@ public class BattleManager : MonoBehaviour
 					else
 					{
 						// 상대 전멸
-						EndBattle("Win");
+						//EndBattle("Win");
+						StartCoroutine(EndBattleCoroutine("Win"));
 						yield break;
 					}
 				}
 				// 야생
 				else
 				{
-					EndBattle("Win");
+					//EndBattle("Win");
+					StartCoroutine(EndBattleCoroutine("Win"));
 					yield break;
 				}
 			}
@@ -348,10 +355,13 @@ public class BattleManager : MonoBehaviour
 						if (act.Attacker.hp <= 0)
 						{
 							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
+							yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{act.Attacker.pokeName}은/는 쓰러졌다!"));
 							continue;
 						}
 
 						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
+						yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{act.Attacker.pokeName} ! {act.Skill} !"));
+
 
 						// 상태이상체크
 						if (act.Attacker.CanActionCheck())
@@ -409,15 +419,18 @@ public class BattleManager : MonoBehaviour
 						{
 							// 검은눈빛, 거미집, 김밥말이
 							Debug.Log($"배틀로그 {currentTurn}턴 : {playerPokemon.pokeName} 은/는 도망칠 수 없다!");
+							yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{playerPokemon.pokeName} 은/는 도망칠 수 없다!"));
 						}
 						else if (isTrainer)
 						{
 							
-							ShowDialogue("안돼! 승부도중에 상대에게 등을 보일 수 없어!");
+							// ShowDialogue("안돼! 승부도중에 상대에게 등을 보일 수 없어!");
+							yield return StartCoroutine(Manager.Dialog.ShowMessageOnce("안돼! 승부도중에 상대에게 등을 보일 수 없어!"));
 						}
 						else
 						{
-							EndBattle("Run");
+							//EndBattle("Run");
+							StartCoroutine(EndBattleCoroutine("Run"));
 							yield break;
 						}
 					}
@@ -448,20 +461,28 @@ public class BattleManager : MonoBehaviour
 			if (!Manager.Poke.AlivePokemonCheck())
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : 플레이어 전멸");
-				EndBattle("Lose");
+				yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"더 이상 싸울 수 있는 포켓몬이 없다!"));
+				
+				//EndBattle("Lose");
+				StartCoroutine(EndBattleCoroutine("Lose"));
 				yield break;
 			}
 
 			// 야생 포켓몬 체크
 			if (!isTrainer && enemyPokemon.hp <= 0)
 			{
+				Debug.Log($"배틀로그 {currentTurn}턴 : 야생 포켓몬 쓰러짐");
+				yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{enemyPokemon.pokeName}은 쓰러졌다!"));
+				
 				int totalExp = (int)((enemyPokemon.baseExp * enemyPokemon.level) / 7);
 				Debug.Log($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
+				yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
+				
 				//playerPokemon.AddExp(totalExp);
 				yield return StartCoroutine(AnimateGainExp(totalExp));
-
-				Debug.Log($"배틀로그 {currentTurn}턴 : 야생 포켓몬 쓰러짐");
-				EndBattle("Win");
+				
+				//EndBattle("Win");
+				StartCoroutine(EndBattleCoroutine("Win"));
 				yield break;
 			}
 		}
@@ -505,7 +526,71 @@ public class BattleManager : MonoBehaviour
 
 
 	// 배틀 종료 처리
-	private void EndBattle(string reason)
+	//private void EndBattle(string reason)
+	// {
+	// 	// 공통적으로 실행
+	// 	Debug.Log($"배틀로그 {currentTurn}턴 : 배틀 종료 - {reason}");
+	//
+	// 	// 코루틴 초기화
+	// 	if (battleCoroutine != null)
+	// 	{
+	// 		StopCoroutine(battleCoroutine);
+	// 		battleCoroutine = null;
+	// 	}
+	//
+	// 	// 상대 포켓몬 초기화
+	// 	if (isTrainer)
+	// 	{
+	// 		foreach (var poke in enemyParty)
+	// 		{
+	// 			Destroy(poke.gameObject);
+	// 		}
+	// 	}
+	// 	Destroy(enemyPokemon.gameObject);
+	//
+	// 	// 내 포켓몬 상태 초기화
+	// 	Manager.Poke.ClearPartyState();
+	//
+	// 	var setting = SceneManager.LoadSceneAsync(Manager.Game.Player.PrevSceneName); // 이전 씬으로 이동
+	// 	setting.allowSceneActivation = false;
+	//
+	// 	switch (reason)
+	// 	{
+	// 		case "Win":
+	// 			{
+	// 				Debug.Log($"배틀로그 {currentTurn}턴 : 승리");
+	//
+	// 				// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
+	// 				Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
+	// 				Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
+	// 				Manager.Data.PlayerData.AddMoney(winMoney);
+	// 				Manager.Poke.enemyData.IsFight = true;
+	// 			}
+	// 			break;
+	// 		case "Lose":
+	// 			{
+	// 				Debug.Log($"배틀로그 {currentTurn}턴 : 패배");
+	//
+	// 				// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
+	// 			}
+	// 			break;
+	// 		case "Run":
+	// 			{
+	// 				Debug.Log($"배틀로그 {currentTurn}턴 : 성공적으로 도망쳤다!");
+	// 				yield return StartCoroutine(logManager.ShowBattleLog($"{Manager.Data.PlayerData.PlayerName}는(은) 성공적으로 도망쳤다!"));
+	// 			}
+	// 			break;
+	// 	}
+	//
+	// 	// 변수 초기화
+	// 	isTrainer = false;
+	// 	setting.allowSceneActivation = true;
+	// 	//게임 데이터 업데이트
+	// 	Manager.Game.EndBattle();
+	// }
+
+
+	private IEnumerator EndBattleCoroutine(string reason)
 	{
 		// 공통적으로 실행
 		Debug.Log($"배틀로그 {currentTurn}턴 : 배틀 종료 - {reason}");
@@ -542,6 +627,7 @@ public class BattleManager : MonoBehaviour
 					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
 					Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
 					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
+					yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
 					Manager.Data.PlayerData.AddMoney(winMoney);
 					Manager.Poke.enemyData.IsFight = true;
 				}
@@ -549,6 +635,7 @@ public class BattleManager : MonoBehaviour
 			case "Lose":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 패배");
+					yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{Manager.Data.PlayerData.PlayerName}는(은) 눈 앞이 캄캄해졌다"));
 
 					// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
 				}
@@ -556,6 +643,7 @@ public class BattleManager : MonoBehaviour
 			case "Run":
 				{
 					Debug.Log($"배틀로그 {currentTurn}턴 : 성공적으로 도망쳤다!");
+					yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{Manager.Data.PlayerData.PlayerName}는(은) 성공적으로 도망쳤다!"));
 				}
 				break;
 		}
@@ -565,27 +653,13 @@ public class BattleManager : MonoBehaviour
 		setting.allowSceneActivation = true;
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
+
 	}
 
 
-	#region Dialogue
 
-	private void ShowDialogue(List<string> lines)
-	{
-		dialogue.CloseDialog += OnBattleDialogClosed;
-		dialogue.StartDialogue(new Dialog(lines));
-	}
+	#region 경험치 증가 코루틴(연속 레벨업시 순차적으로 증가 처리)
 
-	private void ShowDialogue(string text)
-	{
-		List<string> lines = text.Split('\n').ToList();
-		dialogue.StartDialogue(new Dialog(lines));
-	}
-	
-	
-	#endregion
-	
-	
 	//경험치 증가 코루틴
 	public IEnumerator AnimateGainExp(int totalExp)
 	{
@@ -623,7 +697,12 @@ public class BattleManager : MonoBehaviour
 			break;
 		}
 	}
+
+	#endregion
 	
+	
+	
+	#region 포켓몬 스프라이트 / 애니메이션
 	
 	//포켓몬 스프라이트 생성
 	public void SpawnPokemon()
@@ -663,5 +742,8 @@ public class BattleManager : MonoBehaviour
 		if (isPlayerPokemon) spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleBackSprite(pokeName);
 		else spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleFrontSprite(pokeName);
 	}
+	
+	
+	#endregion
 	
 }

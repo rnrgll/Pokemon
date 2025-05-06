@@ -80,7 +80,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
 	    int maxPP = skill.maxPP;
 
 	    skillPP.text = $"{curPP}/{maxPP}";
-	    skillType.text = skill.skillType.ToString();
+	    skillType.text = skill.type.ToString();
     }
     
     

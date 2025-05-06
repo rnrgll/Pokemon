@@ -289,7 +289,6 @@ GameObject:
   - component: {fileID: 3818075419762820509}
   - component: {fileID: 2645568409691099151}
   - component: {fileID: 6389917350282912185}
-  - component: {fileID: 3998924210067361176}
   m_Layer: 5
   m_Name: UI_SkillListBox
   m_TagString: Untagged
@@ -384,26 +383,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!114 &3998924210067361176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6417741657737679098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: 0
-  m_PreferredWidth: -1
-  m_PreferredHeight: -1
-  m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
-  m_LayoutPriority: 1
 --- !u!1001 &233684219700735097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -843,6 +822,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 378353888142536544}
     m_Modifications:
+    - target: {fileID: 3919661287167634497, guid: 8ffc9c6b8e7fd4df3aa789cac4b11fb6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4292379025251742975, guid: 8ffc9c6b8e7fd4df3aa789cac4b11fb6, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
