@@ -1,26 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 
 public class NpcMover : MonoBehaviour
 {
+	// 도착할 위치 : 기본은 시작 위치
+	[SerializeField] public Vector2 exitPos;
+
+	// 이동할 위치 2 단위로
 	[SerializeField] List<Vector2> destinationPoints;
+
+	// 이동 시간
 	[SerializeField] float moveDuration = 0.3f;
+
+	// 회전 시간
 	public float rotateInterval = 2.0f;
-	float moveSpeed;
-	bool npcMoving;
-	public bool npcTurn;
+
+	// 이동 시간
+	[SerializeField] float moveSpeed;
+
+	// 엔피시 이동 여부
+	[SerializeField] bool npcMoving;
+
+	// 엔피시 회전 여부
+	public bool isNPCTurn;
+
 	private int directionIndex = 0;
+
 	int moveIndex = 0;
+
 	float timer;
 
-	
-	Vector2 currentDirection;
+	bool npcTurn;
+
+	[SerializeField] Vector2 currentDirection;
 	private Vector2 npcPos;
 	public Vector2 dir;
-	
-	
+
+
 	Animator anim;
 	NPCController npcController;
 	private Coroutine moveCoroutine;
@@ -31,6 +50,11 @@ public class NpcMover : MonoBehaviour
 		Vector2.left,
 		Vector2.up
 	};
+
+	Coroutine npcMoveCoroutione;
+	Coroutine npcTurnCoroutione;
+	[SerializeField] public bool isNPCMoveCheck;
+	[SerializeField] public bool isNPCTurnCheck;
 
 	private void AutoRotate()
 	{
@@ -46,23 +70,37 @@ public class NpcMover : MonoBehaviour
 		npcPos = this.transform.position;
 		moveSpeed = 1f / moveDuration;
 		npcController = GetComponent<NPCController>();
-		anim = npcController.anim;
+		//anim = npcController.anim;
+		anim = GetComponent<Animator>();
+		currentDirection = Vector2.down;
+		dir = currentDirection;
+		anim.SetFloat("x", currentDirection.x);
+		anim.SetFloat("y", currentDirection.y);
 	}
 
 	private void Update()
 	{
 		timer += Time.deltaTime;
 
-		if (timer > rotateInterval)
+		if (isNPCMoveCheck && npcMoveCoroutione == null)
 		{
-			if (npcTurn)
-				AutoRotate();
-			timer = 0f;
+			npcMoveCoroutione = StartCoroutine(NPCMove());
 		}
-		if (Manager.Dialog.npcState != NpcState.Talking && !npcMoving && !npcTurn)
+		else if (isNPCTurnCheck && npcTurnCoroutione == null)
 		{
-			moveCoroutine = StartCoroutine(MoveOneStep());
+			npcTurnCoroutione = StartCoroutine(NPCTurn());
 		}
+
+		//if (timer > rotateInterval)
+		//{
+		//	if (isNPCTurn)
+		//		AutoRotate();
+		//	timer = 0f;
+		//}
+		//if (Manager.Dialog.npcState != NpcState.Talking && !npcMoving && !npcTurn)
+		//{
+		//	moveCoroutine = StartCoroutine(MoveOneStep());
+		//}
 
 
 	}
@@ -76,9 +114,12 @@ public class NpcMover : MonoBehaviour
 		Vector2 targetPos = destinationPoints[moveIndex];
 		currentDirection = (targetPos - currentPos).normalized;
 
-		anim.SetFloat("x", currentDirection.x);
-		anim.SetFloat("y", currentDirection.y);
-		anim.SetBool("npcMoving", true);
+		if (anim != null)
+		{
+			anim.SetFloat("x", currentDirection.x);
+			anim.SetFloat("y", currentDirection.y);
+			anim.SetBool("npcMoving", true);
+		}
 
 		while (Vector2.Distance(transform.position, targetPos) > 0.1f)
 		{
@@ -86,14 +127,16 @@ public class NpcMover : MonoBehaviour
 			if (!IsWalkAble(currentDirection))
 			{
 				// 애니메이션 멈추고 대기
-				anim.SetBool("npcMoving", false);
+				if (anim != null)
+					anim.SetBool("npcMoving", false);
 				yield return null;
 				continue;
 			}
 			else
 			{
 				// 다시 이동 시작
-				anim.SetBool("npcMoving", true);
+				if (anim != null)
+					anim.SetBool("npcMoving", true);
 				transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 			}
 
@@ -101,12 +144,108 @@ public class NpcMover : MonoBehaviour
 		}
 
 		transform.position = targetPos;
-		anim.SetBool("npcMoving", false);
-		moveIndex = (moveIndex + 1) % destinationPoints.Count;
+		if (anim != null)
+			anim.SetBool("npcMoving", false);
+		if (destinationPoints.Count > 0)
+			moveIndex = (moveIndex + 1) % destinationPoints.Count;
 
 		yield return new WaitForSeconds(1f);
 		npcMoving = false;
 
+	}
+
+	IEnumerator NPCMove()
+	{
+		Debug.Log("엔피시 이동");
+
+		if ((Vector2)transform.position == destinationPoints[destinationPoints.Count - 1])
+		{
+			Debug.Log("엔피시 도착 이동 종료");
+			isNPCMoveCheck = false;
+			anim.SetBool("npcMoving", isNPCMoveCheck);
+			yield break;
+		}
+		if (destinationPoints.Count >= 1)
+		{
+			Debug.Log("엔피시 이동 시작");
+			Vector3 startPos = transform.position;
+			Vector3 targetPos = destinationPoints[moveIndex];
+			dir = (targetPos - startPos).normalized;
+
+			if (dir != Vector2.zero)
+				currentDirection = dir;
+
+			// 플레이어를 체크하려면 레이를 좀 낮게
+			Vector2 rayStartPos = (Vector2)startPos + Vector2.down * 0.3f;
+
+			// 이동 전에 Raycast 검사
+			bool isBlocked = false;
+			RaycastHit2D[] hits = Physics2D.RaycastAll(rayStartPos + currentDirection * 1.1f, currentDirection, 1f);
+			foreach (RaycastHit2D hit in hits)
+			{
+				if (hit.collider != null && hit.transform.gameObject.CompareTag("Player"))
+				{
+					isBlocked = true;
+					break;
+				}
+			}
+
+			if (isBlocked)
+			{
+				anim.SetFloat("x", currentDirection.x);
+				anim.SetFloat("y", currentDirection.y);
+				anim.SetBool("npcMoving", false);
+				yield return new WaitForSeconds(0.1f);
+				yield break;
+			}
+
+			// 이동 시작
+			anim.SetFloat("x", currentDirection.x);
+			anim.SetFloat("y", currentDirection.y);
+			anim.SetBool("npcMoving", true);
+			float time = 0;
+			while (time < moveDuration)
+			{
+				time += Time.deltaTime;
+				float percent = time / moveDuration;
+				transform.position = Vector2.Lerp(startPos, targetPos, percent);
+				yield return null;
+			}
+			transform.position = targetPos;
+
+			// 다음 목적지로
+			if (moveIndex < destinationPoints.Count - 1)
+				moveIndex++;
+			else if (moveIndex >= destinationPoints.Count - 1)
+			{
+				isNPCMoveCheck = false;
+				anim.SetBool("npcMoving", isNPCMoveCheck);
+			}
+
+			// 도착 후 코루틴 null
+			npcMoveCoroutione = null;
+		}
+		else
+		{
+			yield return null;
+		}
+	}
+
+	IEnumerator NPCTurn()
+	{
+		Debug.Log("엔피시 회전");
+
+		int ran = UnityEngine.Random.Range(0, 4);
+		Vector2 dir = directions[ran];
+
+		currentDirection = dir;
+
+		anim.SetFloat("x", currentDirection.x);
+		anim.SetFloat("y", currentDirection.y);
+
+		yield return new WaitForSeconds(2f);	
+
+		npcTurnCoroutione = null;
 	}
 
 	// NPC가 특정 방향으로 이동
@@ -118,7 +257,7 @@ public class NpcMover : MonoBehaviour
 		anim.SetFloat("x", direction.x);
 
 		transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-		
+
 		// 이동 중 여부 판단
 		bool hasReached = Vector2.Distance(transform.position, targetPos) < 0.01f;
 
