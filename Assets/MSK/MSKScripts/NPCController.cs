@@ -24,7 +24,7 @@ public class NPCController : MonoBehaviour, IInteractable
 
 		if (npcMover != null)
 		{
-			npcMover.npcTurn = false;
+			npcMover.isNPCTurn = false;
 			npcMover.StopMoving();
 		}
 
