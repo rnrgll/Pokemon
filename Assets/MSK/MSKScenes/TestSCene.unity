@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4823326117993202315, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
       propertyPath: dialog.lines.Array.data[1]
-      value: "\uB744\uC5B4\uC4F0\uAE30\uAE4C\uC9C0 10\uBC88          \uC0AC"
+      value: 123456789012345678901234567890
       objectReference: {fileID: 0}
     - target: {fileID: -4823326117993202315, guid: 9a47c5312386a3345ae12db43a11e2c7, type: 3}
       propertyPath: dialog.lines.Array.data[2]

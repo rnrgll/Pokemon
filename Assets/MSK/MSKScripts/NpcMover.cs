@@ -113,13 +113,13 @@ public class NpcMover : MonoBehaviour
 	public void MoveTowardsPosition(Vector2 targetPos)
 	{
 		// 애니메이션 방향 설정
-		Vector2 direction = targetPos - (Vector2)transform.position;
+		Vector2 direction = targetPos - (Vector2)transform.position.normalized;
 		anim.SetFloat("y", direction.y);
 		anim.SetFloat("x", direction.x);
 
 		transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+		
 		// 이동 중 여부 판단
-
 		bool hasReached = Vector2.Distance(transform.position, targetPos) < 0.01f;
 
 		anim.SetBool("npcMoving", !hasReached);
