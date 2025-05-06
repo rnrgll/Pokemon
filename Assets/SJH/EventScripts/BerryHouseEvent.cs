@@ -21,6 +21,7 @@ public class BerryHouseEvent : PokeEvent
 			return;
 		}
 		StartCoroutine(TriggerDialogue());
+		// 나무열매 아이템을 주는 로직
 		Manager.Event.berryHouseEvent = true;
 	}
 	private IEnumerator TriggerDialogue()

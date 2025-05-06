@@ -4,8 +4,6 @@ public class NPCController : MonoBehaviour, IInteractable
 {
 	[SerializeField] Dialog dialog;
 	[SerializeField] PokeEvent pokeEvent;
-
-	BerryHouseEvent berryHouseEvent;
 	private NpcMover npcMover;
 	private Vector2 npcPos;
 	public Animator anim;
