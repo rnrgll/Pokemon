@@ -33,12 +33,18 @@ public class Trainer : MonoBehaviour, IInteractable
 	[SerializeField] public bool isTrainerMove;
 	[SerializeField] public Vector2 currentDirection;
 	[SerializeField] public float moveDuration;
+	[SerializeField] public bool isTrainerTurn;
+
 	Coroutine moveCoroutine;
 	Coroutine findCoroutine;
+	Coroutine turnCoroutine;
 
 	// 대사
 	[SerializeField] Dialog dialog;
-	
+
+	// 풀이펙트
+	[SerializeField] GameObject grassEffect;
+
 
 	void Start()
 	{
@@ -46,6 +52,11 @@ public class Trainer : MonoBehaviour, IInteractable
 		isFight = Manager.Event.TrainerIsFight(trainerId);
 		anim = GetComponent<Animator>();
 
+		// 풀 이펙트 설정
+		grassEffect = transform.GetChild(1).gameObject;
+		grassEffect.SetActive(false);
+
+		// 첫 방향 설정
 		anim.SetFloat("x", currentDirection.x);
 		anim.SetFloat("y", currentDirection.y);
 		anim.SetBool("npcMoving", false);
@@ -56,6 +67,11 @@ public class Trainer : MonoBehaviour, IInteractable
 		if (isTrainerMove && moveCoroutine == null)
 		{
 			moveCoroutine = StartCoroutine(TrainerMove());
+		}
+
+		if (isTrainerTurn && turnCoroutine == null)
+		{
+			turnCoroutine = StartCoroutine(TrainerTurn());
 		}
 	}
 
@@ -72,6 +88,24 @@ public class Trainer : MonoBehaviour, IInteractable
 			{
 				findCoroutine = StartCoroutine(FindPlayer());
 			}
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Grass"))
+		{
+			if (grassEffect != null && !grassEffect.activeSelf)
+				grassEffect.SetActive(true);
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Grass"))
+		{
+			if (grassEffect != null)
+				grassEffect.SetActive(false);
 		}
 	}
 
@@ -101,14 +135,39 @@ public class Trainer : MonoBehaviour, IInteractable
 	public void Interact(Vector2 position)
 	{
 		Debug.Log("트레이너 배틀 체크");
+
+		// 플레이어 방향으로 변경
+		var player = Manager.Game.Player;
+		player.state = Define.PlayerState.Dialog;
+
+		Vector2 dir = currentDirection;
+
+		if (player.currentDirection == Vector2.up)
+			dir = Vector2.down;
+		else if (player.currentDirection == Vector2.down)
+			dir = Vector2.up;
+		else if (player.currentDirection == Vector2.left)
+			dir = Vector2.right;
+		else
+			dir = Vector2.left;
+
+		anim.SetFloat("x", dir.x);
+		anim.SetFloat("y", dir.y);
+
 		if (isFight)
 		{
 			Debug.Log("이미 이긴 트레이너 입니다.");
+			player.state = Define.PlayerState.Field;
 			return;
 		}
 
-		Debug.Log("배틀 시작");
-		BattleStart();
+		if (Manager.Dialog.isTyping == false)
+		{
+			Manager.Dialog.npcState = Define.NpcState.Talking;
+			Manager.Dialog.StartDialogue(dialog);
+			Debug.Log("배틀 시작");
+			BattleStart();
+		}
 	}
 
 	public void BattleStart()
@@ -125,9 +184,10 @@ public class Trainer : MonoBehaviour, IInteractable
 
 		Debug.Log("트레이너 배틀 시작");
 
+		// TODO : 배틀 기능 끝나면 주석 해제하기
 		// 씬전환
-		player.CurSceneName = "BattleScene_UIFix";
-		SceneManager.LoadScene("BattleScene_UIFix");
+		//player.CurSceneName = "BattleScene_UIFix";
+		//SceneManager.LoadScene("BattleScene_UIFix");
 	}
 
 	IEnumerator TrainerMove()
@@ -193,6 +253,30 @@ public class Trainer : MonoBehaviour, IInteractable
 		}
 	}
 
+	IEnumerator TrainerTurn()
+	{
+		Debug.Log("엔피시 회전");
+
+		int ran = UnityEngine.Random.Range(0, 4);
+		Vector2 dir;
+		switch (ran)
+		{
+			case 0: dir = Vector2.up; break;
+			case 1: dir = Vector2.down; break;
+			case 2: dir = Vector2.left; break;
+			default: dir = Vector2.right; break;
+		}
+
+		currentDirection = dir;
+
+		anim.SetFloat("x", currentDirection.x);
+		anim.SetFloat("y", currentDirection.y);
+
+		yield return new WaitForSeconds(2f);
+
+		turnCoroutine = null;
+	}
+
 	void BattleCheck()
 	{
 		// 위에서 지정
@@ -203,11 +287,9 @@ public class Trainer : MonoBehaviour, IInteractable
 		{
 			Manager.Dialog.npcState = Define.NpcState.Talking;
 			Manager.Dialog.StartDialogue(dialog);
+			Debug.Log("배틀 시작");
+			BattleStart();
 		}
-
-		Debug.Log("트레이너 앞에 플레이어 발견 배틀시작");
-		// TODO : 배틀 시작
-		//BattleStart();
 	}
 }
 
