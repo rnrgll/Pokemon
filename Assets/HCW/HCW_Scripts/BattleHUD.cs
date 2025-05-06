@@ -26,6 +26,10 @@ public class BattleHUD : MonoBehaviour
 	[SerializeField] private TMP_Text enemyLevelText;
 	[SerializeField] private UI_HpBarController enemyHpBar;
 	// 추후 상태 표시창 추가가능
+
+	[SerializeField] private TMP_Text playerCondition;
+	[SerializeField] private TMP_Text enemyCondition;
+	
 	
 	
 	public void InitPlayerExp(Pokémon p)
