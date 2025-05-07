@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3420855398764000207}
   - component: {fileID: 1754487244389579366}
   - component: {fileID: 97162271254358845}
-  - component: {fileID: 8512244140988615706}
+  - component: {fileID: -5697265589187370784}
   m_Layer: 0
   m_Name: GymInfo
   m_TagString: NPC
@@ -153,7 +153,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8512244140988615706
+--- !u!114 &-5697265589187370784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,8 +171,9 @@ MonoBehaviour:
   rotateInterval: 2
   moveSpeed: 0
   npcMoving: 0
-  isNPCTurn: 0
+  moveIndex: 0
   currentDirection: {x: 0, y: 0}
-  dir: {x: 0, y: 0}
+  isNpcIntervalCheak: 0
+  isPaused: 0
   isNPCMoveCheck: 0
   isNPCTurnCheck: 0
