@@ -9,7 +9,7 @@ using static Define;
 public class Player : MonoBehaviour
 {
 	public PlayerState prevState;
-	Define.PlayerState state;
+	[SerializeField] Define.PlayerState state;
 	[Tooltip("플레이어 상태")]
 	[SerializeField] public Define.PlayerState State {
 		get => state;

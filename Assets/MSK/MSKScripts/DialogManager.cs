@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DialogManager : Singleton<DialogManager>
 {
@@ -57,8 +58,8 @@ public class DialogManager : Singleton<DialogManager>
 				{
 					currentLine = 0;
 					dialogBox.SetActive(false);
-					//Manager.Game.Player.State = Define.PlayerState.Field;
-					Manager.Game.Player.State = Manager.Game.Player.prevState;
+					if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
+						Manager.Game.Player.State = Define.PlayerState.Field;
 					Manager.Dialog.npcState = Define.NpcState.Idle;
 					CloseDialog?.Invoke();
 				}
@@ -126,7 +127,8 @@ public class DialogManager : Singleton<DialogManager>
 		dialogBox.SetActive(false);
 
 		haveToPreventInput = false;
-		Manager.Game.Player.State = Define.PlayerState.Field;
+		if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
+			Manager.Game.Player.State = Define.PlayerState.Field;
 	}
 
 }

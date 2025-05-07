@@ -83,7 +83,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
 	    skillPP.text = $"{curPP}/{maxPP}";
 	    skillType.text = skill.type.ToString();
 		//skillType.text = skill.skillType.ToString();
-		skillType.text = $"/Define.GetKoreanSkillType[skill.skillType]";
+		skillType.text = $"{Define.GetKoreanPokeType[skill.type]}";
     }
     
     
