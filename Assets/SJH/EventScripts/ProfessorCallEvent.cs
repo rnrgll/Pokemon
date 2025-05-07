@@ -10,7 +10,7 @@ public class ProfessorCallEvent : PokeEvent
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.CompareTag("Player") && !Manager.Event.gymEvent && Manager.Event.eggEvent)
+		if (collision.gameObject.CompareTag("Player") && Manager.Event.gymEvent && !Manager.Event.eggEvent)
 		{
 			Debug.Log("이벤트충돌");
 			

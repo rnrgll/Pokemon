@@ -44,18 +44,18 @@ public class RivalEvent1 : PokeEvent
 		Manager.Dialog.StartDialogue(dialog);
 		while (Manager.Dialog.isTyping)
 		{
-			yield return null; // new WaitForSeconds(0.5f);
+			yield return null; // new Wait
 		}
 
 		if (gameObject != null)
 		{
-			gameObject.transform.position += new Vector3(-1f, 0f, 0f);
+			gameObject.transform.position += new Vector3(-2f, 0f, 0f);
 		}
 		Player player = FindObjectOfType<Player>();
 
 		if (player != null)
 		{
-			StartCoroutine(MovePlayerLerp(player.gameObject, new Vector3(0, -3f, 0), 0.5f));
+			StartCoroutine(MovePlayerLerp(player.gameObject, new Vector3(0, -8f, 0), 0.5f));
 		}
 		yield return new WaitForSeconds(1f);
 
