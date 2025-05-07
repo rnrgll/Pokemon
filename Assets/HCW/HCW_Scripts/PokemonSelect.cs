@@ -13,13 +13,17 @@ public class PokemonSelect : MonoBehaviour
 	
 	private System.Action<Pokémon> onChoose;
 	private System.Action onCancel;
-
 	
 	//커서 인덱스 관리
 	private int curIdx = 0;
 	//포켓몬 슬롯 리스트
 	private List<UI_PokemonSlot> partyList = new();
 	
+	
+	//현재 전투 중인 포켓몬
+	private Pokémon currentPokemon;
+	private bool haveToChoose;
+
 	
 	private void OnEnable()
 	{
@@ -31,6 +35,9 @@ public class PokemonSelect : MonoBehaviour
 
 	private void Update()
 	{
+		if (Manager.UI.IsAnyUIOpen) return;
+		
+		Debug.Log(Manager.UI.IsAnyUIOpen);
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
 			MoveCursor(-1);
@@ -47,6 +54,10 @@ public class PokemonSelect : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.X))
 		{
 			//취소
+			if (haveToChoose)
+			{
+				return;
+			}
 			SelectQuit();
 		}
 	}
@@ -62,11 +73,28 @@ public class PokemonSelect : MonoBehaviour
 
 	private void SelectSlot()
 	{
+		//Debug.Log(Manager.UI.IsAnyUIOpen);
 		if (curIdx == partyList.Count-1) //그만두다를 선택한 경우
 		{
 			SelectQuit();
 			return;
 		}
+		
+		if (partyList[curIdx].Pokemon.isDead || partyList[curIdx].Pokemon.hp <= 0)
+		{
+		
+			//선택 불가
+			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage("싸울 기력이 없다!",null,true,true);
+			return;
+		}
+		if (partyList[curIdx].Pokemon == currentPokemon)
+		{
+			
+			//선택 불가
+			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage($"{currentPokemon.pokeName}는(은) 이미 나가있습니다!",null,true,true);
+			return;
+		}
+	
 		
 		OnEntrySelected(partyList[curIdx].Pokemon);
 	}
@@ -100,10 +128,12 @@ public class PokemonSelect : MonoBehaviour
 	
 	
 	//포켓몬 선택 창 open & 파티에 있는 포켓몬으로 슬롯 동적 생성
-	public void Show(List<Pokémon> party, System.Action<Pokémon> onChooseCallback, System.Action onCancelCallback)
+	public void Show(bool haveToChoose, List<Pokémon> party, Pokémon playerPokemon, System.Action<Pokémon> onChooseCallback, System.Action onCancelCallback)
 	{
+		//현재 포켓몬
+		currentPokemon = playerPokemon;
+		this.haveToChoose = haveToChoose;
 		
-		Debug.Log("dhfashfsafhsahfsadhfsahfsahfa");
 		//슬롯 타입 설정하기 (PartySlotType.Skill 만 아니면 됨)
 		Manager.Game.SetSlotType(UI_PokemonParty.PartySlotType.Menu);
 		
@@ -129,11 +159,17 @@ public class PokemonSelect : MonoBehaviour
 			// entry.Setup(p, OnEntrySelected);
 		}
 		
-		//마지막에 '그만두다' 슬롯 추가하기
-		var stopSlot = Instantiate(stopSlotPrefab, content);
-		stopSlot.transform.SetAsLastSibling();
-		//그만두다 슬롯도 리스트에 포함
-		partyList.Add(stopSlot);
+		//마지막에 '그만두다' 슬롯 추가하기 -> 강제 선택인 경우 생성하고 리스트에 넣지말기
+		if (!haveToChoose)
+		{
+			var stopSlot = Instantiate(stopSlotPrefab, content);
+			stopSlot.transform.SetAsLastSibling();
+			//그만두다 슬롯도 리스트에 포함
+			partyList.Add(stopSlot);
+		}
+	
+		
+		
 		
 		// if (content.childCount > 0)
 		// 	UnityEngine.EventSystems.EventSystem
