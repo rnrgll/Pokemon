@@ -44,7 +44,7 @@ public class RivalEvent1 : PokeEvent
 		Manager.Dialog.StartDialogue(dialog);
 		while (Manager.Dialog.isTyping)
 		{
-			yield return null; // new WaitForSeconds(0.5f);
+			yield return null; // new Wait
 		}
 
 		if (gameObject != null)

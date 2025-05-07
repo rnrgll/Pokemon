@@ -19,7 +19,7 @@ public class CherrygroveCityInfoEvent : PokeEvent
 	{
 		Debug.Log($"{Manager.Event.cherrygroveCityInfoEvent} 상태");
 
-		if (Manager.Event.cherrygroveCityInfoEvent)
+		if (!Manager.Event.cherrygroveCityInfoEvent)
 		{
 			dialog = new Dialog(new List<string>
 			{
@@ -50,19 +50,21 @@ public class CherrygroveCityInfoEvent : PokeEvent
 		yield return StartCoroutine(MovePos(player));
 
 		// 3. 이동 후 새로운 대화 시작
-		Dialog extraDialog = new Dialog(new List<string> { "아자차카" });
-		Manager.Dialog.StartDialogue(extraDialog);
-		yield return StartCoroutine(MoveNpcPos(player, 2));
-		yield return StartCoroutine(MovePos(player));
+		//Dialog extraDialog = new Dialog(new List<string> { "아자차카" });
+		//Manager.Dialog.StartDialogue(extraDialog);
+		//yield return StartCoroutine(MoveNpcPos(player, 2));
+		//yield return StartCoroutine(MovePos(player));
+		//
+		//Dialog newDialog = new Dialog(new List<string> { "응애" });
+		//Manager.Dialog.StartDialogue(newDialog);
+		//yield return StartCoroutine(MoveNpcPos(player, 2));
+		//yield return StartCoroutine(MovePos(player));
+		//while (Manager.Dialog.isTyping)
+		//{
+		//	yield return null;
+		//}
 
-		Dialog newDialog = new Dialog(new List<string> { "응애" });
-		Manager.Dialog.StartDialogue(newDialog);
-		yield return StartCoroutine(MoveNpcPos(player, 2));
-		yield return StartCoroutine(MovePos(player));
-		while (Manager.Dialog.isTyping)
-		{
-			yield return null;
-		}
+		Manager.Event.cherrygroveCityInfoEvent = false;
 	}
 
 	private IEnumerator PrintCherryCity()
