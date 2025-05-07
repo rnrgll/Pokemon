@@ -81,7 +81,14 @@ public class Define
 		Faint,          //기절
 		Flinch,			//풀죽음
 	}
-	
+	public enum StatType
+	{
+		Attack,
+		Defense,
+		SpeAttack,
+		SpeDefense,
+		Speed
+	}
 	// 한글로 변환
 	public static Dictionary<StatusCondition, string> GetKoreanState = new()
 	{
@@ -123,6 +130,16 @@ public class Define
 		[SkillType.Status] = "변화",
 	};
 
+	public static Dictionary<StatType, string> GetKoreanStatType = new()
+	{
+		[StatType.Attack] = "공격",
+		[StatType.Defense] = "방어",
+		[StatType.SpeDefense] = "특수방어",
+		[StatType.SpeAttack] = "특수공격",
+		[StatType.Speed] = "스피드",
+
+
+	};
 
 	#region UI
 	public enum UIInputType
