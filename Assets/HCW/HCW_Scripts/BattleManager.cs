@@ -330,6 +330,7 @@ public class BattleManager : MonoBehaviour
 
 					foreach (var act in actions)
 					{
+						yield return battleDelay;
 						if (act.Attacker.hp <= 0)
 						{
 							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
@@ -352,8 +353,7 @@ public class BattleManager : MonoBehaviour
 							hud.SetEnemyHUD(enemyPokemon); // 적 피격
 						else
 							hud.SetPlayerHUD(playerPokemon); // 플레이어 피격
-
-					
+						
 						isAction = true;
 						
 					}
@@ -380,16 +380,43 @@ public class BattleManager : MonoBehaviour
 					//1. 인벤토리 창을 띄운다.
 					Manager.UI.ShowLinkedUI<UI_Bag>("UI_Bag");
 					
-					//2. 대기
-					//대기를 끝내는 조건 : 가방 UI가 닫혀서 UI 매니저가 관리하는 UI가 없는 경우 = 아무 ui도 열려있지 않은 경우
+					//2. 대기 - 대기를 끝내는 조건 : 가방 UI가 닫혀서 UI 매니저가 관리하는 UI가 없는 경우 = 아무 ui도 열려있지 않은 경우
 					yield return new WaitUntil(() => !Manager.UI.IsAnyUIOpen);
 					
 					//3. 턴 인지 확인하는 체크
 					//플레이어가 도구를 사용한 경우 턴 종료 
-					//todo : 플레이어 도구 사용 여부를 체크할 변수가 필요 && 전투 중인경우 도구를 사용하면 아예 ui를 다 닫아야함
 					if (Manager.Game.IsInBattle && Manager.Game.IsItemUsed)
 					{
+						yield return new WaitForSeconds(0.5f); //잠시 대기 후
+						//hp 업데이트 (도구 사용했을 가능성)
+						hud.SetPlayerHUD(playerPokemon, false);
+						hud.SetEnemyHUD(enemyPokemon, false);
+
+						//액션 설정 (상대만 공격하면 되니까 리스트에 넣지 않는다, 정렬 필요 없음)
+						var act = new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill);
+						//fight와 동일하게 조건 체크 후 액션 처리
+						if (act.Attacker.hp <= 0)
+						{
+							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
+							continue;
+						}
+						
+						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
+						
+						// 상태이상체크
+						if (act.Attacker.CanActionCheck())
+						{
+							// TODO : PP 체크
+							// TODO : 상태이상으로 공격 못하는 로그 반영하기
+							yield return StartCoroutine(Motion(act)); // 데미지랑 딜레이 실행 모션 코루틴으로 이동
+						}
+						
+						hud.SetPlayerHUD(playerPokemon, false);
+						hud.SetEnemyHUD(enemyPokemon, false);
+
 						isAction = true;
+						
 					}
 					break;
 
@@ -405,12 +432,10 @@ public class BattleManager : MonoBehaviour
 						else if (isTrainer)
 						{
 							
-							// ShowDialogue("안돼! 승부도중에 상대에게 등을 보일 수 없어!");
 							yield return StartCoroutine(Manager.Dialog.ShowBattleMessage("안돼! 승부도중에 상대에게 등을 보일 수 없어!"));
 						}
 						else
 						{
-							//EndBattle("Run");
 							StartCoroutine(EndBattleCoroutine("Run"));
 							yield break;
 						}
@@ -424,7 +449,7 @@ public class BattleManager : MonoBehaviour
 
 			// TODO : 턴종료 조건 추가하기
 			// 도망을 실패해도 턴이 증가함
-			//2. 가방
+
 			if (isAction)
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : {currentTurn} 턴 종료");
@@ -444,7 +469,6 @@ public class BattleManager : MonoBehaviour
 				Debug.Log($"배틀로그 {currentTurn}턴 : 플레이어 전멸");
 				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"더 이상 싸울 수 있는 포켓몬이 없다!"));
 				
-				//EndBattle("Lose");
 				StartCoroutine(EndBattleCoroutine("Lose"));
 				yield break;
 			}
@@ -459,10 +483,9 @@ public class BattleManager : MonoBehaviour
 				Debug.Log($"{playerPokemon.pokeName}은/는 {totalExp} 경험치를 얻었다!");
 				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName}은/는 {totalExp} 경험치를 얻었다!"));
 				
-				//playerPokemon.AddExp(totalExp);
+				//playerPokemon.AddExp(totalExp); -> 아래 코루틴에서 애니메이션 실행하면서 플레이어한테 추가시켜줌
 				yield return StartCoroutine(AnimateGainExp(totalExp));
 				
-				//EndBattle("Win");
 				StartCoroutine(EndBattleCoroutine("Win"));
 				yield break;
 			}
@@ -517,6 +540,7 @@ public class BattleManager : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 	}
 
+	
 	// 행동 선택 후 행동 처리
 	private void ExecuteAction(BattleAction action)
 	{
@@ -524,7 +548,7 @@ public class BattleManager : MonoBehaviour
 		skill.UseSkill(action.Attacker, action.Target, skill);
 	}
 
-
+	#region 주석처리
 	// 배틀 종료 처리
 	//private void EndBattle(string reason)
 	// {
@@ -588,7 +612,7 @@ public class BattleManager : MonoBehaviour
 	// 	//게임 데이터 업데이트
 	// 	Manager.Game.EndBattle();
 	// }
-
+#endregion
 
 	private IEnumerator EndBattleCoroutine(string reason)
 	{
@@ -760,9 +784,9 @@ public class BattleManager : MonoBehaviour
 	}
 
 	
-	public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
-	//애니메이션 대기 시간 필요
-	public void 
+	// public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
+	// //애니메이션 대기 시간 필요
+	// public void 
 
 	//2. 스프라이트 불러오기
 	public void SetPokemonSprite(string pokeName, SpriteRenderer spriteRenderer, bool isPlayerPokemon)
