@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class RivalEvent1 : PokeEvent
 {
+	[Header("대화 관련 설정")]
+	[SerializeField] private Dialog dialog;
+	[SerializeField] private GameObject npc;
 	public override void OnPokeEvent(GameObject player)
 	{
-		/*
-			......
-		이곳이 유명한 
-		공박사 포켓몬 연구소...
-		뭐야
-		사람을 뚫어지게 쳐다보고
+		Debug.Log($"{Manager.Event.berryHouseEvent} 상태");
+		if (Manager.Event.berryHouseEvent)
+		{
+			return;
+		}
+		StartCoroutine(TriggerDialogue());
+	}
+	private IEnumerator TriggerDialogue()
+	{
+		Manager.Dialog.StartDialogue(dialog);
 
-		플레이어 라이벌 동시에 x축 -1칸
-		플레이어만 y축 -3칸
-		라이벌 x축 +1칸
-		
-		 */
+		while (Manager.Dialog.isTyping)
+		{
+			yield return null;
+		}
 	}
 }

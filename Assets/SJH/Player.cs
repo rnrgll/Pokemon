@@ -284,6 +284,13 @@ public class Player : MonoBehaviour
 		//Debug.Log($"플레이어 위치 저장 : {startPos}");
 	}
 
+	public void PlayerMove(Vector2 direction)
+	{
+		if (moveCoroutine == null)
+		{
+			moveCoroutine = StartCoroutine(Move(direction));
+		}
+	}
 	public void StopMoving()
 	{
 		isMoving = false;
