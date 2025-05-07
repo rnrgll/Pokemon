@@ -83,7 +83,7 @@ public class BattleManager : MonoBehaviour
 		void OnComplete()
 		{
 			// 트레이너
-			if (Manager.Poke.enemyParty.Count >= 1)
+			if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
 			{
 				Debug.Log("트레이너 배틀 시작");
 				//게임 데이터 설정
