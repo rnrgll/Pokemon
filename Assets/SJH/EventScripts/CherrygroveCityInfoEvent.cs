@@ -23,51 +23,36 @@ public class CherrygroveCityInfoEvent : PokeEvent
 		{
 			dialog = new Dialog(new List<string>
 			{
-			"가나다",
-			"라마바"
-			});
+				"너 신출내기 트레이너지?",
+				"급소를 찔렸지!",
+				"누구나 처음은 있는 법",
+				"여러가지 가르쳐줄게! ",
+				"포켓몬 센터는",
+				"상처입은 포켓몬을 맡기면",
+				"지금부터 이후에 몇번이고",
+				"신세를 지게 되겠지",
+				"기억해 두는 것이 좋을 것이다!",
+				"프렌들리 숍에서는",
+				"포켓몬을 잡을 볼이라든지",
+				"여러가지 품목을 팔고 있단다!",
 
-			StartCoroutine(FirstMove(player));
+				"이길의 끝은 30번 도로!",
+				"모두 자랑하는 포켓몬을",
+				"시합시키고 있단다!",
+
+				"해안가 바위 옆으로 ",
+
+				"가게된다면 바다란다!",
+				"바다 속 에서는",
+				" 밖에 없는 포켓몬도 있지!"
+			});
+			StartCoroutine(TriggerDialogue());
 			return;
 		}
 
-		StartCoroutine(PrintCherryCity());
-	}
-
-	private IEnumerator FirstMove(GameObject player)
-	{
-		// 1. 첫 번째 대화 시작
-		Manager.Dialog.StartDialogue(dialog);
-
-		// 대화가 끝날 때까지 대기
-		while (Manager.Dialog.isTyping)
-		{
-			yield return null;
-		}
-
-		// 2. 이동
-		yield return StartCoroutine(MoveNpcPos(player, 1));
-		yield return StartCoroutine(MovePos(player));
-
-		// 3. 이동 후 새로운 대화 시작
-		//Dialog extraDialog = new Dialog(new List<string> { "아자차카" });
-		//Manager.Dialog.StartDialogue(extraDialog);
-		//yield return StartCoroutine(MoveNpcPos(player, 2));
-		//yield return StartCoroutine(MovePos(player));
-		//
-		//Dialog newDialog = new Dialog(new List<string> { "응애" });
-		//Manager.Dialog.StartDialogue(newDialog);
-		//yield return StartCoroutine(MoveNpcPos(player, 2));
-		//yield return StartCoroutine(MovePos(player));
-		//while (Manager.Dialog.isTyping)
-		//{
-		//	yield return null;
-		//}
-
 		Manager.Event.cherrygroveCityInfoEvent = false;
 	}
-
-	private IEnumerator PrintCherryCity()
+	private IEnumerator TriggerDialogue()
 	{
 		Manager.Dialog.StartDialogue(dialog);
 
@@ -75,28 +60,6 @@ public class CherrygroveCityInfoEvent : PokeEvent
 		{
 			yield return null;
 		}
-	}
-	private IEnumerator MoveNpcPos(GameObject _npc,int index)
-	{
-		yield return new WaitForSeconds(0.5f);
-		if (_npc != null)
-		{
-			_npc.transform.position = npcMover.destinationPoints[index];
-		}
-		yield return null;
-	}
-
-	private IEnumerator MovePos(GameObject _npc)
-	{
-		yield return new WaitForSeconds(0.5f);
-		Player player = FindObjectOfType<Player>();
-
-		if (player != null)
-		{
-			player.transform.position = new Vector3(Mathf.Lerp(transform.position.x, _npc.transform.position.x - 2f,0.5f)
-				,Mathf.Lerp(transform.position.y, _npc.transform.position.x, 0.5f));
-		}
-		yield return new WaitForSeconds(1f); 
 	}
 
 

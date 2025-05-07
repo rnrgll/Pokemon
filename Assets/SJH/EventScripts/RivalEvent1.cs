@@ -49,13 +49,13 @@ public class RivalEvent1 : PokeEvent
 
 		if (gameObject != null)
 		{
-			gameObject.transform.position += new Vector3(-1f, 0f, 0f);
+			gameObject.transform.position += new Vector3(-2f, 0f, 0f);
 		}
 		Player player = FindObjectOfType<Player>();
 
 		if (player != null)
 		{
-			StartCoroutine(MovePlayerLerp(player.gameObject, new Vector3(0, -3f, 0), 0.5f));
+			StartCoroutine(MovePlayerLerp(player.gameObject, new Vector3(0, -6f, 0), 0.5f));
 		}
 		yield return new WaitForSeconds(1f);
 
