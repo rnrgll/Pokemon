@@ -97,6 +97,8 @@ public class Healer : MonoBehaviour, IInteractable
 		Manager.Game.Player.CurSceneName = currentSceneName;
 		sound.GetComponent<AudioSource>().loop = true;
 
+		Manager.Game.Player.State = Define.PlayerState.Field;
+
 		Manager.Dialog.npcState = Define.NpcState.Idle;
 		healerCoroutine = null;
 	}
