@@ -166,7 +166,7 @@ public class PokemonManager : Singleton<PokemonManager>
 		// 포켓몬 모두 회복
 		// 체력, 상태이상, 기술
 
-		foreach(var poke in party)
+		foreach (var poke in party)
 		{
 			// 체력
 			poke.Heal(poke.maxHp);
