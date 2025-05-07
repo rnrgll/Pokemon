@@ -265,20 +265,8 @@ public class NpcMover : MonoBehaviour
 
 	public void AnimChange(Vector2 position)
 	{
-		Vector2 currentPos = (Vector2)transform.position;
-		Vector2 diff = position - currentPos;
-
-		if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
-		{
-			currentDirection = diff.x > 0 ? Vector2.right : Vector2.left;
-		}
-		else
-		{
-			currentDirection = diff.y > 0 ? Vector2.up : Vector2.down;
-		}
-
-		anim.SetFloat("x", currentDirection.x);
-		anim.SetFloat("y", currentDirection.y);
+		anim.SetFloat("x", position.x);
+		anim.SetFloat("y", position.y);
 	}
 
 	public void StopMoving()

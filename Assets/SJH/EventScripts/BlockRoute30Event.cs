@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class BlockRoute30Event : PokeEvent
 {
+	[Header("대화 관련 설정")]
+	[SerializeField] private Dialog dialog;
+	[SerializeField] private GameObject npc;
+
 	public override void OnPokeEvent(GameObject player)
 	{
-		/*
-			가거라! 꼬랫
-			몸통박치기!
-			
-			포켓몬 스프라이트 움직임
+		//	이 이벤트는 
+		if (Manager.Event.questEvent)
+		{
+			return;
+		}
+		StartCoroutine(TriggerDialogue());
+	}
+	private IEnumerator TriggerDialogue()
+	{
+		Manager.Dialog.StartDialogue(dialog);
 
-			뭐야?
-			중요한 승부를 하고있어!
-			저리 가란말야!
-
-		 */
+		while (Manager.Dialog.isTyping)
+		{
+			yield return null;
+		}
 	}
 }
 
