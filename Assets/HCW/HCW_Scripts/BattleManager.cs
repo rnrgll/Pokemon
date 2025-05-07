@@ -11,7 +11,6 @@ using Random = UnityEngine.Random;
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
 {
-	private string previousScene;        // 이전 씬 이름
 	[SerializeField] private GameObject introPrefab;
 	[SerializeField] private RectTransform battleSceneUI;
 	[SerializeField] private string battleScene;
@@ -65,7 +64,7 @@ public class BattleManager : MonoBehaviour
 	private void Start()
 	{
 		
-		previousScene = SceneManager.GetActiveScene().name; // 이전 씬 이름 저장
+		battleScene = SceneManager.GetActiveScene().name; //현재 씬 이름 저장
 		//origin 위치 저장
 		pOriginScale = playerPokemonPos.localScale;
 		eOriginScale = enemyPokemonPos.localScale;
@@ -120,6 +119,7 @@ public class BattleManager : MonoBehaviour
 			}
 			intro.OnIntroComplete -= OnComplete;
 			Destroy(introObject);
+			introObject.transform.parent.gameObject.SetActive(false);
 		}
 		intro.OnIntroComplete += OnComplete;
 
@@ -277,7 +277,7 @@ public class BattleManager : MonoBehaviour
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
-						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.name,enemyPokemonPos, false));
+						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.pokeName,enemyPokemonPos, false));
 						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						hud.SetEnemyHUD(enemyPokemon, false);
 
