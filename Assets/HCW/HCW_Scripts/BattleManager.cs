@@ -708,6 +708,7 @@ public class BattleManager : MonoBehaviour
 		// 변수 초기화
 		isTrainer = false;
 		setting.allowSceneActivation = true;
+		Manager.Game.Player.State = PlayerState.Field;
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 

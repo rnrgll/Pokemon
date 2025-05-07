@@ -71,7 +71,7 @@ public class SceneChanger : MonoBehaviour
 		// 잔류이동 지우기
 		Player pc = player.GetComponent<Player>();
 		isChange = true;
-		pc.state = Define.PlayerState.SceneChange;
+		pc.State = Define.PlayerState.SceneChange;
 		//player.transform.position = new Vector3(exitPos.x, exitPos.y);
 		pc.StopMoving();
 		pc.currentDirection = keyDirection;
@@ -88,7 +88,7 @@ public class SceneChanger : MonoBehaviour
 				player.transform.position = exitPos;
 				Debug.Log($"플레이어 이동 : {exitPos}");
 				isChange = false;
-				pc.state = Define.PlayerState.Field;
+				pc.State = Define.PlayerState.Field;
 				//yield return new WaitForSeconds(0.1f);
 				asyncLoad.allowSceneActivation = true;
 

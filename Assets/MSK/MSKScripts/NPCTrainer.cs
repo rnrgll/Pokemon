@@ -33,7 +33,7 @@ public class NPCTrainer : MonoBehaviour
 			Debug.Log($"추격상태 : {isChasingPlayer}");
 			if (isChasingPlayer)
 			{
-				Manager.Game.Player.state = Define.PlayerState.Dialog;
+				Manager.Game.Player.State = Define.PlayerState.Dialog;
 				Debug.Log($"추격 호출");
 				npcMover.MoveTowardsPosition(playerPos - currentDirection * 2);
 				//	도착 확인 후
@@ -43,7 +43,7 @@ public class NPCTrainer : MonoBehaviour
 					Manager.Dialog.StartDialogue(dialog);
 					//	배틀매니저 호출
 					isBattled = true;
-					Manager.Game.Player.state = Define.PlayerState.Field;
+					Manager.Game.Player.State = Define.PlayerState.Field;
 				}
 			}
 		}

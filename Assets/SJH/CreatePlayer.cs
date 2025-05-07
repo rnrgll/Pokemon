@@ -11,7 +11,7 @@ public class CreatePlayer : MonoBehaviour
 			return;
 
 		var player = Instantiate(playerPrefab);
-		player.GetComponent<Player>().state = Define.PlayerState.Field;
+		player.GetComponent<Player>().State = Define.PlayerState.Field;
 		// CreatePlayer 오브젝트 위치에 플레이어 생성
 		player.transform.position = gameObject.transform.position;
 		isCreate = true;

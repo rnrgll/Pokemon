@@ -40,10 +40,24 @@ public class DungeonMapData
 		links = new List<DungeonLink>();
 		links.Add(new DungeonLink
 		{
-			dungeonSceneName = "LDH_MenuTest", //추후 수정 예정
+			dungeonSceneName = "SproutTower1F", //추후 수정 예정
 			entranceSceneName = Define.sceneDic["도라지시티"],
-			dungeonExitPosition = new Vector2(6f, 1f),
-			entrancePosition = new Vector2(-285.959991f,172.694f)
+			dungeonExitPosition = new Vector2(-286f, 172f),
+			entrancePosition = new Vector2(-285.959991f,172.694f) // -286 172
+		});
+		links.Add(new DungeonLink
+		{
+			dungeonSceneName = "SproutTower2F", //추후 수정 예정
+			entranceSceneName = Define.sceneDic["도라지시티"],
+			dungeonExitPosition = new Vector2(-286f, 172f),
+			entrancePosition = new Vector2(-285.959991f, 172.694f) // -286 172
+		});
+		links.Add(new DungeonLink
+		{
+			dungeonSceneName = "SproutTower3F", //추후 수정 예정
+			entranceSceneName = Define.sceneDic["도라지시티"],
+			dungeonExitPosition = new Vector2(-286f, 172f),
+			entrancePosition = new Vector2(-285.959991f, 172.694f) // -286 172
 		});
 	}
 	
