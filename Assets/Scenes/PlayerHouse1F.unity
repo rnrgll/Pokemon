@@ -5018,7 +5018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialog:
     lines:
-    - "\uC548\uB155!"
+    - "\uC870\uC2EC\uD574\uC11C \uB2E4\uB140\uC624\uB834!"
   pokeEvent: {fileID: 0}
   anim: {fileID: 0}
 --- !u!114 &3547370533795615008
