@@ -36,6 +36,7 @@ public class Inventory
 		{
 			//인벤토리에 있는 아이템인 경우
 			slot.Count += amount;
+			Debug.Log($"{itemName} {amount} 획득 성공!");
 		}
 		//새로운 아이템 추가인 경우
 		else
@@ -44,6 +45,7 @@ public class Inventory
 			_slots.Add(newSlot);
 			_slotLookUp[itemName] = newSlot;
 		}
+		
 	}
 
 	public void UseItem(string itemName)
