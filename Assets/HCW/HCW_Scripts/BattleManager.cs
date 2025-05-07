@@ -12,6 +12,9 @@ using Random = UnityEngine.Random;
 public class BattleManager : MonoBehaviour
 {
 	private string previousScene;        // 이전 씬 이름
+	[SerializeField] private GameObject introPrefab;
+	[SerializeField] private RectTransform battleSceneUI;
+	[SerializeField] private string battleScene;
 
 	[Header("UI 관련")]
 	[SerializeField] private Transform playerPokemonPos;       // 플레이어 포켓몬 위치
@@ -28,7 +31,7 @@ public class BattleManager : MonoBehaviour
 	private List<Pokémon> playerParty;    // 플레이어 포켓몬 리스트
 	private List<Pokémon> enemyParty;     // 적 포켓몬 리스트
 	private Pokémon playerPokemon;        // 플레이어 포켓몬
-	
+
 	//자동 반영을 위해 프로퍼티로 변경
 	private Pokémon _enemyPokemon;
 	private Pokémon enemyPokemon    // 적 포켓몬
@@ -71,43 +74,59 @@ public class BattleManager : MonoBehaviour
 		ui.OnSkillSelected.AddListener(OnSkillButton);
 		Debug.Log("배틀매니저 초기화");
 
-		// 현재턴 지정
 		currentTurn = 1;
-		// 트레이너
-		if (Manager.Poke.enemyParty.Count >= 1)
+
+		// Intro 프리팹 생성 & 보여주기
+		var introObject = Instantiate(introPrefab, battleSceneUI);
+		var intro = introObject.GetComponent<BattleIntro>();
+		intro.battleScene = battleScene;
+
+		void OnComplete()
 		{
-			Debug.Log("트레이너 배틀 시작");
-			//게임 데이터 설정
-			//게임 매니저에 정보 업데이트
-			Manager.Game.SetBattleState(true,false);
-
-			TrainerData trainerData = Manager.Poke.enemyData;
-
-			// TODO : EnemyData로 파티 생성하기
-			List<Pokémon> enemyPartyData = new();
-
-			foreach (var data in trainerData.TrainerPartyData)
+			// 트레이너
+			if (Manager.Poke.enemyParty.Count >= 1)
 			{
-				if (string.IsNullOrEmpty(data.PokeName) || data.PokeLevel <= 0)
-					continue;
-				Pokémon poke = Manager.Poke.AddEnemyPokemon(data.PokeName, data.PokeLevel);
-				enemyPartyData.Add(poke);
-			}
-			// 포켓몬 지정
-			enemyParty = enemyPartyData;
-			// 이름지정
-			enemyTrainerName = trainerData.Name;
-			// 상금지정
-			winMoney = trainerData.Money;
+				Debug.Log("트레이너 배틀 시작");
+				//게임 데이터 설정
+				//게임 매니저에 정보 업데이트
+				Manager.Game.SetBattleState(true, false);
 
-			StartBattle(Manager.Poke.party, enemyParty);
+				TrainerData trainerData = Manager.Poke.enemyData;
+
+				// TODO : EnemyData로 파티 생성하기
+				List<Pokémon> enemyPartyData = new();
+
+				foreach (var data in trainerData.TrainerPartyData)
+				{
+					if (string.IsNullOrEmpty(data.PokeName) || data.PokeLevel <= 0)
+						continue;
+					Pokémon poke = Manager.Poke.AddEnemyPokemon(data.PokeName, data.PokeLevel);
+					enemyPartyData.Add(poke);
+				}
+				// 포켓몬 지정
+				enemyParty = enemyPartyData;
+				// 이름지정
+				enemyTrainerName = trainerData.Name;
+				// 상금지정
+				winMoney = trainerData.Money;
+
+				StartBattle(Manager.Poke.party, enemyParty);
+			}
+			else
+			{
+				Debug.Log("야생 배틀 시작");
+				Manager.Game.SetBattleState(true, true);
+				StartBattle(Manager.Poke.party, Manager.Poke.enemyPokemon);
+			}
+			intro.OnIntroComplete -= OnComplete;
+			Destroy(introObject);
 		}
+		intro.OnIntroComplete += OnComplete;
+
+		if (Manager.Poke.enemyParty.Count >= 1)
+			intro.PlayTrainerIntro();
 		else
-		{
-			Debug.Log("야생 배틀 시작");
-			Manager.Game.SetBattleState(true,true);
-			StartBattle(Manager.Poke.party, Manager.Poke.enemyPokemon);
-		}
+			intro.PlayWildIntro();
 	}
 	#endregion
 
@@ -139,7 +158,7 @@ public class BattleManager : MonoBehaviour
 	public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
 	{
 		isTrainer = true; // 상대가 트레이너일경우
-		
+
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
 
@@ -154,17 +173,17 @@ public class BattleManager : MonoBehaviour
 
 		playerPokemon = Manager.Poke.GetFirtstPokemon(); // 파티의 첫번째 포켓몬
 		enemyPokemon = enemyParty[0];   // 적의 첫번째 포켓몬
-		
-		
+
+
 		//포켓몬 프리팹 스폰
 		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
 		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,() => hud.SpawnStatePanel(false));
 		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
-		
+
 		hud.InitPlayerExp(playerPokemon);//플레이어 포켓몬 exp 설정
-		
+
 
 		var lines = new List<string> { $"{enemyTrainerName} 이(가) 승부를 걸어왔다!" };
 
@@ -190,10 +209,10 @@ public class BattleManager : MonoBehaviour
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
 		hud.InitPlayerExp(playerPokemon);//플레이어 포켓몬 exp 설정
-		
 
-		
-		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!"};
+
+
+		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!" };
 
 		Dialog.CloseDialog += OnBattleDialogClosed;
 		Dialog.StartDialogue(new Dialog(lines));
@@ -217,9 +236,9 @@ public class BattleManager : MonoBehaviour
 		{
 			bool isAction = false;
 			Manager.Game.SetIsItemUsed(false); //아이템 사용 여부 플래그 초기화
-			
+
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
-			
+
 			// 내 포켓몬 교체 체크
 			if (playerPokemon.hp <= 0 || playerPokemon.isDead)
 			{
@@ -246,10 +265,10 @@ public class BattleManager : MonoBehaviour
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
 				yield return StartCoroutine(
 					Manager.Dialog.ShowBattleMessage($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
-				
+
 				Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 				yield return StartCoroutine(AnimateGainExp(totalExp));
-				
+
 				// 트레이너 다음 포켓몬 교체
 				if (isTrainer)
 				{
@@ -504,7 +523,7 @@ public class BattleManager : MonoBehaviour
 						}
 					}
 					break;
-					
+
 				default:
 					Debug.LogWarning($"지정하지 않은 액션 선택");
 					break;
@@ -586,7 +605,7 @@ public class BattleManager : MonoBehaviour
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : 야생 포켓몬 쓰러짐");
 				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{enemyPokemon.pokeName}은 쓰러졌다!"));
-				
+
 				int totalExp = (int)((enemyPokemon.baseExp * enemyPokemon.level) / 7);
 				Debug.Log($"{playerPokemon.pokeName}은/는 {totalExp} 경험치를 얻었다!");
 				yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName}은/는 {totalExp} 경험치를 얻었다!"));
@@ -741,15 +760,15 @@ public class BattleManager : MonoBehaviour
 
 
 			// 레벨업 처리
-			if (expThisRound==remainToLevelUp)
+			if (expThisRound == remainToLevelUp)
 			{
 				playerPokemon.AddExp(expThisRound); //증가할 exp를 넣어주면 알아서 레벨업이랑 계산해서 처리함
-				hud.SetPlayerHUD(playerPokemon,false);
+				hud.SetPlayerHUD(playerPokemon, false);
 				//yield return ShowLevelUpDialog(); // 레벨업 안내 문구
 
 				continue;
 			}
-			
+
 			playerPokemon.AddExp(expThisRound);
 			// 레벨업이 아니면 종료
 			break;
@@ -762,34 +781,34 @@ public class BattleManager : MonoBehaviour
 	#region 포켓몬 스프라이트 교체 / 배틀 중 애니메이션 / 공격 모션
 	
 	//1. 배틀 시작시 스프라이트 생성 및 hp 바 애니메이션
-	public void SpawnPokemonAtStart(Pokémon p, Transform pokemonTransform, bool isPlayer, Action onComplete=null)
+	public void SpawnPokemonAtStart(Pokémon p, Transform pokemonTransform, bool isPlayer, Action onComplete = null)
 	{
 		SpriteRenderer sr = pokemonTransform.GetComponent<SpriteRenderer>();
 		sr.color = new Color(1, 1, 1, 0); //투명하게 설정
-		
+
 		//플레이어 포켓몬이면 왼-> 타겟 위치로 등장
 		Vector2 targetPos = pokemonTransform.position;
 		Vector2 entryOffset = isPlayer ? Vector2.left * 10f : Vector2.right * 10f;
 		Vector2 startPosition = targetPos + entryOffset;
-		
-		
+
+
 		float playTime = 1f;
 
 		pokemonTransform.position = startPosition;
-		
+
 		Sequence seq = DOTween.Sequence();
 		seq.AppendCallback(() => SetPokemonSprite(p.pokeName, sr, isPlayer));
 		seq.Append(pokemonTransform.DOMove(targetPos, playTime).SetEase(Ease.OutQuad));
-		seq.Join(sr.DOFade(1f,playTime)); //동시 처리
-		 
+		seq.Join(sr.DOFade(1f, playTime)); //동시 처리
+
 		//상대 포켓몬이면 오 -> 타겟 위치로 등장
-		
+
 		//끝나고 패널 등장
 		seq.OnComplete(() => onComplete?.Invoke());
 
 	}
-	
-	
+
+
 	//2. 포켓몬 교체시 애니메이션
 	//포켓몬 볼로 돌아오기 - 가운데를 중심으로 크기 줄어듬
 	public IEnumerator PlayReturnAnimation(string prePokeName, Transform pokemonTransform, bool needMsg)
@@ -866,7 +885,7 @@ public class BattleManager : MonoBehaviour
 	public void SetPokemonSprite(string pokeName, SpriteRenderer spriteRenderer, bool isPlayerPokemon)
 	{
 		Debug.Log("스프라이트 불러오기");
-		
+
 		if (isPlayerPokemon) spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleBackSprite(pokeName);
 		else spriteRenderer.sprite = Manager.Data.SJH_PokemonData.GetBattleFrontSprite(pokeName);
 	}
@@ -914,5 +933,5 @@ public class BattleManager : MonoBehaviour
 
 	
 	#endregion
-	
+
 }
