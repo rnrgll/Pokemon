@@ -55,7 +55,7 @@ public class RivalEvent1 : PokeEvent
 
 		if (player != null)
 		{
-			StartCoroutine(MovePlayerLerp(player.gameObject, new Vector3(0, -6f, 0), 0.5f));
+			StartCoroutine(MovePlayerLerp(player.gameObject, new Vector3(0, -8f, 0), 0.5f));
 		}
 		yield return new WaitForSeconds(1f);
 
