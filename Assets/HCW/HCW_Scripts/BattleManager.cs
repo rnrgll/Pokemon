@@ -760,9 +760,9 @@ public class BattleManager : MonoBehaviour
 	}
 
 	
-	public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
+	//public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
 	//애니메이션 대기 시간 필요
-	public void 
+	//public void 
 
 	//2. 스프라이트 불러오기
 	public void SetPokemonSprite(string pokeName, SpriteRenderer spriteRenderer, bool isPlayerPokemon)
