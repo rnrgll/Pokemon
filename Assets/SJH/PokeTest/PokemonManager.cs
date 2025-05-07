@@ -28,6 +28,26 @@ public class PokemonManager : Singleton<PokemonManager>
 	void Start()
 	{
 
+		// AddPokemon(6, 20);
+		// AddPokemon("치코리타", 12);
+		// AddPokemon("메가니움", 5);
+		// party[1].Condition = StatusCondition.Poison;
+		// Manager.Data.PlayerData.Inventory.AddItem("해독제", 10);
+		// Manager.Data.PlayerData.Inventory.AddItem("상처약", 10);
+		// enemyData = new TrainerData()
+		// {
+		// 	IsFight = false,
+		// 	Money = 2000,
+		// 	Name = "안뇽안뇽",
+		// 	TrainerId = 15,
+		// 	TrainerPartyData = new List<TrainerPokemon>()
+		// 	{
+		// 		new TrainerPokemon { PokeLevel = 12, PokeName = "치코리타" },
+		// 		new TrainerPokemon() { PokeLevel = 12, PokeName = "치코리타" },
+		// 		new TrainerPokemon() { PokeLevel = 8, PokeName = "리아코" }
+		// 	}
+		// };
+
 	}
 
 	public void AddPokemon(string pokeName, int level)
@@ -70,7 +90,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	{
 		foreach (var poke in party)
 		{
-			if (!poke.isDead && poke.hp > 0)
+			if (!poke.isDead && poke.Hp > 0)
 				return true;
 		}
 		return false;
@@ -155,7 +175,7 @@ public class PokemonManager : Singleton<PokemonManager>
 			// 체력
 			poke.Heal(poke.maxHp);
 			// 상태이상
-			poke.condition = StatusCondition.Normal;
+			poke.Condition = StatusCondition.Normal;
 			// 기술
 			for (int i = 0; i < poke.skillDatas.Count; i++)
 			{

@@ -130,7 +130,7 @@ public class BattleManager : MonoBehaviour
 	}
 	#endregion
 
-	#region 파괴 및 다이얼르그 종료 시 처리?
+	#region 파괴 및 다이얼르그 종료 시
 	private void OnDestroy()
 	{
 		// 구독 해제
@@ -176,7 +176,7 @@ public class BattleManager : MonoBehaviour
 
 
 		//포켓몬 프리팹 스폰
-		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
+		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true,() => hud.SpawnStatePanel(true));
 		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,() => hud.SpawnStatePanel(false));
 		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
@@ -264,7 +264,7 @@ public class BattleManager : MonoBehaviour
 				// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
 				yield return StartCoroutine(
-					Manager.Dialog.ShowBattleMessage($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
+					Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
 
 				Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 				yield return StartCoroutine(AnimateGainExp(totalExp));
@@ -278,7 +278,7 @@ public class BattleManager : MonoBehaviour
 						enemyPokemon = enemyParty[currentEnemyIndex];
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
 						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.pokeName, enemyPokemonPos, false));
-						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						hud.SetEnemyHUD(enemyPokemon, false);
 
 						yield return battleDelay;
