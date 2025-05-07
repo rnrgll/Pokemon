@@ -3725,6 +3725,9 @@ GameObject:
   - component: {fileID: 561518196}
   - component: {fileID: 561518195}
   - component: {fileID: 561518194}
+  - component: {fileID: 561518199}
+  - component: {fileID: 561518198}
+  - component: {fileID: 561518197}
   m_Layer: 0
   m_Name: "\uD30C\uB780\uAF2C\uB81B\uD2B8\uB808\uC774\uB108"
   m_TagString: Untagged
@@ -3844,6 +3847,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1608137885}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &561518197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561518193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19b4bc8e14ecc846b8824712aa2ef30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uAC00\uAC70\uB77C! \uAF2C\uB7AB"
+    - "\uBAB8\uD1B5\uBC15\uCE58\uAE30!"
+    - "\uBB50\uC57C?"
+    - "\uC911\uC694\uD55C \uC2B9\uBD80\uB97C \uD558\uACE0\uC788\uC5B4!"
+    - "\uC800\uB9AC \uAC00\uB780\uB9D0\uC57C!"
+  npc: {fileID: 561518193}
+--- !u!114 &561518198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561518193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines: []
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
+--- !u!114 &561518199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561518193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9198d2aa9d2ef04cb86cdd070345c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitPos: {x: 0, y: 0}
+  destinationPoints: []
+  moveDuration: 0.3
+  rotateInterval: 2
+  moveSpeed: 0
+  npcMoving: 0
+  moveIndex: 0
+  currentDirection: {x: 0, y: 0}
+  isNpcIntervalCheak: 0
+  isPaused: 0
+  isNPCMoveCheck: 0
+  isNPCTurnCheck: 0
 --- !u!1001 &574512435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6783,7 +6846,7 @@ SpriteRenderer:
   m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &1162375364
@@ -43719,7 +43782,7 @@ SpriteRenderer:
   m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &2123923794
