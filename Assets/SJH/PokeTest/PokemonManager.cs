@@ -164,6 +164,8 @@ public class PokemonManager : Singleton<PokemonManager>
 				data.IncreaseMaxPP();
 				poke.skillDatas[i] = data;
 			}
+			//isDead 플래그 꺼주기
+			poke.isDead = false;
 		}
 
 		return true;

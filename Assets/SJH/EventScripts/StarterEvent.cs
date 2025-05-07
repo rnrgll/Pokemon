@@ -43,6 +43,9 @@ public class StarterEvent : PokeEvent
 		});
 		StartCoroutine(TriggerDialogue());
 		Debug.Log("스타팅 종료!!");
+		
+		//포켓몬 획득 => 포켓몬 메뉴 활성환
+		Manager.Data.PlayerData.menuFlag["포켓몬"] = true;
 		Manager.Event.starterEvent = true;
 		/* 
 		포켓몬 선택지 대사

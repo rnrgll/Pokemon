@@ -47,7 +47,10 @@ public class StarterSubEvent : PokeEvent
 				npcMover.AnimChange(Vector2.up);
 				StartCoroutine(TriggerDialogue());
 			}
+			Manager.Data.PlayerData.Inventory.AddItem("상처약", 3);
+			Debug.Log("상처약 3개 줌");
 			Manager.Event.starterSubEvent = true;
+			
 		}
 	}
 	private IEnumerator TriggerDialogue()
@@ -95,5 +98,7 @@ public class StarterSubEvent : PokeEvent
 	약간의 일로도 당황스럽다....
 	player : 아ㅡㅡ 바빠요
 		 */
+		
+		
 	}
 }
