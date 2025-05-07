@@ -759,9 +759,8 @@ public class BattleManager : MonoBehaviour
 		yield return seq.WaitForCompletion();
 	}
 
-
-	public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
-	{ }
+	
+	//public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
 	//애니메이션 대기 시간 필요
 	//public void 
 

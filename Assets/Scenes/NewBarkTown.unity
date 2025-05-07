@@ -42699,6 +42699,12 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3034349289574088700, guid: 491eeaf5f36ddb741aba6157c5d4224c, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 7328826915806096782}
+    - targetCorrespondingSourceObject: {fileID: 3034349289574088700, guid: 491eeaf5f36ddb741aba6157c5d4224c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7328826915806096781}
+    - targetCorrespondingSourceObject: {fileID: 3034349289574088700, guid: 491eeaf5f36ddb741aba6157c5d4224c, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7328826915806096780}
   m_SourcePrefab: {fileID: 100100000, guid: 491eeaf5f36ddb741aba6157c5d4224c, type: 3}
 --- !u!1 &7328826915806096779 stripped
@@ -42715,11 +42721,62 @@ MonoBehaviour:
   m_GameObject: {fileID: 7328826915806096779}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - .... ....
+    - "\uC774\uACF3\uC774 \uC720\uBA85\uD55C"
+    - "\uACF5\uBC15\uC0AC \uD3EC\uCF13\uBAAC \uC5F0\uAD6C\uC18C..."
+    - "\uBB50\uC57C"
+    - "\uC0AC\uB78C\uC744 \uB6AB\uC5B4\uC9C0\uAC8C \uCCD0\uB2E4\uBCF4\uACE0"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
+--- !u!114 &7328826915806096781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328826915806096779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9198d2aa9d2ef04cb86cdd070345c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exitPos: {x: 0, y: 0}
+  destinationPoints:
+  - {x: 0, y: 0}
+  moveDuration: 0.3
+  rotateInterval: 2
+  moveSpeed: 0
+  npcMoving: 0
+  moveIndex: 0
+  currentDirection: {x: 0, y: 0}
+  isNpcIntervalCheak: 0
+  isPaused: 0
+  isNPCMoveCheck: 0
+  isNPCTurnCheck: 0
+--- !u!114 &7328826915806096782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328826915806096779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d2351ed8a289ff43adba1d29a6003c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialog:
-    lines: []
+    lines:
+    - ... .... ....
+    - "\uC774\uACF3\uC774 \uC720\uBA85\uD55C"
+    - "\uACF5\uBC15\uC0AC \uD3EC\uCF13\uBAAC \uC5F0\uAD6C\uC18C..."
+    - "\uBB50\uC57C"
+    - "\uC0AC\uB78C\uC744 \uB6AB\uC5B4\uC9C0\uAC8C \uCCD0\uB2E4\uBCF4\uACE0"
   npc: {fileID: 0}
 --- !u!1 &7365655745701540554
 GameObject:
