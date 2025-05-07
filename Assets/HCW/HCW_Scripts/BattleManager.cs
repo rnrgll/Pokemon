@@ -277,7 +277,7 @@ public class BattleManager : MonoBehaviour
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
-						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.pokeName,enemyPokemonPos, false));
+						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.pokeName, enemyPokemonPos, false));
 						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						hud.SetEnemyHUD(enemyPokemon, false);
 
@@ -351,8 +351,8 @@ public class BattleManager : MonoBehaviour
 							// 스피드에 랭크 계산
 							int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
 								a.Attacker.pokemonBattleStack.speed);
-							int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
-								a.Attacker.pokemonBattleStack.speed);
+							int speedB = b.Attacker.GetModifyStat(b.Attacker.pokemonStat.speed,
+								b.Attacker.pokemonBattleStack.speed);
 
 							if (a.Attacker.condition == StatusCondition.Paralysis)
 								speedA = speedA / 4;
@@ -703,8 +703,11 @@ public class BattleManager : MonoBehaviour
 					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
 					Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
 					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
-					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
-					Manager.Data.PlayerData.AddMoney(winMoney);
+					if (winMoney > 1)
+					{
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
+						Manager.Data.PlayerData.AddMoney(winMoney);
+					}
 					Manager.Poke.enemyData.IsFight = true;
 				}
 				break;

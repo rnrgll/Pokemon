@@ -228,8 +228,8 @@ public class Trainer : MonoBehaviour, IInteractable
 
 		// TODO : 배틀 기능 끝나면 주석 해제하기
 		// 씬전환
-		//player.CurSceneName = "BattleScene_UIFix";
-		//SceneManager.LoadScene("BattleScene_UIFix");
+		player.CurSceneName = "BattleScene_UIFix";
+		SceneManager.LoadScene("BattleScene_UIFix");
 	}
 
 	IEnumerator TrainerMove()

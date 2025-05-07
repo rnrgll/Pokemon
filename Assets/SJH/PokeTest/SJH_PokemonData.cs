@@ -1053,6 +1053,7 @@ public class SJH_PokemonData
 
 	public Sprite GetBattleFrontSprite(string pokeName)
 	{
+		Debug.Log($"Key = {pokeName}");
 		var check = frontSprites[pokeName];
 		if (check == null)
 			return null;
