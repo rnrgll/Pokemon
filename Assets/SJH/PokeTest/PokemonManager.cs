@@ -90,7 +90,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	{
 		foreach (var poke in party)
 		{
-			if (!poke.isDead && poke.Hp > 0)
+			if (!poke.isDead && poke.hp > 0)
 				return true;
 		}
 		return false;
@@ -175,7 +175,7 @@ public class PokemonManager : Singleton<PokemonManager>
 			// 체력
 			poke.Heal(poke.maxHp);
 			// 상태이상
-			poke.Condition = StatusCondition.Normal;
+			poke.condition = StatusCondition.Normal;
 			// 기술
 			for (int i = 0; i < poke.skillDatas.Count; i++)
 			{
@@ -183,6 +183,8 @@ public class PokemonManager : Singleton<PokemonManager>
 				data.IncreaseMaxPP();
 				poke.skillDatas[i] = data;
 			}
+			//isDead 플래그 꺼주기
+			poke.isDead = false;
 		}
 
 		return true;

@@ -335,7 +335,9 @@ public class Pokémon : MonoBehaviour
 
 		if (skills.Count < 4)
 		{
+			SkillS skillInfo = Manager.Data.SkillSData.GetSkillDataByName(newSkill);
 			skills.Add(newSkill);
+			skillDatas.Add(new SkillData(newSkill,skillInfo.curPP, skillInfo.maxPP));
 			ShowLearnSuccess(newSkill, onFinish);
 			return;
 		}
@@ -425,7 +427,10 @@ public class Pokémon : MonoBehaviour
 		}
 		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(ItemMessage.Get(ItemMessageKey.ForgetSkill, pokeName, oldSkill), () =>
 		{
+			SkillS skillInfo = Manager.Data.SkillSData.GetSkillDataByName(newSkill);
 			skills[idx] = newSkill;
+			skillDatas[idx] = new SkillData(newSkill,skillInfo.curPP, skillInfo.maxPP);
+			
 			ShowLearnSuccess(newSkill, onFinish);
 		}, true, true);
 	}

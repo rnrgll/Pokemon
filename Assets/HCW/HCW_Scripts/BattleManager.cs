@@ -690,9 +690,7 @@ public class BattleManager : MonoBehaviour
 
 		// 내 포켓몬 상태 초기화
 		Manager.Poke.ClearPartyState();
-
-		var setting = SceneManager.LoadSceneAsync(Manager.Game.Player.PrevSceneName); // 이전 씬으로 이동
-		setting.allowSceneActivation = false;
+		
 
 		switch (reason)
 		{
@@ -726,7 +724,21 @@ public class BattleManager : MonoBehaviour
 				}
 				break;
 		}
-
+		
+		//경험치 획득 및 ui 안내 패널 활성화 될 때 있음 그 전에 씬 이동하면 안됨
+		yield return new WaitForSeconds(0.5f);
+		
+		if (Manager.UI.IsAnyUIOpen)
+		{
+			Debug.Log("UI가 열려있어 닫히길 기다립니다...");
+			yield return new WaitUntil(() => !Manager.UI.IsAnyUIOpen);
+		}
+		
+		var setting = SceneManager.LoadSceneAsync(Manager.Game.Player.PrevSceneName); // 이전 씬으로 이동
+		setting.allowSceneActivation = false;
+		
+		
+		
 		// 변수 초기화
 		isTrainer = false;
 		setting.allowSceneActivation = true;
