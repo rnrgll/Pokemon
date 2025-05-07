@@ -123,7 +123,7 @@ public class BattleManager : MonoBehaviour
 		}
 		intro.OnIntroComplete += OnComplete;
 
-		if (Manager.Poke.enemyParty.Count >= 1)
+		if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
 			intro.PlayTrainerIntro();
 		else
 			intro.PlayWildIntro();
