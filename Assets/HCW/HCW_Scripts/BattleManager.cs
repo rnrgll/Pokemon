@@ -60,6 +60,7 @@ public class BattleManager : MonoBehaviour
 
 	private void Start()
 	{
+		Manager.Game.Player.State = Define.PlayerState.Battle;
 		previousScene = SceneManager.GetActiveScene().name; // 이전 씬 이름 저장
 
 		// UI 이벤트 구독

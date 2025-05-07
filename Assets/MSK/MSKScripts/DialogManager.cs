@@ -57,7 +57,8 @@ public class DialogManager : Singleton<DialogManager>
 				{
 					currentLine = 0;
 					dialogBox.SetActive(false);
-					Manager.Game.Player.state = Define.PlayerState.Field;
+					//Manager.Game.Player.State = Define.PlayerState.Field;
+					Manager.Game.Player.State = Manager.Game.Player.prevState;
 					Manager.Dialog.npcState = Define.NpcState.Idle;
 					CloseDialog?.Invoke();
 				}
@@ -88,7 +89,7 @@ public class DialogManager : Singleton<DialogManager>
 	}
 	public void StartDialogue(Dialog dialog)
 	{
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		CreateDialogueUI();
 		StartCoroutine(DialogManager.Instance.ShowText(dialog));
 	}
@@ -108,7 +109,7 @@ public class DialogManager : Singleton<DialogManager>
 	
 	public IEnumerator ShowBattleMessage(string message)
 	{
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		CreateDialogueUI();
 
 		haveToPreventInput = true;
@@ -125,7 +126,7 @@ public class DialogManager : Singleton<DialogManager>
 		dialogBox.SetActive(false);
 
 		haveToPreventInput = false;
-		Manager.Game.Player.state = Define.PlayerState.Field;
+		Manager.Game.Player.State = Define.PlayerState.Field;
 	}
 
 }

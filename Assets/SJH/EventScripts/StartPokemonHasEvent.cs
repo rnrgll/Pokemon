@@ -12,7 +12,7 @@ public class StartPokemonHas : PokeEvent
 			if (Manager.Event.starterEvent || !Manager.Event.questEvent)
 				return;
 
-			Manager.Game.Player.state = Define.PlayerState.Dialog;
+			Manager.Game.Player.State = Define.PlayerState.Dialog;
 			Debug.Log("퀘스트 트리거 발생!!!!!!!!!!!");
 			Manager.Game.Player.AnimChange(Vector2.up);
 			Manager.Game.Player.StopMoving();

@@ -38,7 +38,7 @@ public class HealMachine : MonoBehaviour, IInteractable
 	{
 		Manager.Dialog.npcState = Define.NpcState.Talking;
 
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 
 		string currentSceneName = Manager.Game.Player.CurSceneName;
 
@@ -48,10 +48,10 @@ public class HealMachine : MonoBehaviour, IInteractable
 		// 첫 대사
 		Debug.Log("첫대사 시작");
 		Manager.Dialog.StartDialogue(firstDialog);
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		// 대사 끝날때까지 대기
 		yield return UntilDialogClose();
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		// 대사
 		yield return new WaitForSeconds(1f);
 
@@ -85,9 +85,9 @@ public class HealMachine : MonoBehaviour, IInteractable
 
 		// 다음 대사
 		Debug.Log("마지막대사 시작");
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		Manager.Dialog.StartDialogue(afterHealDialog);
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		// 대사끝날때까지 대기
 		yield return UntilDialogClose();
 
@@ -97,7 +97,7 @@ public class HealMachine : MonoBehaviour, IInteractable
 		sound.GetComponent<AudioSource>().loop = true;
 
 		Manager.Dialog.npcState = Define.NpcState.Idle;
-		Manager.Game.Player.state = Define.PlayerState.Field;
+		Manager.Game.Player.State = Define.PlayerState.Field;
 		healerCoroutine = null;
 	}
 
