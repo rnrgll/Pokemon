@@ -10,11 +10,13 @@ public class StarterSubEvent : PokeEvent
 	[SerializeField] private bool isMove;
 	NpcMover npcMover;
 	private Vector2 originalNpcPosition;
+
 	private void ReturnNpcDialogue()
 	{
 		Manager.Dialog.CloseDialog -= ReturnNpcDialogue;
 		StartCoroutine(ReturnNpcPosition());
 	}
+
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.CompareTag("Player") && Manager.Event.starterEvent)
@@ -35,6 +37,7 @@ public class StarterSubEvent : PokeEvent
 
 			npcMover.AnimChange(Vector2.right);
 			originalNpcPosition = npc.transform.position;
+			Manager.Game.Player.StopMoving();
 			Debug.Log("플레이어 닿음");
 
 			if (!isMove)
