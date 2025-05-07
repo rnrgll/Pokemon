@@ -159,8 +159,12 @@ public class UIManager : Singleton<UIManager>
         _order--;
 
         //모든 UI가 다 닫혔으면 이벤트 호출
-        if(!IsAnyUIOpen)
+        if (!IsAnyUIOpen)
+        {
+	        Debug.Log("팝업다다다다다다다닫");
 	        OnAllUIClosed?.Invoke();
+        }
+	       
     }
 
     #endregion

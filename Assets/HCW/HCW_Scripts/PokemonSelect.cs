@@ -23,21 +23,34 @@ public class PokemonSelect : MonoBehaviour
 	//현재 전투 중인 포켓몬
 	private Pokémon currentPokemon;
 	private bool haveToChoose;
-
+	private bool isUIActive = false; // UI 활성화 상태 체크
 	
 	private void OnEnable()
 	{
 		//커서 초기화
 		curIdx = 0;
 		partyList[curIdx].Select();
+		
+		Manager.UI.OnAllUIClosed += OnUIClosed; // UI가 모두 닫힐 때 이벤트 연결
 	}
+	
 
+	private void OnDisable()
+	{
+		Manager.UI.OnAllUIClosed -= OnUIClosed;
+	}
+	
+	private void OnUIClosed()
+	{
+		isUIActive = false; // UI가 닫힐 때 입력 비활성화
+	}
 
 	private void Update()
 	{
-		if (Manager.UI.IsAnyUIOpen) return;
-		
 		Debug.Log(Manager.UI.IsAnyUIOpen);
+		if (isUIActive) return; // UI 활성화 중면 입력 차단
+		
+		
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
 			MoveCursor(-1);
@@ -82,14 +95,14 @@ public class PokemonSelect : MonoBehaviour
 		
 		if (partyList[curIdx].Pokemon.isDead || partyList[curIdx].Pokemon.hp <= 0)
 		{
-		
+			isUIActive = true;
 			//선택 불가
 			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage("싸울 기력이 없다!",null,true,true);
 			return;
 		}
 		if (partyList[curIdx].Pokemon == currentPokemon)
 		{
-			
+			isUIActive = true;
 			//선택 불가
 			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage($"{currentPokemon.pokeName}는(은) 이미 나가있습니다!",null,true,true);
 			return;
@@ -130,6 +143,8 @@ public class PokemonSelect : MonoBehaviour
 	//포켓몬 선택 창 open & 파티에 있는 포켓몬으로 슬롯 동적 생성
 	public void Show(bool haveToChoose, List<Pokémon> party, Pokémon playerPokemon, System.Action<Pokémon> onChooseCallback, System.Action onCancelCallback)
 	{
+		isUIActive = false;
+		
 		//현재 포켓몬
 		currentPokemon = playerPokemon;
 		this.haveToChoose = haveToChoose;
