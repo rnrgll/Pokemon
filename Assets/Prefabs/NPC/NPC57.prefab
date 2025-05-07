@@ -165,8 +165,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9198d2aa9d2ef04cb86cdd070345c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exitPos: {x: 0, y: 0}
   destinationPoints: []
   moveDuration: 0.3
   rotateInterval: 2
-  npcTurn: 0
-  dir: {x: 0, y: 0}
+  moveSpeed: 0
+  npcMoving: 0
+  moveIndex: 0
+  currentDirection: {x: 0, y: 0}
+  isNpcIntervalCheak: 0
+  isPaused: 0
+  isNPCMoveCheck: 0
+  isNPCTurnCheck: 0
