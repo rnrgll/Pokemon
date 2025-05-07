@@ -881,6 +881,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &476075129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5413551415809611818, guid: 50fa6eaa66ae7e84ea9ae4aa2168930e, type: 3}
+  m_PrefabInstance: {fileID: 7193187939093470725}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &506105074
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1030,7 +1035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 620390623}
   - component: {fileID: 620390625}
-  - component: {fileID: 620390624}
+  - component: {fileID: 620390626}
   m_Layer: 0
   m_Name: QuestEvent
   m_TagString: Untagged
@@ -1053,18 +1058,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1297937379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &620390624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620390622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1558feeab8b95cd4dbe63a21dfc5b13c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &620390625
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1110,6 +1103,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 1.8}
   m_EdgeRadius: 0
+--- !u!114 &620390626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620390622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19d1f8da6711dc459b4cb8562c7cd64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - " \uC5EC\uC5B4 \uACE8\uB4DC\uAD70, \uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5C8\uB2E8\uB2E4!"
+    - "\uC624\uB298 \uB108\uB97C \uBD80\uB978 \uAC83\uC740 \uBC14\uD0C1\uC774 \uC788\uC5B4\uC11C\uB780\uB2E4!"
+    - "\uB0B4\uAC00 \uC544\uB294 \uC0AC\uB78C\uC911\uC5D0"
+    - "\uD3EC\uCF13\uBAAC \uD560\uC544\uBC84\uC9C0\uB77C\uACE0 \uD558\uB294 "
+    - "\uC774\uC0C1\uD55C \uAC83\uC744 \uBC1C\uACAC\uD588\uC744 \uB54C"
+    - "\uB300\uBC1C\uACAC! \uC774\uB77C\uACE0 \uB5A0\uB4DC\uB294"
+    - "\uD560\uC544\uBC84\uC9C0\uAC00 \uC788\uB2E8\uB2E4."
+    - "\uADF8\uB9AC\uACE0 \uC804\uC5D0"
+    - "\uC774\uBC88\uB9CC\uD07C\uC740 \uC9C4\uC9DC\uC57C!"
+    - "\uB77C\uB294 \uBA54\uC77C\uC774 \uC654\uB2E8\uB2E4."
+    - "\uD638\uAE30\uC2EC\uC774 \uC0DD\uAE30\uC9C0\uB9CC \uB098\uB3C4 \uC870\uC218\uB3C4 "
+    - "\uD3EC\uCF13\uBAAC\uC5F0\uAD6C\uB85C \uBC14\uBE60\uC11C \uB9D0\uC774\uB2E4."
+    - "\uB124\uAC00 \uB300\uC2E0 \uAC00\uC92C\uC73C\uBA74 \uC88B\uACA0\uAD6C\uB098"
+    - "\uBB3C\uB860 \uD30C\uD2B8\uB108\uAC00 \uB420 \uD3EC\uCF13\uBAAC\uC744 \uC8FC\uACA0\uB2E4"
+    - "\uCD5C\uADFC\uC5D0 \uBC1C\uACAC\uD55C \uC9C4\uADC0\uD55C \uD3EC\uCF13\uBAAC\uC774\uB780\uB2E4"
+    - "\uC790 \uACE0\uB974\uAC70\uB77C!"
+  npc: {fileID: 476075129}
 --- !u!1001 &683512208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1366,6 +1390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1089744237}
   - component: {fileID: 1089744238}
+  - component: {fileID: 1089744239}
   m_Layer: 0
   m_Name: StartPokemonHasEvent
   m_TagString: Untagged
@@ -1433,6 +1458,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 1.8}
   m_EdgeRadius: 0
+--- !u!114 &1089744239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089744236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3490a0d8b30034a8430a41393e6980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC7A0\uAE50 \uC7A0\uAE50 \uC5B4\uB514\uC5D0 \uAC00\uB290\uB0D0!"
 --- !u!1001 &1090239103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6363,6 +6403,7 @@ GameObject:
   - component: {fileID: 5360433721320972919}
   - component: {fileID: 7163503037219098319}
   - component: {fileID: 7163503037219098320}
+  - component: {fileID: 7163503037219098321}
   m_Layer: 0
   m_Name: "PokeBall_\uBE0C\uCF00\uC778"
   m_TagString: Wall
@@ -6659,6 +6700,7 @@ GameObject:
   - component: {fileID: 834346429623159303}
   - component: {fileID: 2493243459078530751}
   - component: {fileID: 8925340635694976383}
+  - component: {fileID: 8925340635694976384}
   m_Layer: 0
   m_Name: "PokeBall_\uB9AC\uC544\uCF54"
   m_TagString: Wall
@@ -6678,6 +6720,7 @@ GameObject:
   - component: {fileID: 834346429990186980}
   - component: {fileID: 2493243458367701852}
   - component: {fileID: 8925340637265832094}
+  - component: {fileID: 8925340637265832095}
   m_Layer: 0
   m_Name: "PokeBall_\uCE58\uCF54\uB9AC\uD0C0"
   m_TagString: Wall
@@ -6804,7 +6847,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83732735a4f913d47bcc3c0a5f6ee908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialog:
+    lines: []
+  pokeEvent: {fileID: 7163503037219098321}
   pokeName: "\uBE0C\uCF00\uC778"
+--- !u!114 &7163503037219098321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042625172792333310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e623d293c678a254bbbf72a394487072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB098\uB3C4 \uC774 \uB140\uC11D\uC740 \uCD5C\uACE0\uC758 \uD3EC\uCF13\uBAAC\uC774\uB77C\uACE0
+      \uC0DD\uAC01\uD55C\uB2E4!"
+  targetPos: {x: -1, y: 0}
 --- !u!1001 &7193187939093470725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7009,7 +7072,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83732735a4f913d47bcc3c0a5f6ee908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialog:
+    lines: []
+  pokeEvent: {fileID: 8925340635694976384}
   pokeName: "\uB9AC\uC544\uCF54"
+--- !u!114 &8925340635694976384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5730832362837359502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e623d293c678a254bbbf72a394487072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB098\uB3C4 \uC774 \uB140\uC11D\uC740 \uCD5C\uACE0\uC758 \uD3EC\uCF13\uBAAC\uC774\uB77C\uACE0
+      \uC0DD\uAC01\uD55C\uB2E4!"
+  targetPos: {x: -2, y: 0}
 --- !u!4 &8925340637265832093
 Transform:
   m_ObjectHideFlags: 0
@@ -7037,7 +7120,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83732735a4f913d47bcc3c0a5f6ee908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialog:
+    lines: []
+  pokeEvent: {fileID: 8925340637265832095}
   pokeName: "\uCE58\uCF54\uB9AC\uD0C0"
+--- !u!114 &8925340637265832095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5730832363409661549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e623d293c678a254bbbf72a394487072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB098\uB3C4 \uC774 \uB140\uC11D\uC740 \uCD5C\uACE0\uC758 \uD3EC\uCF13\uBAAC\uC774\uB77C\uACE0
+      \uC0DD\uAC01\uD55C\uB2E4!"
+  targetPos: {x: -3, y: 0}
 --- !u!4 &8930968593172971368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1841513958902572448, guid: 3ceec004607cef34c9816a21e35d897b, type: 3}
