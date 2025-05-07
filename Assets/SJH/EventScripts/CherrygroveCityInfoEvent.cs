@@ -4,10 +4,101 @@ using UnityEngine;
 
 public class CherrygroveCityInfoEvent : PokeEvent
 {
+	[Header("대화 관련 설정")]
+	[SerializeField] private Dialog dialog;
+	[SerializeField] private GameObject npc;
+	Vector2 prevPos;
+	NpcMover npcMover;
+	private void Start()
+	{
+		prevPos = gameObject.transform.position;
+		npcMover = GetComponent<NpcMover>();
+	}
 
 	public override void OnPokeEvent(GameObject player)
 	{
-		/*
+		Debug.Log($"{Manager.Event.cherrygroveCityInfoEvent} 상태");
+
+		if (Manager.Event.cherrygroveCityInfoEvent)
+		{
+			dialog = new Dialog(new List<string>
+			{
+			"가나다",
+			"라마바"
+			});
+
+			StartCoroutine(FirstMove(player));
+			return;
+		}
+
+		StartCoroutine(PrintCherryCity());
+	}
+
+	private IEnumerator FirstMove(GameObject player)
+	{
+		// 1. 첫 번째 대화 시작
+		Manager.Dialog.StartDialogue(dialog);
+
+		// 대화가 끝날 때까지 대기
+		while (Manager.Dialog.isTyping)
+		{
+			yield return null;
+		}
+
+		// 2. 이동
+		yield return StartCoroutine(MoveNpcPos(player, 1));
+		yield return StartCoroutine(MovePos(player));
+
+		// 3. 이동 후 새로운 대화 시작
+		Dialog extraDialog = new Dialog(new List<string> { "아자차카" });
+		Manager.Dialog.StartDialogue(extraDialog);
+		yield return StartCoroutine(MoveNpcPos(player, 2));
+		yield return StartCoroutine(MovePos(player));
+
+		Dialog newDialog = new Dialog(new List<string> { "응애" });
+		Manager.Dialog.StartDialogue(newDialog);
+		yield return StartCoroutine(MoveNpcPos(player, 2));
+		yield return StartCoroutine(MovePos(player));
+		while (Manager.Dialog.isTyping)
+		{
+			yield return null;
+		}
+	}
+
+	private IEnumerator PrintCherryCity()
+	{
+		Manager.Dialog.StartDialogue(dialog);
+
+		while (Manager.Dialog.isTyping)
+		{
+			yield return null;
+		}
+	}
+	private IEnumerator MoveNpcPos(GameObject _npc,int index)
+	{
+		yield return new WaitForSeconds(0.5f);
+		if (_npc != null)
+		{
+			_npc.transform.position = npcMover.destinationPoints[index];
+		}
+		yield return null;
+	}
+
+	private IEnumerator MovePos(GameObject _npc)
+	{
+		yield return new WaitForSeconds(0.5f);
+		Player player = FindObjectOfType<Player>();
+
+		if (player != null)
+		{
+			player.transform.position = new Vector3(Mathf.Lerp(transform.position.x, _npc.transform.position.x - 2f,0.5f)
+				,Mathf.Lerp(transform.position.y, _npc.transform.position.x, 0.5f));
+		}
+		yield return new WaitForSeconds(1f); 
+	}
+
+
+	/*
 			너 신출내기 트레이너지?
 		급소를 찔렸지!
 		좋아 좋아
@@ -70,5 +161,4 @@ public class CherrygroveCityInfoEvent : PokeEvent
 		할아버지 집 안으로 이동하고 이벤트 종료
 
 		 */
-	}
 }

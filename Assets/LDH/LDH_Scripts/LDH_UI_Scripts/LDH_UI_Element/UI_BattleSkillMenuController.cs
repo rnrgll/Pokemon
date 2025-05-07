@@ -40,6 +40,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
         curX = 0;
         //Debug.Log($"<color=blue>{curX} </color>");
         skillButtonList[curX].SetArrowActive(true);
+        UpdateSkillInfo();
     }
 
     private void Update()

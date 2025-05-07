@@ -101,8 +101,20 @@ public class DialogManager : Singleton<DialogManager>
 		{
 			dialogInstance = Instantiate(prefab);
 			// 인스턴스 내부 트랜스폼을 통하여 프리팹 내부 접근
+			
+			var canvas = dialogInstance.GetComponent<Canvas>();
+			if (canvas != null)
+			{
+				canvas.overrideSorting = true;     // 다른 UI 위에 올리기 허용
+				canvas.sortingOrder = 1000;        // 큰 값으로 설정해서 다른 ui보다 가장 앞에 올라오도록 처리
+			}
+			
 			dialogBox = dialogInstance.transform.GetChild(0).gameObject;
 			dialogText = dialogBox.GetComponentInChildren<TMP_Text>();
+		}
+		else
+		{
+			Debug.Log("다이얼로그 인스턴스 이미 있음.");
 		}
 	}
 	
@@ -110,7 +122,8 @@ public class DialogManager : Singleton<DialogManager>
 	
 	public IEnumerator ShowBattleMessage(string message)
 	{
-		Manager.Game.Player.State = Define.PlayerState.Dialog;
+		Debug.Log("다이얼로그 시작합니다.");
+		Manager.Game.Player.state = Define.PlayerState.Dialog;
 		CreateDialogueUI();
 
 		haveToPreventInput = true;
@@ -130,5 +143,6 @@ public class DialogManager : Singleton<DialogManager>
 		if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
 			Manager.Game.Player.State = Define.PlayerState.Field;
 	}
+	
 
 }
