@@ -45,7 +45,7 @@ public class UI_Linked : MonoBehaviour, IUIInputHandler, IUISelectable, IUICance
     
     
     public void SetupOptions(Transform selectButtonParent, List<(string label, ISelectableAction action)> options)
-    {
+    {  Debug.Log("4");
 	    
 	    // List<UI_GenericSelectButton> selectButtons
 	    for (int i = 0; i < selectButtonParent.childCount; i++)
@@ -56,6 +56,7 @@ public class UI_Linked : MonoBehaviour, IUIInputHandler, IUISelectable, IUICance
 		    }
 		   
 	    }
+	    Debug.Log("5");
     }
 
     public virtual void HandleInput(Define.UIInputType inputType)
