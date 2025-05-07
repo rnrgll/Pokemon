@@ -958,7 +958,7 @@ GameObject:
   - component: {fileID: 1093879146}
   - component: {fileID: 1093879145}
   m_Layer: 0
-  m_Name: PokeGearEvent
+  m_Name: PokeHouseEvent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1011,8 +1011,7 @@ MonoBehaviour:
       \uC815\uB3C4\uB2C8\uAE4C"
     - "\uB0B4 \uC0C1\uC0C1\uC774 \uB9DE\uC558\uB294\uAC00... \uACF5\uBC15\uC0AC\uB77C\uBA74
       \uC54C\uACE0\uC788\uC744 \uD130"
-  npc1: {fileID: 8645870667295629459}
-  npc2: {fileID: 2061531879}
+  npc: {fileID: 8645870667295629459}
   isMove: 0
 --- !u!61 &1093879146
 BoxCollider2D:
@@ -4271,11 +4270,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &2061531879 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2994874419291185717, guid: 5f0c44390446d8646bf6b35ba7279a44, type: 3}
-  m_PrefabInstance: {fileID: 3381091287388753785}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2067620418
 GameObject:
   m_ObjectHideFlags: 0
