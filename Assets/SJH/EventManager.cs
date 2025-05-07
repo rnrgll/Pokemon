@@ -41,6 +41,7 @@ public class EventManager : Singleton<EventManager>
 	[SerializeField] public bool backNewBarkTownEvent;     // pokemonHouseEvent true일 떄 포켓몬 할아버지집 나가면 강제 이벤트 (대충 마을로오라는)
 	[SerializeField] public bool rivalEvent2;              // 연두마을 가는길에 라이벌 배틀 이벤트
 
+				[SerializeField] public bool teachEvent;               // 무궁시티 체육관 왼쪽에 말걸면 학교로 데려가서 설명해주는 이벤트
 	 // 공박사 이벤트(adventureEvent) 가 true = 비활성화, false = 활성화로 영향을 받는 이벤트
 	[SerializeField] public bool blockRoute30Event;        
 

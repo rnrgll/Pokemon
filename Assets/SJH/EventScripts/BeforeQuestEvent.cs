@@ -19,7 +19,7 @@ public class BeforeQuestEvent : PokeEvent
 			if (Manager.Event.beforeQuestEvent)
 				return;
 
-			Manager.Game.Player.state = Define.PlayerState.Dialog;
+			Manager.Game.Player.State = Define.PlayerState.Dialog;
 			Debug.Log("퀘스트 트리거 발생!!!!!!!!!!!");
 			Manager.Game.Player.PlayerMove(targetPos);
 			Manager.Event.beforeQuestEvent = true;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DialogManager : Singleton<DialogManager>
 {
@@ -57,7 +58,8 @@ public class DialogManager : Singleton<DialogManager>
 				{
 					currentLine = 0;
 					dialogBox.SetActive(false);
-					Manager.Game.Player.state = Define.PlayerState.Field;
+					if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
+						Manager.Game.Player.State = Define.PlayerState.Field;
 					Manager.Dialog.npcState = Define.NpcState.Idle;
 					CloseDialog?.Invoke();
 				}
@@ -88,7 +90,7 @@ public class DialogManager : Singleton<DialogManager>
 	}
 	public void StartDialogue(Dialog dialog)
 	{
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		CreateDialogueUI();
 		StartCoroutine(DialogManager.Instance.ShowText(dialog));
 	}
@@ -121,7 +123,7 @@ public class DialogManager : Singleton<DialogManager>
 	public IEnumerator ShowBattleMessage(string message)
 	{
 		Debug.Log("다이얼로그 시작합니다.");
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		CreateDialogueUI();
 
 		haveToPreventInput = true;
@@ -138,7 +140,8 @@ public class DialogManager : Singleton<DialogManager>
 		dialogBox.SetActive(false);
 
 		haveToPreventInput = false;
-		Manager.Game.Player.state = Define.PlayerState.Field;
+		if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
+			Manager.Game.Player.State = Define.PlayerState.Field;
 	}
 	
 

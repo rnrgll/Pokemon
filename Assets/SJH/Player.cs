@@ -8,8 +8,21 @@ using static Define;
 
 public class Player : MonoBehaviour
 {
+	public PlayerState prevState;
+	[SerializeField] Define.PlayerState state;
 	[Tooltip("플레이어 상태")]
-	[SerializeField] public Define.PlayerState state;
+	[SerializeField] public Define.PlayerState State {
+		get => state;
+		set
+		{
+			if (state != value)
+			{
+				Debug.Log($"플레이어 상태 변경: {state} > {value}");
+				prevState = state;
+				state = value;
+			}
+		}
+	}
 	[Tooltip("플레이어 방향")]
 	[SerializeField] public Vector2 currentDirection = Vector2.down; // 처음 방향은 아래
 	// 플레이어 이동 코루틴
@@ -112,14 +125,12 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		if (state == Define.PlayerState.SceneChange) // 씬이동중
+		if (State == Define.PlayerState.SceneChange) // 씬이동중
 			return;
 
-		switch (state)
+		switch (State)
 		{
 			case Define.PlayerState.Field:          // 필드
-				if (Input.GetKeyDown(KeyCode.Alpha1))
-					PokemonManager.Get.party[0].AddExp(100);
 				MoveState();
 				break;
 			case Define.PlayerState.Battle:         // 배틀중
@@ -129,7 +140,7 @@ public class Player : MonoBehaviour
 			case Define.PlayerState.Menu:           // Menu 활성화중
 				break;
 			case Define.PlayerState.Dialog:         //	대화 활성화중
-				
+				Debug.Log("현재 State = Dialog");
 				break;
 		}
 	}
@@ -167,7 +178,7 @@ public class Player : MonoBehaviour
 			if (!Manager.UI.IsAnyUIOpen)
 			{
 				Manager.UI.ShowLinkedUI<UI_Menu>("UI_Menu");
-				state = Define.PlayerState.Menu; // 플레이어 상태를 UI로 전환
+				State = Define.PlayerState.Menu; // 플레이어 상태를 UI로 전환
 			}
 			return;
 		}
@@ -314,7 +325,7 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Z))
 			{
-				switch (state)
+				switch (State)
 				{
 					case PlayerState.Field:
 						// 필드 상호작용
@@ -521,17 +532,19 @@ public class Player : MonoBehaviour
 	void OnAllUIClosed()
 	{
 		//만약 이전 상태가 필드가 아니라 배틀 상태였다면..?? -> 추후 로직에 따라 수정 필요
-		if(state==Define.PlayerState.Menu)
-			state = Define.PlayerState.Field;
+		if(State==Define.PlayerState.Menu)
+			State = Define.PlayerState.Field;
 		else if (Manager.Game.IsInBattle)
 		{
-			state = Define.PlayerState.Battle;
+			State = Define.PlayerState.Battle;
 		}
 		else
 		{
 			//todo: 수정필요(대사 중 팝업 띄울떼 고랴)
-			state = Define.PlayerState.Field; //다이얼로그..일때.. 고려해함(수정 필요)
+			State = Define.PlayerState.Field; //다이얼로그..일때.. 고려해함(수정 필요)
 		}
 	}
 	#endregion	
+
+	
 }
