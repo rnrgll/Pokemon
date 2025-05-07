@@ -520,16 +520,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6890650511317701747, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
       propertyPath: soundData.Array.size
-      value: 32
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 6890650511317701747, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
       propertyPath: soundData.Array.data[31].key
       value: BattleScene_UIFix
       objectReference: {fileID: 0}
     - target: {fileID: 6890650511317701747, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
+      propertyPath: soundData.Array.data[32].key
+      value: Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890650511317701747, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
       propertyPath: soundData.Array.data[31].sound
       value: 
       objectReference: {fileID: 8300000, guid: 91170687e01d86d48a0b7a6f009af6b0, type: 3}
+    - target: {fileID: 6890650511317701747, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
+      propertyPath: soundData.Array.data[32].sound
+      value: 
+      objectReference: {fileID: 8300000, guid: be7d2f3130d4e9544a38dca2eb289851, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -6,7 +6,7 @@ using static Define;
 public class PokemonManager : Singleton<PokemonManager>
 {
 	public static PokemonManager Get => GetInstance();
-	
+
 	// 내파티
 	public List<Pokémon> party = new List<Pokémon>();
 	// PC
@@ -18,7 +18,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	public Pokémon enemyPokemon;
 	// 배틀할 상대 포켓몬들
 	public List<Pokémon> enemyParty;
-	
+
 	// 필드에 따라다니는 포켓몬
 	public GameObject fieldPokemon;
 
@@ -28,22 +28,22 @@ public class PokemonManager : Singleton<PokemonManager>
 	void Start()
 	{
 		// Test용 스타팅 포ㅓ켓몬 주기
-		AddPokemon(3, 20);
-		
-		//====================테스트 코드===============//
-		//메뉴 구현 중 테스트를 위한 임시 데이터 추가
-		AddPokemon(5, 10);
-		AddPokemon(8, 20);
-		party[1].hp = 1;
-		party[1].condition = StatusCondition.Poison;
-		// AddPokemon(33, 10);
+		// AddPokemon(4, 20);
 
-		enemyParty = new List<Pokémon>();
-		enemyPokemon = Manager.Poke.AddEnemyPokemon("브케인",15);
-		//===========================================//
-		AddPokemon("블레이범", 50);
-		AddPokemon("피죤투",30);
+		// //====================테스트 코드===============//
+		// //메뉴 구현 중 테스트를 위한 임시 데이터 추가
+		// AddPokemon(1, 10);
+		// AddPokemon(8, 20);
+		// party[1].hp = 1;
+		// party[1].condition = StatusCondition.Poison;
+		// // AddPokemon(33, 10);
+		//
+		// enemyParty = new List<Pokémon>();
+		// enemyPokemon = Manager.Poke.AddEnemyPokemon("치코리타",15);
 
+		// AddPokemon("블레이범", 50);
+		// AddPokemon("피죤투",30);
+		// //===========================================//
 	}
 
 	public void AddPokemon(string pokeName, int level)
@@ -159,5 +159,28 @@ public class PokemonManager : Singleton<PokemonManager>
 		{
 			poke.StackReset();
 		}
+	}
+
+	public bool PartyHeal()
+	{
+		// 포켓몬 모두 회복
+		// 체력, 상태이상, 기술
+
+		foreach(var poke in party)
+		{
+			// 체력
+			poke.Heal(poke.maxHp);
+			// 상태이상
+			poke.condition = StatusCondition.Normal;
+			// 기술
+			for (int i = 0; i < poke.skillDatas.Count; i++)
+			{
+				var data = poke.skillDatas[i];
+				data.IncreaseMaxPP();
+				poke.skillDatas[i] = data;
+			}
+		}
+
+		return true;
 	}
 }

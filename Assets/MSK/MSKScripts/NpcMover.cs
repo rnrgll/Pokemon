@@ -44,6 +44,7 @@ public class NpcMover : MonoBehaviour
 	[SerializeField] public bool isNPCMoveCheck;
 	//	회전
 	[SerializeField] public bool isNPCTurnCheck;
+	public event Action MoveFin;
 	
 	private void Awake()
 	{
@@ -218,6 +219,7 @@ public class NpcMover : MonoBehaviour
 			{
 				isNPCMoveCheck = false;
 				anim.SetBool("npcMoving", false);
+				MoveFin?.Invoke();
 			}
 
 			npcMoveCoroutione = null;
@@ -265,20 +267,8 @@ public class NpcMover : MonoBehaviour
 
 	public void AnimChange(Vector2 position)
 	{
-		Vector2 currentPos = (Vector2)transform.position;
-		Vector2 diff = position - currentPos;
-
-		if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
-		{
-			currentDirection = diff.x > 0 ? Vector2.right : Vector2.left;
-		}
-		else
-		{
-			currentDirection = diff.y > 0 ? Vector2.up : Vector2.down;
-		}
-
-		anim.SetFloat("x", currentDirection.x);
-		anim.SetFloat("y", currentDirection.y);
+		anim.SetFloat("x", position.x);
+		anim.SetFloat("y", position.y);
 	}
 
 	public void StopMoving()
@@ -295,6 +285,7 @@ public class NpcMover : MonoBehaviour
 		anim.SetFloat("y", currentDirection.y);
 
 		Manager.Dialog.npcState = NpcState.Idle;
+		MoveFin?.Invoke();
 	}
 
 	private bool IsWalkAble(Vector2 currentDirection)

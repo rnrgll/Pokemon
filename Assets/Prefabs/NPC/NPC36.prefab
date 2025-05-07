@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5889187351210917364}
   - component: {fileID: 1501236116446818905}
   - component: {fileID: 4735206674679744894}
-  - component: {fileID: -3197809385295084329}
   m_Layer: 0
   m_Name: NPC36
   m_TagString: NPC
@@ -131,20 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &-3197809385295084329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3451414011729524487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9198d2aa9d2ef04cb86cdd070345c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destinationPoints: []
-  moveDuration: 0.3
-  rotateInterval: 2
-  npcTurn: 0
-  dir: {x: 0, y: 0}

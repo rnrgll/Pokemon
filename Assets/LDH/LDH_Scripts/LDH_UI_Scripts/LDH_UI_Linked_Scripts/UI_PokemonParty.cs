@@ -205,7 +205,7 @@ public class UI_PokemonParty : UI_Linked
 	//커서 업데이트
 	void UpdateCursor()
 	{
-		Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
+		//Debug.Log($"커서 업데이트 : {preCursorIdx} => {curCursorIdx}");
 		if (preCursorIdx < party.Count)
 			slotList[preCursorIdx].Deselect();
 		else

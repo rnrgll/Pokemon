@@ -12,14 +12,14 @@ public class CutScene : MonoBehaviour
 	public IEnumerator PlayEvent()
 	{
 		//	이벤트 중 움직임 제한
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 
 		foreach (var action in actions) {
 
 			yield return action.PlayEvent();
 		}
 		//	제한 해방
-		Manager.Game.Player.state = Define.PlayerState.Field;
+		Manager.Game.Player.State = Define.PlayerState.Field;
 	}
 	public void Addaction(CutSceneAction action) {
 		

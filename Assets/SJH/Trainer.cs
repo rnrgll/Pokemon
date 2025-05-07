@@ -155,7 +155,7 @@ public class Trainer : MonoBehaviour, IInteractable
 
 		// 플레이어 이동 제한
 		var player = Manager.Game.Player;
-		player.state = Define.PlayerState.Dialog;
+		player.State = Define.PlayerState.Dialog;
 
 		// 이동 할 위치 저장
 		yield return new WaitUntil(() =>
@@ -180,7 +180,7 @@ public class Trainer : MonoBehaviour, IInteractable
 
 		// 플레이어 방향으로 변경
 		var player = Manager.Game.Player;
-		player.state = Define.PlayerState.Dialog;
+		player.State = Define.PlayerState.Dialog;
 
 		Vector2 dir = currentDirection;
 
@@ -199,7 +199,7 @@ public class Trainer : MonoBehaviour, IInteractable
 		if (isFight)
 		{
 			Debug.Log("이미 이긴 트레이너 입니다.");
-			player.state = Define.PlayerState.Field;
+			player.State = Define.PlayerState.Field;
 			return;
 		}
 
