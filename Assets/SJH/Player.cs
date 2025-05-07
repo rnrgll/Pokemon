@@ -527,4 +527,15 @@ public class Player : MonoBehaviour
 		}
 	}
 	#endregion	
+
+
+	// 플레이어 외부 이동
+	public void PlayerMove(Vector2 direction)
+	{
+		if (moveCoroutine == null)
+		{
+			moveCoroutine = StartCoroutine(Move(direction));
+		}
+	}
+	
 }

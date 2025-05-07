@@ -160,4 +160,27 @@ public class PokemonManager : Singleton<PokemonManager>
 			poke.StackReset();
 		}
 	}
+
+	public bool PartyHeal()
+	{
+		// 포켓몬 모두 회복
+		// 체력, 상태이상, 기술
+
+		foreach(var poke in party)
+		{
+			// 체력
+			poke.Heal(poke.maxHp);
+			// 상태이상
+			poke.condition = StatusCondition.Normal;
+			// 기술
+			for (int i = 0; i < poke.skillDatas.Count; i++)
+			{
+				var data = poke.skillDatas[i];
+				data.IncreaseMaxPP();
+				poke.skillDatas[i] = data;
+			}
+		}
+
+		return true;
+	}
 }
