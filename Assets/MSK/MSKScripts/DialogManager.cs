@@ -123,7 +123,7 @@ public class DialogManager : Singleton<DialogManager>
 	public IEnumerator ShowBattleMessage(string message)
 	{
 		Debug.Log("다이얼로그 시작합니다.");
-		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 		CreateDialogueUI();
 
 		haveToPreventInput = true;
