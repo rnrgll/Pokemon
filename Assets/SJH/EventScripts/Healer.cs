@@ -51,6 +51,7 @@ public class Healer : MonoBehaviour, IInteractable
 		Manager.Dialog.StartDialogue(firstDialog);
 		// 대사 끝날때까지 대기
 		yield return UntilDialogClose();
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 
 		// 대사
 		yield return new WaitForSeconds(1f);

@@ -368,7 +368,7 @@ public class SJH_PokemonData
 				EvolveName = "피죤",
 				DefaultSkill = new List<string>()
 				{
-					"몸통박치기",
+					"몸통박치기", "진흙뿌리기"
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
@@ -394,7 +394,7 @@ public class SJH_PokemonData
 				EvolveName = "피죤투",
 				DefaultSkill = new List<string>()
 				{
-					"몸통박치기", "모래뿌리기", "바람일으키기",
+					"몸통박치기", "모래뿌리기", "바람일으키기", "진흙뿌리기"
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
