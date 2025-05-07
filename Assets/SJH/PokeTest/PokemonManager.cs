@@ -6,7 +6,7 @@ using static Define;
 public class PokemonManager : Singleton<PokemonManager>
 {
 	public static PokemonManager Get => GetInstance();
-	
+
 	// 내파티
 	public List<Pokémon> party = new List<Pokémon>();
 	// PC
@@ -18,7 +18,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	public Pokémon enemyPokemon;
 	// 배틀할 상대 포켓몬들
 	public List<Pokémon> enemyParty;
-	
+
 	// 필드에 따라다니는 포켓몬
 	public GameObject fieldPokemon;
 
@@ -29,7 +29,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	{
 		// Test용 스타팅 포ㅓ켓몬 주기
 		// AddPokemon(4, 20);
-		
+
 		// //====================테스트 코드===============//
 		// //메뉴 구현 중 테스트를 위한 임시 데이터 추가
 		// AddPokemon(1, 10);
