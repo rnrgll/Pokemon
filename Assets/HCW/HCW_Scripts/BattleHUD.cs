@@ -68,6 +68,7 @@ public class BattleHUD : MonoBehaviour
 		enemyHpBar.SetHp(e.hp, e.maxHp);
 		
 		enemyCondition.text = Define.GetKoreanState[e.condition];
+		enemyCondition.gameObject.SetActive(e.condition!=Define.StatusCondition.Normal);
 		
 		if(!playAnim) return;
 		
@@ -96,12 +97,13 @@ public class BattleHUD : MonoBehaviour
 	#region Animation
 
 	//등장 애니메이션
-	public void SpawnStatePanel()
+	public void SpawnStatePanel(bool isPlayer)
 	{
 		float playTime = 0.4f;
-		Sequence seq = DOTween.Sequence();
-		seq.Append(playerPanel.DOAnchorPos(pPanelOrigin, playTime).SetEase(Ease.OutQuad));
-		seq.Join(enemyPanel.DOAnchorPos(ePanelOrigin, playTime).SetEase(Ease.OutQuad));
+		if (isPlayer)
+			playerPanel.DOAnchorPos(pPanelOrigin, playTime).SetEase(Ease.OutQuad);
+		else
+			enemyPanel.DOAnchorPos(ePanelOrigin, playTime).SetEase(Ease.OutQuad);
 	}
 
 	#endregion
