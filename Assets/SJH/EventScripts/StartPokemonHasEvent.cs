@@ -16,8 +16,13 @@ public class StartPokemonHas : PokeEvent
 			Debug.Log("퀘스트 트리거 발생!!!!!!!!!!!");
 			Manager.Game.Player.AnimChange(Vector2.up);
 			Manager.Game.Player.StopMoving();
-			Manager.Game.Player.PlayerMove(Vector2.up);
-			Manager.Game.Player.StopMoving();
+
+			if (Manager.Game.Player.transform.position.x == -12)
+				Manager.Game.Player.transform.position = new Vector2(-12, 8);
+			else
+				Manager.Game.Player.transform.position = new Vector2(-10, 8);
+			//Manager.Game.Player.PlayerMove(Vector2.up);
+			//Manager.Game.Player.StopMoving();
 
 			StartCoroutine(TriggerDialogue());
 		}
