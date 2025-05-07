@@ -98,7 +98,7 @@ public class UI_MultiLinePopUp :UI_PopUp, IUIInputHandler
 	}
 	
 	
-	public void HandleInput(Define.UIInputType inputType)
+	public override void HandleInput(Define.UIInputType inputType)
 	{
 		if (!_canReceiveInput) return;
 		if (inputType != Define.UIInputType.Select && inputType != Define.UIInputType.Cancel) 

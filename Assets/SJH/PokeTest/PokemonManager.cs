@@ -6,7 +6,7 @@ using static Define;
 public class PokemonManager : Singleton<PokemonManager>
 {
 	public static PokemonManager Get => GetInstance();
-	
+
 	// 내파티
 	public List<Pokémon> party = new List<Pokémon>();
 	// PC
@@ -18,7 +18,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	public Pokémon enemyPokemon;
 	// 배틀할 상대 포켓몬들
 	public List<Pokémon> enemyParty;
-	
+
 	// 필드에 따라다니는 포켓몬
 	public GameObject fieldPokemon;
 
@@ -28,23 +28,22 @@ public class PokemonManager : Singleton<PokemonManager>
 	void Start()
 	{
 		// Test용 스타팅 포ㅓ켓몬 주기
-		AddPokemon(1, 5);
-		
-		
-		//====================테스트 코드===============//
-		//메뉴 구현 중 테스트를 위한 임시 데이터 추가
-		AddPokemon(5, 10);
-		AddPokemon(8, 20);
-		party[1].hp = 1;
-		party[1].condition = StatusCondition.Poison;
-		// AddPokemon(33, 10);
+		// AddPokemon(4, 20);
 
-		enemyParty = new List<Pokémon>();
-		enemyPokemon = Manager.Poke.AddEnemyPokemon("치코리타", 5);
-		//===========================================//
-		AddPokemon("블레이범", 50);
-		AddPokemon("피죤투",30);
+		// //====================테스트 코드===============//
+		// //메뉴 구현 중 테스트를 위한 임시 데이터 추가
+		// AddPokemon(1, 10);
+		// AddPokemon(8, 20);
+		// party[1].hp = 1;
+		// party[1].condition = StatusCondition.Poison;
+		// // AddPokemon(33, 10);
+		//
+		// enemyParty = new List<Pokémon>();
+		// enemyPokemon = Manager.Poke.AddEnemyPokemon("치코리타",15);
 
+		// AddPokemon("블레이범", 50);
+		// AddPokemon("피죤투",30);
+		// //===========================================//
 	}
 
 	public void AddPokemon(string pokeName, int level)

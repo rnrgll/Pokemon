@@ -5,10 +5,17 @@ using UnityEngine;
 
 public class LDH_Test : MonoBehaviour
 {
-	private void Awake()
+	public BattleManager bm;
+	private void Start()
 	{
-		//Player player = new Player();
+		Manager.Game.Player.PrevSceneName = "Route29";
 	}
-	
+
+	public void ExpTest(int exp)
+	{
+		Debug.Log("<color=red> 경험치 증가 시작</color>");
+		StartCoroutine(bm.AnimateGainExp(exp));
+		Debug.Log("<color=red> 경험치 증가 끝</color>");
+	}	
 	
 }

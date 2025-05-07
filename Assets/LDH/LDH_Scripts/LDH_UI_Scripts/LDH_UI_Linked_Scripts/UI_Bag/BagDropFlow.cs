@@ -10,7 +10,6 @@ public class BagDropFlow
 	private InventorySlot _targetSlot;
 	private int _maxAmount;
 	private int _currentAmount;
-	private string confirmMsg = "{0}를(을) {1}개 버리시겠습니까?";
 
 	public BagDropFlow(UI_Bag bag)
 	{

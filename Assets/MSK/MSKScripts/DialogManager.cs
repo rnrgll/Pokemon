@@ -24,6 +24,8 @@ public class DialogManager : Singleton<DialogManager>
 	int currentLine = 0;
 	//	대사 출력의 여부
 	public bool isTyping;
+	
+	private bool haveToPreventInput = false;
 
 	public static DialogManager Instance { get; private set; }
 
@@ -38,7 +40,8 @@ public class DialogManager : Singleton<DialogManager>
 
 	public void HandleUpdate()
 	{   // 대화 진행중
-
+		if (haveToPreventInput) return;
+		
 		if (Input.GetKeyDown(KeyCode.Z))
 		{
 
@@ -96,8 +99,47 @@ public class DialogManager : Singleton<DialogManager>
 		{
 			dialogInstance = Instantiate(prefab);
 			// 인스턴스 내부 트랜스폼을 통하여 프리팹 내부 접근
+			
+			var canvas = dialogInstance.GetComponent<Canvas>();
+			if (canvas != null)
+			{
+				canvas.overrideSorting = true;     // 다른 UI 위에 올리기 허용
+				canvas.sortingOrder = 1000;        // 큰 값으로 설정해서 다른 ui보다 가장 앞에 올라오도록 처리
+			}
+			
 			dialogBox = dialogInstance.transform.GetChild(0).gameObject;
 			dialogText = dialogBox.GetComponentInChildren<TMP_Text>();
 		}
+		else
+		{
+			Debug.Log("다이얼로그 인스턴스 이미 있음.");
+		}
 	}
+	
+	
+	
+	public IEnumerator ShowBattleMessage(string message)
+	{
+		Debug.Log("다이얼로그 시작합니다.");
+		Manager.Game.Player.state = Define.PlayerState.Dialog;
+		CreateDialogueUI();
+
+		haveToPreventInput = true;
+		dialogBox.SetActive(true);
+		dialogText.text = "";
+
+		foreach (var letter in message.ToCharArray())
+		{
+			dialogText.text += letter;
+			yield return new WaitForSeconds(0.6f / letterPerSec);
+		}
+
+		yield return new WaitForSeconds(1f); // 읽는 시간 확보
+		dialogBox.SetActive(false);
+
+		haveToPreventInput = false;
+		Manager.Game.Player.state = Define.PlayerState.Field;
+	}
+	
+
 }
