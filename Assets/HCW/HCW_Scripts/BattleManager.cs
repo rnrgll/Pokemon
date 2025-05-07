@@ -258,7 +258,7 @@ public class BattleManager : MonoBehaviour
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
-						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.name,enemyPokemonPos, false));
+						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.pokeName, enemyPokemonPos, false));
 						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						hud.SetEnemyHUD(enemyPokemon, false);
 
@@ -332,8 +332,8 @@ public class BattleManager : MonoBehaviour
 							// 스피드에 랭크 계산
 							int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
 								a.Attacker.pokemonBattleStack.speed);
-							int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
-								a.Attacker.pokemonBattleStack.speed);
+							int speedB = b.Attacker.GetModifyStat(b.Attacker.pokemonStat.speed,
+								b.Attacker.pokemonBattleStack.speed);
 
 							if (a.Attacker.condition == StatusCondition.Paralysis)
 								speedA = speedA / 4;
