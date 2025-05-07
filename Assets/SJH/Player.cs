@@ -20,6 +20,13 @@ public class Player : MonoBehaviour
 				Debug.Log($"플레이어 상태 변경: {state} > {value}");
 				prevState = state;
 				state = value;
+				
+				//상태변경시 이동 정지 처리
+				if (state != Define.PlayerState.Field)
+				{
+					StopMoving(); // 이동 중지
+					StopAllMovementCoroutines(); // 이동 관련 코루틴 중지
+				}
 			}
 		}
 	}
@@ -158,6 +165,8 @@ public class Player : MonoBehaviour
 
 	void MoveState()
 	{
+		if (State != Define.PlayerState.Field) return; // 상태가 Field가 아니면 이동 불가
+
 		if (isJump)
 			return;
 		// Idle 설정
@@ -274,12 +283,14 @@ public class Player : MonoBehaviour
 		}
 		transform.position = endPos;
 
-		isMoving = false;
-		if (isIdle)
-		{
-			anim.SetBool("isMoving", false);
-			isIdle = false;
-		}
+		StopAllMovementCoroutines();
+		
+		// isMoving = false;
+		// if (isIdle)
+		// {
+		// 	anim.SetBool("isMoving", false);
+		// 	isIdle = false;
+		// }
 
 		// 타일체크
 		RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector2.zero, 0);
@@ -527,7 +538,33 @@ public class Player : MonoBehaviour
 		}
 
 		yield return new WaitForSeconds(0.5f);
+		
+		StopAllMovementCoroutines();
 	}
+	
+	private void StopAllMovementCoroutines()
+	{
+		if (moveCoroutine != null)
+		{
+			StopCoroutine(moveCoroutine);
+			moveCoroutine = null;
+		}
+
+		if (jumpCoroutine != null)
+		{
+			StopCoroutine(jumpCoroutine);
+			jumpCoroutine = null;
+		}
+
+		isMoving = false;
+		isJump = false;
+		anim.SetBool("isMoving", false);
+	}
+
+	
+	
+	
+	
 	#region UI
 	void OnAllUIClosed()
 	{
