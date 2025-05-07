@@ -101,6 +101,7 @@ public class BattleManager : MonoBehaviour
 						continue;
 					Pokémon poke = Manager.Poke.AddEnemyPokemon(data.PokeName, data.PokeLevel);
 					enemyPartyData.Add(poke);
+					Debug.Log($"Lv. {data.PokeLevel} / {data.PokeName}");
 				}
 				// 포켓몬 지정
 				enemyParty = enemyPartyData;
@@ -158,6 +159,11 @@ public class BattleManager : MonoBehaviour
 	public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
 	{
 		isTrainer = true; // 상대가 트레이너일경우
+
+		foreach(var data in enemies)
+		{
+			Debug.Log($"Lv. {data.level} / {data.pokeName}");
+		}
 
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
