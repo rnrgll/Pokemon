@@ -74,7 +74,7 @@ public class BattleManager : MonoBehaviour
 		// 현재턴 지정
 		currentTurn = 1;
 		// 트레이너
-		if (Manager.Poke.enemyParty.Count >= 1)
+		if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
 		{
 			Debug.Log("트레이너 배틀 시작");
 			//게임 데이터 설정
@@ -684,8 +684,11 @@ public class BattleManager : MonoBehaviour
 					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
 					Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
 					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
-					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
-					Manager.Data.PlayerData.AddMoney(winMoney);
+					if (winMoney > 1)
+					{
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
+						Manager.Data.PlayerData.AddMoney(winMoney);
+					}
 					Manager.Poke.enemyData.IsFight = true;
 				}
 				break;

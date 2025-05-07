@@ -2473,11 +2473,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -166
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 100
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4584,7 +4584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &575754981
 Transform:
   m_ObjectHideFlags: 0
@@ -4616,14 +4616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72136f84c64fed24db3d9a0cd1ae48c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialog:
-    lines:
-    - "\uC5EC \uC5EC\uBCF4\uC138\uC694 \uACE8\uB4DC\uAD70?"
-    - "\uD06C \uD070\uC77C\uB0AC\uAD6C\uB098!! \uC5D0- \uADF8\uB7EC\uB2C8\uAE4C \uBB50\uAC00
-      \uBB50\uC600\uB294\uC9C0......"
-    - "\uC5B4\uB5A1\uD558\uC9C0...... \uC544\uBB34\uD2BC \uD070\uC77C\uC774\uB780\uB2E4! "
-    - "\uC9C0\uAE08 \uBC14\uB85C \uB3CC\uC544\uC624\uB108\uB77C! "
-    - "\uC091......!"
 --- !u!61 &575754983
 BoxCollider2D:
   m_ObjectHideFlags: 0

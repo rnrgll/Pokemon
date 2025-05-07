@@ -44,6 +44,9 @@ public class PokemonManager : Singleton<PokemonManager>
 		// AddPokemon("블레이범", 50);
 		// AddPokemon("피죤투",30);
 		// //===========================================//
+
+		// Test
+		AddPokemon("블레이범", 99);
 	}
 
 	public void AddPokemon(string pokeName, int level)
