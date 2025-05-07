@@ -89,7 +89,7 @@ public class PokemonSelect : MonoBehaviour
 	{
 		int nextIdx = curIdx + direction;
 		if (nextIdx < 0) nextIdx = partyList.Count-1; //그만두다 슬롯까지 파티리스트에 넣었으므로 -1해줘야함
-		else if (nextIdx > partyList.Count) nextIdx = 0;
+		else if (nextIdx >= partyList.Count) nextIdx = 0;
 		
 		//이전 커서 선택 해제, 다음 커서 선택으로 업데이트
 		partyList[curIdx].Deselect();
@@ -102,6 +102,8 @@ public class PokemonSelect : MonoBehaviour
 	//포켓몬 선택 창 open & 파티에 있는 포켓몬으로 슬롯 동적 생성
 	public void Show(List<Pokémon> party, System.Action<Pokémon> onChooseCallback, System.Action onCancelCallback)
 	{
+		
+		Debug.Log("dhfashfsafhsahfsadhfsahfsahfa");
 		//슬롯 타입 설정하기 (PartySlotType.Skill 만 아니면 됨)
 		Manager.Game.SetSlotType(UI_PokemonParty.PartySlotType.Menu);
 		

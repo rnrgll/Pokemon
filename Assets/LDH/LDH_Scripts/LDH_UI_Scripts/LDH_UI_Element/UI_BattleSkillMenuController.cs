@@ -40,6 +40,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
         curX = 0;
         //Debug.Log($"<color=blue>{curX} </color>");
         skillButtonList[curX].SetArrowActive(true);
+        UpdateSkillInfo();
     }
 
     private void Update()
@@ -83,7 +84,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
 	    skillPP.text = $"{curPP}/{maxPP}";
 	    skillType.text = skill.type.ToString();
 		//skillType.text = skill.skillType.ToString();
-		skillType.text = $"/Define.GetKoreanSkillType[skill.skillType]";
+		skillType.text = $"/{Define.GetKoreanSkillType[skill.skillType]}";
     }
     
     

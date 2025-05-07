@@ -11,7 +11,6 @@ using Random = UnityEngine.Random;
 // 배틀 로직 및 흐름 제어
 public class BattleManager : MonoBehaviour
 {
-	
 	private string previousScene;        // 이전 씬 이름
 
 	[Header("UI 관련")]
@@ -40,8 +39,6 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 	
-	
-	
 	private int currentEnemyIndex;        // 현재 적 포켓몬 인덱스
 	private string selectedAction;        // 선택된 행동
 	private string playerSelectedSkill;   // 선택된 스킬
@@ -52,12 +49,14 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private string enemyTrainerName;    // 트레이너면 이름
 	[SerializeField] int winMoney;	// 승리보상
 	
-	
 	Coroutine battleCoroutine;
 	WaitForSeconds battleDelay = new WaitForSeconds(1.5f);
-	// 턴
-	int currentTurn;
+	int currentTurn; // 턴
 
+
+	
+	#region start - 배틀 시작 전 초기화 및 데이터 설정
+	
 	private void Start()
 	{
 		previousScene = SceneManager.GetActiveScene().name; // 이전 씬 이름 저장
@@ -105,10 +104,9 @@ public class BattleManager : MonoBehaviour
 			StartBattle(Manager.Poke.party, Manager.Poke.enemyPokemon);
 		}
 	}
-	private void Update()
-	{
+	#endregion
 
-	}
+	#region 파괴 및 다이얼르그 종료 시 처리?
 	private void OnDestroy()
 	{
 		// 구독 해제
@@ -126,7 +124,12 @@ public class BattleManager : MonoBehaviour
 		Debug.Log("배틀 다이얼로그 종료");
 		battleCoroutine = StartCoroutine(BattleLoop()); // 배틀은 대화창이 닫힌 후 시작하게
 	}
+	
+	#endregion
 
+
+	#region 배틀 시작 - 트레이너 대결
+	
 	// 배틀 시작: 플레이어/적 파티 초기화 및 첫 포켓몬 설정
 	public void StartBattle(List<Pokémon> party, List<Pokémon> enemies)
 	{
@@ -150,7 +153,7 @@ public class BattleManager : MonoBehaviour
 		
 		//포켓몬 프리팹 스폰
 		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
-		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,hud.SpawnStatePanel);
+		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,() => hud.SpawnStatePanel(false));
 		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
 		hud.SetEnemyHUD(enemyPokemon);     // 적 포켓몬 HUD 설정
@@ -163,7 +166,9 @@ public class BattleManager : MonoBehaviour
 		Dialog.CloseDialog += OnBattleDialogClosed;
 		Dialog.StartDialogue(new Dialog(lines));
 	}
+	#endregion
 
+	#region 배틀 시작 - 야생 포켓몬
 	public void StartBattle(List<Pokémon> party, Pokémon enemy)
 	{
 		isTrainer = false; // 상대가 트레이너가 아닐경우
@@ -172,8 +177,8 @@ public class BattleManager : MonoBehaviour
 		playerPokemon = Manager.Poke.GetFirtstPokemon(); // 파티의 첫번째 포켓몬
 		enemyPokemon = enemy; // 적 포켓몬 설정
 
-		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
-		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,hud.SpawnStatePanel);
+		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true,() => hud.SpawnStatePanel(true));
+		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,() => hud.SpawnStatePanel(false));
 		
 		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
@@ -187,7 +192,14 @@ public class BattleManager : MonoBehaviour
 		Dialog.CloseDialog += OnBattleDialogClosed;
 		Dialog.StartDialogue(new Dialog(lines));
 	}
-
+	#endregion
+	
+	
+	//액션, 스킬 선택시 호출되는 메소드?
+	private void OnActionButton(string action) => selectedAction = action;
+	private void OnSkillButton(int idx) => playerSelectedSkill = playerPokemon.skills[idx];
+	
+	#region 배틀 루프
 	private IEnumerator BattleLoop()
 	{
 		// ui.ShowActionMenu(); // 행동 선택 UI 표시
@@ -207,7 +219,6 @@ public class BattleManager : MonoBehaviour
 			{
 				Debug.Log($"배틀로그 {currentTurn}턴 : 교체할 포켓몬을 선택해주세요.");
 				
-
 				yield return StartCoroutine(PokemonSwitch());
 				{
 					hud.SetPlayerHUD(playerPokemon, false);
@@ -237,9 +248,9 @@ public class BattleManager : MonoBehaviour
 					if (currentEnemyIndex < enemyParty.Count)
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
-						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
-
+						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.name,enemyPokemonPos, false));
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						hud.SetEnemyHUD(enemyPokemon, false);
 
 						yield return battleDelay;
@@ -284,142 +295,171 @@ public class BattleManager : MonoBehaviour
 			switch (selectedAction)
 			{
 				case "Fight":
-					// playerSelectedSkill = null;
-					// ui.ShowSkillSelection(playerPokemon);
-					// yield return new WaitUntil(() => playerSelectedSkill != null); // 기술 선택할때까지 대기
-					//ui.HideSkillSelection();
-					
-					//기술 선택을 취소할 수도 있음
-					//기술 선택창을 열었다고 액션 체크를 하면 안됨
-					//기술 선택창과 액션 체크를 분리시켜야 함
-					
-					var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
-                    {
-						new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
-						new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
-					};
-
-					// 속도에 따라 정렬
-					actions.Sort((a, b) =>
 					{
-						// 우선도가 없고 선공기는 전광석화 뿐이니 단순하게
-						bool aIsQuickAttack = a.Skill == "전광석화";
-						bool bIsQuickAttack = b.Skill == "전광석화";
+						//기술 선택을 취소할 수도 있음
+						//기술 선택창을 열었다고 액션 체크를 하면 안됨
+						//기술 선택창과 액션 체크를 분리시켜야 함
 
-						if (aIsQuickAttack && !bIsQuickAttack)
-							return -1; // a가 먼저
-						if (!aIsQuickAttack && bIsQuickAttack)
-							return 1;  // b가 먼저
-
-						// 스피드에 랭크 계산
-						int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
-						int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed, a.Attacker.pokemonBattleStack.speed);
-
-						if (a.Attacker.condition == StatusCondition.Paralysis)
-							speedA = speedA / 4;
-						if (b.Attacker.condition == StatusCondition.Paralysis)
-							speedB = speedB / 4;
-
-						Debug.Log($"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
-						if (speedA != speedB)
-							return speedB.CompareTo(speedA);
-
-						// 속도 같으면 랜덤
-						return Random.Range(0, 2) == 0 ? -1 : 1;
-					});
-
-					foreach (var act in actions)
-					{
-						yield return battleDelay;
-						if (act.Attacker.hp <= 0)
+						var actions = new List<BattleAction> // 적과 플레이어의 행동을 리스트에 추가
 						{
-							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
-							//yield return StartCoroutine(Manager.Dialog.ShowMessageOnce($"{act.Attacker.pokeName}은/는 쓰러졌다!"));
-							continue;
+							new BattleAction(playerPokemon, enemyPokemon, playerSelectedSkill),
+							new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill)
+						};
+
+						// 속도에 따라 정렬
+						actions.Sort((a, b) =>
+						{
+							// 우선도가 없고 선공기는 전광석화 뿐이니 단순하게
+							bool aIsQuickAttack = a.Skill == "전광석화";
+							bool bIsQuickAttack = b.Skill == "전광석화";
+
+							if (aIsQuickAttack && !bIsQuickAttack)
+								return -1; // a가 먼저
+							if (!aIsQuickAttack && bIsQuickAttack)
+								return 1; // b가 먼저
+
+							// 스피드에 랭크 계산
+							int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
+								a.Attacker.pokemonBattleStack.speed);
+							int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
+								a.Attacker.pokemonBattleStack.speed);
+
+							if (a.Attacker.condition == StatusCondition.Paralysis)
+								speedA = speedA / 4;
+							if (b.Attacker.condition == StatusCondition.Paralysis)
+								speedB = speedB / 4;
+
+							Debug.Log(
+								$"배틀로그 {currentTurn}턴 : [{a.Attacker.pokeName}의 스피드 : {speedA}] VS [{b.Attacker.pokeName}의 스피드 : {speedB}]");
+							if (speedA != speedB)
+								return speedB.CompareTo(speedA);
+
+							// 속도 같으면 랜덤
+							return Random.Range(0, 2) == 0 ? -1 : 1;
+						});
+
+						foreach (var act in actions)
+						{
+							yield return battleDelay;
+							if (act.Attacker.hp <= 0)
+							{
+								Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
+								continue;
+							}
+
+							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
+							yield return StartCoroutine(
+								Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
+
+							// 상태이상체크
+							if (act.Attacker.CanActionCheck())
+							{
+								// TODO : PP 체크
+								yield return StartCoroutine(Motion(act)); // 데미지랑 딜레이 실행 모션 코루틴으로 이동
+							}
+
+							//매 액션마다 피격자의 hp 갱신해주기
+							if (act.Attacker == playerPokemon)
+								hud.SetEnemyHUD(enemyPokemon); // 적 피격
+							else
+								hud.SetPlayerHUD(playerPokemon); // 플레이어 피격
+
+							isAction = true;
+
 						}
 
+						yield return battleDelay;
+						break;
+					}
+				case "Pokemon":
+					{
+						bool isSwitched = false;
+						yield return StartCoroutine(PokemonSwitch(value => isSwitched = value));
+						//포켓몬 교체를 취소한 경우 턴 종료 아님 -> 다시 액션 선택을 기다려야함
+						//PokemonSwitch bool 반환으로 변경
+						if (!isSwitched)
+						{
+							selectedAction = null;
+							break;
+						}
+
+						// TODO : 상대 포켓몬의 PP 체크
+
+						//액션 설정
+						var act = new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill);
+
+						//5. 액션에 대햔 다이얼로그 출력
 						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
-						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
-						
-						// 상태이상체크
+						yield return StartCoroutine(
+							Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
+
 						if (act.Attacker.CanActionCheck())
 						{
 							// TODO : PP 체크
 							yield return StartCoroutine(Motion(act)); // 데미지랑 딜레이 실행 모션 코루틴으로 이동
 						}
 						
-						//매 액션마다 피격자의 hp 갱신해주기
-						if (act.Attacker == playerPokemon)
-							hud.SetEnemyHUD(enemyPokemon); // 적 피격
-						else
-							hud.SetPlayerHUD(playerPokemon); // 플레이어 피격
-						
-						isAction = true;
-						
-					}
-					
-					yield return battleDelay;
-					break;
-
-				case "Pokemon":
-					yield return StartCoroutine(PokemonSwitch());
-					{
-						// TODO : 상대 포켓몬의 PP 체크
-						ExecuteAction(new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill));
-
-						hud.SetPlayerHUD(playerPokemon,false);
-						hud.SetEnemyHUD(enemyPokemon,false);
+						//6. 수치 반영
+						hud.SetPlayerHUD(playerPokemon);
+						hud.SetEnemyHUD(enemyPokemon);
 
 						isAction = true;
 
 						yield return new WaitForSeconds(1f);
-					}
-					break;
 
+						break;
+					}
 				case "Bag":
-					//1. 인벤토리 창을 띄운다.
-					Manager.UI.ShowLinkedUI<UI_Bag>("UI_Bag");
-					
-					//2. 대기 - 대기를 끝내는 조건 : 가방 UI가 닫혀서 UI 매니저가 관리하는 UI가 없는 경우 = 아무 ui도 열려있지 않은 경우
-					yield return new WaitUntil(() => !Manager.UI.IsAnyUIOpen);
-					
-					//3. 턴 인지 확인하는 체크
-					//플레이어가 도구를 사용한 경우 턴 종료 
-					if (Manager.Game.IsInBattle && Manager.Game.IsItemUsed)
 					{
-						yield return new WaitForSeconds(0.5f); //잠시 대기 후
-						//hp 업데이트 (도구 사용했을 가능성)
-						hud.SetPlayerHUD(playerPokemon, false);
-						hud.SetEnemyHUD(enemyPokemon, false);
+						//1. 인벤토리 창을 띄운다.
+						Manager.UI.ShowLinkedUI<UI_Bag>("UI_Bag");
 
-						//액션 설정 (상대만 공격하면 되니까 리스트에 넣지 않는다, 정렬 필요 없음)
-						var act = new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill);
-						//fight와 동일하게 조건 체크 후 액션 처리
-						if (act.Attacker.hp <= 0)
-						{
-							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
-							continue;
-						}
-						
-						Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
-						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
-						
-						// 상태이상체크
-						if (act.Attacker.CanActionCheck())
-						{
-							// TODO : PP 체크
-							// TODO : 상태이상으로 공격 못하는 로그 반영하기
-							yield return StartCoroutine(Motion(act)); // 데미지랑 딜레이 실행 모션 코루틴으로 이동
-						}
-						
-						hud.SetPlayerHUD(playerPokemon, false);
-						hud.SetEnemyHUD(enemyPokemon, false);
+						//2. 대기 - 대기를 끝내는 조건 : 가방 UI가 닫혀서 UI 매니저가 관리하는 UI가 없는 경우 = 아무 ui도 열려있지 않은 경우
+						yield return new WaitUntil(() => !Manager.UI.IsAnyUIOpen);
 
-						isAction = true;
-						
+						//3. 턴 인지 확인하는 체크
+						//플레이어가 도구를 사용한 경우 턴 종료 
+						if (Manager.Game.IsInBattle && Manager.Game.IsItemUsed)
+						{
+							//1.잠시 대기 후
+							yield return new WaitForSeconds(0.5f);
+
+							//2. hp 업데이트 (도구 사용했을 가능성)
+							hud.SetPlayerHUD(playerPokemon, false);
+							hud.SetEnemyHUD(enemyPokemon, false);
+
+							//3. 액션 설정 (상대만 공격하면 되니까 리스트에 넣지 않는다, 정렬 필요 없음)
+							var act = new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill);
+
+							//4. fight와 동일하게 조건 체크 후 액션 처리
+							if (act.Attacker.hp <= 0)
+							{
+								Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
+								continue;
+							}
+
+							//5. 액션에 대햔 다이얼로그 출력
+							Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
+							yield return StartCoroutine(
+								Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
+
+							// 6. 상태이상체크
+							if (act.Attacker.CanActionCheck())
+							{
+								// TODO : PP 체크
+								// TODO : 상태이상으로 공격 못하는 로그 반영하기
+								yield return StartCoroutine(Motion(act)); // 데미지랑 딜레이 실행 모션 코루틴으로 이동
+							}
+
+							hud.SetPlayerHUD(playerPokemon);
+							hud.SetEnemyHUD(enemyPokemon);
+
+							isAction = true;
+
+						}
+
+						break;
 					}
-					break;
-
 				case "Run":
 					{
 						// 도망못가게함
@@ -492,128 +532,45 @@ public class BattleManager : MonoBehaviour
 		}
 		Debug.Log($"배틀로그 {currentTurn}턴 : 배틀종료");
 	}
-
-	private void OnActionButton(string action) => selectedAction = action;
-	private void OnSkillButton(int idx) => playerSelectedSkill = playerPokemon.skills[idx];
-
-	private IEnumerator PokemonSwitch()
+    #endregion
+    
+    
+	//포켓몬 교체
+	private IEnumerator PokemonSwitch(Action<bool> callback=null)
 	{
 		Pokémon chosen = null;
 		bool cancelled = false;
 
 		//포켓몬 선택 팝업창 열기
 		pokemonSelect.Show(playerParty, p => chosen = p, () => cancelled = true);
-
 		
 		yield return new WaitUntil(() => chosen != null || cancelled);
 
 		if (cancelled) // 취소시 메뉴 다시 열기
 		{
-			selectedAction = null;
-			Debug.LogWarning("포켓몬 선택 취소함 메뉴 다시 열리기");
-			ui.ShowActionMenu(playerPokemon);
-			yield break;
+			Debug.LogWarning("포켓몬 선택 취소");
 		}
+		else
+		{
+			//교체 애니메이션 실행
+			yield return StartCoroutine(PlaySwitchAnimation(playerPokemon.name, chosen.name, playerPokemonPos, true));
 
-		playerPokemon = chosen; // 선택 하면 교체
-		hud.SetPlayerHUD(playerPokemon, false);
-
+			playerPokemon = chosen; // 선택 하면 교체
+			hud.SetPlayerHUD(playerPokemon, false);
+		}
 		selectedAction = null;
-	}
-	private IEnumerator Motion(BattleAction action)
-	{
-		// 공격 모션
-		var atkPos = action.Attacker == playerPokemon ? playerPokemonPos : enemyPokemonPos;
-		var atkAnim = atkPos.GetComponent<Animator>();
-		atkAnim.SetTrigger("DoAttack");
-
-		yield return new WaitForSeconds(0.5f);
-
-		ExecuteAction(action);
-		// hud.SetPlayerHUD(playerPokemon);
-		// hud.SetEnemyHUD(enemyPokemon);
-
-		//피격 모션
-		var tgtPos = action.Target == playerPokemon ? playerPokemonPos : enemyPokemonPos;
-		var tgtAnim = tgtPos.GetComponent<Animator>();
-		tgtAnim.SetTrigger("DoBlink");
-		yield return new WaitForSeconds(0.5f);
+		callback.Invoke(!cancelled);
 	}
 
-	
 	// 행동 선택 후 행동 처리
 	private void ExecuteAction(BattleAction action)
 	{
 		var skill = Manager.Data.SkillSData.GetSkillDataByName(action.Skill);
 		skill.UseSkill(action.Attacker, action.Target, skill);
 	}
+	
 
-	#region 주석처리
-	// 배틀 종료 처리
-	//private void EndBattle(string reason)
-	// {
-	// 	// 공통적으로 실행
-	// 	Debug.Log($"배틀로그 {currentTurn}턴 : 배틀 종료 - {reason}");
-	//
-	// 	// 코루틴 초기화
-	// 	if (battleCoroutine != null)
-	// 	{
-	// 		StopCoroutine(battleCoroutine);
-	// 		battleCoroutine = null;
-	// 	}
-	//
-	// 	// 상대 포켓몬 초기화
-	// 	if (isTrainer)
-	// 	{
-	// 		foreach (var poke in enemyParty)
-	// 		{
-	// 			Destroy(poke.gameObject);
-	// 		}
-	// 	}
-	// 	Destroy(enemyPokemon.gameObject);
-	//
-	// 	// 내 포켓몬 상태 초기화
-	// 	Manager.Poke.ClearPartyState();
-	//
-	// 	var setting = SceneManager.LoadSceneAsync(Manager.Game.Player.PrevSceneName); // 이전 씬으로 이동
-	// 	setting.allowSceneActivation = false;
-	//
-	// 	switch (reason)
-	// 	{
-	// 		case "Win":
-	// 			{
-	// 				Debug.Log($"배틀로그 {currentTurn}턴 : 승리");
-	//
-	// 				// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
-	// 				Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
-	// 				Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
-	// 				Manager.Data.PlayerData.AddMoney(winMoney);
-	// 				Manager.Poke.enemyData.IsFight = true;
-	// 			}
-	// 			break;
-	// 		case "Lose":
-	// 			{
-	// 				Debug.Log($"배틀로그 {currentTurn}턴 : 패배");
-	//
-	// 				// TODO : 마지막 회복 위치로 이동해야할듯 우선은 이전씬으로만
-	// 			}
-	// 			break;
-	// 		case "Run":
-	// 			{
-	// 				Debug.Log($"배틀로그 {currentTurn}턴 : 성공적으로 도망쳤다!");
-	// 				yield return StartCoroutine(logManager.ShowBattleLog($"{Manager.Data.PlayerData.PlayerName}는(은) 성공적으로 도망쳤다!"));
-	// 			}
-	// 			break;
-	// 	}
-	//
-	// 	// 변수 초기화
-	// 	isTrainer = false;
-	// 	setting.allowSceneActivation = true;
-	// 	//게임 데이터 업데이트
-	// 	Manager.Game.EndBattle();
-	// }
-#endregion
-
+    //배틀 종료
 	private IEnumerator EndBattleCoroutine(string reason)
 	{
 		// 공통적으로 실행
@@ -725,14 +682,11 @@ public class BattleManager : MonoBehaviour
 	#endregion
 	
 	
-	
-	#region 포켓몬 스프라이트 / 애니메이션
+	#region 포켓몬 스프라이트 교체 / 배틀 중 애니메이션 / 공격 모션
 	
 	//1. 배틀 시작시 스프라이트 생성 및 hp 바 애니메이션
 	public void SpawnPokemonAtStart(Pokémon p, Transform pokemonTransform, bool isPlayer, Action onComplete=null)
 	{
-		SetPokemonSprite(p.pokeName, pokemonTransform.GetComponent<SpriteRenderer>(), isPlayer);
-
 		SpriteRenderer sr = pokemonTransform.GetComponent<SpriteRenderer>();
 		sr.color = new Color(1, 1, 1, 0); //투명하게 설정
 		
@@ -747,6 +701,7 @@ public class BattleManager : MonoBehaviour
 		pokemonTransform.position = startPosition;
 		
 		Sequence seq = DOTween.Sequence();
+		seq.AppendCallback(() => SetPokemonSprite(p.pokeName, sr, isPlayer));
 		seq.Append(pokemonTransform.DOMove(targetPos, playTime).SetEase(Ease.OutQuad));
 		seq.Join(sr.DOFade(1f,playTime)); //동시 처리
 		 
@@ -760,35 +715,76 @@ public class BattleManager : MonoBehaviour
 	
 	//2. 포켓몬 교체시 애니메이션
 	//포켓몬 볼로 돌아오기 - 가운데를 중심으로 크기 줄어듬
-	public IEnumerator PlayReturnAnimation(Transform target)
+	public IEnumerator PlayReturnAnimation(string prePokeName, Transform pokemonTransform, bool isPlayer)
 	{
+		if(isPlayer)
+			yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{prePokeName} 이젠 됐어 돌아와!"));
+		
+		
+		SpriteRenderer sr = pokemonTransform.GetComponent<SpriteRenderer>();
+		
 		Sequence seq = DOTween.Sequence();
-		seq.Append(target.DOScale(Vector3.zero, 0.5f));
+		seq.Append(pokemonTransform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack));
+		if (sr != null)
+			seq.Join(sr.DOFade(0f, 0.5f));
 
 		yield return seq.WaitForCompletion();
 	}
 
 
 	//포켓몬 배틀로 나가기 - 가운데를 중심으로 크기 증가
-	public IEnumerator PlayEnterBattleAnimation(Transform pokemonTransform, float duration = 0.5f)
+	public IEnumerator PlayEnterBattleAnimation(string newPokeName, Transform pokemonTransform, Vector2 targetScale ,bool isPlayer, Action onComplete = null)
 	{
+		float duration = 0.3f;
+		
+		if(isPlayer)
+			yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"가랏! {newPokeName}!"));
+		
 		// 초기 상태: 작게 시작
 		pokemonTransform.localScale = Vector3.zero;
 		
-	
+		//투명하게 시작 처리
+		SpriteRenderer sr = pokemonTransform.GetComponent<SpriteRenderer>();
+		if (sr != null)
+			sr.color = new Color(1f, 1f, 1f, 0f);
+		
+		
 		// 애니메이션 시퀀스
 		Sequence seq = DOTween.Sequence();
-		seq.Append(pokemonTransform.DOScale(Vector3.one, duration).SetEase(Ease.OutBack)); // 자연스럽게 커짐
-		
+		seq.Append(pokemonTransform.DOScale(targetScale, duration).SetEase(Ease.OutBack));
+		if (sr != null)
+			seq.Join(sr.DOFade(1f, duration));
+
 		yield return seq.WaitForCompletion();
+		
+		onComplete?.Invoke();
 	}
 
-	
-	// public void PlaySendOutAnimation(Pokémon newPokemon, Action onComplete)
-	// //애니메이션 대기 시간 필요
-	// public void 
+	//포켓몬 교체 애니메이션(나가고 들어오는거 전체)
+	public IEnumerator  PlaySwitchAnimation(string prePokeName, string newPokeName,
+		Transform pokemonTransform, bool isPlayer, float delay = 0.2f, Action onComplete = null)
+	{
+		Vector2 targetScale = pokemonTransform.localScale;
+		
+		// 1. 작아지며 퇴장
+		yield return StartCoroutine(PlayReturnAnimation(prePokeName, pokemonTransform, isPlayer));
 
-	//2. 스프라이트 불러오기
+		// 2. 잠깐 대기
+		yield return new WaitForSeconds(delay);
+
+		// 3. 스프라이트 교체
+		SpriteRenderer sr = pokemonTransform.GetComponent<SpriteRenderer>();
+		SetPokemonSprite(newPokeName, sr, isPlayer);
+
+		// 4. 커지며 등장
+		yield return StartCoroutine(PlayEnterBattleAnimation(newPokeName, pokemonTransform, targetScale, isPlayer));
+
+		onComplete?.Invoke();
+
+	}
+	
+	
+	//스프라이트 불러오기
 	public void SetPokemonSprite(string pokeName, SpriteRenderer spriteRenderer, bool isPlayerPokemon)
 	{
 		Debug.Log("스프라이트 불러오기");
@@ -799,9 +795,28 @@ public class BattleManager : MonoBehaviour
 	
 	
 	
-	
-	
-	
+	//공격, 피격 모션
+	private IEnumerator Motion(BattleAction action)
+	{
+		// 공격 모션
+		var atkPos = action.Attacker == playerPokemon ? playerPokemonPos : enemyPokemonPos;
+		var atkAnim = atkPos.GetComponent<Animator>();
+		atkAnim.SetTrigger("DoAttack");
+
+		yield return new WaitForSeconds(0.5f);
+
+		ExecuteAction(action);
+		// hud.SetPlayerHUD(playerPokemon);
+		// hud.SetEnemyHUD(enemyPokemon);
+
+		//피격 모션
+		var tgtPos = action.Target == playerPokemon ? playerPokemonPos : enemyPokemonPos;
+		var tgtAnim = tgtPos.GetComponent<Animator>();
+		tgtAnim.SetTrigger("DoBlink");
+		yield return new WaitForSeconds(0.5f);
+	}
+
+
 	
 	#endregion
 	
