@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class QuestEvent : PokeEvent
 {
 	[Header("대화 관련 설정")]
 	[SerializeField] private Dialog dialog;
 	[SerializeField] private GameObject npc;
+
+	Vector2 pos = new Vector2(-10, 14);
+
+	Vector2 pos1 = new Vector2 (-12, 16);
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.CompareTag("Player"))
@@ -15,12 +20,15 @@ public class QuestEvent : PokeEvent
 				return;
 
 
+			if ((Vector2)Manager.Game.Player.transform.position == pos1)
+			{
+				NpcMover npcMover = npc.GetComponent<NpcMover>();
+				Manager.Game.Player.AnimChange(Vector2.right);
+				npcMover.AnimChange(Vector2.left);
+				
 
-			NpcMover npcMover = npc.GetComponent<NpcMover>();
-			Manager.Game.Player.AnimChange(Vector2.right);
+			}
 			Manager.Game.Player.StopMoving();
-			npcMover.AnimChange(Vector2.left);
-
 			StartCoroutine(TriggerDialogue());
 			
 			Manager.Event.questEvent = true;
