@@ -26,10 +26,10 @@ public class TownExitEvent : PokeEvent
 		StartCoroutine(ReturnNpcPosition());
 	}
 
-	void OnCollisionEnter2D(Collision2D player)
+	void OnCollisionEnter2D(Collision2D collision)
 	{
 
-		if (player.gameObject.CompareTag("Player"))
+		if (collision.gameObject.CompareTag("Player"))
 		{
 			if (Manager.Event.townExitEvent)
 				return;
@@ -37,6 +37,12 @@ public class TownExitEvent : PokeEvent
 			if (Manager.Poke.party.Count <= 0)
 			{
 				Debug.Log("포켓몬을 가지고 있지 않습니다 삡");
+				Player player = collision.gameObject.GetComponent<Player>();
+				player.State = Define.PlayerState.Dialog;
+				if (player.moveCoroutine != null)
+					player.StopCoroutine(player.moveCoroutine);
+				player.StopMoving();
+				player.AnimChange();
 				if (player.transform.position.y == -12)
 				{
 					npcMover.destinationPoints = new List<Vector2> { new Vector2(-20, -12)};
