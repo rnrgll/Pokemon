@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TownExitEvent : PokeEvent
@@ -9,9 +10,15 @@ public class TownExitEvent : PokeEvent
 	[SerializeField] Dialog dialog;
 	[SerializeField] GameObject npc;
 	[SerializeField] bool isMove;
-	GameObject player;
-	private Vector2 originalNpcPosition;
-	NpcMover npcMover;
+	[SerializeField] GameObject player;
+	[SerializeField] private Vector2 originalNpcPosition;
+	[SerializeField] NpcMover npcMover;
+
+	void Start()
+	{
+		player = Manager.Game.Player.gameObject;
+		npcMover = npc.GetComponent<NpcMover>();
+	}
 
 	private void ReturnNpcDialogue()
 	{
@@ -19,15 +26,15 @@ public class TownExitEvent : PokeEvent
 		StartCoroutine(ReturnNpcPosition());
 	}
 
-	void OnCollisionEnter2D(Collision2D collision)
+	void OnCollisionEnter2D(Collision2D player)
 	{
 
-		if (collision.gameObject.CompareTag("Player"))
+		if (player.gameObject.CompareTag("Player"))
 		{
 			if (Manager.Event.townExitEvent)
 				return;
 			Debug.Log("플레이어 닿음");
-			if (Manager.Poke.party.Count < 0)
+			if (Manager.Poke.party.Count <= 0)
 			{
 				Debug.Log("포켓몬을 가지고 있지 않습니다 삡");
 				if (player.transform.position.y == -12)
@@ -50,27 +57,64 @@ public class TownExitEvent : PokeEvent
 			Manager.Event.townExitEvent = true;
 		}
 	}
+
+	void OnTriggerEnter2D(Collider2D player)
+	{
+		if (player.gameObject.CompareTag("Player"))
+		{
+			if (Manager.Event.townExitEvent)
+				return;
+			Debug.Log("플레이어 닿음");
+			if (Manager.Poke.party.Count <= 0)
+			{
+				Debug.Log("포켓몬을 가지고 있지 않습니다 삡");
+				if (player.transform.position.y == -12)
+				{
+					npcMover.destinationPoints = new List<Vector2> { new Vector2(-20, -12) };
+				}
+				else
+				{
+					npcMover.destinationPoints = new List<Vector2> { new Vector2(-22, -12) };
+				}
+				if (!isMove)
+				{
+					isMove = true;
+					npcMover.isNPCMoveCheck = true;
+					StartCoroutine(TriggerDialogue());
+				}
+				return;
+			}
+
+			Manager.Event.townExitEvent = true;
+		}
+	}
+
 	public override void OnPokeEvent(GameObject player)
 	{
-		if (Manager.Poke.party.Count < 0)
-		{
-			Debug.Log("포켓몬을 가지고 있지 않습니다 삡");
-			return;
-		}
-		Debug.Log("포켓몬을 가지고 있습니다 통과");
-		// TODO : 포켓몬 없이 마을밖으로 나갈 때 엔피시가 가로막게
+		//if (Manager.Event.townExitEvent)
+		//	return;
+		//Debug.Log("플레이어 닿음");
+		//if (Manager.Poke.party.Count <= 0)
+		//{
+		//	Debug.Log("포켓몬을 가지고 있지 않습니다 삡");
+		//	if (player.transform.position.y == -12)
+		//	{
+		//		npcMover.destinationPoints = new List<Vector2> { new Vector2(-20, -12) };
+		//	}
+		//	else
+		//	{
+		//		npcMover.destinationPoints = new List<Vector2> { new Vector2(-22, -12) };
+		//	}
+		//	if (!isMove)
+		//	{
+		//		isMove = true;
+		//		npcMover.isNPCMoveCheck = true;
+		//		StartCoroutine(TriggerDialogue());
+		//	}
+		//	return;
+		//}
 
-		// 장소 : 연두마을 -22, -12 or -22, -13
-		// 엔피시 : NPC2
-		// 조건 : 포켓몬을 들고 있지 않은 상태에서 마을밖으로 나갈때
-		if (player.transform.position.y == -12)
-		{
-
-		}
-		else
-		{
-
-		}
+		//Manager.Event.townExitEvent = true;
 		/*
 
 			아! 골드군
@@ -87,19 +131,22 @@ public class TownExitEvent : PokeEvent
 	}
 	private IEnumerator TriggerDialogue()
 	{
-		NpcMover npcMover = npc.GetComponent<NpcMover>();
+		npcMover = npc.GetComponent<NpcMover>();
 		Manager.Dialog.StartDialogue(dialog);
+		Manager.Game.Player.StopMoving();
 
 		while (Manager.Dialog.isTyping)
 		{
 			yield return null;
 		}
 		isMove = false;
+		Manager.Dialog.CloseDialog += ReturnNPCPlayer;
 	}
 
 	private IEnumerator ReturnNpcPosition()
 	{
-		NpcMover npcMover = npc.GetComponent<NpcMover>();
+		Debug.Log("엔피시 이전위치로");
+		npcMover = npc.GetComponent<NpcMover>();
 
 		npcMover.StopMoving();
 		if (npcMover.destinationPoints.Count == 0 || (Vector2)npc.transform.position != originalNpcPosition)
@@ -113,5 +160,12 @@ public class TownExitEvent : PokeEvent
 		{
 			yield return null;
 		}
+	}
+
+	public void ReturnNPCPlayer()
+	{
+		Manager.Game.Player.transform.position = new Vector3(-18, -12);
+		npc.transform.position = new Vector3(-12, -12);
+		Manager.Dialog.CloseDialog -= ReturnNPCPlayer;
 	}
 }

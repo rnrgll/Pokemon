@@ -73,7 +73,7 @@ public class EncounterManager : Singleton<EncounterManager>
 					// 애니메이션 종료
 					var player = Manager.Game.Player;
 					player.GetComponent<Player>().StopMoving();
-					
+
 					// 씬전환 전 정보 저장
 					player.PrevSceneName = SceneManager.GetActiveScene().name;
 

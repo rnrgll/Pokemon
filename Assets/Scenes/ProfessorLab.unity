@@ -838,7 +838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exitSceneName: NewBarkTown
-  exitPos: {x: -10, y: -4}
+  exitPos: {x: -12, y: -4}
   portalType: 1
   isPlayerIn: 0
   keyDirection: {x: 0, y: -1}

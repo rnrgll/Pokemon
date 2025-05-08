@@ -138,7 +138,7 @@ public class SJH_PokemonData
 				// 스킬 딕셔너리 <int 레벨, string 기술명 or Skill class>
 				SkillDic = new Dictionary<int, string>()
 				{
-					[8] = "잎날가르기",
+					[6] = "잎날가르기",
 					[12] = "리플렉터",
 					[15] = "독가루",
 					[22] = "광합성",
@@ -219,8 +219,8 @@ public class SJH_PokemonData
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
-					[6] = "연막",
-					[12] = "불꽃세례",
+					[6] = "불꽃세례",
+					[12] = "연막",
 					[19] = "전광석화",
 					[27] = "화염자동차",
 					[36] = "스피드스타",
@@ -294,8 +294,8 @@ public class SJH_PokemonData
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
-					[7] = "분노",
-					[13] = "물대포",
+					[6] = "물대포",
+					[13] = "분노",
 					[20] = "물기",
 					[27] = "겁나는얼굴",
 					[35] = "베어가르기",
@@ -368,7 +368,7 @@ public class SJH_PokemonData
 				EvolveName = "피죤",
 				DefaultSkill = new List<string>()
 				{
-					"몸통박치기",
+					"몸통박치기", "진흙뿌리기"
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
@@ -394,7 +394,7 @@ public class SJH_PokemonData
 				EvolveName = "피죤투",
 				DefaultSkill = new List<string>()
 				{
-					"몸통박치기", "모래뿌리기", "바람일으키기",
+					"몸통박치기", "모래뿌리기", "바람일으키기", "진흙뿌리기"
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
@@ -1053,6 +1053,7 @@ public class SJH_PokemonData
 
 	public Sprite GetBattleFrontSprite(string pokeName)
 	{
+		Debug.Log($"Key = {pokeName}");
 		var check = frontSprites[pokeName];
 		if (check == null)
 			return null;

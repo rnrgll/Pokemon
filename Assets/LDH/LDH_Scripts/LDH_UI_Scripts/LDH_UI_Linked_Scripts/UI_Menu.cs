@@ -10,13 +10,16 @@ public class UI_Menu : UI_Linked
     private static int _curIdx = 0;
     private int _preIdx = 0;
     
-    [Header("UI Layout")]
+    [Header("UI")]
     [SerializeField] private Transform _UI_MenuBox;
     [SerializeField] private Transform _UI_WhiteBox;
+    [SerializeField] private List<UIMenuSelectButton> menuBtns;
+    
     private TMP_Text _UI_WhiteBoxText;
     
-    
-   private List<UIMenuSelectButton> _activeMenuButtons = new();
+	private List<UIMenuSelectButton> _activeMenuButtons = new();
+	private Dictionary<string, ISelectableAction> menuAction;
+	
    
     private void Awake()
     {
@@ -24,24 +27,56 @@ public class UI_Menu : UI_Linked
 	    _UI_MenuBox = transform.GetChild(1);
 	    
 	    _UI_WhiteBoxText = _UI_WhiteBox.GetComponentInChildren<TMP_Text>();
-       
-	    SetupOptions( _UI_MenuBox,
-		    new List<(string, ISelectableAction)>
+	    
+	    menuAction = new()
 	    {
-		    ("포켓몬", new OpenLinkedUIAction("UI_PokemonParty")),
-		    ("가방", new OpenLinkedUIAction("UI_Bag")),
-		    ("포켓기어", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
-		    ("이름", new OpenLinkedUIAction("UI_PlayerCard")),
-		    ("레포트",new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
-		    ("설정", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
-		    ("닫다", new CustomAction(() => CloseSelf())),
-	    });
-        
+		   ["포켓몬"] = new OpenLinkedUIAction("UI_PokemonParty"),
+		   ["가방"] = new OpenLinkedUIAction("UI_Bag"),
+		   ["포켓기어"] = new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능")),
+		   ["플레이어"] = new OpenLinkedUIAction("UI_PlayerCard"),
+		   ["레포트"] = new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능")),
+		   ["설정"] = new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능")),
+		   ["닫다"] = new CustomAction(() => CloseSelf()),
+	    };
+	       
+	    // SetupOptions( _UI_MenuBox,
+		   //  new List<(string, ISelectableAction)>
+	    // {
+		   //  ("포켓몬", new OpenLinkedUIAction("UI_PokemonParty")),
+		   //  ("가방", new OpenLinkedUIAction("UI_Bag")),
+		   //  ("포켓기어", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+		   //  ("이름", new OpenLinkedUIAction("UI_PlayerCard")),
+		   //  ("레포트",new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+		   //  ("설정", new CustomAction(() => Debug.Log("선택됨. 구현되지 않은 기능"))),
+		   //  ("닫다", new CustomAction(() => CloseSelf())),
+	    // });
+	    
     }
+
+
+    private void SetMenu()
+    {
+	    _activeMenuButtons.Clear();
+	    for (int i = 0; i < menuBtns.Count; i++)
+	    {
+		    string menuName = menuBtns[i].MenuName;
+		    bool isOpen = Manager.Data.PlayerData.menuFlag[menuName];
+		    if (isOpen)
+		    {
+			    menuBtns[i].SetAction(menuAction[menuName]);
+			    _activeMenuButtons.Add(menuBtns[i]);
+		    }
+		    else
+		    {
+			    menuBtns[i].gameObject.SetActive(false);
+		    }
+	    }
+    }
+  
 
     private void OnEnable()
     {
-	    RefreshActiveMenuList();
+	    SetMenu();
 	    UpdateUI();
     }
 
@@ -74,19 +109,22 @@ public class UI_Menu : UI_Linked
 	    }
     }
 
-    void RefreshActiveMenuList()
-    {
-	    _activeMenuButtons.Clear();
-	    foreach (Transform child in _UI_MenuBox)
-	    {
-		    UIMenuSelectButton menuSelectButton = child.GetComponent<UIMenuSelectButton>();
-		    if (menuSelectButton.IsOpened)
-		    {
-			    _activeMenuButtons.Add(menuSelectButton);
-			    
-		    }
-	    }
-    }
+    // void RefreshActiveMenuList()
+    // {
+	   //  _activeMenuButtons.Clear();
+	   //  foreach (UIMenuSelectButton btn in menuBtns)
+	   //  {
+		  //   UIMenuSelectButton menuSelectButton = child.GetComponent<UIMenuSelectButton>();
+		  //   menuSelectButton.SetOpened(Manager.Instance.PlayerData.menuFlag[menuSelectButton.GetMenuName()]);
+    //
+		  //   if (menuSelectButton.IsOpened)
+		  //   {
+			 //    _activeMenuButtons.Add(menuSelectButton);
+			 //    
+		  //   }
+	   //  }
+	   //  Debug.Log(_activeMenuButtons.Count);
+    // }
 
     void MoveIdx(int direction)
     {
@@ -105,12 +143,14 @@ public class UI_Menu : UI_Linked
 
     void UpdateUI()
     {
+	    if (_activeMenuButtons.Count == 0) return;
 	    UpdateArrow();
 	    UpdateMenuDescription();
     }
     
     void UpdateArrow()
     { 
+	    
 	    _activeMenuButtons[_preIdx].SetArrowActive(false);
 	    _activeMenuButtons[_curIdx].SetArrowActive(true);
     }

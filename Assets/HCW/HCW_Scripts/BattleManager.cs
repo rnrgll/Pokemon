@@ -101,6 +101,7 @@ public class BattleManager : MonoBehaviour
 						continue;
 					Pokémon poke = Manager.Poke.AddEnemyPokemon(data.PokeName, data.PokeLevel);
 					enemyPartyData.Add(poke);
+					Debug.Log($"Lv. {data.PokeLevel} / {data.PokeName}");
 				}
 				// 포켓몬 지정
 				enemyParty = enemyPartyData;
@@ -123,14 +124,14 @@ public class BattleManager : MonoBehaviour
 		}
 		intro.OnIntroComplete += OnComplete;
 
-		if (Manager.Poke.enemyParty.Count >= 1)
+		if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
 			intro.PlayTrainerIntro();
 		else
 			intro.PlayWildIntro();
 	}
 	#endregion
 
-	#region 파괴 및 다이얼르그 종료 시 처리?
+	#region 파괴 및 다이얼르그 종료 시
 	private void OnDestroy()
 	{
 		// 구독 해제
@@ -159,6 +160,11 @@ public class BattleManager : MonoBehaviour
 	{
 		isTrainer = true; // 상대가 트레이너일경우
 
+		foreach(var data in enemies)
+		{
+			Debug.Log($"Lv. {data.level} / {data.pokeName}");
+		}
+
 		playerParty = party?.Take(MaxPartySize).ToList() ?? new List<Pokémon>();// 파티의 최대 크기 설정 및 초기화
 		enemyParty = enemies?.ToList() ?? new List<Pokémon>(); // 적 포켓몬 리스트 초기화
 
@@ -176,7 +182,7 @@ public class BattleManager : MonoBehaviour
 
 
 		//포켓몬 프리팹 스폰
-		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true);
+		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true,() => hud.SpawnStatePanel(true));
 		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,() => hud.SpawnStatePanel(false));
 		
 		hud.SetPlayerHUD(playerPokemon);   // 플레이어 포켓몬 HUD 설정
@@ -264,7 +270,7 @@ public class BattleManager : MonoBehaviour
 				// 경험치 = (기본 경험치량 × 트레이너 보너스 × 레벨) / 7
 				int totalExp = (int)((enemyPokemon.baseExp * (isTrainer == true ? 1.5f : 1f) * enemyPokemon.level) / 7);
 				yield return StartCoroutine(
-					Manager.Dialog.ShowBattleMessage($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
+					Manager.Dialog.ShowBattleMessage($"{playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!"));
 
 				Debug.Log($"배틀로그 : {playerPokemon.pokeName} 은/는 {totalExp} 경험치를 얻었다!");
 				yield return StartCoroutine(AnimateGainExp(totalExp));
@@ -277,8 +283,8 @@ public class BattleManager : MonoBehaviour
 					{
 						enemyPokemon = enemyParty[currentEnemyIndex];
 						Debug.Log($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다");
-						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.pokeName,enemyPokemonPos, false));
-						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"배틀로그 : 상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
+						yield return StartCoroutine(PlaySwitchAnimation(null, enemyPokemon.pokeName, enemyPokemonPos, false));
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"상대는 {enemyPokemon.pokeName}을/를 꺼냈다"));
 						hud.SetEnemyHUD(enemyPokemon, false);
 
 						yield return battleDelay;
@@ -351,8 +357,8 @@ public class BattleManager : MonoBehaviour
 							// 스피드에 랭크 계산
 							int speedA = a.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
 								a.Attacker.pokemonBattleStack.speed);
-							int speedB = b.Attacker.GetModifyStat(a.Attacker.pokemonStat.speed,
-								a.Attacker.pokemonBattleStack.speed);
+							int speedB = b.Attacker.GetModifyStat(b.Attacker.pokemonStat.speed,
+								b.Attacker.pokemonBattleStack.speed);
 
 							if (a.Attacker.condition == StatusCondition.Paralysis)
 								speedA = speedA / 4;
@@ -690,9 +696,7 @@ public class BattleManager : MonoBehaviour
 
 		// 내 포켓몬 상태 초기화
 		Manager.Poke.ClearPartyState();
-
-		var setting = SceneManager.LoadSceneAsync(Manager.Game.Player.PrevSceneName); // 이전 씬으로 이동
-		setting.allowSceneActivation = false;
+		
 
 		switch (reason)
 		{
@@ -703,8 +707,11 @@ public class BattleManager : MonoBehaviour
 					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
 					Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
 					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
-					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
-					Manager.Data.PlayerData.AddMoney(winMoney);
+					if (winMoney > 1)
+					{
+						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
+						Manager.Data.PlayerData.AddMoney(winMoney);
+					}
 					Manager.Poke.enemyData.IsFight = true;
 				}
 				break;
@@ -723,11 +730,27 @@ public class BattleManager : MonoBehaviour
 				}
 				break;
 		}
-
+		
+		//경험치 획득 및 ui 안내 패널 활성화 될 때 있음 그 전에 씬 이동하면 안됨
+		yield return new WaitForSeconds(0.5f);
+		
+		if (Manager.UI.IsAnyUIOpen)
+		{
+			Debug.Log("UI가 열려있어 닫히길 기다립니다...");
+			yield return new WaitUntil(() => !Manager.UI.IsAnyUIOpen);
+		}
+		
+		var setting = SceneManager.LoadSceneAsync(Manager.Game.Player.PrevSceneName); // 이전 씬으로 이동
+		setting.allowSceneActivation = false;
+		
+		
+		
 		// 변수 초기화
 		isTrainer = false;
 		setting.allowSceneActivation = true;
 		Manager.Game.Player.State = PlayerState.Field;
+		Manager.Game.Player.CurSceneName = Manager.Game.Player.PrevSceneName;
+		Manager.Poke.PartyBattleStatInit();
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 

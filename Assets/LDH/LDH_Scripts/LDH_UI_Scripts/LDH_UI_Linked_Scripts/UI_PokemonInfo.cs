@@ -17,9 +17,10 @@ public class UI_PokemonInfo : UI_Linked
 		[SerializeField] private TMP_Text level;
 		[SerializeField] private TMP_Text pageNum;
 
-		[Header("panel 1 UI")] [SerializeField]
-		private Slider hpSlider;
-
+		[Header("panel 1 UI")]
+		[SerializeField] private Slider hpSlider;
+		[SerializeField] private TMP_Text curHpText;
+		[SerializeField] private TMP_Text maxHpText;
 		[SerializeField] private TMP_Text statusText;
 		[SerializeField] private TMP_Text type1Text;
 		[SerializeField] private TMP_Text type2Text;
@@ -99,13 +100,16 @@ public class UI_PokemonInfo : UI_Linked
 				case 0:
 					int hp = pokemon.hp;
 					int maxHp = pokemon.maxHp;
-					int exp = pokemon.curExp;
-					int nextExp = pokemon.nextExp;
+					int nextExp = pokemon.GetExpByLevel(pokemon.level + 1) - pokemon.GetExpByLevel(pokemon.level);
+					int exp = nextExp - pokemon.nextExp;
 
+					curHpText.text = $"{hp}/";
+					maxHpText.text = maxHp.ToString();
+					
 					hpSlider.maxValue = maxHp;
 					hpSlider.value = hp;
 
-					expSlider.maxValue = exp + nextExp;
+					expSlider.maxValue = nextExp;
 					expSlider.value = exp;
 
 					curExpText.text = exp.ToString();

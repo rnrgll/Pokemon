@@ -316,6 +316,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2994874419291185717, guid: 5f0c44390446d8646bf6b35ba7279a44, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1483452531}
+    - targetCorrespondingSourceObject: {fileID: 2994874419291185717, guid: 5f0c44390446d8646bf6b35ba7279a44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1483452535}
   m_SourcePrefab: {fileID: 100100000, guid: 5f0c44390446d8646bf6b35ba7279a44, type: 3}
 --- !u!1 &16464976 stripped
 GameObject:
@@ -2104,7 +2107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &275875176
 Transform:
   m_ObjectHideFlags: 0
@@ -4141,9 +4144,10 @@ GameObject:
   - component: {fileID: 561518199}
   - component: {fileID: 561518198}
   - component: {fileID: 561518197}
+  - component: {fileID: 561518200}
   m_Layer: 0
   m_Name: "\uD30C\uB780\uAF2C\uB81B\uD2B8\uB808\uC774\uB108"
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4320,6 +4324,27 @@ MonoBehaviour:
   isPaused: 0
   isNPCMoveCheck: 0
   isNPCTurnCheck: 0
+--- !u!95 &561518200
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561518193}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &574512435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7299,7 +7324,7 @@ GameObject:
   - component: {fileID: 1162375366}
   m_Layer: 0
   m_Name: "\uBE68\uAC04\uAF2C\uB81B"
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8833,6 +8858,27 @@ MonoBehaviour:
   isPaused: 0
   isNPCMoveCheck: 1
   isNPCTurnCheck: 1
+--- !u!95 &1483452535
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16464976}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b96b2811ff46bf1409e721f58d90accb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1488469528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16521,7 +16567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1586213439
 Transform:
   m_ObjectHideFlags: 0
@@ -16613,7 +16659,7 @@ GameObject:
   - component: {fileID: 1601741338}
   m_Layer: 0
   m_Name: "\uBE68\uAC04\uAF2C\uB81B\uD2B8\uB808\uC774\uB108"
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16874,7 +16920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1608137885
 Transform:
   m_ObjectHideFlags: 0
@@ -44401,7 +44447,7 @@ GameObject:
   - component: {fileID: 2123923796}
   m_Layer: 0
   m_Name: "\uD30C\uB780\uAF2C\uB81B"
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
