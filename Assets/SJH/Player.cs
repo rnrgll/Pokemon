@@ -20,6 +20,13 @@ public class Player : MonoBehaviour
 				Debug.Log($"플레이어 상태 변경: {state} > {value}");
 				prevState = state;
 				state = value;
+				
+				// 상태 변경 시 이동 정지
+				if (state != Define.PlayerState.Field)
+				{
+					StopMoving(); // 이동 중지
+					StopAllMovementCoroutines(); // 이동 관련 코루틴 중지
+				}
 			}
 		}
 	}
@@ -159,6 +166,8 @@ public class Player : MonoBehaviour
 
 	void MoveState()
 	{
+		if (State != Define.PlayerState.Field) return; // 상태가 Field가 아니면 이동 불가
+
 		if (isJump)
 			return;
 		// Idle 설정
