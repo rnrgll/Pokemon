@@ -178,6 +178,14 @@ public class Trainer : MonoBehaviour, IInteractable
 	{
 		Debug.Log("트레이너 배틀 체크");
 
+		if (isTrainerTurn)
+			isTrainerTurn = false;
+		if (turnCoroutine != null)
+		{
+			StopCoroutine(turnCoroutine);
+			turnCoroutine = null;
+		}
+
 		var player = Manager.Game.Player;
 		player.State = Define.PlayerState.Dialog;
 
@@ -186,6 +194,8 @@ public class Trainer : MonoBehaviour, IInteractable
 		else if (player.currentDirection == Vector2.down) dir = Vector2.up;
 		else if (player.currentDirection == Vector2.left) dir = Vector2.right;
 		else dir = Vector2.left;
+
+		currentDirection = dir;
 
 		anim.SetFloat("x", dir.x);
 		anim.SetFloat("y", dir.y);
@@ -197,11 +207,11 @@ public class Trainer : MonoBehaviour, IInteractable
 			return;
 		}
 
-		if (Manager.Dialog.isTyping == false && moveCoroutine == null)
-		{
-			Manager.Dialog.npcState = Define.NpcState.Talking;
-			StartCoroutine(StayDialog());
-		}
+		//if (Manager.Dialog.isTyping == false && moveCoroutine == null)
+		//{
+		//	Manager.Dialog.npcState = Define.NpcState.Talking;
+		//	StartCoroutine(StayDialog());
+		//}
 	}
 	IEnumerator StayDialog()
 	{
@@ -233,7 +243,9 @@ public class Trainer : MonoBehaviour, IInteractable
 	public void BattleStart()
 	{
 		// 포켓몬 매니저 enemyParty에 파티 넣으면 배틀씬에서 트레이너 배틀로 인식
+		Manager.Poke.enemyPokemon = null;
 		Manager.Poke.enemyData = Manager.Event.GetTrainerDataById(trainerId);
+		Manager.Poke.enemyParty = null;
 
 		// 플레이어 스탑
 		var player = Manager.Game.Player;

@@ -2219,6 +2219,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6270959539984545281, guid: 3d6c7bec28fe11040a6f42b36d3adb6a, type: 3}
   m_PrefabInstance: {fileID: 450788340}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &467406100
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 349731098428950007, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_Name
+      value: CreatePlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
 --- !u!1 &513726590
 GameObject:
   m_ObjectHideFlags: 0
@@ -41321,8 +41378,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6338271806746144077}
   - component: {fileID: 3145338098623523335}
-  - component: {fileID: 3590872263304907671}
   - component: {fileID: 5112615885041801924}
+  - component: {fileID: 6338271806746144078}
   m_Layer: 0
   m_Name: TownInfo
   m_TagString: Wall
@@ -41775,19 +41832,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &3590872263304907671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2447590319734384409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uC5F0\uB450\uB9C8\uC744 \uC785\uB2C8\uB2E4."
 --- !u!61 &3626501847799266489
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42215,19 +42259,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5073340059823247257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6218027178762855191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uACF5\uBC15\uC0AC \uC9D1\uC785\uB2C8\uB2E4."
 --- !u!61 &5112615885041801924
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42387,7 +42418,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2327050439560505667}
   - component: {fileID: 6636956740319751689}
-  - component: {fileID: 5073340059823247257}
   - component: {fileID: 3553025252789198538}
   m_Layer: 0
   m_Name: ProfessorHouse
@@ -42411,6 +42441,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 49273815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6338271806746144078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2447590319734384409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC774\uACF3\uC740 \uC5F0\uB450\uB9C8\uC744"
+    - "\uC2DC\uC791\uC758 \uBC14\uB78C\uC774 \uBD88\uC5B4\uC624\uB294 \uB9C8\uC744"
+  pokeEvent: {fileID: 0}
 --- !u!212 &6450139729168562522
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -42525,8 +42572,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1722070498875093818}
   - component: {fileID: 7761506494183257200}
-  - component: {fileID: 8198031344346633696}
   - component: {fileID: 496447442262459571}
+  - component: {fileID: 7761506494183257201}
   m_Layer: 0
   m_Name: Lab
   m_TagString: Wall
@@ -42544,8 +42591,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1722070498282295262}
   - component: {fileID: 7761506494662887572}
-  - component: {fileID: 8198031344906168580}
   - component: {fileID: 496447442810468439}
+  - component: {fileID: 7761506494662887573}
   m_Layer: 0
   m_Name: PlayerHouse
   m_TagString: Wall
@@ -42747,6 +42794,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7761506494183257201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054751597609941358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uACF5\uBC15\uC0AC \uC5F0\uAD6C\uC18C \uC785\uB2C8\uB2E4."
+  pokeEvent: {fileID: 0}
 --- !u!212 &7761506494662887572
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -42799,6 +42862,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7761506494662887573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054751598140065162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC774\uACF3\uC740 \uACE8\uB4DC\uC758 \uC9D1"
+  pokeEvent: {fileID: 0}
 --- !u!61 &7911750132602267182
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42880,32 +42959,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8198031344346633696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054751597609941358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uACF5\uBC15\uC0AC \uC5F0\uAD6C\uC18C \uC785\uB2C8\uB2E4."
---- !u!114 &8198031344906168580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054751598140065162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uD50C\uB808\uC774\uC5B4 \uC9D1\uC785\uB2C8\uB2E4."
 --- !u!1 &8270464215891498874
 GameObject:
   m_ObjectHideFlags: 0
@@ -43301,3 +43354,4 @@ SceneRoots:
   - {fileID: 4460147973305485735}
   - {fileID: 9183715634618660000}
   - {fileID: 35575596}
+  - {fileID: 467406100}

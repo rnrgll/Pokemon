@@ -26,6 +26,12 @@ public class PokeGearEvent : PokeEvent
 			NpcMover npcMover = npc.GetComponent<NpcMover>();
 			originalNpcPosition = npc.transform.position;
 			Debug.Log("플레이어 닿음");
+			Player player = collision.gameObject.GetComponent<Player>();
+			player.State = Define.PlayerState.Dialog;
+			if (player.moveCoroutine != null)
+				player.StopCoroutine(player.moveCoroutine);
+			player.StopMoving();
+			player.AnimChange();
 
 			if (!isMove)
 			{

@@ -10038,6 +10038,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1001470556}
   - component: {fileID: 1001470557}
+  - component: {fileID: 1001470558}
   m_Layer: 0
   m_Name: Sign_Route29 (1)
   m_TagString: Untagged
@@ -10112,6 +10113,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1001470558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001470555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC774\uACF3\uC740 29\uBC88 \uB3C4\uB85C"
+  pokeEvent: {fileID: 0}
 --- !u!1001 &1002143219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57145,8 +57162,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2245214518652923555, guid: d46bfa3c916ecdd468c8e617bd647131, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1377149463076550563}
   m_SourcePrefab: {fileID: 100100000, guid: d46bfa3c916ecdd468c8e617bd647131, type: 3}
+--- !u!1 &1377149463076550562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2245214518652923555, guid: d46bfa3c916ecdd468c8e617bd647131, type: 3}
+  m_PrefabInstance: {fileID: 1377149463076550561}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1377149463076550563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377149463076550562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB098\uBB34\uC5F4\uB9E4\uB294 \uB2EC\uCF64\uD558\uC9C0"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1001 &2550281597564869823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57274,8 +57316,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9151824625554749035, guid: e7e4452493dd243479b69cbe502541bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2918768499265450340}
   m_SourcePrefab: {fileID: 100100000, guid: e7e4452493dd243479b69cbe502541bf, type: 3}
+--- !u!1 &2918768499265450339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9151824625554749035, guid: e7e4452493dd243479b69cbe502541bf, type: 3}
+  m_PrefabInstance: {fileID: 2918768499265450338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2918768499265450340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2918768499265450339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uD480\uC232\uC5D0\uC11C\uB294 \uD3EC\uCF13\uBAAC\uC774 \uD280\uC5B4\uB098\uC628\uB2E8\uB2E4"
+  pokeEvent: {fileID: 0}
 --- !u!61 &3656171497528009131
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -57406,19 +57472,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5015790454846304504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6177087084789816438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uC5F0\uB450\uB9C8\uC744 \uC785\uB2C8\uB2E4."
 --- !u!1 &6177087084789816438
 GameObject:
   m_ObjectHideFlags: 0
@@ -57429,8 +57482,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2574067995609732642}
   - component: {fileID: 6910916299800056168}
-  - component: {fileID: 5015790454846304504}
   - component: {fileID: 3656171497528009131}
+  - component: {fileID: 6910916299800056169}
   m_Layer: 0
   m_Name: Sign_Route29
   m_TagString: Wall
@@ -57592,6 +57645,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6910916299800056169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6177087084789816438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC774\uACF3\uC740 29\uBC88 \uB3C4\uB85C"
+  pokeEvent: {fileID: 0}
 --- !u!1001 &7340668211085997807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57647,8 +57716,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5499504148147822484, guid: 9b517aae1feed1a4f9c46b38f35fd872, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7340668211085997809}
   m_SourcePrefab: {fileID: 100100000, guid: 9b517aae1feed1a4f9c46b38f35fd872, type: 3}
+--- !u!1 &7340668211085997808 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5499504148147822484, guid: 9b517aae1feed1a4f9c46b38f35fd872, type: 3}
+  m_PrefabInstance: {fileID: 7340668211085997807}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7340668211085997809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7340668211085997808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB808\uD3EC\uD2B8\uB97C \uC791\uC131\uC911\uC774\uC57C"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1001 &7740159879015954704
 PrefabInstance:
   m_ObjectHideFlags: 0

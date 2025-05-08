@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class QuestEvent : PokeEvent
 {
 	[Header("대화 관련 설정")]
 	[SerializeField] private Dialog dialog;
 	[SerializeField] private GameObject npc;
+
+	Vector2 pos = new Vector2(-10, 14);
+
+	Vector2 pos1 = new Vector2 (-12, 16);
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.CompareTag("Player"))
@@ -15,14 +20,18 @@ public class QuestEvent : PokeEvent
 				return;
 
 
-
-			NpcMover npcMover = npc.GetComponent<NpcMover>();
-			Manager.Game.Player.AnimChange(Vector2.right);
+			if ((Vector2)Manager.Game.Player.transform.position == pos1)
+			{
+				NpcMover npcMover = npc.GetComponent<NpcMover>();
+				Manager.Game.Player.AnimChange(Vector2.right);
+				npcMover.AnimChange(Vector2.left);
+			}
+			else {
+				Manager.Game.Player.AnimChange(Vector2.up);
+			}
 			Manager.Game.Player.StopMoving();
-			npcMover.AnimChange(Vector2.left);
-
 			StartCoroutine(TriggerDialogue());
-			
+			Manager.Event.pokegearEvent = true;
 			Manager.Event.questEvent = true;
 		}
 	}
@@ -30,7 +39,7 @@ public class QuestEvent : PokeEvent
 	{
 		/*
 		 여어 골드군, 기다리고 있었단다!
-		오늘 너를 부른 것은 바탁이 있어서란다!
+		오늘 너를 부른 것은 부탁이 있어서란다!
 		내가 아는 사람중에
 		포켓몬 할아버지라고 하는 
 		이상한 것을 발견했을 때

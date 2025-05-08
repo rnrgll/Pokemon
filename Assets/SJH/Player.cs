@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 			if (state != value)
 			{
 				Debug.Log($"플레이어 상태 변경: {state} > {value}");
+				
 				prevState = state;
 				state = value;
 			}
@@ -245,7 +246,8 @@ public class Player : MonoBehaviour
 		// 같은 방향이면 이동 시작
 		if (inputDir == currentDirection)
 		{
-			moveCoroutine = StartCoroutine(Move(inputDir));
+			if (State != PlayerState.SceneChange)
+				moveCoroutine = StartCoroutine(Move(inputDir));
 		}
 		// 방향만 전환
 		else
@@ -258,6 +260,11 @@ public class Player : MonoBehaviour
 	{
 		// 1 이동 = x or y 2 변화
 		// 바로 2를 이동하지않고 이동시간에 걸쳐서 이동
+		if (State == PlayerState.SceneChange)
+		{
+			StopCoroutine(moveCoroutine);
+			moveCoroutine = null;
+		}
 		isMoving = true;
 		isIdle = false;
 		anim.SetBool("isMoving", isMoving);

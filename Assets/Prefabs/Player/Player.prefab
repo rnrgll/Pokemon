@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1399854069, guid: a9e7160145e356645a4abffa836fc5ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a1222f577d39144817fc8520fa6a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prevState: 0
   state: 0
   currentDirection: {x: 0, y: -1}
   moveValue: 2
@@ -517,6 +518,10 @@ PrefabInstance:
     - target: {fileID: 773624832938180059, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405078135023344127, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6890650511317701747, guid: 7c0bfd7b304d08a498d4bb78eab9e847, type: 3}
       propertyPath: soundData.Array.size

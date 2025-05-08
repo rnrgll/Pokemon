@@ -75,8 +75,8 @@ public class SceneChanger : MonoBehaviour
 		//player.transform.position = new Vector3(exitPos.x, exitPos.y);
 		pc.StopMoving();
 		pc.currentDirection = keyDirection;
-		pc.AnimChange();
-
+		pc.AnimChange(keyDirection);
+		player.transform.position = exitPos;
 		pc.CurSceneName = exitSceneName;
 
 		while (!asyncLoad.isDone)
@@ -88,9 +88,9 @@ public class SceneChanger : MonoBehaviour
 				player.transform.position = exitPos;
 				Debug.Log($"플레이어 이동 : {exitPos}");
 				isChange = false;
-				pc.State = Define.PlayerState.Field;
 				//yield return new WaitForSeconds(0.1f);
 				asyncLoad.allowSceneActivation = true;
+				pc.State = Define.PlayerState.Field;
 
 				break;  // 루프 탈출
 			}

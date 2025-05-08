@@ -83,7 +83,8 @@ public class BattleManager : MonoBehaviour
 		void OnComplete()
 		{
 			// 트레이너
-			if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
+			//if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
+			if (Manager.Poke.enemyData != null)
 			{
 				Debug.Log("트레이너 배틀 시작");
 				//게임 데이터 설정
@@ -124,7 +125,7 @@ public class BattleManager : MonoBehaviour
 		}
 		intro.OnIntroComplete += OnComplete;
 
-		if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
+		if (Manager.Poke.enemyData != null)
 			intro.PlayTrainerIntro();
 		else
 			intro.PlayWildIntro();
@@ -705,14 +706,17 @@ public class BattleManager : MonoBehaviour
 					Debug.Log($"배틀로그 {currentTurn}턴 : 승리");
 
 					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
-					Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
-					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
-					if (winMoney > 1)
+					if (isTrainer)
 					{
-						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
-						Manager.Data.PlayerData.AddMoney(winMoney);
+						Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
+						Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
+						if (winMoney > 1)
+						{
+							yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
+							Manager.Data.PlayerData.AddMoney(winMoney);
+						}
+						Manager.Poke.enemyData.IsFight = true;
 					}
-					Manager.Poke.enemyData.IsFight = true;
 				}
 				break;
 			case "Lose":
@@ -751,6 +755,11 @@ public class BattleManager : MonoBehaviour
 		Manager.Game.Player.State = PlayerState.Field;
 		Manager.Game.Player.CurSceneName = Manager.Game.Player.PrevSceneName;
 		Manager.Poke.PartyBattleStatInit();
+
+		Manager.Poke.enemyData = null;
+		Manager.Poke.enemyParty = null;
+		Manager.Poke.enemyPokemon = null;
+
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 

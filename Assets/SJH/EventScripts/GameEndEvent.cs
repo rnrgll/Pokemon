@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameEndEvent : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameEndEvent : MonoBehaviour
 			if (Manager.Event.gymEvent)
 			{
 				// TODO : 씬전환
+				SceneManager.LoadScene("EndScene");
 			}
 		}
 	}
