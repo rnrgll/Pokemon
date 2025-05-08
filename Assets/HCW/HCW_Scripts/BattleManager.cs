@@ -83,7 +83,8 @@ public class BattleManager : MonoBehaviour
 		void OnComplete()
 		{
 			// 트레이너
-			if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
+			//if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
+			if (Manager.Poke.enemyData != null)
 			{
 				Debug.Log("트레이너 배틀 시작");
 				//게임 데이터 설정
@@ -124,7 +125,7 @@ public class BattleManager : MonoBehaviour
 		}
 		intro.OnIntroComplete += OnComplete;
 
-		if (Manager.Poke.enemyData.TrainerPartyData.Count >= 1)
+		if (Manager.Poke.enemyData != null)
 			intro.PlayTrainerIntro();
 		else
 			intro.PlayWildIntro();
@@ -751,6 +752,11 @@ public class BattleManager : MonoBehaviour
 		Manager.Game.Player.State = PlayerState.Field;
 		Manager.Game.Player.CurSceneName = Manager.Game.Player.PrevSceneName;
 		Manager.Poke.PartyBattleStatInit();
+
+		Manager.Poke.enemyData = null;
+		Manager.Poke.enemyParty = null;
+		Manager.Poke.enemyPokemon = null;
+
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 

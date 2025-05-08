@@ -69,6 +69,8 @@ public class EncounterManager : Singleton<EncounterManager>
 
 					// 포켓몬 매니저 enemyPokemon 에 값을 넣으면 야생 / enemyParty 에 값을 넣으면 트레이너
 					Manager.Poke.enemyPokemon = pokeObject;
+					Manager.Poke.enemyData = null;
+					Manager.Poke.enemyParty = null;
 
 					// 애니메이션 종료
 					var player = Manager.Game.Player;
