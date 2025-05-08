@@ -6,11 +6,11 @@ public class ProfessorCallEvent : PokeEvent
 {
 	[Header("대화 관련 설정")]
 	[SerializeField] private Dialog dialog;
-	[SerializeField] private GameObject npc;
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.CompareTag("Player") && Manager.Event.gymEvent && !Manager.Event.eggEvent)
+
+		if (collision.gameObject.CompareTag("Player") && Manager.Event.pokemonHouseEvent && !Manager.Event.backNewBarkTownEvent)
 		{
 			Debug.Log("이벤트충돌");
 			
@@ -25,8 +25,8 @@ public class ProfessorCallEvent : PokeEvent
 			Manager.Dialog.StartDialogue(dialog);
 			return;
 		}
-		StartCoroutine(PrintCor());
-		Manager.Event.eggEvent = false;
+		
+		Manager.Event.backNewBarkTownEvent = false;
 	}
 
 	private IEnumerator PrintCor()
