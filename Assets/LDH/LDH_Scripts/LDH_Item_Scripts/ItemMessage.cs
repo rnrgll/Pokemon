@@ -14,7 +14,7 @@ public static class ItemMessage
 		{ItemMessageKey.RestoreSleep, "{0}는(은)\n눈을 떴다"},
 		{ItemMessageKey.RestoreParalysis, "{0}의 몸에\n마비가 사라졌다"},
 		{ItemMessageKey.RestoreConfusion, "{0}는(은)\n혼란이 풀렸다."},
-		{ItemMessageKey.CanNotUseBall, "트레이너가 볼을 쳐냈다!\n다른사람의 물건을 훔치면 도둑놈!"},
+		{ItemMessageKey.CanNotUseBall, "대결 중에는 사용할 수 없다!\n다른사람의 물건을 훔치면 도둑놈!"},
 		{ItemMessageKey.TMHMBeforeUse, "기술 머신을 가동시켰다!\n \n안에는 {0}(이)가\n기록되어져 있다!\n{0}를(을)\n포켓몬에게 가르치겠습니까?"},
 		{ItemMessageKey.CanNotLearn,"{0}과(와) {1}는(은)\n상성이 좋지 않았다!\n{1}은(는) 배울 수 없다!"},
 		{ItemMessageKey.LearnFail,

@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
 	
 	//배틀 중 아이템 사용 여부 확인용 플래그
 	public bool IsItemUsed { get; private set; }
-	
+	public Define.ItemCategory UsedItemType { get; private set; }
 	
 	public void SetPlayer(Player player)
 	{
@@ -62,5 +62,9 @@ public class GameManager : Singleton<GameManager>
 		SlotType = type;
 	}
 
-	public void SetIsItemUsed(bool isItemUsed) => IsItemUsed = isItemUsed;
+	public void SetItemUsed(bool isItemUsed, Define.ItemCategory itemType)
+	{
+		IsItemUsed = isItemUsed;
+		UsedItemType = itemType;
+	}
 }

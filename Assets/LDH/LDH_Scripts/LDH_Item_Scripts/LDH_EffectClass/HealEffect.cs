@@ -7,7 +7,7 @@ public class HealEffect : ScriptableObject, IItemEffect
 
 	public bool Apply(Pokémon target, InGameContext inGameContext)
 	{
-		if (target.hp >= target.maxHp)
+		if (target.hp >= target.maxHp || target.condition==Define.StatusCondition.Faint)
 		{
 			inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.NoEffect));
 			return false;

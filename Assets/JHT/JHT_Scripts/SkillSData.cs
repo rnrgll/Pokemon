@@ -105,6 +105,9 @@ public class SkillSData
 			["플래시"] = new Flash(),
 			// TM
 			["진흙뿌리기"] = new MudSlap(),
+			
+			//몬스터볼 사용
+			["몬스터볼사용"] = new 
 		};
 	}
 	public SkillS GetSkillDataByName(string name)

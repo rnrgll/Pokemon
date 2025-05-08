@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour
 	void Awake()
 	{
 		audioSource = GetComponent<AudioSource>();
-
+		audioSource.volume = 0.5f;
 		// 배열 > 딕셔너리
 		soundMap = new Dictionary<string, AudioClip>();
 		foreach (var data in soundData)

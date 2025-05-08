@@ -12,14 +12,12 @@ public class Item_MonsterBall : ItemBase
 		if (!inGameContext.IsWildBattle)
 		{
 			inGameContext.NotifyMessage?.Invoke(ItemMessage.Get(ItemMessageKey.CanNotUseBall));
-			
-			//트레이너가 볼을 쳐내는 애니메이션 적용
-			//아이템 개수 줄어듬 -> 사용은 됨!
-			return true;
+			return false;
 		}
 
-		// TODO: 포획 시도 로직은 이후 BattleManager와 연동
-		inGameContext.NotifyMessage?.Invoke($"{itemName}을(를) 던졌다!");
+		
+		inGameContext.NotifyMessage?.Invoke($"{Manager.Data.PlayerData.PlayerName}는 {itemName}을(를) 던졌다!");
+	
 		return true;
 	}
 }

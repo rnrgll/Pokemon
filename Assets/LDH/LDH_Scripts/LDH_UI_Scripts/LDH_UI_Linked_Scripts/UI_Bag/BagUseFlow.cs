@@ -159,7 +159,7 @@ public class BagUseFlow
 		{
 			Manager.UI.UndoLinkedUI();
 			//기술머신만 여기서 result로 아이템 개수 갱신 처리
-			UseResult(_context.Result);
+			UseResult(_context.ItemResult);
 		};
 		
 		OpenPokePartByType(_slotType);
@@ -199,7 +199,7 @@ public class BagUseFlow
 			//배틀 중이라면 아이템 사용했음을 저장해두가
 			if (Manager.Game.IsInBattle)
 			{
-				Manager.Game.SetIsItemUsed(success); //아이템 사용함!
+				Manager.Game.SetItemUsed(success, _item.Category); //아이템 사용함!
 				return;
 			}
 		}

@@ -52,7 +52,7 @@ public class PokemonManager : Singleton<PokemonManager>
 		pokemon.Init(pokeName, level);
 		return pokemon;
 	}
-	private void AddParty(Pokémon pokemon)
+	public void AddParty(Pokémon pokemon)
 	{
 		pokemon.gameObject.name = pokemon.pokeName;
 		if (party.Count >= 6)

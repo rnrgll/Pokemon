@@ -1443,7 +1443,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1671617706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2148,8 +2148,6 @@ MonoBehaviour:
   enemyPokemonPos: {fileID: 1569807288}
   ui: {fileID: 8869995786001475716}
   hud: {fileID: 4179932499129051925}
-  playerBallList: {fileID: 0}
-  enemyBallList: {fileID: 0}
   pokemonSelect: {fileID: 9059097708465644121}
   isTrainer: 1
   enemyTrainerName: 

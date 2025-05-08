@@ -13,8 +13,8 @@ public class InGameContext
 
 	public Action Callback;
 	
-	public bool Result { get; set; } // Use 결과 저장용(필요할때 쓰기)
-	
+	public bool ItemResult { get; set; } // Use 결과 저장용(필요할때 쓰기)
+
 	// 체이닝 가능한 메서드들
 	public InGameContext SetMessage(Action<string> msg)
 	{
