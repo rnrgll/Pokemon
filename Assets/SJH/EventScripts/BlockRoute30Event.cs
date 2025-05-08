@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class BlockRoute30Event : PokeEvent
 {
+
 	[Header("대화 관련 설정")]
 	[SerializeField] private Dialog dialog;
-	[SerializeField] private GameObject npc;
 
-	public override void OnPokeEvent(GameObject player)
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		//	이 이벤트는 
-		if (Manager.Event.questEvent)
+		if (collision.gameObject.CompareTag("Player") && Manager.Event.pokemonHouseEvent && !Manager.Event.backNewBarkTownEvent)
 		{
+			Debug.Log("이벤트충돌");
+
+			dialog = new Dialog(new List<string>
+			{
+			"크 큰일났구나!!",
+			"에- 그러니까 뭐가 뭐였는지...",
+			"어떡하지....",
+			"아무튼 큰일이란다",
+			"지금 바로 돌아오너라"
+			});
+			Manager.Dialog.StartDialogue(dialog);
 			return;
 		}
-		StartCoroutine(TriggerDialogue());
+		StartCoroutine(PrintCor());
+		Manager.Event.backNewBarkTownEvent = false;
 	}
-	private IEnumerator TriggerDialogue()
+
+	private IEnumerator PrintCor()
 	{
 		Manager.Dialog.StartDialogue(dialog);
 
@@ -25,6 +37,18 @@ public class BlockRoute30Event : PokeEvent
 		{
 			yield return null;
 		}
+	}
+	public override void OnPokeEvent(GameObject player)
+	{
+		/*
+		 npc공박사 전화옴
+(공박사 전화1)
+크 큰일났구나!!
+에- 그러니까 뭐가 뭐였는지...
+어떡하지....
+아무튼 큰일이란다
+지금 바로 돌아오너라
+		 */
 	}
 }
 
