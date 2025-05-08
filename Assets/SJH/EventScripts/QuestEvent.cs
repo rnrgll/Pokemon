@@ -31,7 +31,7 @@ public class QuestEvent : PokeEvent
 			}
 			Manager.Game.Player.StopMoving();
 			StartCoroutine(TriggerDialogue());
-			
+			Manager.Event.pokegearEvent = true;
 			Manager.Event.questEvent = true;
 		}
 	}
