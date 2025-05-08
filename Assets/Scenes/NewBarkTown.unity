@@ -42259,19 +42259,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5073340059823247257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6218027178762855191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uACF5\uBC15\uC0AC \uC9D1\uC785\uB2C8\uB2E4."
 --- !u!61 &5112615885041801924
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -42431,7 +42418,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2327050439560505667}
   - component: {fileID: 6636956740319751689}
-  - component: {fileID: 5073340059823247257}
   - component: {fileID: 3553025252789198538}
   m_Layer: 0
   m_Name: ProfessorHouse

@@ -750,6 +750,7 @@ public class BattleManager : MonoBehaviour
 		setting.allowSceneActivation = true;
 		Manager.Game.Player.State = PlayerState.Field;
 		Manager.Game.Player.CurSceneName = Manager.Game.Player.PrevSceneName;
+		Manager.Poke.PartyBattleStatInit();
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 
