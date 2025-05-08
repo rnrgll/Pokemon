@@ -5091,11 +5091,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1237280250679537327, guid: d2527acb3c41ff34c876c3325ac9c8d3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1507609195173709632, guid: d2527acb3c41ff34c876c3325ac9c8d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3869374856575107709}
   m_SourcePrefab: {fileID: 100100000, guid: d2527acb3c41ff34c876c3325ac9c8d3, type: 3}
+--- !u!1 &3869374856575107708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1507609195173709632, guid: d2527acb3c41ff34c876c3325ac9c8d3, type: 3}
+  m_PrefabInstance: {fileID: 3869374856575107707}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3869374856575107709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869374856575107708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC5C4\uB9C8\uD45C \uD64D\uB828\uC12C \uD584\uBC84\uAC70! "
+  pokeEvent: {fileID: 0}
 --- !u!61 &3875907532703835945
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5193,11 +5218,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6063204777602746382, guid: cd3576533d81a2749aafb50800e359c9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 642055782704407920, guid: cd3576533d81a2749aafb50800e359c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5395344710196219970}
   m_SourcePrefab: {fileID: 100100000, guid: cd3576533d81a2749aafb50800e359c9, type: 3}
+--- !u!1 &5395344710196219969 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 642055782704407920, guid: cd3576533d81a2749aafb50800e359c9, type: 3}
+  m_PrefabInstance: {fileID: 5395344710196219968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5395344710196219970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395344710196219969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB450 \uB0A8\uC790\uAC00 \uC5EC\uD589\uC744 \uB5A0\uB098\uB294 \uC601\uD654\uAC00
+      \uB098\uC628\uB2E4!"
+  pokeEvent: {fileID: 0}
 --- !u!1001 &6700416690163373843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5250,11 +5301,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sink
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 575143416437579086, guid: 1c0a264c0f468844e8a36d8bb7139955, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2826388970539591896, guid: 1c0a264c0f468844e8a36d8bb7139955, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6700416690163373845}
   m_SourcePrefab: {fileID: 100100000, guid: 1c0a264c0f468844e8a36d8bb7139955, type: 3}
+--- !u!1 &6700416690163373844 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2826388970539591896, guid: 1c0a264c0f468844e8a36d8bb7139955, type: 3}
+  m_PrefabInstance: {fileID: 6700416690163373843}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6700416690163373845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6700416690163373844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uBC18\uC9DD\uBC18\uC9DD \uC5C4\uB9C8\uC758 \uC131\uACA9!"
+  pokeEvent: {fileID: 0}
 --- !u!1001 &7630183009742325036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5266,6 +5342,10 @@ PrefabInstance:
     - target: {fileID: 2933707027980234783, guid: 2c69dad24fea1594e9ece49ed29f99a5, type: 3}
       propertyPath: m_Name
       value: Fridge
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059026348586494058, guid: 2c69dad24fea1594e9ece49ed29f99a5, type: 3}
+      propertyPath: text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7681147910428218313, guid: 2c69dad24fea1594e9ece49ed29f99a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5307,11 +5387,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5059026348586494058, guid: 2c69dad24fea1594e9ece49ed29f99a5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2933707027980234783, guid: 2c69dad24fea1594e9ece49ed29f99a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7630183009742325038}
   m_SourcePrefab: {fileID: 100100000, guid: 2c69dad24fea1594e9ece49ed29f99a5, type: 3}
+--- !u!1 &7630183009742325037 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2933707027980234783, guid: 2c69dad24fea1594e9ece49ed29f99a5, type: 3}
+  m_PrefabInstance: {fileID: 7630183009742325036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7630183009742325038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630183009742325037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB9DB\uC788\uB294 \uBB3C\uC774 \uC788\uB2E4!"
+  pokeEvent: {fileID: 0}
 --- !u!4 &7971591871560780872
 Transform:
   m_ObjectHideFlags: 0

@@ -124,7 +124,7 @@ public class SJH_PokemonData
 			{
 				Id = 1,
 				Name = "치코리타",
-				BaseStat = new PokemonStat(45, 49, 65, 49, 65, 45),
+				BaseStat = new PokemonStat(55, 59, 75, 59, 75, 55),
 				PokeType1 = Define.PokeType.Grass,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
@@ -138,7 +138,7 @@ public class SJH_PokemonData
 				// 스킬 딕셔너리 <int 레벨, string 기술명 or Skill class>
 				SkillDic = new Dictionary<int, string>()
 				{
-					[6] = "잎날가르기",
+					[5] = "잎날가르기",
 					[12] = "리플렉터",
 					[15] = "독가루",
 					[22] = "광합성",
@@ -207,7 +207,7 @@ public class SJH_PokemonData
 			{
 				Id = 4,
 				Name = "브케인",
-				BaseStat = new PokemonStat(39, 52, 43, 60, 50, 65),
+				BaseStat = new PokemonStat(49, 62, 53, 70, 60, 75),
 				PokeType1 = Define.PokeType.Fire,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
@@ -219,7 +219,7 @@ public class SJH_PokemonData
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
-					[6] = "불꽃세례",
+					[5] = "불꽃세례",
 					[12] = "연막",
 					[19] = "전광석화",
 					[27] = "화염자동차",
@@ -282,7 +282,7 @@ public class SJH_PokemonData
 			{
 				Id = 7,
 				Name = "리아코",
-				BaseStat = new PokemonStat(50, 65, 64, 44, 48, 43),
+				BaseStat = new PokemonStat(60, 75, 74, 55, 58, 53),
 				PokeType1 = Define.PokeType.Water,
 				PokeType2 = Define.PokeType.None,
 				ExpType = Define.ExpType.MediumSlow,
@@ -294,7 +294,7 @@ public class SJH_PokemonData
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
-					[6] = "물대포",
+					[5] = "물대포",
 					[13] = "분노",
 					[20] = "물기",
 					[27] = "겁나는얼굴",
