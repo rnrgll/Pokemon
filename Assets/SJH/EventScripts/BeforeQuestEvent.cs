@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BeforeQuestEvent : PokeEvent
 {
-	Vector2 targetPos = new Vector2(0, 9);  // 목표 위치
+	Vector2 targetPos = new Vector2(0, 8);  // 목표 위치
 	Player player;
 
 	private void Awake()
