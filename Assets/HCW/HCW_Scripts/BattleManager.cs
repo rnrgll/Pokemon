@@ -986,7 +986,9 @@ public class BattleManager : MonoBehaviour
 		//포켓몬 파티에 추가
 		Debug.Log(action.Target.pokeName);
 		Debug.Log(action.Target.hp);
-		Manager.Poke.AddParty(action.Target); //스탯 그대로 들고가야하므로 AddParty 사용
+		//Manager.Poke.AddParty(action.Target); //스탯 그대로 들고가야하므로 AddParty 사용 -> 이거 쓰면 안됨... 
+		//임시로 그냥 새 데이터로 추가하는 걸로 구현
+		Manager.Poke.AddPokemon(action.Target.pokeName, action.Target.level);
 		//대화
 		yield return StartCoroutine(
 			Manager.Dialog.ShowBattleMessage($"신난다! {action.Target.pokeName}을 잡았다!"));
