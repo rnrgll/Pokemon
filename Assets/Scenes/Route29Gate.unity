@@ -4857,8 +4857,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8110619590769514768, guid: e24394bfa76a48f41877885eadf5e18e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3081948885041965219}
   m_SourcePrefab: {fileID: 100100000, guid: e24394bfa76a48f41877885eadf5e18e, type: 3}
+--- !u!1 &3081948885041965218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8110619590769514768, guid: e24394bfa76a48f41877885eadf5e18e, type: 3}
+  m_PrefabInstance: {fileID: 3081948885041965217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3081948885041965219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3081948885041965218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC5B8\uB355\uC774 \uC788\uC5B4\uC11C \uC62C\uB77C\uAC08 \uC218 \uC5C6\uB124"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!212 &3282609317701990289
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5015,8 +5040,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2079451380577186431, guid: 616758029f5429d4784bf550bf23de88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8372965964279714234}
   m_SourcePrefab: {fileID: 100100000, guid: 616758029f5429d4784bf550bf23de88, type: 3}
+--- !u!1 &8372965964279714233 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2079451380577186431, guid: 616758029f5429d4784bf550bf23de88, type: 3}
+  m_PrefabInstance: {fileID: 8372965964279714232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8372965964279714234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8372965964279714233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uBB50"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!61 &8621107648377671174
 BoxCollider2D:
   m_ObjectHideFlags: 0
