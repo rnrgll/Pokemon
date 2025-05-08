@@ -706,14 +706,17 @@ public class BattleManager : MonoBehaviour
 					Debug.Log($"배틀로그 {currentTurn}턴 : 승리");
 
 					// TODO : 배틀에서 이기고 다시 배틀할 수 없게 해야함
-					Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
-					Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
-					if (winMoney > 1)
+					if (isTrainer)
 					{
-						yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
-						Manager.Data.PlayerData.AddMoney(winMoney);
+						Manager.Event.TrainerWin(Manager.Poke.enemyData.TrainerId);
+						Debug.Log($"골드는 상금으로 {winMoney}원을 손에 넣었다!");
+						if (winMoney > 1)
+						{
+							yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"골드는 상금으로 {winMoney}원을 손에 넣었다!"));
+							Manager.Data.PlayerData.AddMoney(winMoney);
+						}
+						Manager.Poke.enemyData.IsFight = true;
 					}
-					Manager.Poke.enemyData.IsFight = true;
 				}
 				break;
 			case "Lose":
