@@ -71,34 +71,35 @@ public class BagUseFlow
 	{
 		//todo: 몬스터볼 배틀에서 수정하기
 		//타갯 포켓몬
+		
 		bool success = _item.Use(Manager.Game.EnemyPokemon, _context);
 		UseResult(success);
 		Debug.Log("몬스터볼 사용 함");
 
-		// 확률 X = ((3 × MaxHP - 2 × HP) × Rate × Ball) / (3 × MaxHP)
-		var enemyPokemon = Manager.Game.EnemyPokemon;
-		int maxHp = enemyPokemon.maxHp;
-		int curHp = enemyPokemon.hp;
-		int rate = ((3 * maxHp - 2 * curHp) * 255 * 1) / (3 * maxHp);
-
-		// 확정성공
-		if (rate >= 255)
-		{
-			Debug.Log($"{enemyPokemon.pokeName} 포획 성공! {rate}");
-		}
-		else
-		{
-			// 0~254 중 rate 이상이 나올 확률
-			int rand = UnityEngine.Random.Range(0, 256); // 0~255
-			if (rand < rate)
-			{
-				Debug.Log($"{enemyPokemon.pokeName} 포획 성공! ({rand} < {rate})");
-			}
-			else
-			{
-				Debug.Log($"{enemyPokemon.pokeName} 포획 실패 ({rand} >= {rate})");
-			}
-		}
+		// // 확률 X = ((3 × MaxHP - 2 × HP) × Rate × Ball) / (3 × MaxHP)
+		// var enemyPokemon = Manager.Game.EnemyPokemon;
+		// int maxHp = enemyPokemon.maxHp;
+		// int curHp = enemyPokemon.hp;
+		// int rate = ((3 * maxHp - 2 * curHp) * 255 * 1) / (3 * maxHp);
+		//
+		// // 확정성공
+		// if (rate >= 255)
+		// {
+		// 	Debug.Log($"{enemyPokemon.pokeName} 포획 성공! {rate}");
+		// }
+		// else
+		// {
+		// 	// 0~254 중 rate 이상이 나올 확률
+		// 	int rand = UnityEngine.Random.Range(0, 256); // 0~255
+		// 	if (rand < rate)
+		// 	{
+		// 		Debug.Log($"{enemyPokemon.pokeName} 포획 성공! ({rand} < {rate})");
+		// 	}
+		// 	else
+		// 	{
+		// 		Debug.Log($"{enemyPokemon.pokeName} 포획 실패 ({rand} >= {rate})");
+		// 	}
+		// }
 
 		//ShowResultMessage(success);
 	}

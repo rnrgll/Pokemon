@@ -25,12 +25,15 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private PokemonSelect pokemonSelect;
 
 	private DialogManager Dialog => DialogManager.Instance;
-
+	
 	[Header("전투 관련")]
 	private List<Pokémon> playerParty;    // 플레이어 포켓몬 리스트
 	private List<Pokémon> enemyParty;     // 적 포켓몬 리스트
 	private Pokémon playerPokemon;        // 플레이어 포켓몬
 
+	[SerializeField] private Sprite monsterBall;
+	
+	
 	//자동 반영을 위해 프로퍼티로 변경
 	private Pokémon _enemyPokemon;
 	private Pokémon enemyPokemon    // 적 포켓몬
@@ -976,8 +979,8 @@ public class BattleManager : MonoBehaviour
 		//todo:몬스터볼 사용 애니메이션
 		var tgtPos = enemyPokemonPos;
 		var tgtAnim = tgtPos.GetComponent<Animator>();
-		tgtAnim.SetTrigger("Catch");
-		
+		tgtAnim.SetTrigger("Catched");
+		enemyPokemonPos.GetComponent<SpriteRenderer>().sprite = monsterBall;
 		yield return new WaitForSeconds(0.5f);
 		
 		//포켓몬 파티에 추가
