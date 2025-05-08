@@ -1844,16 +1844,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: PC_A
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3718729198112687710, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1938586120197931330, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1888241959}
   m_SourcePrefab: {fileID: 100100000, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
 --- !u!4 &1888241957 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 413871001597979690, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
   m_PrefabInstance: {fileID: 1888241956}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1888241958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1938586120197931330, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
+  m_PrefabInstance: {fileID: 1888241956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1888241959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888241958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "Pc\uB2E4!"
+  pokeEvent: {fileID: 0}
 --- !u!1 &1977262852
 GameObject:
   m_ObjectHideFlags: 0
@@ -5680,8 +5705,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8568048424251625147, guid: 15944f8055c23a64081593a891401186, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7325941495888183541}
   m_SourcePrefab: {fileID: 100100000, guid: 15944f8055c23a64081593a891401186, type: 3}
+--- !u!1 &7325941495888183540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8568048424251625147, guid: 15944f8055c23a64081593a891401186, type: 3}
+  m_PrefabInstance: {fileID: 7325941495888183539}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7325941495888183541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7325941495888183540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "Pc\uC758 \uAE30\uB2A5\uC740 \uC774\uC218\uC7AC\uAC00 \uB9CC\uB4E4\uC5C8\uC5B4!"
+    - "\uADF8\uB7F0\uB370... \uC774\uC218\uC7AC\uAC00 \uB204\uAD6C\uC9C0?"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1001 &7574117219130345172
 PrefabInstance:
   m_ObjectHideFlags: 0
