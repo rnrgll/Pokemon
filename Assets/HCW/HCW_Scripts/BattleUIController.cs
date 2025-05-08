@@ -102,9 +102,9 @@ public class BattleUIController : MonoBehaviour
 	{
 		//UI에 스킬 정보 반영을 위해 UI 컨트롤러에 포켓몬 정보 넘겨주기
 		//동일한 값이 아닌 경우만 넘겨주기
-		if (UI_SkillMenu.Pokemon != pokemon)
+		// if (UI_SkillMenu.Pokemon != pokemon)
 			UI_SkillMenu.Pokemon = pokemon;
-		
+		//
 		var skills = pokemon.skills;
 		for (int i = 0; i < skillButtonList.Count; i++)
 		{

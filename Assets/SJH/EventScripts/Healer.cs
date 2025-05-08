@@ -51,6 +51,7 @@ public class Healer : MonoBehaviour, IInteractable
 		Manager.Dialog.StartDialogue(firstDialog);
 		// 대사 끝날때까지 대기
 		yield return UntilDialogClose();
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
 
 		// 대사
 		yield return new WaitForSeconds(1f);
@@ -96,6 +97,8 @@ public class Healer : MonoBehaviour, IInteractable
 		// bgm 다시 재생
 		Manager.Game.Player.CurSceneName = currentSceneName;
 		sound.GetComponent<AudioSource>().loop = true;
+
+		Manager.Game.Player.State = Define.PlayerState.Field;
 
 		Manager.Dialog.npcState = Define.NpcState.Idle;
 		healerCoroutine = null;

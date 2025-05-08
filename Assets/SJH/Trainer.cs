@@ -178,20 +178,14 @@ public class Trainer : MonoBehaviour, IInteractable
 	{
 		Debug.Log("트레이너 배틀 체크");
 
-		// 플레이어 방향으로 변경
 		var player = Manager.Game.Player;
 		player.State = Define.PlayerState.Dialog;
 
 		Vector2 dir = currentDirection;
-
-		if (player.currentDirection == Vector2.up)
-			dir = Vector2.down;
-		else if (player.currentDirection == Vector2.down)
-			dir = Vector2.up;
-		else if (player.currentDirection == Vector2.left)
-			dir = Vector2.right;
-		else
-			dir = Vector2.left;
+		if (player.currentDirection == Vector2.up) dir = Vector2.down;
+		else if (player.currentDirection == Vector2.down) dir = Vector2.up;
+		else if (player.currentDirection == Vector2.left) dir = Vector2.right;
+		else dir = Vector2.left;
 
 		anim.SetFloat("x", dir.x);
 		anim.SetFloat("y", dir.y);
@@ -203,14 +197,38 @@ public class Trainer : MonoBehaviour, IInteractable
 			return;
 		}
 
-		if (Manager.Dialog.isTyping == false)
+		if (Manager.Dialog.isTyping == false && moveCoroutine == null)
 		{
 			Manager.Dialog.npcState = Define.NpcState.Talking;
-			Manager.Dialog.StartDialogue(dialog);
-			Debug.Log("배틀 시작");
-			BattleStart();
+			StartCoroutine(StayDialog());
 		}
 	}
+	IEnumerator StayDialog()
+	{
+		// 플레이어 방향 변경
+		var player = Manager.Game.Player;
+		Vector2 dir = -currentDirection;
+		player.AnimChange(dir);
+
+		Manager.Dialog.StartDialogue(dialog);
+		Manager.Game.Player.State = Define.PlayerState.Dialog;
+
+		yield return UntilDialogClose();
+
+		BattleStart();
+	}
+
+	IEnumerator UntilDialogClose()
+	{
+		bool isDone = false;
+
+		void OnClose() => isDone = true;
+
+		Manager.Dialog.CloseDialog += OnClose;
+		yield return new WaitUntil(() => isDone);
+		Manager.Dialog.CloseDialog -= OnClose;
+	}
+
 
 	public void BattleStart()
 	{
@@ -228,8 +246,8 @@ public class Trainer : MonoBehaviour, IInteractable
 
 		// TODO : 배틀 기능 끝나면 주석 해제하기
 		// 씬전환
-		//player.CurSceneName = "BattleScene_UIFix";
-		//SceneManager.LoadScene("BattleScene_UIFix");
+		player.CurSceneName = "BattleScene_UIFix";
+		SceneManager.LoadScene("BattleScene_UIFix");
 	}
 
 	IEnumerator TrainerMove()
@@ -266,7 +284,8 @@ public class Trainer : MonoBehaviour, IInteractable
 				{
 					isTrainerMove = false;
 					anim.SetBool("npcMoving", false);
-					BattleCheck();
+					Manager.Dialog.npcState = Define.NpcState.Talking;
+					StartCoroutine(StayDialog());
 					moveCoroutine = null;
 					Debug.Log("플레이어 감지");
 					yield break;
@@ -317,36 +336,6 @@ public class Trainer : MonoBehaviour, IInteractable
 		yield return new WaitForSeconds(2f);
 
 		turnCoroutine = null;
-	}
-
-	void BattleCheck()
-	{
-		// 위에서 지정
-		//Manager.Game.Player.state = Define.PlayerState.Dialog;
-
-		// 플레이어 방향을 트레이너 방향으로 바꾸기
-		var player = Manager.Game.Player;
-		Vector2 dir = -currentDirection;
-		player.AnimChange(dir);
-
-		// 대사 출력
-		if (Manager.Dialog.isTyping == false)
-		{
-			Manager.Dialog.npcState = Define.NpcState.Talking;
-			Manager.Dialog.StartDialogue(dialog);
-			Debug.Log("배틀 시작");
-			BattleStart();
-		}
-	}
-
-	void OnDrawGizmos()
-	{
-		Gizmos.color = Color.red;
-
-		Vector3 rayStart = transform.position;
-		if (currentDirection.x != 0)
-			rayStart += Vector3.down * 0.3f;
-		Gizmos.DrawLine(rayStart, rayStart + (Vector3)(currentDirection * findDistance));
 	}
 }
 

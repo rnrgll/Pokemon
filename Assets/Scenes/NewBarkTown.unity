@@ -1024,7 +1024,7 @@ MonoBehaviour:
   dialog:
     lines:
     - "\uB0A0\uC528\uAC00 \uC88B\uC544~!"
-  pokeEvent: {fileID: 0}
+  pokeEvent: {fileID: 820109653}
   anim: {fileID: 0}
 --- !u!1001 &205837457
 PrefabInstance:
@@ -1512,63 +1512,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8274744671361420350, guid: 25f62136e11fba743af3a5bd97df17ef, type: 3}
   m_PrefabInstance: {fileID: 323056930}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &334423170
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 349731098428950007, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_Name
-      value: CreatePlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
 --- !u!1001 &352803027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4139,6 +4082,9 @@ MonoBehaviour:
     - "\uD480\uC232\uB9CC \uC788\uC73C\uB2C8\uAE4C"
   npc: {fileID: 201123084}
   isMove: 0
+  player: {fileID: 0}
+  originalNpcPosition: {x: 0, y: 0}
+  npcMover: {fileID: 0}
 --- !u!1001 &827544825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7546,7 +7492,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -6, y: 0}
+  m_Offset: {x: -7, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7557,7 +7503,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 14, y: 4}
+  m_Size: {x: 12, y: 4}
   m_EdgeRadius: 0
 --- !u!1001 &1582649087
 PrefabInstance:
@@ -43354,5 +43300,4 @@ SceneRoots:
   - {fileID: 217936586}
   - {fileID: 4460147973305485735}
   - {fileID: 9183715634618660000}
-  - {fileID: 334423170}
   - {fileID: 35575596}

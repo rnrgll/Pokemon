@@ -1,19 +1,11 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 
-public enum StatType
-{
-	Attack,
-	Defense,
-	SpeAttack,
-	SpeDefense,
-	Speed
-}
+
 [CreateAssetMenu(menuName = "ItemEffect/BoostStat")]
 public class StatEffect : ScriptableObject, IItemEffect
 {
-	[SerializeField] private StatType statType;
+	[SerializeField] private Define.StatType statType;
 	
 	[SerializeField] private int boostRankAmount;
 	
@@ -24,23 +16,25 @@ public class StatEffect : ScriptableObject, IItemEffect
 		// 효과 적용
 		switch (statType)
 		{
-			case StatType.Attack:
+			case Define.StatType.Attack:
 				target.pokemonBattleStack.attack = Mathf.Min(6, target.pokemonBattleStack.attack + boostRankAmount);
 				break;
-			case StatType.Defense:
+			case Define.StatType.Defense:
 				target.pokemonBattleStack.defense = Mathf.Min(6, target.pokemonBattleStack.defense + boostRankAmount);
 				break;
-			case StatType.SpeAttack:
+			case Define.StatType.SpeAttack:
 				target.pokemonBattleStack.speAttack = Mathf.Min(6, target.pokemonBattleStack.speAttack + boostRankAmount);
 				break;
-			case StatType.SpeDefense:
+			case Define.StatType.SpeDefense:
 				target.pokemonBattleStack.speDefense = Mathf.Min(6, target.pokemonBattleStack.speDefense + boostRankAmount);
 				break;
-			case StatType.Speed:
+			case Define.StatType.Speed:
 				target.pokemonBattleStack.speed = Mathf.Min(6, target.pokemonBattleStack.speed + boostRankAmount);
 				break;
 		}
 		// TODO : 효과 적용 후 메뉴 닫혀야함
+		
+		inGameContext.NotifyMessage?.Invoke($"{Define.GetKoreanStatType[statType]}이(가) {boostRankAmount} 랭크 올랐다!");
 		Debug.Log($"{statType.ToString()}을 사용합니다.");
 		return true;
 	}

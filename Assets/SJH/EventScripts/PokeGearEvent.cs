@@ -33,6 +33,9 @@ public class PokeGearEvent : PokeEvent
 				npcMover.isNPCMoveCheck = true;
 				StartCoroutine(TriggerDialogue());
 			}
+			
+			//포켓 기어 획득 => 메뉴 생성
+			Manager.Data.PlayerData.menuFlag["포켓기어"] = true;
 			Manager.Event.pokegearEvent = true;
 		}
 	}

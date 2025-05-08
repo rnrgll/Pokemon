@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 
@@ -27,7 +29,18 @@ public class EventManager : Singleton<EventManager>
 
 	[SerializeField] public bool rivalEvent1;              // 연두마을 연구소 옆에서 라이벌한테 말걸면 차이는 이벤트
 	[SerializeField] public bool eggEvent;                 // 체육관 승리 후 체육관 나가면 강제 이벤트 (전화) 센터가면 포켓몬알줌 끝
-	[SerializeField] public bool gymEvent;                 // 체육관 이벤트 (승리시)
+
+	private bool _gymEvent; // 체육관 이벤트 (승리시)
+	[SerializeField]
+	public bool gymEvent
+	{
+		get => _gymEvent;
+		set
+		{
+			if(value == true)
+				Manager.Data.PlayerData.GetBadge(0);
+		}
+	}             
 	//	[SerializeField] public bool teachEvent;           // 무궁시티 체육관 왼쪽에 말걸면 학교로 데려가서 설명해주는 이벤트
 	[SerializeField] public bool cherrygroveCityInfoEvent; // 무궁시티 마을 입구 할아버지 말걸면 마을 소개해주는 이벤트
 	[SerializeField] public bool sproutTowerEvent;         // 모다피탑 3층에서 라이벌과 스님이 얘기하는 이벤트
@@ -44,10 +57,6 @@ public class EventManager : Singleton<EventManager>
 				[SerializeField] public bool teachEvent;               // 무궁시티 체육관 왼쪽에 말걸면 학교로 데려가서 설명해주는 이벤트
 	 // 공박사 이벤트(adventureEvent) 가 true = 비활성화, false = 활성화로 영향을 받는 이벤트
 	[SerializeField] public bool blockRoute30Event;        
-
-
-	
-
 
 
 	[SerializeField] public int playerStarter = 0;				// 플레이어가 선택한 스타팅 포켓몬 0 브케인, 1 리아코 2 치코리타

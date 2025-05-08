@@ -131,7 +131,8 @@ public class Player : MonoBehaviour
 		switch (State)
 		{
 			case Define.PlayerState.Field:          // 필드
-				MoveState();
+				if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
+					MoveState();
 				break;
 			case Define.PlayerState.Battle:         // 배틀중
 				break;
@@ -140,7 +141,7 @@ public class Player : MonoBehaviour
 			case Define.PlayerState.Menu:           // Menu 활성화중
 				break;
 			case Define.PlayerState.Dialog:         //	대화 활성화중
-				Debug.Log("현재 State = Dialog");
+				//Debug.Log("현재 State = Dialog");
 				break;
 		}
 	}

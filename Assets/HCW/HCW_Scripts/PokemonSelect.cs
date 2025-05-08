@@ -95,16 +95,10 @@ public class PokemonSelect : MonoBehaviour
 		
 		if (partyList[curIdx].Pokemon.isDead || partyList[curIdx].Pokemon.hp <= 0)
 		{
-			isUIActive = true;
-			//선택 불가
-			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage("싸울 기력이 없다!",null,true,true);
 			return;
 		}
 		if (partyList[curIdx].Pokemon == currentPokemon)
 		{
-			isUIActive = true;
-			//선택 불가
-			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage($"{currentPokemon.pokeName}는(은) 이미 나가있습니다!",null,true,true);
 			return;
 		}
 	

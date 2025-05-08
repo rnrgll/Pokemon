@@ -77,7 +77,7 @@ public class UI_BattleSkillMenuController : MonoBehaviour
 		SkillData skillData = pokemon.skillDatas[curX];
 		string skillName = skillData.Name;
 	    SkillS skill = Manager.Data.SkillSData.GetSkillDataByName(skillName);
-
+		
 		int curPP = skillData.CurPP;
 		int maxPP = skillData.MaxPP;
 
@@ -93,7 +93,13 @@ public class UI_BattleSkillMenuController : MonoBehaviour
     //z 키 입력시 호출되는 메소드
     public void OnSelect()
     {
-        skillButtonList[curX].Trigger();
+	    if(pokemon.SkillPPCheck(pokemon.skillDatas[curX].Name))
+	    {
+		    
+		    skillButtonList[curX].Trigger();
+	    }
+	    Debug.Log(pokemon.skillDatas[curX].CurPP);
+       
     }
 
     //x키 입력시 호출되는 메소드

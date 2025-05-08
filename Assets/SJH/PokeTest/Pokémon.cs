@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static Define;
 
@@ -314,13 +313,13 @@ public class Pokémon : MonoBehaviour
 			if (!skills.Contains(newSkill))
 			{
 				//메소드로 분리했습니다.(이도현)
-				TryLearnSkill(newSkill, null );
+				TryLearnSkill(newSkill, null);
 			}
 		}
 	}
-	
 
-	
+
+
 	#region LearSkillFlow
 
 	public void TryLearnSkill(string newSkill, Action<bool> onFinish)
@@ -329,14 +328,16 @@ public class Pokémon : MonoBehaviour
 		{
 			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
 				.ShowMessage(
-					ItemMessage.Get(ItemMessageKey.AlreadyKnow, pokeName, newSkill),()=>onFinish?.Invoke(false), true, true
+					ItemMessage.Get(ItemMessageKey.AlreadyKnow, pokeName, newSkill), () => onFinish?.Invoke(false), true, true
 						);
 			return;
 		}
-		
+
 		if (skills.Count < 4)
 		{
+			SkillS skillInfo = Manager.Data.SkillSData.GetSkillDataByName(newSkill);
 			skills.Add(newSkill);
+			skillDatas.Add(new SkillData(newSkill,skillInfo.curPP, skillInfo.maxPP));
 			ShowLearnSuccess(newSkill, onFinish);
 			return;
 		}
@@ -378,7 +379,7 @@ public class Pokémon : MonoBehaviour
 						// 다시 가르칠지 묻는 창으로 복귀
 						TryLearnSkill(newSkill, onFinish);
 					});
-			},true,true,true);
+			}, true, true, true);
 	}
 
 	private void AskSkillToForget(string newSkill, Action<bool> onFinish)
@@ -411,7 +412,7 @@ public class Pokémon : MonoBehaviour
 		Util.SetPositionFromBottomRight(boxRT, 0f, 0f);
 		Util.SetRelativeVerticalOffset(boxRT, canvas, 0.34f);
 	}
-	
+
 	//기술 잊게하기
 	private void ForgetAndLearn(int idx, string newSkill, Action<bool> onFinish)
 	{
@@ -421,14 +422,17 @@ public class Pokémon : MonoBehaviour
 			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage("중요한 기술입니다\n잊게할 수 없습니다!", () =>
 			{
 				ShowForgetChoicePopup(newSkill, onFinish); // 다시 선택
-			},true,true);
+			}, true, true);
 			return;
 		}
-		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(ItemMessage.Get(ItemMessageKey.ForgetSkill,pokeName,oldSkill), () =>
+		Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp").ShowMessage(ItemMessage.Get(ItemMessageKey.ForgetSkill, pokeName, oldSkill), () =>
 		{
+			SkillS skillInfo = Manager.Data.SkillSData.GetSkillDataByName(newSkill);
 			skills[idx] = newSkill;
+			skillDatas[idx] = new SkillData(newSkill,skillInfo.curPP, skillInfo.maxPP);
+			
 			ShowLearnSuccess(newSkill, onFinish);
-		},true,true);
+		}, true, true);
 	}
 	private void ShowLearnSuccess(string skill, Action<bool> onFinish)
 	{
@@ -440,8 +444,8 @@ public class Pokémon : MonoBehaviour
 					onFinish?.Invoke(true);
 				}, true, true);
 	}
-	
-	
+
+
 	#endregion
 
 	void CheckEvolution()
@@ -666,28 +670,30 @@ public class Pokémon : MonoBehaviour
 		string logMsg = "";
 		switch (effectiveness)
 		{
-			case 0: 
+			case 0:
 				Debug.Log($"배틀로그 : 그러나 {defender.pokeName} 에게는 효과가 없었다...");
 				logMsg = $"그러나 {defender.pokeName} 에게는 효과가 없었다...";
 				break;
-			case 25: 
+			case 25:
 				Debug.Log("배틀로그 : 그러나 효과는 미미했다");
 				logMsg = "그러나 효과는 미미했다";
 				break;
-			case 50: 
+			case 50:
 				Debug.Log("배틀로그 : 효과는 조금 부족한 듯 하다");
 				logMsg = "효과는 조금 부족한 듯 하다";
 				break;
 			case 100: /*효과는 보통일 경우 메시지 없음*/ break;
-			case 200: Debug.Log("배틀로그 : 효과는 뛰어났다!");
+			case 200:
+				Debug.Log("배틀로그 : 효과는 뛰어났다!");
 				logMsg = "효과는 뛰어났다!";
 				break;
-			case 400: Debug.Log("배틀로그 : 효과는 굉장했다!!");
+			case 400:
+				Debug.Log("배틀로그 : 효과는 굉장했다!!");
 				logMsg = "효과는 굉장했다!!";
 				break;
 			default: Debug.Log($"배틀로그 : 버그 [{typeEffectiveness}]"); break;
 		}
-		if(!string.IsNullOrEmpty(logMsg))
+		if (!string.IsNullOrEmpty(logMsg))
 			StartCoroutine(Manager.Dialog.ShowBattleMessage(logMsg));
 
 		if (damage > 0)
@@ -742,7 +748,7 @@ public class Pokémon : MonoBehaviour
 			case "단단해지기":
 				attacker.pokemonBattleStack.defense = Mathf.Min(6, attacker.pokemonBattleStack.defense + 1);
 				Debug.Log($"배틀로그 : {attacker.pokeName} 은/는 {skill.name} 기술로 방어 1랭크 상승 {ran}");
-				
+
 				break;
 
 			case "성장":
@@ -1448,7 +1454,7 @@ public class Pokémon : MonoBehaviour
 					condition = StatusCondition.Normal;
 					return false;
 				}
-			default:	// 노말
+			default:    // 노말
 				return true;
 		}
 	}
@@ -1515,7 +1521,7 @@ public class Pokémon : MonoBehaviour
 			if (skillDatas[i].Name == skillName)
 			{
 				var data = skillDatas[i];
-				
+
 				// PP 체크
 				if (data.CurPP <= 0)
 					return false;

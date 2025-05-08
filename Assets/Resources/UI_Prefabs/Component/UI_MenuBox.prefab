@@ -158,7 +158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: _descriptasbleData
@@ -320,7 +320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: _linkedPrefabPath
@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isPlayerMenu
@@ -644,7 +644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: _linkedPrefabPath
@@ -891,7 +891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: _descriptasbleData
@@ -1130,7 +1130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: _descriptasbleData
@@ -1369,7 +1369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: isOpened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4809853445402048327, guid: fa0cb8d66e1734fdabcc99be1d060dfd, type: 3}
       propertyPath: _descriptasbleData

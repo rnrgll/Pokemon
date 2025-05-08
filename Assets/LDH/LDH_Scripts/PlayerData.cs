@@ -16,6 +16,9 @@ public class PlayerData
 	public string PlayerID => playerID;
 	public int Money => money;
 	
+    //=== 메뉴 ===//
+    public Dictionary<string, bool> menuFlag;
+
 	//========트레이너 카드 관련 정보==========//
 	[SerializeField] private float playStartTime;
 	[SerializeField] private bool[] hasBadges = new bool[8];
@@ -25,7 +28,6 @@ public class PlayerData
 	//==========인벤토리 정보===========//
 	private Inventory _inventory;
 	public Inventory Inventory => _inventory;
-	public IReadOnlyList<InventorySlot> PlayerInventory => _inventory.Slots; //앝은 API 제공용..이 필요한가? 모르겠다
 	
 
 
@@ -57,6 +59,20 @@ public class PlayerData
 		//인벤토리 생성
 		_inventory = new();
 		_inventory.Init();
+		
+		
+		//메뉴 플래그
+		menuFlag= new Dictionary<string, bool>()
+		{
+			{ "포켓몬", false },
+			{ "가방", true},
+			{ "설정", true},
+			{"포켓기어", false},
+			{"레포트", true},
+			{"닫다", true},
+			{"플레이어",true}
+		
+		};
 	}
 
 	#endregion
