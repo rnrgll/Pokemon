@@ -4794,6 +4794,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rival_NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 3034349289574088700, guid: 491eeaf5f36ddb741aba6157c5d4224c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3106648144908331207, guid: 491eeaf5f36ddb741aba6157c5d4224c, type: 3}
       propertyPath: m_Sprite
       value: 
