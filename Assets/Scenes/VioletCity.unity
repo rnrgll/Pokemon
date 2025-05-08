@@ -4004,11 +4004,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -274
+      value: -326
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 146
+      value: 148
       objectReference: {fileID: 0}
     - target: {fileID: 2102166460230956873, guid: a760862bc9291ab4ca56ba18e20205e2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7000,7 +7000,7 @@ GameObject:
   - component: {fileID: 846851586}
   m_Layer: 0
   m_Name: Rock (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15222,7 +15222,7 @@ GameObject:
   - component: {fileID: 1840187628}
   m_Layer: 0
   m_Name: Rock
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53776,11 +53776,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d9b1e68cfa07bf48a6d079d48510d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitSceneName: 
-  exitPos: {x: 0, y: 0}
+  exitSceneName: VioletCityNPCHouse2
+  exitPos: {x: -2, y: -20}
   portalType: 0
   isPlayerIn: 0
-  keyDirection: {x: 0, y: 0}
+  keyDirection: {x: 0, y: 1}
   isChange: 0
 --- !u!4 &6664776779683073966
 Transform:
