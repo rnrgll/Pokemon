@@ -984,7 +984,9 @@ public class BattleManager : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 		
 		//포켓몬 파티에 추가
-		Manager.Poke.AddParty(enemyPokemon); //스탯 그대로 들고가야하므로 AddParty 사용
+		Debug.Log(action.Target.pokeName);
+		Debug.Log(action.Target.hp);
+		Manager.Poke.AddParty(action.Target); //스탯 그대로 들고가야하므로 AddParty 사용
 		//대화
 		yield return StartCoroutine(
 			Manager.Dialog.ShowBattleMessage($"신난다! {action.Target.pokeName}을 잡았다!"));

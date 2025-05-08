@@ -70,7 +70,18 @@ public class BagUseFlow
 	private void UseMonsterBall()
 	{
 		//todo: 몬스터볼 배틀에서 수정하기
-		//타갯 포켓몬
+		
+		_context.SetMessage((msg) =>
+		{
+			Manager.UI.ShowPopupUI<UI_MultiLinePopUp>("UI_MultiLinePopUp")
+				.ShowMessage(msg,
+					() =>
+					{
+						Debug.Log("as;ldfjafl;asf;kl");
+						Manager.UI.CloseAllUI();
+						Debug.Log(Manager.UI.IsAnyUIOpen);
+					},true,true);
+		});
 		
 		bool success = _item.Use(Manager.Game.EnemyPokemon, _context);
 		UseResult(success);

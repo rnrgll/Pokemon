@@ -15,7 +15,7 @@ public class Item_MonsterBall : ItemBase
 			return false;
 		}
 
-		
+		Debug.Log("a;lfsdjdsa;lfjasl;fajsfl;");
 		inGameContext.NotifyMessage?.Invoke($"{Manager.Data.PlayerData.PlayerName}는 {itemName}을(를) 던졌다!");
 	
 		return true;
