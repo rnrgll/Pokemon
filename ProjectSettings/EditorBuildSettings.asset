@@ -72,6 +72,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PokemonHouse.unity
     guid: 3248e90954e9f4e43870314c25370590
   - enabled: 1
+    path: Assets/Scenes/PokemonAcademy.unity
+    guid: b36124e692bc06741bd650d145720284
+  - enabled: 1
     path: Assets/Scenes/PokeCenter2.unity
     guid: 7b0590647c3c2434da8a6fd5019e3ff7
   - enabled: 1
