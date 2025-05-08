@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4254224882488173097}
   - component: {fileID: 7871302785052112843}
   - component: {fileID: 4441765321202510641}
-  - component: {fileID: 4557489123171164342}
   m_Layer: 0
   m_Name: Radio_C
   m_TagString: Wall
@@ -131,16 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &4557489123171164342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254934704171455298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uB77C\uB514\uC624\uC785\uB2C8\uB2E4."

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1044130036890540306}
   - component: {fileID: 2128956772244991216}
   - component: {fileID: 8268090120691731172}
-  - component: {fileID: 6296857455458057422}
   m_Layer: 0
   m_Name: GrassObject_A
   m_TagString: Wall
@@ -131,16 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
---- !u!114 &6296857455458057422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9195723018656560985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uCE90\uBE44\uB137 \uC785\uB2C8\uB2E4."
