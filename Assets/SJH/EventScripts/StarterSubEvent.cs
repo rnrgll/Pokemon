@@ -49,6 +49,10 @@ public class StarterSubEvent : PokeEvent
 			}
 			Manager.Data.PlayerData.Inventory.AddItem("상처약", 3);
 			Debug.Log("상처약 3개 줌");
+			
+			Manager.Data.PlayerData.Inventory.AddItem("몬스터볼", 5);
+			Debug.Log("상처약 5개 줌");
+			
 			Manager.Event.starterSubEvent = true;
 			
 		}

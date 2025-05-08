@@ -49,23 +49,37 @@ public class DialogManager : Singleton<DialogManager>
 			// 다음 대사박스 출력
 			if (!isTyping)
 			{
-				++currentLine;
-				if (currentLine < dialog.Lines.Count)
-				{
-					StartCoroutine(ShowDialog(dialog.Lines[currentLine]));
-				}
-				else
-				{
-					currentLine = 0;
-					dialogBox.SetActive(false);
-					if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
-						Manager.Game.Player.State = Define.PlayerState.Field;
-					Manager.Dialog.npcState = Define.NpcState.Idle;
-					CloseDialog?.Invoke();
-				}
+				
+				AdvanceDialog();
 			}
 		}
 	}
+
+	private void AdvanceDialog()
+	{
+		++currentLine;
+		if (currentLine < dialog.Lines.Count)
+		{
+			StartCoroutine(ShowDialog(dialog.Lines[currentLine]));
+		}
+		else
+		{
+			EndDialog();
+		}
+	}
+	private void EndDialog()
+	{
+		currentLine = 0;
+		dialogBox.SetActive(false);
+		haveToPreventInput = false;
+
+		if (SceneManager.GetActiveScene().name != "BattleScene_UIFix")
+			Manager.Game.Player.State = Define.PlayerState.Field;
+
+		Manager.Dialog.npcState = Define.NpcState.Idle;
+		CloseDialog?.Invoke();
+	}
+
 	public IEnumerator ShowText(Dialog dialog)
 	{
 		yield return new WaitForEndOfFrame();
@@ -75,6 +89,7 @@ public class DialogManager : Singleton<DialogManager>
 		dialogBox.SetActive(true);
 		dialogText.text = dialog.Lines[0];
 		StartCoroutine(ShowDialog(dialog.Lines[0]));
+		yield return null;
 	}
 
 	public IEnumerator ShowDialog(string dialog)
