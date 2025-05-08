@@ -75,8 +75,8 @@ public class SceneChanger : MonoBehaviour
 		//player.transform.position = new Vector3(exitPos.x, exitPos.y);
 		pc.StopMoving();
 		pc.currentDirection = keyDirection;
-		pc.AnimChange();
-
+		pc.AnimChange(keyDirection);
+		player.transform.position = exitPos;
 		pc.CurSceneName = exitSceneName;
 
 		while (!asyncLoad.isDone)
