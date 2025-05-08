@@ -1024,7 +1024,7 @@ MonoBehaviour:
   dialog:
     lines:
     - "\uB0A0\uC528\uAC00 \uC88B\uC544~!"
-  pokeEvent: {fileID: 0}
+  pokeEvent: {fileID: 820109653}
   anim: {fileID: 0}
 --- !u!1001 &205837457
 PrefabInstance:
@@ -4082,6 +4082,9 @@ MonoBehaviour:
     - "\uD480\uC232\uB9CC \uC788\uC73C\uB2C8\uAE4C"
   npc: {fileID: 201123084}
   isMove: 0
+  player: {fileID: 0}
+  originalNpcPosition: {x: 0, y: 0}
+  npcMover: {fileID: 0}
 --- !u!1001 &827544825
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7489,7 +7492,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -6, y: 0}
+  m_Offset: {x: -7, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7500,7 +7503,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 14, y: 4}
+  m_Size: {x: 12, y: 4}
   m_EdgeRadius: 0
 --- !u!1001 &1582649087
 PrefabInstance:
