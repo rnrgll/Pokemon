@@ -691,7 +691,6 @@ public class BattleManager : MonoBehaviour
 			foreach (var poke in enemyParty)
 			{
 				Destroy(poke.gameObject);
-				isTrainer = false;
 			}
 		}
 		Destroy(enemyPokemon.gameObject);
