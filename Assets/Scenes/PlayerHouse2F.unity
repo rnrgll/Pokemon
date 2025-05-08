@@ -363,6 +363,11 @@ Transform:
   - {fileID: 237915830638684181}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &934047368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4979347859166561638, guid: f7a61b6dc78d22b488808318a2f11acc, type: 3}
+  m_PrefabInstance: {fileID: 6121934351452728191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &953704323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4630915498899864684, guid: 0d721b383716e6f468c5630a3fa5f295, type: 3}
@@ -745,6 +750,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8747403109386209928, guid: f7a61b6dc78d22b488808318a2f11acc, type: 3}
   m_PrefabInstance: {fileID: 6121934351452728191}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1854679203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934047368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uD638\uB450\uC758 \uC624\uD6C4 \uB77C\uB514\uC624!"
+  pokeEvent: {fileID: 0}
 --- !u!1 &1871045814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,11 +2984,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frame_A
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -6169847377421923664, guid: 39232c309234c7a49840547f00c1bb65, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7343527402869167986, guid: 39232c309234c7a49840547f00c1bb65, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 337549312177116462}
   m_SourcePrefab: {fileID: 100100000, guid: 39232c309234c7a49840547f00c1bb65, type: 3}
+--- !u!1 &337549312177116461 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7343527402869167986, guid: 39232c309234c7a49840547f00c1bb65, type: 3}
+  m_PrefabInstance: {fileID: 337549312177116460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &337549312177116462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337549312177116461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uD53C\uCE74\uCE04!"
+  pokeEvent: {fileID: 0}
 --- !u!1001 &3274540262238137992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3020,11 +3066,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: PC
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3718729198112687710, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1938586120197931330, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3274540262238137994}
   m_SourcePrefab: {fileID: 100100000, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
+--- !u!1 &3274540262238137993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1938586120197931330, guid: 94a49c5b6a6f9d546af42bf8fa126a14, type: 3}
+  m_PrefabInstance: {fileID: 3274540262238137992}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3274540262238137994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3274540262238137993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "PC\uB2E4!"
+  pokeEvent: {fileID: 0}
 --- !u!212 &3327809727573107399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3125,15 +3196,44 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7330657147021893964, guid: a569b1ad68986c44c822b62c0e3dad94, type: 3}
+      propertyPath: text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8215834473534541206, guid: a569b1ad68986c44c822b62c0e3dad94, type: 3}
       propertyPath: m_Name
       value: TV_A
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7330657147021893964, guid: a569b1ad68986c44c822b62c0e3dad94, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8215834473534541206, guid: a569b1ad68986c44c822b62c0e3dad94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3744485780322282815}
   m_SourcePrefab: {fileID: 100100000, guid: a569b1ad68986c44c822b62c0e3dad94, type: 3}
+--- !u!1 &3744485780322282814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8215834473534541206, guid: a569b1ad68986c44c822b62c0e3dad94, type: 3}
+  m_PrefabInstance: {fileID: 3744485780322282813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3744485780322282815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744485780322282814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "TV\uC785\uB2C8\uB2E4."
+  pokeEvent: {fileID: 0}
 --- !u!1001 &4340091267479785295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3288,11 +3388,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8815993951960344838, guid: 3f5e0c85f6ee3d449b916c88a3d18f60, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4103925463279085910, guid: 3f5e0c85f6ee3d449b916c88a3d18f60, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5946496575117693994}
   m_SourcePrefab: {fileID: 100100000, guid: 3f5e0c85f6ee3d449b916c88a3d18f60, type: 3}
+--- !u!1 &5946496575117693993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4103925463279085910, guid: 3f5e0c85f6ee3d449b916c88a3d18f60, type: 3}
+  m_PrefabInstance: {fileID: 5946496575117693992}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5946496575117693994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946496575117693993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uD3EC\uCF13\uBAAC \uC7A1\uC9C0\uAC00 \uBAA8\uC5EC\uC788\uB2E4!"
+  pokeEvent: {fileID: 0}
 --- !u!1001 &6121934351452728191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3301,6 +3426,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1673290761}
     m_Modifications:
+    - target: {fileID: 4545650312570556284, guid: f7a61b6dc78d22b488808318a2f11acc, type: 3}
+      propertyPath: text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4979347859166561638, guid: f7a61b6dc78d22b488808318a2f11acc, type: 3}
       propertyPath: m_Name
       value: Radio_A
@@ -3345,10 +3474,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4545650312570556284, guid: f7a61b6dc78d22b488808318a2f11acc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4979347859166561638, guid: f7a61b6dc78d22b488808318a2f11acc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1854679203}
   m_SourcePrefab: {fileID: 100100000, guid: f7a61b6dc78d22b488808318a2f11acc, type: 3}
 --- !u!114 &8038923910679437949
 MonoBehaviour:
