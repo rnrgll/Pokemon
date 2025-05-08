@@ -40,17 +40,17 @@ public class TownExitEvent : PokeEvent
 				if (player.transform.position.y == -12)
 				{
 					npcMover.destinationPoints = new List<Vector2> { new Vector2(-20, -12)};
+					Manager.Game.Player.transform.position = new Vector2(-20, -12);
+						
 				}
 				else
 				{
 					npcMover.destinationPoints = new List<Vector2> { new Vector2(-22, -12) };
+					Manager.Game.Player.transform.position = new Vector2(-20, -12);
 				}
-				if (!isMove)
-				{
-					isMove = true;
-					npcMover.isNPCMoveCheck = true;
+				
 					StartCoroutine(TriggerDialogue());
-				}
+				
 				return;
 			}
 			
