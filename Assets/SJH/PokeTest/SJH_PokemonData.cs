@@ -138,7 +138,7 @@ public class SJH_PokemonData
 				// 스킬 딕셔너리 <int 레벨, string 기술명 or Skill class>
 				SkillDic = new Dictionary<int, string>()
 				{
-					[8] = "잎날가르기",
+					[6] = "잎날가르기",
 					[12] = "리플렉터",
 					[15] = "독가루",
 					[22] = "광합성",
@@ -219,8 +219,8 @@ public class SJH_PokemonData
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
-					[6] = "연막",
-					[12] = "불꽃세례",
+					[6] = "불꽃세례",
+					[12] = "연막",
 					[19] = "전광석화",
 					[27] = "화염자동차",
 					[36] = "스피드스타",
@@ -294,8 +294,8 @@ public class SJH_PokemonData
 				},
 				SkillDic = new Dictionary<int, string>()
 				{
-					[7] = "분노",
-					[13] = "물대포",
+					[6] = "물대포",
+					[13] = "분노",
 					[20] = "물기",
 					[27] = "겁나는얼굴",
 					[35] = "베어가르기",
