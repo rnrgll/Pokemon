@@ -170,7 +170,7 @@ public class UI_PokemonInfo : UI_Linked
 
 		private void UpdateRightInfoData()
 		{
-			//todo: 포켓몬 이미지빼고 정보 반영. 이미지 반영 추가해야함
+			pokemonImg.sprite =  Manager.Data.SJH_PokemonData.GetBattleBackSprite(pokemon.pokeName);
 			number.text =  $"No. {pokemon.id}";
 			level.text = $":L{pokemon.level}";
 			pokemonName.text = pokemon.pokeName;

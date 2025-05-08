@@ -25,12 +25,15 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private PokemonSelect pokemonSelect;
 
 	private DialogManager Dialog => DialogManager.Instance;
-
+	
 	[Header("전투 관련")]
 	private List<Pokémon> playerParty;    // 플레이어 포켓몬 리스트
 	private List<Pokémon> enemyParty;     // 적 포켓몬 리스트
 	private Pokémon playerPokemon;        // 플레이어 포켓몬
 
+	[SerializeField] private Sprite monsterBall;
+	
+	
 	//자동 반영을 위해 프로퍼티로 변경
 	private Pokémon _enemyPokemon;
 	private Pokémon enemyPokemon    // 적 포켓몬
@@ -242,7 +245,7 @@ public class BattleManager : MonoBehaviour
 		while ((Manager.Poke.AlivePokemonCheck()) && ((isTrainer && currentEnemyIndex < enemyParty.Count) || (!isTrainer && enemyPokemon.hp > 0)))
 		{
 			bool isAction = false;
-			Manager.Game.SetIsItemUsed(false); //아이템 사용 여부 플래그 초기화
+			Manager.Game.SetItemUsed(false, ItemCategory.Count); //아이템 사용 여부 플래그 초기화
 
 			Debug.Log($"배틀로그 {currentTurn}턴 : [{playerPokemon.pokeName} {playerPokemon.hp} / {playerPokemon.maxHp}] VS [{enemyPokemon.pokeName} {enemyPokemon.hp} / {enemyPokemon.maxHp}]");
 
@@ -308,11 +311,6 @@ public class BattleManager : MonoBehaviour
 				
 				}
 			}
-			// else
-			// {
-			// 	// 상대 포켓몬이 살아있으면 다시 ui 활성화
-			// 	ui.ShowActionMenu(); // 행동 선택 UI 표시
-			// }
 
 			// 행동 선택 대기
 			ui.ShowActionMenu(playerPokemon);
@@ -470,7 +468,14 @@ public class BattleManager : MonoBehaviour
 							hud.SetPlayerHUD(playerPokemon, false);
 							hud.SetEnemyHUD(enemyPokemon, false);
 
-							//3. 액션 설정 (상대만 공격하면 되니까 리스트에 넣지 않는다, 정렬 필요 없음)
+							if (Manager.Game.UsedItemType == ItemCategory.Ball)
+							{
+								//볼인경우 액션 생성
+								var catchAct = new BattleAction(playerPokemon, enemyPokemon, "몬스터볼사용");
+								actions.Add(catchAct);
+							}
+
+							//3. 액션 설정 (몬스터볼 사용이 항상 먼저이므로, 정렬 필요 없음)
 							var act = new BattleAction(enemyPokemon, playerPokemon, enemySelectedSkill);
 							actions.Add(act);
 
@@ -733,6 +738,12 @@ public class BattleManager : MonoBehaviour
 					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{Manager.Data.PlayerData.PlayerName}는(은) 성공적으로 도망쳤다!"));
 				}
 				break;
+			case "Catch":
+				{
+					Debug.Log($"배틀로그 {currentTurn}턴 : 포켓몬 획득");
+					yield return StartCoroutine(Manager.Dialog.ShowBattleMessage($"{Manager.Data.PlayerData.PlayerName}는(은) 성공적으로 도망쳤다!"));
+					break;
+				}
 		}
 		
 		//경험치 획득 및 ui 안내 패널 활성화 될 때 있음 그 전에 씬 이동하면 안됨
@@ -955,14 +966,47 @@ public class BattleManager : MonoBehaviour
 		// hud.SetPlayerHUD(playerPokemon);
 		// hud.SetEnemyHUD(enemyPokemon);
 
-		//피격 모션
-		var tgtPos = action.Target == playerPokemon ? playerPokemonPos : enemyPokemonPos;
-		var tgtAnim = tgtPos.GetComponent<Animator>();
-		tgtAnim.SetTrigger("DoBlink");
+		if (action.Skill == "몬스터볼사용")
+		{
+			yield return StartCoroutine(CatchPokemonMotion(action));
+		}
+
+		else
+		{
+			//피격 모션
+			var tgtPos = action.Target == playerPokemon ? playerPokemonPos : enemyPokemonPos;
+			var tgtAnim = tgtPos.GetComponent<Animator>();
+			tgtAnim.SetTrigger("DoBlink");
+		}
+		
 		yield return new WaitForSeconds(0.5f);
 	}
 
 
+	private IEnumerator CatchPokemonMotion(BattleAction action)
+	{
+		//todo:몬스터볼 사용 애니메이션
+		var tgtPos = enemyPokemonPos;
+		var tgtAnim = tgtPos.GetComponent<Animator>();
+		tgtAnim.SetTrigger("Catched");
+		enemyPokemonPos.GetComponent<SpriteRenderer>().sprite = monsterBall;
+		yield return new WaitForSeconds(0.5f);
+		
+		//포켓몬 파티에 추가
+		Debug.Log(action.Target.pokeName);
+		Debug.Log(action.Target.hp);
+		//Manager.Poke.AddParty(action.Target); //스탯 그대로 들고가야하므로 AddParty 사용 -> 이거 쓰면 안됨... 
+		//임시로 그냥 새 데이터로 추가하는 걸로 구현
+		Manager.Poke.AddPokemon(action.Target.pokeName, action.Target.level);
+		//대화
+		yield return StartCoroutine(
+			Manager.Dialog.ShowBattleMessage($"신난다! {action.Target.pokeName}을 잡았다!"));
+		StopCoroutine(battleCoroutine);
+		battleCoroutine = null;
+
+		StartCoroutine(EndBattleCoroutine("포켓몬포획"));
+	}
+	
 	
 	#endregion
 

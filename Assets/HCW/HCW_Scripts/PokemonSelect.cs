@@ -87,11 +87,12 @@ public class PokemonSelect : MonoBehaviour
 	private void SelectSlot()
 	{
 		//Debug.Log(Manager.UI.IsAnyUIOpen);
-		if (curIdx == partyList.Count-1) //그만두다를 선택한 경우
+		if (!haveToChoose && curIdx == partyList.Count-1) //그만두다를 선택한 경우
 		{
 			SelectQuit();
 			return;
-		}
+		}		
+
 		
 		if (partyList[curIdx].Pokemon.isDead || partyList[curIdx].Pokemon.hp <= 0)
 		{

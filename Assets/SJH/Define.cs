@@ -59,7 +59,8 @@ public class Define
 	{
 		Physical,   // 물리
 		Special,    // 특수
-		Status      // 특수기
+		Status,      // 특수기
+		ETC //기타
 	}
 
 	public enum ExpType // 경험치 타입
@@ -128,6 +129,7 @@ public class Define
 		[SkillType.Physical] = "물리",
 		[SkillType.Special] = "특수",
 		[SkillType.Status] = "변화",
+		[SkillType.ETC] = "기타"
 	};
 
 	public static Dictionary<StatType, string> GetKoreanStatType = new()

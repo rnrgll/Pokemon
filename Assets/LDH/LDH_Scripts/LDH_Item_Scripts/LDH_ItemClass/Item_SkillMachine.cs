@@ -67,7 +67,7 @@ public class Item_SkillMachine : ItemBase
 
 		 target.TryLearnSkill(skillName, (bool isSuccess) =>
 		 {
-			 inGameContext.Result = isSuccess;
+			 inGameContext.ItemResult = isSuccess;
 			 inGameContext.Callback?.Invoke();
 		 });
 

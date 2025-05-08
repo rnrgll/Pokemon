@@ -928,7 +928,10 @@ public class Pokémon : MonoBehaviour
 			#endregion
 
 			// 그외
-
+			case "몬스터볼사용":
+				Debug.Log($"배틀로그 : {defender.pokeName}에게 몬스터볼 사용 ");
+				break;
+				
 			// 턴 관련
 			#region 턴 관련
 
