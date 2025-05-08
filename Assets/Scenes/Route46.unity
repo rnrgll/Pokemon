@@ -215,13 +215,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7054751597827215526, guid: 199c333f86351ac479944037a7c1b303, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 130070744}
   m_SourcePrefab: {fileID: 100100000, guid: 199c333f86351ac479944037a7c1b303, type: 3}
 --- !u!4 &130070742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1722070499058883314, guid: 199c333f86351ac479944037a7c1b303, type: 3}
   m_PrefabInstance: {fileID: 130070741}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &130070743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7054751597827215526, guid: 199c333f86351ac479944037a7c1b303, type: 3}
+  m_PrefabInstance: {fileID: 130070741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &130070744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130070743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC774\uACF3\uC740 46\uBC88 \uB3C4\uB85C"
+  pokeEvent: {fileID: 0}
 --- !u!1 &152060497
 GameObject:
   m_ObjectHideFlags: 0
