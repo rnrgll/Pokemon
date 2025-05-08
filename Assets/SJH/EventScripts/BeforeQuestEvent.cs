@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BeforeQuestEvent : PokeEvent
 {
-	Vector2 targetPos = new Vector2(0, 8);  // 목표 위치
+	Vector2 targetPos1 = new Vector2(0, 4);  // 목표 위치
+	Vector2 targetPos2 = new Vector2(0, 3);  // 목표 위치
 	Player player;
 
 	private void Awake()
@@ -21,7 +22,12 @@ public class BeforeQuestEvent : PokeEvent
 
 			Manager.Game.Player.State = Define.PlayerState.Dialog;
 			Debug.Log("퀘스트 트리거 발생!!!!!!!!!!!");
-			Manager.Game.Player.PlayerMove(targetPos);
+			if(Manager.Game.Player.transform.position.x == -10)
+				Manager.Game.Player.PlayerMove(targetPos2);
+			else
+				Manager.Game.Player.PlayerMove(targetPos1);
+
+			Manager.Game.Player.StopMoving();
 			Manager.Event.beforeQuestEvent = true;
 		}
 	}

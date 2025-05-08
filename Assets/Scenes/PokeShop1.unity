@@ -5529,8 +5529,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6818743922387283613, guid: 9640deab7fc001e4384eec97cd0a061b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4175541307495852723}
   m_SourcePrefab: {fileID: 100100000, guid: 9640deab7fc001e4384eec97cd0a061b, type: 3}
+--- !u!1 &4175541307495852722 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6818743922387283613, guid: 9640deab7fc001e4384eec97cd0a061b, type: 3}
+  m_PrefabInstance: {fileID: 4175541307495852721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4175541307495852723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175541307495852722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ef73625943f2d498f113e21dd28dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC0C1\uC810\uC740 \uC900\uBE44\uC911\uC774\uB798"
+  pokeEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1001 &5042056402363423327
 PrefabInstance:
   m_ObjectHideFlags: 0
