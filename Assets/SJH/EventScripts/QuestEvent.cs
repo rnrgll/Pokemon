@@ -25,8 +25,9 @@ public class QuestEvent : PokeEvent
 				NpcMover npcMover = npc.GetComponent<NpcMover>();
 				Manager.Game.Player.AnimChange(Vector2.right);
 				npcMover.AnimChange(Vector2.left);
-				
-
+			}
+			else {
+				Manager.Game.Player.AnimChange(Vector2.up);
 			}
 			Manager.Game.Player.StopMoving();
 			StartCoroutine(TriggerDialogue());
