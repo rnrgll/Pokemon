@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed59e50fca4f38e44a5f1ebdc10ede59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trainerId: 4
+  trainerId: 3
   isFight: 0
   exitPos: {x: 0, y: 0}
   anim: {fileID: 0}
@@ -154,7 +154,7 @@ MonoBehaviour:
   isTrainerMove: 0
   currentDirection: {x: 0, y: 1}
   moveDuration: 0.3
-  isTrainerTurn: 0
+  isTrainerTurn: 1
   dialog:
     lines:
     - "\uC794\uB729 \uD3EC\uCF13\uBAAC\uC744 \uC7A1\uC558\uB2E4"
