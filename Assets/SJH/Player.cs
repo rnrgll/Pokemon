@@ -260,7 +260,7 @@ public class Player : MonoBehaviour
 	{
 		// 1 이동 = x or y 2 변화
 		// 바로 2를 이동하지않고 이동시간에 걸쳐서 이동
-		if (State != PlayerState.SceneChange)
+		if (State == PlayerState.SceneChange)
 		{
 			StopCoroutine(moveCoroutine);
 			moveCoroutine = null;
