@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3842655268682024264}
   - component: {fileID: 7243099165264825795}
   - component: {fileID: 1811957828823970146}
-  - component: {fileID: 5660337516211250492}
   m_Layer: 0
   m_Name: Cabinet_D
   m_TagString: Wall
@@ -131,16 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 4}
   m_EdgeRadius: 0
---- !u!114 &5660337516211250492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5919782808750799537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uCE90\uBE44\uB137 \uC785\uB2C8\uB2E4."
