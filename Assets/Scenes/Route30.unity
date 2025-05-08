@@ -5430,16 +5430,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sign_Name (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8198031343997172776, guid: 199c333f86351ac479944037a7c1b303, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7054751597827215526, guid: 199c333f86351ac479944037a7c1b303, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 837982445}
   m_SourcePrefab: {fileID: 100100000, guid: 199c333f86351ac479944037a7c1b303, type: 3}
 --- !u!4 &837982443 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1722070499058883314, guid: 199c333f86351ac479944037a7c1b303, type: 3}
   m_PrefabInstance: {fileID: 837982442}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &837982444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7054751597827215526, guid: 199c333f86351ac479944037a7c1b303, type: 3}
+  m_PrefabInstance: {fileID: 837982442}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &837982445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837982444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uB3C4\uB77C\uC9C0\uC2DC\uD2F0\uB85C \uAC00\uB294 \uAE38..."
+  pokeEvent: {fileID: 0}
 --- !u!1 &852163528
 GameObject:
   m_ObjectHideFlags: 0
@@ -45592,8 +45617,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1722070500187597189}
   - component: {fileID: 7761506493346836175}
-  - component: {fileID: 8198031345183739743}
   - component: {fileID: 496447443639590412}
+  - component: {fileID: 7761506493346836176}
   m_Layer: 0
   m_Name: Sign_Name
   m_TagString: Wall
@@ -45611,8 +45636,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1722070500161544493}
   - component: {fileID: 7761506493320521319}
-  - component: {fileID: 8198031345174398967}
   - component: {fileID: 496447443615569572}
+  - component: {fileID: 7761506493320521320}
   m_Layer: 0
   m_Name: Sign_Name (1)
   m_TagString: Wall
@@ -45630,8 +45655,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1722070500281041762}
   - component: {fileID: 7761506493440017448}
-  - component: {fileID: 8198031345222673848}
   - component: {fileID: 496447443533821163}
+  - component: {fileID: 7761506493440017449}
   m_Layer: 0
   m_Name: Sign_Name (3)
   m_TagString: Wall
@@ -45838,6 +45863,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7761506493320521320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054751596798225273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC5EC\uAE30\uC11C \uACE7\uC7A5"
+    - "\uD3EC\uCF13\uBAAC \uD560\uC544\uBC84\uC9C0\uC758 \uC9D1"
+  pokeEvent: {fileID: 0}
 --- !u!212 &7761506493346836175
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -45890,6 +45932,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7761506493346836176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054751596774007761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uC774\uACF3\uC740 30\uBC88 \uB3C4\uB85C"
+    - "\uB3C4\uB77C\uC9C0\uC2DC\uD2F0 ...... \uBB34\uAD81\uC2DC\uD2F0"
+  pokeEvent: {fileID: 0}
 --- !u!212 &7761506493440017448
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -45942,6 +46001,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7761506493440017449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054751596884232502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5975fa55c2a216b41bb35c14a3b3e20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog:
+    lines:
+    - "\uD3EC\uCF13\uBAAC \uD560\uC544\uBC84\uC9C0\uC758 \uC9D1"
+  pokeEvent: {fileID: 0}
 --- !u!1 &7978250097997119171
 GameObject:
   m_ObjectHideFlags: 0
@@ -45978,47 +46053,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8198031345174398967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054751596798225273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uC5EC\uAE30\uC11C \uACE7\uC7A5\\n\uD3EC\uCF13\uBAAC \uD560\uC544\uBC84\uC9C0\uC758
-    \uC9D1"
---- !u!114 &8198031345183739743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054751596774007761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uC774\uACF3\uC740 30\uBC88 \uB3C4\uB85C\\n\uB3C4\uB77C\uC9C0\uC2DC\uD2F0
-    ...... \uBB34\uAD81\uC2DC\uD2F0"
---- !u!114 &8198031345222673848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054751596884232502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uD3EC\uCF13\uBAAC \uD560\uC544\uBC84\uC9C0\uC758 \uC9D1"
 --- !u!212 &8303890679488969909
 SpriteRenderer:
   m_ObjectHideFlags: 0
