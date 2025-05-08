@@ -166,5 +166,6 @@ public class TownExitEvent : PokeEvent
 	{
 		Manager.Game.Player.transform.position = new Vector3(-18, -12);
 		npc.transform.position = new Vector3(-12, -12);
+		Manager.Dialog.CloseDialog -= ReturnNPCPlayer;
 	}
 }
