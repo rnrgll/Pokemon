@@ -28,10 +28,7 @@ public class PokemonManager : Singleton<PokemonManager>
 	void Start()
 	{
 		// TODO :  삭제
-		AddPokemon("블레이범", 50);
-		enemyPokemon = AddEnemyPokemon("치코리타", 10);
-		enemyParty = null;
-		enemyData = null;
+
 	}
 
 	public void AddPokemon(string pokeName, int level)
