@@ -1229,7 +1229,7 @@ MonoBehaviour:
   ui: {fileID: 8869995786001475716}
   hud: {fileID: 4179932499129051925}
   pokemonSelect: {fileID: 9059097708465644121}
-  monsterBall: {fileID: 0}
+  monsterBall: {fileID: 1603498490, guid: 92bd6a8254bb348dbbeee6274773357d, type: 3}
   isTrainer: 1
   enemyTrainerName: 
   winMoney: 0
