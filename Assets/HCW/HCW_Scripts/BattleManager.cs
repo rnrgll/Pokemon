@@ -689,6 +689,12 @@ public class BattleManager : MonoBehaviour
 							Manager.Data.PlayerData.AddMoney(winMoney);
 						}
 						Manager.Poke.enemyData.IsFight = true;
+
+						if (Manager.Poke.enemyData.TrainerId == 14)
+						{
+							Debug.Log("체육관 클리어~");
+							Manager.Event.gymEvent = true;
+						}
 					}
 				}
 				break;
@@ -730,7 +736,6 @@ public class BattleManager : MonoBehaviour
 		
 		// 변수 초기화
 		isTrainer = false;
-		setting.allowSceneActivation = true;
 		Manager.Game.Player.State = PlayerState.Field;
 		Manager.Game.Player.CurSceneName = Manager.Game.Player.PrevSceneName;
 		Manager.Poke.PartyBattleStatInit();
@@ -739,9 +744,11 @@ public class BattleManager : MonoBehaviour
 		Manager.Poke.enemyParty = null;
 		Manager.Poke.enemyPokemon = null;
 
+
 		//게임 데이터 업데이트
 		Manager.Game.EndBattle();
 
+		setting.allowSceneActivation = true;
 	}
 
 

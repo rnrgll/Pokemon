@@ -30,15 +30,17 @@ public class EventManager : Singleton<EventManager>
 	[SerializeField] public bool rivalEvent1;              // 연두마을 연구소 옆에서 라이벌한테 말걸면 차이는 이벤트
 	[SerializeField] public bool eggEvent;                 // 체육관 승리 후 체육관 나가면 강제 이벤트 (전화) 센터가면 포켓몬알줌 끝
 
-	private bool _gymEvent; // 체육관 이벤트 (승리시)
-	[SerializeField]
+	[SerializeField] private bool _gymEvent; // 체육관 이벤트 (승리시)
 	public bool gymEvent
 	{
 		get => _gymEvent;
 		set
 		{
 			if(value == true)
+			{
 				Manager.Data.PlayerData.GetBadge(0);
+				_gymEvent = true;
+			}
 		}
 	}             
 	//	[SerializeField] public bool teachEvent;           // 무궁시티 체육관 왼쪽에 말걸면 학교로 데려가서 설명해주는 이벤트

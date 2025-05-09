@@ -207,11 +207,11 @@ public class Trainer : MonoBehaviour, IInteractable
 			return;
 		}
 
-		//if (Manager.Dialog.isTyping == false && moveCoroutine == null)
-		//{
-		//	Manager.Dialog.npcState = Define.NpcState.Talking;
-		//	StartCoroutine(StayDialog());
-		//}
+		if (Manager.Dialog.isTyping == false && moveCoroutine == null)
+		{
+			Manager.Dialog.npcState = Define.NpcState.Talking;
+			StartCoroutine(StayDialog());
+		}
 	}
 	IEnumerator StayDialog()
 	{
