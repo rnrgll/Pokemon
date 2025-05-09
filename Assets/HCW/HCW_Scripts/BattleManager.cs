@@ -223,10 +223,10 @@ public class BattleManager : MonoBehaviour
 
 
 
-		//var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!" };
+		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!" };
 
-		//Dialog.CloseDialog += OnBattleDialogClosed;
-		//Dialog.StartDialogue(new Dialog(lines));
+		Dialog.CloseDialog += OnBattleDialogClosed;
+		Dialog.StartDialogue(new Dialog(lines));
 	}
 	#endregion
 	
