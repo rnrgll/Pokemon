@@ -1055,6 +1055,8 @@ public class SJH_PokemonData
 	{
 		Debug.Log($"Key = {pokeName}");
 		var check = frontSprites[pokeName];
+		
+		Debug.Log($"Sprite for {pokeName}: {check}");
 		if (check == null)
 			return null;
 		else

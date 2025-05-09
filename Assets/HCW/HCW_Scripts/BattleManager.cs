@@ -125,6 +125,7 @@ public class BattleManager : MonoBehaviour
 			intro.OnIntroComplete -= OnComplete;
 			Destroy(introObject);
 			introObject.transform.parent.gameObject.SetActive(false);
+			
 		}
 		intro.OnIntroComplete += OnComplete;
 
@@ -211,7 +212,7 @@ public class BattleManager : MonoBehaviour
 
 		playerPokemon = Manager.Poke.GetFirtstPokemon(); // 파티의 첫번째 포켓몬
 		enemyPokemon = enemy; // 적 포켓몬 설정
-
+		
 		SpawnPokemonAtStart(playerPokemon, playerPokemonPos, true,() => hud.SpawnStatePanel(true));
 		SpawnPokemonAtStart(enemyPokemon,enemyPokemonPos,false,() => hud.SpawnStatePanel(false));
 		
@@ -222,10 +223,10 @@ public class BattleManager : MonoBehaviour
 
 
 
-		var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!" };
+		//var lines = new List<string> { $"앗! 야생의 {enemyPokemon.pokeName}이(가) 튀어나왔다!" };
 
-		Dialog.CloseDialog += OnBattleDialogClosed;
-		Dialog.StartDialogue(new Dialog(lines));
+		//Dialog.CloseDialog += OnBattleDialogClosed;
+		//Dialog.StartDialogue(new Dialog(lines));
 	}
 	#endregion
 	
@@ -372,39 +373,6 @@ public class BattleManager : MonoBehaviour
 							// 속도 같으면 랜덤
 							return Random.Range(0, 2) == 0 ? -1 : 1;
 						});
-
-						// foreach (var act in actions)
-						// {
-						// 	yield return battleDelay;
-						// 	if (act.Attacker.hp <= 0)
-						// 	{
-						// 		Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} 은/는 기절 행동불가");
-						// 		continue;
-						// 	}
-						//
-						// 	Debug.Log($"배틀로그 {currentTurn}턴 : {act.Attacker.pokeName} ! {act.Skill} !");
-						// 	yield return StartCoroutine(
-						// 		Manager.Dialog.ShowBattleMessage($"{act.Attacker.pokeName} ! {act.Skill} !"));
-						//
-						// 	// 상태이상체크
-						// 	if (act.Attacker.CanActionCheck())
-						// 	{
-						// 		// TODO : PP 체크
-						// 		yield return StartCoroutine(Motion(act)); // 데미지랑 딜레이 실행 모션 코루틴으로 이동
-						// 	}
-						//
-						// 	//매 액션마다 피격자의 hp 갱신해주기
-						// 	if (act.Attacker == playerPokemon)
-						// 		hud.SetEnemyHUD(enemyPokemon); // 적 피격
-						// 	else
-						// 		hud.SetPlayerHUD(playerPokemon); // 플레이어 피격
-						//
-						// 	isAction = true;
-						//
-						// }
-
-						// yield return battleDelay;
-
 						isAction = true;
 						break;
 					}
@@ -963,9 +931,6 @@ public class BattleManager : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 
 		ExecuteAction(action);
-		// hud.SetPlayerHUD(playerPokemon);
-		// hud.SetEnemyHUD(enemyPokemon);
-
 		if (action.Skill == "몬스터볼사용")
 		{
 			yield return StartCoroutine(CatchPokemonMotion(action));
