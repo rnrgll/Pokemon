@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1722070499058883314}
   - component: {fileID: 7761506494634958264}
-  - component: {fileID: 8198031343997172776}
   - component: {fileID: -8726924594276979333}
   m_Layer: 0
   m_Name: Sign_Name
@@ -86,19 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8198031343997172776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054751597827215526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7db5468695b50b4ea9bcd3e545d0e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "\uC5F0\uB450\uB9C8\uC744 \uC785\uB2C8\uB2E4."
 --- !u!61 &-8726924594276979333
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -5,10 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - MyPoke
   - Wall
   - Interact
   - NPC
+  - Pokemon
+  - SlopeLeft
+  - SlopeRight
+  - SlopeDown
+  - Slope
+  - Grass
   layers:
   - Default
   - TransparentFX

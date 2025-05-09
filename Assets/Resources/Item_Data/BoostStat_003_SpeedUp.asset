@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edacdef20447549be977ada4eabb1fa0, type: 3}
+  m_Name: BoostStat_003_SpeedUp
+  m_EditorClassIdentifier: 
+  itemName: "\uC2A4\uD53C\uB4DC \uC5C5"
+  description: "\uC0AC\uC6A9\uD558\uBA74, \uBC30\uD2C0 \uC911\uC5D0\uB9CC \uC2A4\uD53C\uB4DC\uB97C
+    \uB192\uD78C\uB2E4"
+  category: 0
+  useTarget: 2
+  useContext: 1
+  isSellable: 1
+  sellPrice: 175
+  isPurchasable: 1
+  purchasePrice: 350
+  isConsumable: 1
+  effectObjects:
+  - {fileID: 11400000, guid: 05b516efa9abf40f997ab97a79bd2424, type: 2}

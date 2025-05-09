@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3306e82e0ca6f4f93bb54348fdfa31c3, type: 3}
+  m_Name: TM_031_MudSlap
+  m_EditorClassIdentifier: 
+  itemName: "\uC9C4\uD759\uBFCC\uB9AC\uAE30"
+  description: "\uC0C1\uB300\uC758 \uC5BC\uAD74 \uB4F1\uC5D0 \uC9C4\uD759\uC744 \uB0B4\uB358\uC838\uC11C
+    \uACF5\uACA9\uD55C\uB2E4. \uBA85\uC911\uB960\uC744 \uB5A8\uC5B4\uB728\uB9B0\uB2E4."
+  category: 3
+  useTarget: 2
+  useContext: 0
+  isSellable: 1
+  sellPrice: 1500
+  isPurchasable: 0
+  purchasePrice: 0
+  isConsumable: 1
+  machineType: 0
+  machineNumber: 31
+  skillCode: TM31
+  skillName: "\uC9C4\uD759\uBFCC\uB9AC\uAE30"
+  pokemonIdList: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f00000010000000110000001200000013000000140000002200000023000000

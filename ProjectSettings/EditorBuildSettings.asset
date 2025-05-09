@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: 068181a56091d9945bf46285c5920af8
+  - enabled: 1
     path: Assets/Scenes/PlayerHouse2F.unity
     guid: 5f33ad3f969a6304b95201f9267d274a
   - enabled: 1
@@ -17,4 +20,91 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ProfessorLab.unity
     guid: fdb2e3ac7269f8d4aac01f0d1f9d8958
+  - enabled: 1
+    path: Assets/Scenes/Route29.unity
+    guid: 677d99f6026fdef42a5a60ebe6c754c5
+  - enabled: 1
+    path: Assets/Scenes/Route29Gate.unity
+    guid: ffa6492d659aa4544ad01c68b9666bb8
+  - enabled: 1
+    path: Assets/Scenes/Route46.unity
+    guid: 7f4b3d85b3aa8a44fa97e02ff0c9d6c8
+  - enabled: 1
+    path: Assets/Scenes/CherrygroveCity.unity
+    guid: 60e700bea29426c42873305ad5070653
+  - enabled: 1
+    path: Assets/Scenes/PokeCenter1.unity
+    guid: 3ef3897628dbba246adbd6dfb60ee594
+  - enabled: 1
+    path: Assets/Scenes/PokeShop1.unity
+    guid: 30f4d74dade6f9342bc84e3b8f3ab98f
+  - enabled: 1
+    path: Assets/Scenes/Route30.unity
+    guid: eed65007b26ab194e845b515d6182514
+  - enabled: 1
+    path: Assets/Scenes/Route31.unity
+    guid: 619bd064198cdae49bb3b1fa7e8b2747
+  - enabled: 1
+    path: Assets/Scenes/Route31Gate.unity
+    guid: 48f14f5771491134ba2b94c8891f74a2
+  - enabled: 1
+    path: Assets/Scenes/VioletCity.unity
+    guid: 4c0a44bd89fbf6c41b2fc87dddc9dd2a
+  - enabled: 1
+    path: Assets/Scenes/ProfessorHouse.unity
+    guid: 7db57a9339ab327468a57fb93ec7808c
+  - enabled: 1
+    path: Assets/Scenes/NewBarkTownNPCHouse.unity
+    guid: 883b5e8e7e291fc4abbab7dd66a60bdd
+  - enabled: 1
+    path: Assets/Scenes/CherrygroveCityNPCHouse1.unity
+    guid: 3576abcd30beb50459616df10c9091ce
+  - enabled: 1
+    path: Assets/Scenes/CherrygroveCityNPCHouse2.unity
+    guid: eba99c3426bf07b4abbc300416faffd7
+  - enabled: 1
+    path: Assets/Scenes/CherrygroveCityNPCHouse3.unity
+    guid: 0bc8e445aaf09fa49a856b9080c7c977
+  - enabled: 1
+    path: Assets/Scenes/Route30BerryHouse.unity
+    guid: cb9a12c60aab7384d8e33cfcf91e3b00
+  - enabled: 1
+    path: Assets/Scenes/PokemonHouse.unity
+    guid: 3248e90954e9f4e43870314c25370590
+  - enabled: 1
+    path: Assets/Scenes/PokemonAcademy.unity
+    guid: b36124e692bc06741bd650d145720284
+  - enabled: 1
+    path: Assets/Scenes/PokeCenter2.unity
+    guid: 7b0590647c3c2434da8a6fd5019e3ff7
+  - enabled: 1
+    path: Assets/Scenes/PokeShop2.unity
+    guid: fa4e6f2778fc70047a6fe7ec05d99034
+  - enabled: 1
+    path: Assets/Scenes/VioletCityNPCHouse1.unity
+    guid: 901ed0922ae37ac4fbf82a489bf41c6c
+  - enabled: 1
+    path: Assets/Scenes/VioletCityNPCHouse2.unity
+    guid: 06664fd7896be2b489951f912bfe67f8
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: 7090f9a8b53e94ee5ad4564fab665b13
+  - enabled: 1
+    path: Assets/Scenes/BattleScene_UIFix.unity
+    guid: ac914ccfd92a6d149bd4db2017520409
+  - enabled: 1
+    path: Assets/Scenes/SproutTower1F.unity
+    guid: c46961ff9093c8440b35f94a3dfc6fc4
+  - enabled: 1
+    path: Assets/Scenes/SproutTower2F.unity
+    guid: ab8996166b1938546aef816670e8fc00
+  - enabled: 1
+    path: Assets/Scenes/SproutTower3F.unity
+    guid: a86dc65496127af469a3721d7614122e
+  - enabled: 1
+    path: Assets/Scenes/VioletCityGym.unity
+    guid: 5424572dc209ce141baff004d03c554a
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: e3fcda03c74444d4295fc2b4862e49a2
   m_configObjects: {}

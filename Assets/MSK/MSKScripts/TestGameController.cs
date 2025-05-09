@@ -6,7 +6,7 @@ using UnityEngine.Experimental.GlobalIllumination;
 public enum GameState { FreeMove, Dialog }
 public class TestGameController : MonoBehaviour
 {
-    [SerializeField] MSKPlayer playerController;
+    [SerializeField] Player playerController;
 
     GameState state;
     private void Start() { 

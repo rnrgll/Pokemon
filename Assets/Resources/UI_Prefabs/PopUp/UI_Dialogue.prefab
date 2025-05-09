@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7205419937092367943}
   - component: {fileID: 4462096482148243396}
   - component: {fileID: 7946090510423172857}
+  - component: {fileID: 8250234707304667137}
   m_Layer: 5
   m_Name: UI_Dialogue
   m_TagString: Untagged
@@ -57,7 +58,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -102,6 +103,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8250234707304667137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7030831986916096914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b62c0a158a89848c69cf68206457d172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPrefab: {fileID: 0}
+  buttonParent: {fileID: 0}
 --- !u!1001 &8859842274380268651
 PrefabInstance:
   m_ObjectHideFlags: 0
